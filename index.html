@@ -33,7 +33,9 @@
       color: var(--text);
     }
 
-    /* LOGIN */
+    /* =========================
+       LOGIN
+    ========================= */
 
     .login {
       min-height: 100vh;
@@ -154,7 +156,9 @@
       display: none;
     }
 
-    /* APP */
+    /* =========================
+       APP
+    ========================= */
 
     .app {
       display: none;
@@ -241,7 +245,9 @@
       color: var(--muted);
     }
 
-    /* CARDS */
+    /* =========================
+       CARDS
+    ========================= */
 
     .cards {
       display: grid;
@@ -285,7 +291,9 @@
       border-top: 3px solid var(--blue);
     }
 
-    /* PAINEL */
+    /* =========================
+       PAINEL
+    ========================= */
 
     .panel {
       margin-top: 20px;
@@ -372,6 +380,17 @@
       font-weight: 800;
     }
 
+    /* =========================
+       BOTÕES DA TABELA
+    ========================= */
+
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
     .edit-btn {
       background: #eef3f1;
       color: var(--dark);
@@ -379,7 +398,24 @@
       font-size: 12px;
     }
 
-    /* MODAL */
+    .edit-btn:hover {
+      background: #dfe8e4;
+    }
+
+    .delete-btn {
+      background: #fee7e7;
+      color: #9f2626;
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    .delete-btn:hover {
+      background: #fbd3d3;
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
 
     .modal {
       display: none;
@@ -418,7 +454,9 @@
       grid-column: 1 / -1;
     }
 
-    /* BOTÕES */
+    /* =========================
+       BOTÕES DO MODAL
+    ========================= */
 
     .actions {
       display: flex;
@@ -440,12 +478,20 @@
       color: var(--dark);
     }
 
-    /* RESPONSIVO */
+    .cancel-btn:hover {
+      background: #e0e7e4;
+    }
+
+    /* =========================
+       RESPONSIVO
+    ========================= */
 
     @media (max-width: 1100px) {
+
       .cards {
         grid-template-columns: repeat(2, 1fr);
       }
+
     }
 
     @media (max-width: 700px) {
@@ -499,32 +545,57 @@
       .actions button {
         flex: 1;
       }
+
+      .table-actions {
+        flex-direction: column;
+      }
+
     }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
+
 
 <body>
 
-  <!-- LOGIN -->
 
-  <section class="login" id="login">
+  <!-- ==================================================
+       LOGIN
+  ================================================== -->
+
+  <section
+    class="login"
+    id="login"
+  >
 
     <div class="loginbox">
 
       <div class="logo">
+
         COPLAN
-        <span>Controle de O.S. e Demandas</span>
+
+        <span>
+          Controle de O.S. e Demandas
+        </span>
+
       </div>
 
-      <h2>Acesso ao sistema</h2>
+
+      <h2>
+        Acesso ao sistema
+      </h2>
+
 
       <p>
         Entre para acompanhar as demandas da equipe.
       </p>
 
-      <form id="loginForm">
+
+      <form
+        id="loginForm"
+      >
 
         <div class="field">
 
@@ -541,6 +612,7 @@
 
         </div>
 
+
         <div class="field">
 
           <label for="senha">
@@ -556,12 +628,14 @@
 
         </div>
 
+
         <div
           class="error"
           id="loginerr"
         >
           E-mail ou senha inválidos.
         </div>
+
 
         <button
           class="primary wide"
@@ -572,6 +646,7 @@
 
       </form>
 
+
       <div class="hint">
         Sistema de controle de Ordens de Serviço e Demandas.
       </div>
@@ -581,19 +656,31 @@
   </section>
 
 
-  <!-- SISTEMA -->
+
+  <!-- ==================================================
+       SISTEMA
+  ================================================== -->
 
   <section
     class="app"
     id="app"
   >
 
+
+    <!-- MENU LATERAL -->
+
     <aside class="sidebar">
 
       <div class="side-logo">
+
         COPLAN
-        <small>CONTROLE DE DEMANDAS</small>
+
+        <small>
+          CONTROLE DE DEMANDAS
+        </small>
+
       </div>
+
 
       <div class="nav">
 
@@ -611,6 +698,7 @@
 
       </div>
 
+
       <div class="user">
 
         <strong id="useremail">
@@ -623,6 +711,7 @@
           Acesso ao sistema
         </span>
 
+
         <button onclick="sair()">
           Sair
         </button>
@@ -632,7 +721,13 @@
     </aside>
 
 
+
+    <!-- CONTEÚDO -->
+
     <main class="main">
+
+
+      <!-- CABEÇALHO -->
 
       <div class="top">
 
@@ -648,6 +743,7 @@
 
         </div>
 
+
         <button
           class="primary"
           onclick="abrir()"
@@ -658,9 +754,11 @@
       </div>
 
 
+
       <!-- CARDS -->
 
       <div class="cards">
+
 
         <div class="card green">
 
@@ -677,6 +775,7 @@
 
         </div>
 
+
         <div class="card red">
 
           <div class="label">
@@ -691,6 +790,7 @@
           </div>
 
         </div>
+
 
         <div class="card yellow">
 
@@ -707,6 +807,7 @@
 
         </div>
 
+
         <div class="card blue">
 
           <div class="label">
@@ -721,6 +822,7 @@
           </div>
 
         </div>
+
 
         <div class="card red">
 
@@ -737,21 +839,26 @@
 
         </div>
 
+
       </div>
+
 
 
       <!-- TABELA -->
 
       <div class="panel">
 
+
         <div class="toolbar">
 
           <div class="filters">
+
 
             <input
               id="busca"
               placeholder="Buscar O.S. ou descrição..."
             >
+
 
             <select id="status">
 
@@ -773,6 +880,7 @@
 
             </select>
 
+
             <select id="pendFiltro">
 
               <option value="">
@@ -789,9 +897,11 @@
 
             </select>
 
+
           </div>
 
         </div>
+
 
 
         <div style="overflow:auto">
@@ -802,20 +912,46 @@
 
               <tr>
 
-                <th>Prioridade</th>
-                <th>O.S.</th>
-                <th>Prazo</th>
-                <th>Descrição</th>
-                <th>Status</th>
-                <th>Pendência</th>
-                <th>Observação</th>
-                <th></th>
+                <th>
+                  Prioridade
+                </th>
+
+                <th>
+                  O.S.
+                </th>
+
+                <th>
+                  Prazo
+                </th>
+
+                <th>
+                  Descrição
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+                <th>
+                  Pendência
+                </th>
+
+                <th>
+                  Observação
+                </th>
+
+                <th>
+                  Ações
+                </th>
 
               </tr>
 
             </thead>
 
-            <tbody id="tbody"></tbody>
+
+            <tbody
+              id="tbody"
+            ></tbody>
 
           </table>
 
@@ -828,7 +964,10 @@
   </section>
 
 
-  <!-- MODAL -->
+
+  <!-- ==================================================
+       MODAL NOVA / EDITAR O.S.
+  ================================================== -->
 
   <div
     class="modal"
@@ -837,19 +976,22 @@
 
     <div class="modalbox">
 
+
       <h2 id="mt">
         Nova O.S.
       </h2>
 
+
       <!--
         TODOS OS CAMPOS DA O.S. SÃO OPCIONAIS.
-        O formulário usa novalidate.
+        NÃO EXISTE REQUIRED AQUI.
       -->
 
       <form
         id="osForm"
         novalidate
       >
+
 
         <input
           type="hidden"
@@ -858,6 +1000,7 @@
 
 
         <div class="grid">
+
 
           <!-- PRIORIDADE -->
 
@@ -997,12 +1140,14 @@
 
           </div>
 
+
         </div>
 
 
         <!-- BOTÕES -->
 
         <div class="actions">
+
 
           <button
             type="button"
@@ -1012,6 +1157,7 @@
             Cancelar
           </button>
 
+
           <button
             type="submit"
             class="primary"
@@ -1019,7 +1165,9 @@
             Salvar
           </button>
 
+
         </div>
+
 
       </form>
 
@@ -1028,21 +1176,30 @@
   </div>
 
 
+
+  <!-- ==================================================
+       JAVASCRIPT
+  ================================================== -->
+
   <script>
 
-    /* ==============================
+
+    /* =========================
        SUPABASE
-    ============================== */
+    ========================= */
 
     const SUPABASE_URL =
       'https://otzhzpimeawafhguhcae.supabase.co';
 
+
     const SUPABASE_PUBLISHABLE_KEY =
       'sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
+
 
     const {
       createClient
     } = supabase;
+
 
     const db =
       createClient(
@@ -1052,12 +1209,14 @@
 
 
     let dados = [];
+
     let carregando = false;
 
 
-    /* ==============================
+
+    /* =========================
        LOGIN
-    ============================== */
+    ========================= */
 
     document
       .getElementById('loginForm')
@@ -1071,30 +1230,40 @@
 
       e.preventDefault();
 
+
       const email =
         document
           .getElementById('email')
           .value
           .trim();
 
+
       const senha =
         document
           .getElementById('senha')
           .value;
 
+
       const erro =
         document
           .getElementById('loginerr');
 
-      erro.style.display = 'none';
+
+      erro.style.display =
+        'none';
+
 
       const {
         error
       } =
         await db.auth.signInWithPassword({
+
           email: email,
+
           password: senha
+
         });
+
 
       if (error) {
 
@@ -1109,11 +1278,13 @@
     }
 
 
-    /* ==============================
-       INICIAR
-    ============================== */
+
+    /* =========================
+       INICIAR SISTEMA
+    ========================= */
 
     async function iniciar() {
+
 
       const {
         data: {
@@ -1121,6 +1292,7 @@
         }
       } =
         await db.auth.getSession();
+
 
       if (session) {
 
@@ -1156,28 +1328,38 @@
     }
 
 
+
     function mostrarLogin() {
 
       document
         .getElementById('login')
-        .style.display = 'grid';
+        .style.display =
+        'grid';
+
 
       document
         .getElementById('app')
-        .style.display = 'none';
+        .style.display =
+        'none';
 
     }
 
 
+
     async function mostrarApp(user) {
+
 
       document
         .getElementById('login')
-        .style.display = 'none';
+        .style.display =
+        'none';
+
 
       document
         .getElementById('app')
-        .style.display = 'block';
+        .style.display =
+        'block';
+
 
       document
         .getElementById('useremail')
@@ -1185,9 +1367,11 @@
         user?.email ||
         'Usuário';
 
+
       await carregarDados();
 
     }
+
 
 
     async function sair() {
@@ -1197,15 +1381,18 @@
     }
 
 
-    /* ==============================
-       CARREGAR
-    ============================== */
+
+    /* =========================
+       CARREGAR DADOS
+    ========================= */
 
     async function carregarDados() {
+
 
       carregando = true;
 
       render();
+
 
       const {
         data,
@@ -1222,7 +1409,9 @@
             }
           );
 
+
       carregando = false;
+
 
       if (error) {
 
@@ -1235,29 +1424,40 @@
 
       }
 
-      dados = data || [];
+
+      dados =
+        data || [];
+
 
       render();
 
     }
 
 
-    /* ==============================
-       ABRIR
-    ============================== */
 
-    function abrir(registro = null) {
+    /* =========================
+       ABRIR MODAL
+    ========================= */
+
+    function abrir(
+      registro = null
+    ) {
+
 
       const form =
-        document.getElementById(
-          'osForm'
-        );
+        document
+          .getElementById(
+            'osForm'
+          );
+
 
       form.reset();
+
 
       document
         .getElementById('id')
         .value = '';
+
 
       document
         .getElementById('mt')
@@ -1269,40 +1469,48 @@
 
       if (registro) {
 
+
         document
           .getElementById('id')
           .value =
           registro.id || '';
+
 
         document
           .getElementById('prioridade')
           .value =
           registro.prioridade ?? '';
 
+
         document
           .getElementById('os')
           .value =
           registro.os ?? '';
+
 
         document
           .getElementById('prazo')
           .value =
           registro.prazo ?? '';
 
+
         document
           .getElementById('st')
           .value =
           registro.status ?? '';
+
 
         document
           .getElementById('pe')
           .value =
           registro.pendencia ?? '';
 
+
         document
           .getElementById('desc')
           .value =
           registro.descricao ?? '';
+
 
         document
           .getElementById('obs')
@@ -1320,9 +1528,10 @@
     }
 
 
-    /* ==============================
-       FECHAR
-    ============================== */
+
+    /* =========================
+       FECHAR MODAL
+    ========================= */
 
     function fechar() {
 
@@ -1334,11 +1543,10 @@
     }
 
 
-    /* ==============================
+
+    /* =========================
        SALVAR
-       
-       TODOS OS CAMPOS OPCIONAIS.
-    ============================== */
+    ========================= */
 
     document
       .getElementById('osForm')
@@ -1349,6 +1557,7 @@
 
 
     async function salvar(e) {
+
 
       e.preventDefault();
 
@@ -1410,15 +1619,11 @@
 
 
       /*
-        Nenhum campo é obrigatório.
-
-        Se estiver vazio:
-        - número → NULL
-        - data → NULL
-        - texto → ""
+        TODOS OS CAMPOS SÃO OPCIONAIS.
       */
 
       const registro = {
+
 
         prioridade:
           prioridadeValor === ''
@@ -1427,30 +1632,36 @@
                 prioridadeValor
               ),
 
+
         os:
           os === ''
             ? null
             : os,
+
 
         prazo:
           prazo === ''
             ? null
             : prazo,
 
+
         status:
           status === ''
             ? null
             : status,
+
 
         pendencia:
           pendencia === ''
             ? null
             : pendencia,
 
+
         descricao:
           descricao === ''
             ? null
             : descricao,
+
 
         observacao:
           observacao === ''
@@ -1463,9 +1674,13 @@
       let resultado;
 
 
-      /* EDITAR */
+
+      /* =========================
+         EDITAR
+      ========================= */
 
       if (id) {
+
 
         resultado =
           await db
@@ -1485,9 +1700,13 @@
       }
 
 
-      /* NOVA */
+
+      /* =========================
+         NOVA O.S.
+      ========================= */
 
       else {
+
 
         resultado =
           await db
@@ -1501,6 +1720,7 @@
             .single();
 
       }
+
 
 
       if (resultado.error) {
@@ -1517,16 +1737,98 @@
 
       fechar();
 
+
       await carregarDados();
 
     }
 
 
-    /* ==============================
+
+    /* =========================
+       EXCLUIR O.S.
+    ========================= */
+
+    async function excluir(id) {
+
+
+      const registro =
+        dados.find(
+          x =>
+            String(x.id) ===
+            String(id)
+        );
+
+
+      if (!registro) {
+
+        alert(
+          'Não foi possível localizar esta O.S.'
+        );
+
+        return;
+
+      }
+
+
+      const identificacao =
+        registro.os
+          ? `O.S. ${registro.os}`
+          : 'esta O.S.';
+
+
+      const confirmar =
+        confirm(
+          `Deseja realmente excluir ${identificacao}?\n\n` +
+          `Esta ação não poderá ser desfeita.`
+        );
+
+
+      if (!confirmar) {
+
+        return;
+
+      }
+
+
+
+      const {
+        error
+      } =
+        await db
+          .from(
+            'ordens_servico'
+          )
+          .delete()
+          .eq(
+            'id',
+            id
+          );
+
+
+      if (error) {
+
+        alert(
+          'Não foi possível excluir a O.S.\n\n' +
+          error.message
+        );
+
+        return;
+
+      }
+
+
+      await carregarDados();
+
+    }
+
+
+
+    /* =========================
        RENDER
-    ============================== */
+    ========================= */
 
     function render() {
+
 
       const busca =
         (
@@ -1556,6 +1858,7 @@
       const lista =
         dados
           .filter(x => {
+
 
             const texto =
               String(
@@ -1598,6 +1901,7 @@
           .sort(
             (a, b) => {
 
+
               const pa =
                 a.prioridade === null ||
                 a.prioridade === undefined ||
@@ -1607,6 +1911,7 @@
                       a.prioridade
                     );
 
+
               const pb =
                 b.prioridade === null ||
                 b.prioridade === undefined ||
@@ -1615,6 +1920,7 @@
                   : Number(
                       b.prioridade
                     );
+
 
               return pa - pb;
 
@@ -1631,6 +1937,7 @@
 
       if (!lista.length) {
 
+
         tbody.innerHTML = `
 
           <tr>
@@ -1643,18 +1950,22 @@
                 color:#71807b;
               "
             >
+
               ${
                 carregando
                   ? 'Carregando...'
                   : 'Nenhuma O.S. cadastrada.'
               }
+
             </td>
 
           </tr>
 
         `;
 
+
       } else {
+
 
         tbody.innerHTML =
           lista
@@ -1666,7 +1977,9 @@
       }
 
 
+
       /* CARDS */
+
 
       document
         .getElementById('total')
@@ -1716,11 +2029,13 @@
     }
 
 
-    /* ==============================
-       LINHA
-    ============================== */
+
+    /* =========================
+       MONTAR LINHA
+    ========================= */
 
     function montarLinha(x) {
+
 
       const atrasado =
         estaAtrasado(x);
@@ -1763,7 +2078,9 @@
 
         <tr>
 
+
           <td>
+
             <b>
               ${
                 esc(
@@ -1772,10 +2089,12 @@
                 )
               }
             </b>
+
           </td>
 
 
           <td>
+
             <b>
               ${
                 esc(
@@ -1784,6 +2103,7 @@
                 )
               }
             </b>
+
           </td>
 
 
@@ -1811,73 +2131,110 @@
 
 
           <td>
+
             ${
               esc(
                 x.descricao ??
                 '—'
               )
             }
+
           </td>
 
 
           <td>
+
 
             ${
               x.status
+
                 ? `
+
                   <span
                     class="badge ${statusClass}"
                   >
+
                     ${esc(
                       x.status
                     )}
+
                   </span>
+
                 `
+
                 : '—'
             }
+
 
           </td>
 
 
           <td>
+
 
             ${
               x.pendencia
+
                 ? `
+
                   <span
                     class="badge ${pendClass}"
                   >
+
                     ${esc(
                       x.pendencia
                     )}
+
                   </span>
+
                 `
+
                 : '—'
             }
+
 
           </td>
 
 
           <td>
+
             ${
               esc(
                 x.observacao ??
                 '—'
               )
             }
+
           </td>
 
 
           <td>
 
-            <button
-              class="edit-btn"
-              onclick="editar('${escAttr(x.id)}')"
-            >
-              Editar
-            </button>
+
+            <div class="table-actions">
+
+
+              <button
+                class="edit-btn"
+                onclick="editar('${escAttr(x.id)}')"
+              >
+                Editar
+              </button>
+
+
+              <button
+                class="delete-btn"
+                onclick="excluir('${escAttr(x.id)}')"
+              >
+                Excluir
+              </button>
+
+
+            </div>
+
 
           </td>
+
 
         </tr>
 
@@ -1886,11 +2243,13 @@
     }
 
 
-    /* ==============================
+
+    /* =========================
        EDITAR
-    ============================== */
+    ========================= */
 
     function editar(id) {
+
 
       const registro =
         dados.find(
@@ -1918,11 +2277,13 @@
     }
 
 
-    /* ==============================
-       ATRASO
-    ============================== */
+
+    /* =========================
+       VERIFICAR ATRASO
+    ========================= */
 
     function estaAtrasado(x) {
+
 
       if (
         !x.prazo ||
@@ -1945,6 +2306,7 @@
       const hoje =
         new Date();
 
+
       hoje.setHours(
         0,
         0,
@@ -1958,14 +2320,18 @@
     }
 
 
-    /* ==============================
-       DATA
-    ============================== */
+
+    /* =========================
+       FORMATAR DATA
+    ========================= */
 
     function br(valor) {
 
+
       if (!valor) {
+
         return 'Não definido';
+
       }
 
 
@@ -1994,11 +2360,13 @@
     }
 
 
-    /* ==============================
-       SEGURANÇA
-    ============================== */
+
+    /* =========================
+       ESCAPAR HTML
+    ========================= */
 
     function esc(valor) {
+
 
       return String(
         valor ?? ''
@@ -2018,7 +2386,9 @@
     }
 
 
+
     function escAttr(valor) {
+
 
       return String(
         valor ?? ''
@@ -2035,9 +2405,10 @@
     }
 
 
-    /* ==============================
+
+    /* =========================
        FILTROS
-    ============================== */
+    ========================= */
 
     document
       .getElementById('busca')
@@ -2063,15 +2434,17 @@
       );
 
 
-    /* ==============================
-       FECHAR CLICANDO FORA
-    ============================== */
+
+    /* =========================
+       FECHAR MODAL AO CLICAR FORA
+    ========================= */
 
     document
       .getElementById('modal')
       .addEventListener(
         'click',
         function(e) {
+
 
           if (
             e.target ===
@@ -2086,13 +2459,15 @@
       );
 
 
-    /* ==============================
+
+    /* =========================
        INICIAR
-    ============================== */
+    ========================= */
 
     iniciar();
 
   </script>
 
 </body>
+
 </html>
