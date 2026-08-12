@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Coplan • Controle de O.S.</title>
 
   <style>
@@ -11,7 +11,7 @@
       --green2: #008b68;
       --dark: #12382f;
       --bg: #f4f7f6;
-      --card: #fff;
+      --card: #ffffff;
       --line: #e4ebe8;
       --text: #1e2b27;
       --muted: #71807b;
@@ -31,7 +31,10 @@
       color: var(--text);
     }
 
-    /* LOGIN */
+    /* =========================
+       LOGIN
+    ========================= */
+
     .login {
       min-height: 100vh;
       display: grid;
@@ -120,7 +123,7 @@
     }
 
     button:hover {
-      opacity: .92;
+      opacity: 0.92;
     }
 
     .primary {
@@ -151,7 +154,10 @@
       display: none;
     }
 
-    /* APP */
+    /* =========================
+       APP
+    ========================= */
+
     .app {
       display: none;
       min-height: 100vh;
@@ -176,7 +182,7 @@
       display: block;
       font-size: 11px;
       font-weight: 500;
-      opacity: .65;
+      opacity: 0.65;
       margin-top: 3px;
     }
 
@@ -237,7 +243,10 @@
       color: var(--muted);
     }
 
-    /* CARDS */
+    /* =========================
+       CARDS
+    ========================= */
+
     .cards {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -280,7 +289,10 @@
       border-top: 3px solid var(--blue);
     }
 
-    /* PAINEL */
+    /* =========================
+       PAINEL
+    ========================= */
+
     .panel {
       margin-top: 20px;
       background: #fff;
@@ -373,7 +385,10 @@
       font-size: 12px;
     }
 
-    /* MODAL */
+    /* =========================
+       MODAL
+    ========================= */
+
     .modal {
       display: none;
       position: fixed;
@@ -417,10 +432,10 @@
       justify-content: flex-end;
       align-items: center;
       gap: 8px;
-      margin-top: 22px;
-      padding-top: 15px;
-      border-top: 1px solid var(--line);
       width: 100%;
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
     }
 
     .actions button {
@@ -428,7 +443,10 @@
       min-width: 100px;
     }
 
-    /* RESPONSIVO */
+    /* =========================
+       RESPONSIVO
+    ========================= */
+
     @media (max-width: 1100px) {
       .cards {
         grid-template-columns: repeat(2, 1fr);
@@ -485,7 +503,10 @@
 
 <body>
 
-  <!-- LOGIN -->
+  <!-- =========================
+       LOGIN
+  ========================= -->
+
   <section class="login" id="login">
 
     <div class="loginbox">
@@ -505,6 +526,7 @@
 
         <div class="field">
           <label for="email">E-mail</label>
+
           <input
             id="email"
             type="email"
@@ -515,6 +537,7 @@
 
         <div class="field">
           <label for="senha">Senha</label>
+
           <input
             id="senha"
             type="password"
@@ -527,14 +550,17 @@
           E-mail ou senha inválidos.
         </div>
 
-        <button class="primary wide" type="submit">
+        <button
+          class="primary wide"
+          type="submit"
+        >
           Entrar
         </button>
 
       </form>
 
       <div class="hint">
-        Esta versão utiliza autenticação e banco de dados Supabase.
+        Sistema de controle de Ordens de Serviço e Demandas.
       </div>
 
     </div>
@@ -542,7 +568,10 @@
   </section>
 
 
-  <!-- SISTEMA -->
+  <!-- =========================
+       SISTEMA
+  ========================= -->
+
   <section class="app" id="app">
 
     <aside class="sidebar">
@@ -585,10 +614,16 @@
 
         <div>
           <h1>Dashboard</h1>
-          <p>Visão geral das ordens de serviço</p>
+
+          <p>
+            Visão geral das ordens de serviço
+          </p>
         </div>
 
-        <button class="primary" onclick="abrir()">
+        <button
+          class="primary"
+          onclick="abrir()"
+        >
           + Nova O.S.
         </button>
 
@@ -596,37 +631,83 @@
 
 
       <!-- CARDS -->
+
       <div class="cards">
 
         <div class="card green">
-          <div class="label">TOTAL DE O.S.</div>
-          <div class="num" id="total">0</div>
+          <div class="label">
+            TOTAL DE O.S.
+          </div>
+
+          <div
+            class="num"
+            id="total"
+          >
+            0
+          </div>
         </div>
 
+
         <div class="card red">
-          <div class="label">PENDENTES</div>
-          <div class="num" id="pendCount">0</div>
+          <div class="label">
+            PENDENTES
+          </div>
+
+          <div
+            class="num"
+            id="pendCount"
+          >
+            0
+          </div>
         </div>
+
 
         <div class="card yellow">
-          <div class="label">EM ANDAMENTO</div>
-          <div class="num" id="and">0</div>
+          <div class="label">
+            EM ANDAMENTO
+          </div>
+
+          <div
+            class="num"
+            id="and"
+          >
+            0
+          </div>
         </div>
+
 
         <div class="card blue">
-          <div class="label">AGUARDANDO CLIENTE</div>
-          <div class="num" id="cli">0</div>
+          <div class="label">
+            AGUARDANDO CLIENTE
+          </div>
+
+          <div
+            class="num"
+            id="cli"
+          >
+            0
+          </div>
         </div>
 
+
         <div class="card red">
-          <div class="label">EM ATRASO</div>
-          <div class="num" id="late">0</div>
+          <div class="label">
+            EM ATRASO
+          </div>
+
+          <div
+            class="num"
+            id="late"
+          >
+            0
+          </div>
         </div>
 
       </div>
 
 
       <!-- TABELA -->
+
       <div class="panel">
 
         <div class="toolbar">
@@ -639,17 +720,43 @@
               oninput="render()"
             >
 
-            <select id="status" onchange="render()">
-              <option value="">Todos os status</option>
-              <option value="Pendente">Pendente</option>
-              <option value="Em andamento">Em andamento</option>
-              <option value="Concluído">Concluído</option>
+            <select
+              id="status"
+              onchange="render()"
+            >
+              <option value="">
+                Todos os status
+              </option>
+
+              <option value="Pendente">
+                Pendente
+              </option>
+
+              <option value="Em andamento">
+                Em andamento
+              </option>
+
+              <option value="Concluído">
+                Concluído
+              </option>
             </select>
 
-            <select id="pendFiltro" onchange="render()">
-              <option value="">Todas as pendências</option>
-              <option value="Empresa">Empresa</option>
-              <option value="Cliente">Cliente</option>
+
+            <select
+              id="pendFiltro"
+              onchange="render()"
+            >
+              <option value="">
+                Todas as pendências
+              </option>
+
+              <option value="Empresa">
+                Empresa
+              </option>
+
+              <option value="Cliente">
+                Cliente
+              </option>
             </select>
 
           </div>
@@ -662,6 +769,7 @@
           <table>
 
             <thead>
+
               <tr>
                 <th>Prioridade</th>
                 <th>O.S.</th>
@@ -672,6 +780,7 @@
                 <th>Observação</th>
                 <th></th>
               </tr>
+
             </thead>
 
             <tbody id="tbody"></tbody>
@@ -687,8 +796,14 @@
   </section>
 
 
-  <!-- MODAL NOVA/EDITAR O.S. -->
-  <div class="modal" id="modal">
+  <!-- =========================
+       MODAL
+  ========================= -->
+
+  <div
+    class="modal"
+    id="modal"
+  >
 
     <div class="modalbox">
 
@@ -698,9 +813,15 @@
 
       <form onsubmit="salvar(event)">
 
-        <input type="hidden" id="id">
+        <input
+          type="hidden"
+          id="id"
+        >
+
 
         <div class="grid">
+
+          <!-- PRIORIDADE -->
 
           <div class="field">
 
@@ -718,6 +839,8 @@
           </div>
 
 
+          <!-- O.S. -->
+
           <div class="field">
 
             <label for="os">
@@ -732,7 +855,8 @@
           </div>
 
 
-          <!-- PRAZO NÃO É OBRIGATÓRIO -->
+          <!-- PRAZO OPCIONAL -->
+
           <div class="field">
 
             <label for="prazo">
@@ -746,6 +870,8 @@
 
           </div>
 
+
+          <!-- STATUS -->
 
           <div class="field">
 
@@ -772,6 +898,8 @@
           </div>
 
 
+          <!-- PENDÊNCIA -->
+
           <div class="field">
 
             <label for="pe">
@@ -793,6 +921,8 @@
           </div>
 
 
+          <!-- DESCRIÇÃO -->
+
           <div class="field full">
 
             <label for="desc">
@@ -807,6 +937,8 @@
 
           </div>
 
+
+          <!-- OBSERVAÇÃO -->
 
           <div class="field full">
 
@@ -824,7 +956,8 @@
         </div>
 
 
-        <!-- BOTÕES SEMPRE NA PARTE INFERIOR -->
+        <!-- BOTÕES -->
+
         <div class="actions">
 
           <button
@@ -850,9 +983,11 @@
   </div>
 
 
-  <script>
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
 
-    /* CONFIGURAÇÃO SUPABASE */
+  <script>
 
     const SUPABASE_URL =
       'https://otzhzpimeawafhguhcae.supabase.co';
@@ -860,39 +995,63 @@
     const SUPABASE_PUBLISHABLE_KEY =
       'sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
 
-    const { createClient } = supabase;
 
-    const db = createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+    const {
+      createClient
+    } = supabase;
+
+
+    const db =
+      createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
 
 
     let dados = [];
+
     let carregando = false;
 
 
-    /* INICIAR */
+    /* =========================
+       INICIAR
+    ========================= */
 
     async function iniciar() {
 
       const {
-        data: { session }
+        data: {
+          session
+        }
       } = await db.auth.getSession();
 
+
       if (session) {
-        mostrarApp(session.user);
+
+        mostrarApp(
+          session.user
+        );
+
       } else {
+
         mostrarLogin();
+
       }
+
 
       db.auth.onAuthStateChange(
         (_event, session) => {
 
           if (session) {
-            mostrarApp(session.user);
+
+            mostrarApp(
+              session.user
+            );
+
           } else {
+
             mostrarLogin();
+
           }
 
         }
@@ -901,7 +1060,9 @@
     }
 
 
-    /* LOGIN */
+    /* =========================
+       LOGIN
+    ========================= */
 
     function mostrarLogin() {
 
@@ -918,39 +1079,52 @@
 
       e.preventDefault();
 
+
       const email =
         document.getElementById('email')
           .value
           .trim();
 
+
       const senha =
         document.getElementById('senha')
           .value;
 
+
       const erro =
         document.getElementById('loginerr');
 
-      erro.style.display = 'none';
 
-      const { error } =
-        await db.auth.signInWithPassword({
-          email,
-          password: senha
-        });
+      erro.style.display =
+        'none';
+
+
+      const {
+        error
+      } =
+        await db.auth
+          .signInWithPassword({
+            email,
+            password: senha
+          });
+
 
       if (error) {
 
         erro.textContent =
           'E-mail ou senha inválidos.';
 
-        erro.style.display = 'block';
+        erro.style.display =
+          'block';
 
       }
 
     }
 
 
-    /* MOSTRAR APP */
+    /* =========================
+       MOSTRAR APP
+    ========================= */
 
     async function mostrarApp(user) {
 
@@ -960,23 +1134,32 @@
       document.getElementById('app')
         .style.display = 'block';
 
+
       document.getElementById('useremail')
         .textContent =
-        user?.email || 'Usuário';
+        user?.email ||
+        'Usuário';
+
 
       await carregarDados();
 
     }
 
 
-    /* SAIR */
+    /* =========================
+       SAIR
+    ========================= */
 
     async function sair() {
+
       await db.auth.signOut();
+
     }
 
 
-    /* CARREGAR DADOS */
+    /* =========================
+       CARREGAR DADOS
+    ========================= */
 
     async function carregarDados() {
 
@@ -984,18 +1167,24 @@
 
       render();
 
+
       const {
         data,
         error
-      } = await db
-        .from('ordens_servico')
-        .select('*')
-        .order(
-          'prioridade',
-          { ascending: true }
-        );
+      } =
+        await db
+          .from('ordens_servico')
+          .select('*')
+          .order(
+            'prioridade',
+            {
+              ascending: true
+            }
+          );
+
 
       carregando = false;
+
 
       if (error) {
 
@@ -1007,63 +1196,92 @@
         render();
 
         return;
+
       }
 
-      dados = data || [];
+
+      dados =
+        data || [];
+
 
       render();
 
     }
 
 
-    /* ABRIR MODAL */
+    /* =========================
+       ABRIR MODAL
+    ========================= */
 
     function abrir(x = null) {
 
       const form =
-        document.querySelector('#modal form');
+        document.querySelector(
+          '#modal form'
+        );
+
 
       form.reset();
+
 
       document.getElementById('id')
         .value = '';
 
+
       document.getElementById('mt')
         .textContent =
-        x ? 'Editar O.S.' : 'Nova O.S.';
+        x
+          ? 'Editar O.S.'
+          : 'Nova O.S.';
 
 
       if (x) {
 
         document.getElementById('id')
-          .value = x.id || '';
+          .value =
+          x.id || '';
+
 
         document.getElementById('prioridade')
-          .value = x.prioridade ?? '';
+          .value =
+          x.prioridade ?? '';
+
 
         document.getElementById('os')
-          .value = x.os ?? '';
+          .value =
+          x.os ?? '';
+
 
         document.getElementById('prazo')
-          .value = x.prazo ?? '';
+          .value =
+          x.prazo ?? '';
+
 
         document.getElementById('st')
           .value =
-          x.status ?? 'Pendente';
+          x.status ??
+          'Pendente';
+
 
         document.getElementById('pe')
           .value =
-          x.pendencia ?? 'Empresa';
+          x.pendencia ??
+          'Empresa';
+
 
         document.getElementById('desc')
           .value =
-          x.descricao ?? '';
+          x.descricao ??
+          '';
+
 
         document.getElementById('obs')
           .value =
-          x.observacao ?? '';
+          x.observacao ??
+          '';
 
       }
+
 
       document.getElementById('modal')
         .classList.add('open');
@@ -1071,7 +1289,9 @@
     }
 
 
-    /* FECHAR MODAL */
+    /* =========================
+       FECHAR MODAL
+    ========================= */
 
     function fechar() {
 
@@ -1081,53 +1301,74 @@
     }
 
 
-    /* SALVAR */
+    /* =========================
+       SALVAR
+    ========================= */
 
     async function salvar(e) {
 
       e.preventDefault();
+
 
       const id =
         document.getElementById('id')
           .value;
 
 
+      /*
+        PRAZO É OPCIONAL.
+        Se estiver vazio:
+        prazo = null
+      */
+
       const registro = {
 
         prioridade:
           Number(
-            document.getElementById('prioridade')
+            document
+              .getElementById(
+                'prioridade'
+              )
               .value
           ),
 
+
         os:
-          document.getElementById('os')
+          document
+            .getElementById('os')
             .value
             .trim(),
 
-        /*
-         * PRAZO É OPCIONAL.
-         * Se estiver vazio, será enviado como null.
-         */
+
         prazo:
-          document.getElementById('prazo')
-            .value || null,
+          document
+            .getElementById('prazo')
+            .value ||
+          null,
+
 
         status:
-          document.getElementById('st')
+          document
+            .getElementById('st')
             .value,
+
 
         pendencia:
-          document.getElementById('pe')
+          document
+            .getElementById('pe')
             .value,
 
+
         descricao:
-          document.getElementById('desc')
+          document
+            .getElementById('desc')
             .value
             .trim(),
 
+
         observacao:
-          document.getElementById('obs')
+          document
+            .getElementById('obs')
             .value
             .trim()
 
@@ -1135,8 +1376,11 @@
 
 
       /*
-       * PRAZO NÃO É VALIDADO AQUI.
-       */
+        SOMENTE O.S. E DESCRIÇÃO
+        SÃO VALIDADOS AQUI.
+        PRAZO NÃO É OBRIGATÓRIO.
+      */
+
       if (
         !registro.os ||
         !registro.descricao
@@ -1154,6 +1398,8 @@
       let resultado;
 
 
+      /* EDITAR */
+
       if (id) {
 
         resultado =
@@ -1164,7 +1410,12 @@
             .select()
             .single();
 
-      } else {
+      }
+
+
+      /* NOVA */
+
+      else {
 
         resultado =
           await db
@@ -1195,25 +1446,35 @@
     }
 
 
-    /* RENDER */
+    /* =========================
+       RENDER
+    ========================= */
 
     function render() {
 
       const q =
         (
-          document.getElementById('busca')
-            ?.value || ''
+          document
+            .getElementById('busca')
+            ?.value ||
+          ''
         )
           .toLowerCase()
           .trim();
 
+
       const f =
-        document.getElementById('status')
-          ?.value || '';
+        document
+          .getElementById('status')
+          ?.value ||
+        '';
+
 
       const p =
-        document.getElementById('pendFiltro')
-          ?.value || '';
+        document
+          .getElementById('pendFiltro')
+          ?.value ||
+        '';
 
 
       const lista =
@@ -1221,14 +1482,19 @@
           .filter(x => {
 
             const texto =
-              String(x.os || '') +
+              String(
+                x.os || ''
+              ) +
               ' ' +
-              String(x.descricao || '');
+              String(
+                x.descricao || ''
+              );
 
 
             return (
 
-              (!q ||
+              (
+                !q ||
                 texto
                   .toLowerCase()
                   .includes(q)
@@ -1236,13 +1502,15 @@
 
               &&
 
-              (!f ||
+              (
+                !f ||
                 x.status === f
               )
 
               &&
 
-              (!p ||
+              (
+                !p ||
                 x.pendencia === p
               )
 
@@ -1251,156 +1519,223 @@
           })
           .sort(
             (x, y) =>
-              Number(x.prioridade || 0) -
-              Number(y.prioridade || 0)
+              Number(
+                x.prioridade || 0
+              ) -
+              Number(
+                y.prioridade || 0
+              )
           );
 
 
       const tbody =
-        document.getElementById('tbody');
+        document.getElementById(
+          'tbody'
+        );
+
+
+      if (!tbody) {
+        return;
+      }
 
 
       tbody.innerHTML =
         lista.length
 
-          ? lista.map(x => {
+          ? lista
+              .map(x => {
 
-              let atras = false;
+                let atrasado =
+                  false;
 
-              if (x.prazo) {
 
-                const prazo =
-                  new Date(
-                    x.prazo +
-                    'T00:00:00'
+                if (x.prazo) {
+
+                  const prazo =
+                    new Date(
+                      x.prazo +
+                      'T00:00:00'
+                    );
+
+
+                  const hoje =
+                    new Date();
+
+
+                  hoje.setHours(
+                    0,
+                    0,
+                    0,
+                    0
                   );
 
-                const hoje =
-                  new Date();
 
-                hoje.setHours(
-                  0,
-                  0,
-                  0,
-                  0
-                );
+                  atrasado =
+                    x.status !==
+                      'Concluído' &&
+                    prazo < hoje;
 
-                atras =
-                  x.status !== 'Concluído' &&
-                  prazo < hoje;
-
-              }
+                }
 
 
-              let statusClass = 'p';
-
-              if (
-                x.status ===
-                'Em andamento'
-              ) {
-                statusClass = 'a';
-              }
-
-              if (
-                x.status ===
-                'Concluído'
-              ) {
-                statusClass = 'c';
-              }
+                let statusClass =
+                  'p';
 
 
-              const pendClass =
-                x.pendencia === 'Cliente'
-                  ? 'pc'
-                  : 'pe';
+                if (
+                  x.status ===
+                  'Em andamento'
+                ) {
+
+                  statusClass =
+                    'a';
+
+                }
 
 
-              return `
+                if (
+                  x.status ===
+                  'Concluído'
+                ) {
 
-                <tr>
+                  statusClass =
+                    'c';
 
-                  <td>
-                    <b>
-                      ${esc(x.prioridade)}
-                    </b>
-                  </td>
+                }
 
-                  <td>
-                    <b>
-                      ${esc(x.os)}
-                    </b>
-                  </td>
 
-                  <td class="${atras ? 'late' : ''}">
-                    ${br(x.prazo)}
-                    ${atras
-                      ? ' • ATRASADO'
-                      : ''}
-                  </td>
+                const pendClass =
+                  x.pendencia ===
+                  'Cliente'
+                    ? 'pc'
+                    : 'pe';
 
-                  <td>
-                    ${esc(x.descricao)}
-                  </td>
 
-                  <td>
-                    <span class="badge ${statusClass}">
-                      ${esc(x.status)}
-                    </span>
-                  </td>
+                return `
 
-                  <td>
-                    <span class="badge ${pendClass}">
-                      ${esc(x.pendencia)}
-                    </span>
-                  </td>
+                  <tr>
 
-                  <td>
-                    ${
-                      esc(x.observacao) ||
-                      '—'
-                    }
-                  </td>
+                    <td>
+                      <b>
+                        ${esc(
+                          x.prioridade
+                        )}
+                      </b>
+                    </td>
 
-                  <td>
-                    <button
-                      class="edit-btn"
-                      onclick="editarPorId('${escAttr(x.id)}')"
+
+                    <td>
+                      <b>
+                        ${esc(
+                          x.os
+                        )}
+                      </b>
+                    </td>
+
+
+                    <td
+                      class="${
+                        atrasado
+                          ? 'late'
+                          : ''
+                      }"
                     >
-                      Editar
-                    </button>
-                  </td>
+                      ${br(
+                        x.prazo
+                      )}
 
-                </tr>
+                      ${
+                        atrasado
+                          ? ' • ATRASADO'
+                          : ''
+                      }
+                    </td>
 
-              `;
 
-            }).join('')
+                    <td>
+                      ${esc(
+                        x.descricao
+                      )}
+                    </td>
+
+
+                    <td>
+                      <span
+                        class="badge ${statusClass}"
+                      >
+                        ${esc(
+                          x.status
+                        )}
+                      </span>
+                    </td>
+
+
+                    <td>
+                      <span
+                        class="badge ${pendClass}"
+                      >
+                        ${esc(
+                          x.pendencia
+                        )}
+                      </span>
+                    </td>
+
+
+                    <td>
+                      ${
+                        esc(
+                          x.observacao
+                        ) ||
+                        '—'
+                      }
+                    </td>
+
+
+                    <td>
+
+                      <button
+                        class="edit-btn"
+                        onclick="editarPorId('${escAttr(x.id)}')"
+                      >
+                        Editar
+                      </button>
+
+                    </td>
+
+                  </tr>
+
+                `;
+
+              })
+              .join('')
 
           : `
 
-            <tr>
+              <tr>
 
-              <td
-                colspan="8"
-                style="
-                  text-align:center;
-                  padding:40px;
-                  color:#71807b
-                "
-              >
-                ${
-                  carregando
-                    ? 'Carregando...'
-                    : 'Nenhuma O.S. cadastrada.'
-                }
-              </td>
+                <td
+                  colspan="8"
+                  style="
+                    text-align:center;
+                    padding:40px;
+                    color:#71807b;
+                  "
+                >
+                  ${
+                    carregando
+                      ? 'Carregando...'
+                      : 'Nenhuma O.S. cadastrada.'
+                  }
+                </td>
 
-            </tr>
+              </tr>
 
-          `;
+            `;
 
 
-      /* DASHBOARD */
+      /* =========================
+         CARDS
+      ========================= */
 
       document.getElementById('total')
         .textContent =
@@ -1411,7 +1746,8 @@
         .textContent =
         dados.filter(
           x =>
-            x.status === 'Pendente'
+            x.status ===
+            'Pendente'
         ).length;
 
 
@@ -1419,7 +1755,8 @@
         .textContent =
         dados.filter(
           x =>
-            x.status === 'Em andamento'
+            x.status ===
+            'Em andamento'
         ).length;
 
 
@@ -1427,8 +1764,10 @@
         .textContent =
         dados.filter(
           x =>
-            x.pendencia === 'Cliente' &&
-            x.status !== 'Concluído'
+            x.pendencia ===
+              'Cliente' &&
+            x.status !==
+              'Concluído'
         ).length;
 
 
@@ -1437,11 +1776,15 @@
         dados.filter(x => {
 
           if (
-            x.status === 'Concluído' ||
+            x.status ===
+              'Concluído' ||
             !x.prazo
           ) {
+
             return false;
+
           }
+
 
           const prazo =
             new Date(
@@ -1449,8 +1792,10 @@
               'T00:00:00'
             );
 
+
           const hoje =
             new Date();
+
 
           hoje.setHours(
             0,
@@ -1459,6 +1804,7 @@
             0
           );
 
+
           return prazo < hoje;
 
         }).length;
@@ -1466,7 +1812,9 @@
     }
 
 
-    /* EDITAR */
+    /* =========================
+       EDITAR
+    ========================= */
 
     function editarPorId(id) {
 
@@ -1494,29 +1842,47 @@
     }
 
 
-    /* DATA */
+    /* =========================
+       DATA
+    ========================= */
 
     function br(x) {
 
       if (!x) {
+
         return 'Não definido';
+
       }
+
 
       const partes =
         x.split('-');
 
-      if (partes.length !== 3) {
+
+      if (
+        partes.length !== 3
+      ) {
+
         return x;
+
       }
 
-      const [y, m, d] = partes;
+
+      const [
+        y,
+        m,
+        d
+      ] = partes;
+
 
       return `${d}/${m}/${y}`;
 
     }
 
 
-    /* ESCAPE HTML */
+    /* =========================
+       SEGURANÇA HTML
+    ========================= */
 
     function esc(s) {
 
@@ -1525,31 +1891,39 @@
       ).replace(
         /[&<>"']/g,
         c => ({
+
           '&': '&amp;',
           '<': '&lt;',
           '>': '&gt;',
           '"': '&quot;',
           "'": '&#039;'
+
         }[c])
       );
 
     }
 
 
-    /* ESCAPE ATRIBUTO */
-
     function escAttr(s) {
 
       return String(
         s ?? ''
       )
-        .replace(/\\/g, '\\\\')
-        .replace(/'/g, "\\'");
+        .replace(
+          /\\/g,
+          '\\\\'
+        )
+        .replace(
+          /'/g,
+          "\\'"
+        );
 
     }
 
 
-    /* FECHAR CLICANDO FORA */
+    /* =========================
+       FECHAR MODAL AO CLICAR FORA
+    ========================= */
 
     document
       .getElementById('modal')
@@ -1560,14 +1934,18 @@
           if (
             e.target === this
           ) {
+
             fechar();
+
           }
 
         }
       );
 
 
-    /* INICIAR */
+    /* =========================
+       INICIAR
+    ========================= */
 
     iniciar();
 
