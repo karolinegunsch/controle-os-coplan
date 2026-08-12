@@ -172,10 +172,10 @@ async function salvar(e) {
     observacao: document.getElementById('obs').value.trim()
   };
 
-  if (!registro.os || !registro.descricao) {
-    alert('Preencha O.S. e descrição.');
-    return;
-  }
+if (!registro.os || !registro.prazo || !registro.descricao) {
+  alert('Preencha O.S., prazo e descrição.');
+  return;
+}
 
   let resultado;
 
