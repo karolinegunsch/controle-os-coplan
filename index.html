@@ -247,7 +247,7 @@ function render() {
 }
 
 function br(x) {
-  if (!x) return '';
+  if (!x) return 'Não definido';
   const [y, m, d] = x.split('-');
   return `${d}/${m}/${y}`;
 }
