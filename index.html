@@ -161,6 +161,7 @@ async function salvar(e) {
   e.preventDefault();
 
   const id = document.getElementById('id').value;
+
   const registro = {
     prioridade: Number(document.getElementById('prioridade').value),
     os: document.getElementById('os').value.trim(),
@@ -171,8 +172,8 @@ async function salvar(e) {
     observacao: document.getElementById('obs').value.trim()
   };
 
-  if (!registro.os || !registro.prazo || !registro.descricao) {
-    alert('Preencha O.S., prazo e descrição.');
+  if (!registro.os || !registro.descricao) {
+    alert('Preencha O.S. e descrição.');
     return;
   }
 
@@ -194,7 +195,7 @@ async function salvar(e) {
   }
 
   if (resultado.error) {
-    alert('Não foi possível salvar a O.S.\\n\\n' + resultado.error.message);
+    alert('Não foi possível salvar a O.S.\n\n' + resultado.error.message);
     return;
   }
 
