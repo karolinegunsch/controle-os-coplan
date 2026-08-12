@@ -8,6 +8,7 @@
   <title>Coplan • Controle de O.S.</title>
 
   <style>
+
     :root {
       --green: #006b4f;
       --green2: #008b68;
@@ -17,11 +18,13 @@
       --line: #e4ebe8;
       --text: #1e2b27;
       --muted: #71807b;
+
       --red: #c93d3d;
       --yellow: #c98612;
       --blue: #3c6edb;
-      --purple: #7657b8;
-      --orange: #d56b19;
+      --purple: #7652b8;
+      --orange: #d66b16;
+      --cyan: #23879b;
     }
 
     * {
@@ -345,21 +348,21 @@
     }
 
     /* =========================
-       STATUS
+       BADGES DOS STATUS
     ========================= */
 
     .badge {
       display: inline-block;
       padding: 5px 9px;
       border-radius: 99px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
       white-space: nowrap;
     }
 
     .status-backlog {
-      background: #edf0f2;
-      color: #53616a;
+      background: #eeeeee;
+      color: #555;
     }
 
     .status-fazendo {
@@ -373,33 +376,33 @@
     }
 
     .status-disponivel {
-      background: #eee8ff;
-      color: #6546a5;
-    }
-
-    .status-testando {
-      background: #ffe9d8;
-      color: #a95013;
-    }
-
-    .status-teste-concluido {
-      background: #def5ee;
-      color: #17664f;
-    }
-
-    .status-producao {
       background: #e4ecff;
       color: #365aa0;
     }
 
+    .status-testando {
+      background: #e7e1ff;
+      color: #5a4199;
+    }
+
+    .status-teste-concluido {
+      background: #dff4f8;
+      color: #176879;
+    }
+
+    .status-producao {
+      background: #ffe7d5;
+      color: #a64d0c;
+    }
+
     .status-concluido {
-      background: #dff5e7;
+      background: #d9f3df;
       color: #17683f;
     }
 
     .status-entregue {
-      background: #d9f4ed;
-      color: #12634e;
+      background: #dcefe9;
+      color: #17664f;
     }
 
     .status-devolvido {
@@ -408,18 +411,14 @@
     }
 
     .status-analise-iniciada {
-      background: #fff2d5;
-      color: #94600a;
+      background: #f1e5ff;
+      color: #7440a8;
     }
 
     .status-analise-concluida {
-      background: #def6e9;
-      color: #17683f;
+      background: #e0f4ed;
+      color: #17664f;
     }
-
-    /* =========================
-       PENDÊNCIA
-    ========================= */
 
     .pc {
       background: #e4ecff;
@@ -530,13 +529,24 @@
        RESPONSIVO
     ========================= */
 
+    @media (max-width: 1250px) {
+
+      .cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+    }
+
     @media (max-width: 1100px) {
+
       .cards {
         grid-template-columns: repeat(2, 1fr);
       }
+
     }
 
     @media (max-width: 700px) {
+
       .sidebar {
         position: static;
         width: auto;
@@ -590,7 +600,9 @@
       .table-actions {
         flex-direction: column;
       }
+
     }
+
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -599,9 +611,9 @@
 
 <body>
 
-  <!-- =========================
+  <!-- ==================================================
        LOGIN
-  ========================= -->
+  ================================================== -->
 
   <section class="login" id="login">
 
@@ -609,10 +621,15 @@
 
       <div class="logo">
         COPLAN
-        <span>Controle de O.S. e Demandas</span>
+
+        <span>
+          Controle de O.S. e Demandas
+        </span>
       </div>
 
-      <h2>Acesso ao sistema</h2>
+      <h2>
+        Acesso ao sistema
+      </h2>
 
       <p>
         Entre para acompanhar as demandas da equipe.
@@ -672,9 +689,9 @@
   </section>
 
 
-  <!-- =========================
+  <!-- ==================================================
        SISTEMA
-  ========================= -->
+  ================================================== -->
 
   <section class="app" id="app">
 
@@ -683,8 +700,13 @@
     <aside class="sidebar">
 
       <div class="side-logo">
+
         COPLAN
-        <small>CONTROLE DE DEMANDAS</small>
+
+        <small>
+          CONTROLE DE DEMANDAS
+        </small>
+
       </div>
 
       <div class="nav">
@@ -728,6 +750,8 @@
 
     <main class="main">
 
+      <!-- CABEÇALHO -->
+
       <div class="top">
 
         <div>
@@ -752,9 +776,7 @@
       </div>
 
 
-      <!-- =========================
-           CARDS
-      ========================= -->
+      <!-- CARDS -->
 
       <div class="cards">
 
@@ -774,17 +796,17 @@
         <div class="card yellow">
 
           <div class="label">
-            EM ANDAMENTO
+            FAZENDO
           </div>
 
-          <div class="num" id="and">
+          <div class="num" id="fazendo">
             0
           </div>
 
         </div>
 
 
-        <div class="card purple">
+        <div class="card blue">
 
           <div class="label">
             EM TESTE
@@ -797,7 +819,7 @@
         </div>
 
 
-        <div class="card blue">
+        <div class="card purple">
 
           <div class="label">
             EM PRODUÇÃO
@@ -825,9 +847,7 @@
       </div>
 
 
-      <!-- =========================
-           TABELA
-      ========================= -->
+      <!-- TABELA -->
 
       <div class="panel">
 
@@ -883,7 +903,7 @@
               </option>
 
               <option value="DEVOLVIDO_DEV">
-                Devolvido para DEV
+                Devolvido ao DEV
               </option>
 
               <option value="ANALISE_INICIADA">
@@ -975,9 +995,9 @@
   </section>
 
 
-  <!-- =========================
-       MODAL NOVA / EDITAR
-  ========================= -->
+  <!-- ==================================================
+       MODAL NOVA / EDITAR O.S.
+  ================================================== -->
 
   <div
     class="modal"
@@ -1102,7 +1122,7 @@
               </option>
 
               <option value="DEVOLVIDO_DEV">
-                Devolvido para DEV
+                Devolvido ao DEV
               </option>
 
               <option value="ANALISE_INICIADA">
@@ -1179,6 +1199,8 @@
         </div>
 
 
+        <!-- BOTÕES -->
+
         <div class="actions">
 
           <button
@@ -1205,9 +1227,9 @@
   </div>
 
 
-  <!-- =========================
+  <!-- ==================================================
        JAVASCRIPT
-  ========================= -->
+  ================================================== -->
 
   <script>
 
@@ -1232,6 +1254,7 @@
       );
 
     let dados = [];
+
     let carregando = false;
 
 
@@ -1274,6 +1297,7 @@
         await db.auth.signInWithPassword({
 
           email: email,
+
           password: senha
 
         });
@@ -1395,7 +1419,6 @@
 
       render();
 
-
       const {
         data,
         error
@@ -1410,7 +1433,6 @@
               nullsFirst: false
             }
           );
-
 
       carregando = false;
 
@@ -1451,11 +1473,9 @@
 
       form.reset();
 
-
       document
         .getElementById('id')
         .value = '';
-
 
       document
         .getElementById('mt')
@@ -1472,42 +1492,35 @@
           .value =
           registro.id || '';
 
-
         document
           .getElementById('prioridade')
           .value =
           registro.prioridade ?? '';
-
 
         document
           .getElementById('os')
           .value =
           registro.os ?? '';
 
-
         document
           .getElementById('prazo')
           .value =
           registro.prazo ?? '';
-
 
         document
           .getElementById('st')
           .value =
           registro.status ?? '';
 
-
         document
           .getElementById('pe')
           .value =
           registro.pendencia ?? '';
 
-
         document
           .getElementById('desc')
           .value =
           registro.descricao ?? '';
-
 
         document
           .getElementById('obs')
@@ -1657,9 +1670,7 @@
       let resultado;
 
 
-      /* =========================
-         EDITAR
-      ========================= */
+      /* EDITAR */
 
       if (id) {
 
@@ -1681,9 +1692,7 @@
       }
 
 
-      /* =========================
-         NOVA O.S.
-      ========================= */
+      /* NOVA O.S. */
 
       else {
 
@@ -1759,7 +1768,9 @@
 
 
       if (!confirmar) {
+
         return;
+
       }
 
 
@@ -1792,6 +1803,96 @@
       await carregarDados();
 
     }
+
+
+    /* =========================
+       NOMES DOS STATUS
+    ========================= */
+
+    const statusNomes = {
+
+      BACKLOG_DESENVOLVIMENTO:
+        'Backlog Desenvolvimento',
+
+      FAZENDO:
+        'Fazendo',
+
+      FEITO:
+        'Feito',
+
+      DISPONIVEL_TESTE:
+        'Disponível para Teste',
+
+      TESTANDO:
+        'Testando',
+
+      TESTE_CONCLUIDO:
+        'Teste Concluído',
+
+      EM_PRODUCAO:
+        'Em Produção',
+
+      CONCLUIDO:
+        'Concluído',
+
+      ENTREGUE:
+        'Entregue',
+
+      DEVOLVIDO_DEV:
+        'Devolvido ao DEV',
+
+      ANALISE_INICIADA:
+        'Análise Iniciada',
+
+      ANALISE_CONCLUIDA:
+        'Análise Concluída'
+
+    };
+
+
+    /* =========================
+       CLASSES DOS STATUS
+    ========================= */
+
+    const statusClasses = {
+
+      BACKLOG_DESENVOLVIMENTO:
+        'status-backlog',
+
+      FAZENDO:
+        'status-fazendo',
+
+      FEITO:
+        'status-feito',
+
+      DISPONIVEL_TESTE:
+        'status-disponivel',
+
+      TESTANDO:
+        'status-testando',
+
+      TESTE_CONCLUIDO:
+        'status-teste-concluido',
+
+      EM_PRODUCAO:
+        'status-producao',
+
+      CONCLUIDO:
+        'status-concluido',
+
+      ENTREGUE:
+        'status-entregue',
+
+      DEVOLVIDO_DEV:
+        'status-devolvido',
+
+      ANALISE_INICIADA:
+        'status-analise-iniciada',
+
+      ANALISE_CONCLUIDA:
+        'status-analise-concluida'
+
+    };
 
 
     /* =========================
@@ -1953,13 +2054,11 @@
 
 
       document
-        .getElementById('and')
+        .getElementById('fazendo')
         .textContent =
-        dados.filter(
-          x =>
-            x.status ===
-            'FAZENDO'
-        ).length;
+        contarStatus(
+          'FAZENDO'
+        );
 
 
       document
@@ -1967,21 +2066,22 @@
         .textContent =
         dados.filter(
           x =>
-            x.status ===
-            'DISPONIVEL_TESTE' ||
-            x.status ===
-            'TESTANDO'
+            [
+              'DISPONIVEL_TESTE',
+              'TESTANDO',
+              'TESTE_CONCLUIDO'
+            ].includes(
+              x.status
+            )
         ).length;
 
 
       document
         .getElementById('producao')
         .textContent =
-        dados.filter(
-          x =>
-            x.status ===
-            'EM_PRODUCAO'
-        ).length;
+        contarStatus(
+          'EM_PRODUCAO'
+        );
 
 
       document
@@ -1989,109 +2089,27 @@
         .textContent =
         dados.filter(
           x =>
-            x.status ===
-            'CONCLUIDO' ||
-            x.status ===
-            'ENTREGUE'
+            [
+              'CONCLUIDO',
+              'ENTREGUE'
+            ].includes(
+              x.status
+            )
         ).length;
 
     }
 
 
     /* =========================
-       STATUS
+       CONTAR STATUS
     ========================= */
 
-    function obterStatusClass(status) {
+    function contarStatus(status) {
 
-      const classes = {
-
-        BACKLOG_DESENVOLVIMENTO:
-          'status-backlog',
-
-        FAZENDO:
-          'status-fazendo',
-
-        FEITO:
-          'status-feito',
-
-        DISPONIVEL_TESTE:
-          'status-disponivel',
-
-        TESTANDO:
-          'status-testando',
-
-        TESTE_CONCLUIDO:
-          'status-teste-concluido',
-
-        EM_PRODUCAO:
-          'status-producao',
-
-        CONCLUIDO:
-          'status-concluido',
-
-        ENTREGUE:
-          'status-entregue',
-
-        DEVOLVIDO_DEV:
-          'status-devolvido',
-
-        ANALISE_INICIADA:
-          'status-analise-iniciada',
-
-        ANALISE_CONCLUIDA:
-          'status-analise-concluida'
-
-      };
-
-      return classes[status] || 'status-backlog';
-
-    }
-
-
-    function obterStatusNome(status) {
-
-      const nomes = {
-
-        BACKLOG_DESENVOLVIMENTO:
-          'Backlog Desenvolvimento',
-
-        FAZENDO:
-          'Fazendo',
-
-        FEITO:
-          'Feito',
-
-        DISPONIVEL_TESTE:
-          'Disponível para Teste',
-
-        TESTANDO:
-          'Testando',
-
-        TESTE_CONCLUIDO:
-          'Teste Concluído',
-
-        EM_PRODUCAO:
-          'Em Produção',
-
-        CONCLUIDO:
-          'Concluído',
-
-        ENTREGUE:
-          'Entregue',
-
-        DEVOLVIDO_DEV:
-          'Devolvido para DEV',
-
-        ANALISE_INICIADA:
-          'Análise Iniciada',
-
-        ANALISE_CONCLUIDA:
-          'Análise Concluída'
-
-      };
-
-      return nomes[status] || status;
+      return dados.filter(
+        x =>
+          x.status === status
+      ).length;
 
     }
 
@@ -2107,15 +2125,15 @@
 
 
       const statusClass =
-        obterStatusClass(
+        statusClasses[
           x.status
-        );
+        ] || 'status-backlog';
 
 
-      const statusNome =
-        obterStatusNome(
+      const statusTexto =
+        statusNomes[
           x.status
-        );
+        ] || x.status || '—';
 
 
       const pendClass =
@@ -2204,7 +2222,7 @@
                   >
 
                     ${esc(
-                      statusNome
+                      statusTexto
                     )}
 
                   </span>
@@ -2366,7 +2384,9 @@
     function br(valor) {
 
       if (!valor) {
+
         return 'Não definido';
+
       }
 
 
@@ -2465,7 +2485,7 @@
 
 
     /* =========================
-       FECHAR MODAL
+       FECHAR MODAL AO CLICAR FORA
     ========================= */
 
     document
