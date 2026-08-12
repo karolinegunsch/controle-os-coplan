@@ -164,7 +164,7 @@ async function salvar(e) {
   const registro = {
     prioridade: Number(document.getElementById('prioridade').value),
     os: document.getElementById('os').value.trim(),
-    prazo: document.getElementById('prazo').value,
+    prazo: document.getElementById('prazo').value || null,
     status: document.getElementById('st').value,
     pendencia: document.getElementById('pe').value,
     descricao: document.getElementById('desc').value.trim(),
