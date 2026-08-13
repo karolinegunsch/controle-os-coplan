@@ -1,3697 +1,2639 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Coplan • Controle de O.S.</title>
-
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- SheetJS - leitura de Excel -->
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-
-  <style>
-
-    :root {
-      --green: #006b4f;
-      --green2: #008b68;
-      --dark: #12382f;
-      --bg: #f4f7f6;
-      --card: #fff;
-      --line: #e4ebe8;
-      --text: #1e2b27;
-      --muted: #71807b;
-
-      --red: #c93d3d;
-      --yellow: #c98612;
-      --blue: #3c6edb;
-      --purple: #7652b8;
-      --orange: #d66b16;
-      --cyan: #23879b;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Inter, Segoe UI, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    /* =========================
-       LOGIN
-    ========================= */
-
-    .login {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(
-        135deg,
-        #073e31,
-        #006b4f 55%,
-        #0d8b6a
-      );
-    }
-
-    .loginbox {
-      width: min(420px, 92%);
-      background: #fff;
-      border-radius: 20px;
-      padding: 36px;
-      box-shadow: 0 20px 60px #0004;
-    }
-
-    .logo {
-      font-weight: 900;
-      font-size: 34px;
-      color: var(--green);
-      letter-spacing: -1px;
-    }
-
-    .logo span {
-      display: block;
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 500;
-      margin-top: 4px;
-    }
-
-    .login h2 {
-      margin: 30px 0 6px;
-    }
-
-    .login p {
-      color: var(--muted);
-      margin-top: 0;
-    }
-
-    .field {
-      margin: 15px 0;
-    }
-
-    .field label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 7px;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 12px 13px;
-      border: 1px solid #d5dfdb;
-      border-radius: 9px;
-      font: inherit;
-      background: #fff;
-      outline: none;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px #006b4f14;
-    }
-
-    textarea {
-      resize: vertical;
-    }
-
-    button {
-      border: 0;
-      border-radius: 9px;
-      padding: 11px 16px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    button:hover {
-      opacity: .92;
-    }
-
-    button:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-
-    .primary {
-      background: var(--green);
-      color: #fff;
-    }
-
-    .secondary {
-      background: #eef3f1;
-      color: var(--dark);
-    }
-
-    .wide {
-      width: 100%;
-      margin-top: 8px;
-    }
-
-    .hint {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 14px;
-      line-height: 1.5;
-    }
-
-    .error {
-      color: #b42318;
-      font-size: 13px;
-      margin-top: 8px;
-      display: none;
-    }
-
-    /* =========================
-       APP
-    ========================= */
-
-    .app {
-      display: none;
-      min-height: 100vh;
-    }
-
-    .sidebar {
-      position: fixed;
-      inset: 0 auto 0 0;
-      width: 245px;
-      background: #073e31;
-      color: #fff;
-      padding: 25px 17px;
-    }
-
-    .side-logo {
-      font-size: 27px;
-      font-weight: 900;
-      padding: 8px 12px 28px;
-    }
-
-    .side-logo small {
-      display: block;
-      font-size: 11px;
-      font-weight: 500;
-      opacity: .65;
-      margin-top: 3px;
-    }
-
-    .nav {
-      padding: 8px 0;
-    }
-
-    .nav div {
-      padding: 12px;
-      border-radius: 9px;
-      margin: 4px 0;
-      color: #dcebe6;
-      cursor: pointer;
-    }
-
-    .nav .active,
-    .nav div:hover {
-      background: #ffffff16;
-      color: #fff;
-    }
-
-    .user {
-      position: absolute;
-      bottom: 20px;
-      left: 17px;
-      right: 17px;
-      padding: 12px;
-      border-top: 1px solid #ffffff22;
-      font-size: 13px;
-    }
-
-    .user button {
-      margin-top: 10px;
-      width: 100%;
-      background: #ffffff12;
-      color: #fff;
-    }
-
-    .main {
-      margin-left: 245px;
-      padding: 28px 34px;
-    }
-
-    .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-      gap: 15px;
-    }
-
-    .top h1 {
-      margin: 0;
-      font-size: 25px;
-    }
-
-    .top p {
-      margin: 5px 0;
-      color: var(--muted);
-    }
-
-    .top-buttons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    /* =========================
-       CARDS
-    ========================= */
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      padding: 19px;
-      box-shadow: 0 3px 12px #12382f08;
-    }
-
-    .card .label {
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .card .num {
-      font-size: 29px;
-      font-weight: 800;
-      margin-top: 9px;
-    }
-
-    .card.green {
-      border-top: 3px solid var(--green);
-    }
-
-    .card.yellow {
-      border-top: 3px solid var(--yellow);
-    }
-
-    .card.blue {
-      border-top: 3px solid var(--blue);
-    }
-
-    .card.purple {
-      border-top: 3px solid var(--purple);
-    }
-
-    /* =========================
-       PAINEL
-    ========================= */
-
-    .panel {
-      margin-top: 20px;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      padding: 20px;
-    }
-
-    .toolbar {
-      display: flex;
-      gap: 9px;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-
-    .filters {
-      display: flex;
-      gap: 8px;
-      flex: 1;
-      min-width: 300px;
-    }
-
-    .filters input {
-      max-width: 320px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 17px;
-    }
-
-    th,
-    td {
-      text-align: left;
-      padding: 13px 10px;
-      border-bottom: 1px solid var(--line);
-      font-size: 13px;
-    }
-
-    th {
-      font-size: 11px;
-      text-transform: uppercase;
-      color: var(--muted);
-      background: #fafcfb;
-    }
-
-    /* =========================
-       BADGES
-    ========================= */
-
-    .badge {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 99px;
-      font-size: 10px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .status-backlog {
-      background: #eeeeee;
-      color: #555;
-    }
-
-    .status-fazendo {
-      background: #fff2d5;
-      color: #94600a;
-    }
-
-    .status-feito {
-      background: #def6e9;
-      color: #17683f;
-    }
-
-    .status-disponivel {
-      background: #e4ecff;
-      color: #365aa0;
-    }
-
-    .status-testando {
-      background: #e7e1ff;
-      color: #5a4199;
-    }
-
-    .status-teste-concluido {
-      background: #dff4f8;
-      color: #176879;
-    }
-
-    .status-producao {
-      background: #ffe7d5;
-      color: #a64d0c;
-    }
-
-    .status-concluido {
-      background: #d9f3df;
-      color: #17683f;
-    }
-
-    .status-entregue {
-      background: #dcefe9;
-      color: #17664f;
-    }
-
-    .status-devolvido {
-      background: #fee7e7;
-      color: #9f2626;
-    }
-
-    .status-analise-iniciada {
-      background: #f1e5ff;
-      color: #7440a8;
-    }
-
-    .status-analise-concluida {
-      background: #e0f4ed;
-      color: #17664f;
-    }
-
-    .status-aguardando {
-      background: #fff3d6;
-      color: #94600a;
-    }
-
-    .status-paralisado {
-      background: #ffe5e5;
-      color: #a52828;
-    }
-
-    .pc {
-      background: #e4ecff;
-      color: #365aa0;
-    }
-
-    .pe {
-      background: #def5ee;
-      color: #17664f;
-    }
-
-    .late {
-      color: #bd2525;
-      font-weight: 800;
-    }
-
-    /* =========================
-       AÇÕES
-    ========================= */
-
-    .table-actions {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-
-    .edit-btn {
-      background: #eef3f1;
-      color: var(--dark);
-      padding: 7px 10px;
-      font-size: 12px;
-    }
-
-    .delete-btn {
-      background: #fee7e7;
-      color: #9f2626;
-      padding: 7px 10px;
-      font-size: 12px;
-    }
-
-    /* =========================
-       MODAL
-    ========================= */
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: #0007;
-      place-items: center;
-      padding: 20px;
-      z-index: 1000;
-    }
-
-    .modal.open {
-      display: grid;
-    }
-
-    .modalbox {
-      background: #fff;
-      width: min(700px, 100%);
-      max-height: 90vh;
-      overflow-y: auto;
-      border-radius: 15px;
-      padding: 25px;
-    }
-
-    .modalbox h2 {
-      margin: 0 0 20px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 13px;
-    }
-
-    .full {
-      grid-column: 1 / -1;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      margin-top: 22px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-    }
-
-    .actions button {
-      min-width: 105px;
-    }
-
-    .cancel-btn {
-      background: #eef1ef;
-      color: var(--dark);
-    }
-
-    /* =========================
-       IMPORTAÇÃO
-    ========================= */
-
-    .import-help {
-      background: #f3f8f6;
-      border: 1px solid #dcebe5;
-      border-radius: 10px;
-      padding: 12px;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.5;
-      margin-bottom: 15px;
-    }
-
-    .import-result {
-      display: none;
-      margin-top: 15px;
-      padding: 15px;
-      border-radius: 10px;
-      background: #f7f9f8;
-      border: 1px solid var(--line);
-    }
-
-    .import-result.show {
-      display: block;
-    }
-
-    .result-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .result-card {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 9px;
-      padding: 12px;
-      text-align: center;
-    }
-
-    .result-card strong {
-      display: block;
-      font-size: 22px;
-      margin-top: 4px;
-    }
-
-    .result-new {
-      color: var(--green);
-    }
-
-    .result-update {
-      color: var(--blue);
-    }
-
-    .result-error {
-      color: var(--red);
-    }
-
-    .error-list {
-      max-height: 220px;
-      overflow-y: auto;
-      font-size: 12px;
-      line-height: 1.5;
-      color: #8f2222;
-    }
-
-    .file-name {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 8px;
-    }
-
-    /* =========================
-       RESPONSIVO
-    ========================= */
-
-    @media (max-width: 1250px) {
-      .cards {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 1100px) {
-      .cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 700px) {
-
-      .sidebar {
-        position: static;
-        width: auto;
-      }
-
-      .main {
-        margin-left: 0;
-        padding: 20px;
-      }
-
-      .user {
-        position: static;
-        margin-top: 25px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .full {
-        grid-column: auto;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .top {
-        align-items: flex-start;
-        gap: 10px;
-        flex-direction: column;
-      }
-
-      .top-buttons {
-        width: 100%;
-        justify-content: stretch;
-      }
-
-      .top-buttons button {
-        flex: 1;
-      }
-
-      .filters {
-        flex-direction: column;
-        min-width: 100%;
-      }
-
-      .filters input {
-        max-width: none;
-      }
-
-      .actions {
-        justify-content: stretch;
-      }
-
-      .actions button {
-        flex: 1;
-      }
-
-      .table-actions {
-        flex-direction: column;
-      }
-
-      .result-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coplan • Controle de O.S.</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<style>
+:root{
+  --green:#006b4f;
+  --green2:#008b68;
+  --dark:#12382f;
+  --bg:#f4f7f6;
+  --card:#fff;
+  --line:#e4ebe8;
+  --text:#1e2b27;
+  --muted:#71807b;
+  --red:#c93d3d;
+  --yellow:#c98612;
+  --blue:#3c6edb;
+  --purple:#7652b8;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.login{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a);
+}
+
+.loginbox{
+  width:min(420px,92%);
+  background:#fff;
+  border-radius:20px;
+  padding:36px;
+  box-shadow:0 20px 60px #0004;
+}
+
+.logo{
+  font-weight:900;
+  font-size:34px;
+  color:var(--green);
+}
+
+.logo span{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+  font-weight:500;
+  margin-top:4px;
+}
+
+.login h2{margin:30px 0 6px}
+.login p{color:var(--muted)}
+
+.field{margin:15px 0}
+
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #d5dfdb;
+  border-radius:9px;
+  font:inherit;
+  background:#fff;
+  outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px #006b4f14;
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:11px 16px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:inherit;
+}
+
+button:hover{opacity:.92}
+button:disabled{opacity:.5;cursor:not-allowed}
+
+.primary{
+  background:var(--green);
+  color:#fff;
+}
+
+.secondary{
+  background:#eef3f1;
+  color:var(--dark);
+}
+
+.control-button{
+  background:#e7e1ff;
+  color:#5a4199;
+}
+
+.wide{
+  width:100%;
+  margin-top:8px;
+}
+
+.error{
+  color:#b42318;
+  font-size:13px;
+  margin-top:8px;
+  display:none;
+}
+
+.app{
+  display:none;
+  min-height:100vh;
+}
+
+.sidebar{
+  position:fixed;
+  inset:0 auto 0 0;
+  width:245px;
+  background:#073e31;
+  color:#fff;
+  padding:25px 17px;
+}
+
+.side-logo{
+  font-size:27px;
+  font-weight:900;
+  padding:8px 12px 28px;
+}
+
+.side-logo small{
+  display:block;
+  font-size:11px;
+  font-weight:500;
+  opacity:.65;
+  margin-top:3px;
+}
+
+.nav div{
+  padding:12px;
+  border-radius:9px;
+  margin:4px 0;
+  color:#dcebe6;
+}
+
+.nav .active{
+  background:#ffffff16;
+  color:#fff;
+}
+
+.user{
+  position:absolute;
+  bottom:20px;
+  left:17px;
+  right:17px;
+  padding:12px;
+  border-top:1px solid #ffffff22;
+  font-size:13px;
+}
+
+.user button{
+  margin-top:10px;
+  width:100%;
+  background:#ffffff12;
+  color:#fff;
+}
+
+.main{
+  margin-left:245px;
+  padding:28px 34px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+  gap:15px;
+}
+
+.top h1{
+  margin:0;
+  font-size:25px;
+}
+
+.top p{
+  margin:5px 0;
+  color:var(--muted);
+}
+
+.top-buttons{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:19px;
+  box-shadow:0 3px 12px #12382f08;
+}
+
+.card .label{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+}
+
+.card .num{
+  font-size:29px;
+  font-weight:800;
+  margin-top:9px;
+}
+
+.card.green{border-top:3px solid var(--green)}
+.card.yellow{border-top:3px solid var(--yellow)}
+.card.blue{border-top:3px solid var(--blue)}
+.card.purple{border-top:3px solid var(--purple)}
+
+.panel{
+  margin-top:20px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:20px;
+}
+
+.toolbar{
+  display:flex;
+  gap:9px;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+
+.filters{
+  display:flex;
+  gap:8px;
+  flex:1;
+  min-width:300px;
+}
+
+.filters input{max-width:320px}
+
+.table-wrap{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:17px;
+  min-width:1500px;
+}
+
+th,td{
+  text-align:left;
+  padding:13px 10px;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+
+th{
+  font-size:11px;
+  text-transform:uppercase;
+  color:var(--muted);
+  background:#fafcfb;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:99px;
+  font-size:10px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.status-backlog{background:#eee;color:#555}
+.status-fazendo{background:#fff2d5;color:#94600a}
+.status-feito{background:#def6e9;color:#17683f}
+.status-disponivel{background:#e4ecff;color:#365aa0}
+.status-testando{background:#e7e1ff;color:#5a4199}
+.status-teste-concluido{background:#dff4f8;color:#176879}
+.status-producao{background:#ffe7d5;color:#a64d0c}
+.status-concluido{background:#d9f3df;color:#17683f}
+.status-entregue{background:#dcefe9;color:#17664f}
+.status-devolvido{background:#fee7e7;color:#9f2626}
+.status-analise-iniciada{background:#f1e5ff;color:#7440a8}
+.status-analise-concluida{background:#e0f4ed;color:#17664f}
+.status-aguardando{background:#fff3d6;color:#94600a}
+.status-paralisado{background:#ffe5e5;color:#a52828}
+
+.pc{
+  background:#e4ecff;
+  color:#365aa0;
+}
+
+.pe{
+  background:#def5ee;
+  color:#17664f;
+}
+
+.priority{
+  font-weight:800;
+}
+
+.priority-1{color:#bd2525}
+.priority-2{color:#c98612}
+.priority-3{color:#3c6edb}
+
+.late{
+  color:#bd2525;
+  font-weight:800;
+}
+
+.table-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+}
+
+.edit-btn{
+  background:#eef3f1;
+  color:var(--dark);
+  padding:7px 10px;
+  font-size:12px;
+}
+
+.delete-btn{
+  background:#fee7e7;
+  color:#9f2626;
+  padding:7px 10px;
+  font-size:12px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0007;
+  place-items:center;
+  padding:20px;
+  z-index:1000;
+}
+
+.modal.open{
+  display:grid;
+}
+
+.modalbox{
+  background:#fff;
+  width:min(750px,100%);
+  max-height:90vh;
+  overflow-y:auto;
+  border-radius:15px;
+  padding:25px;
+}
+
+.modalbox h2{
+  margin:0 0 20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+.actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  width:100%;
+  margin-top:22px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+}
+
+.cancel-btn{
+  background:#eef1ef;
+  color:var(--dark);
+}
+
+.import-help{
+  background:#f3f8f6;
+  border:1px solid #dcebe5;
+  border-radius:10px;
+  padding:13px;
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+.import-help strong{
+  color:var(--dark);
+}
+
+.import-result{
+  display:none;
+  margin-top:15px;
+  padding:15px;
+  border-radius:10px;
+  background:#f7f9f8;
+  border:1px solid var(--line);
+}
+
+.import-result.show{
+  display:block;
+}
+
+.result-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.result-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:12px;
+  text-align:center;
+}
+
+.result-card strong{
+  display:block;
+  font-size:22px;
+  margin-top:4px;
+}
+
+.result-new{color:var(--green)}
+.result-update{color:var(--blue)}
+.result-error{color:var(--red)}
+
+.error-list{
+  max-height:220px;
+  overflow-y:auto;
+  font-size:12px;
+  line-height:1.5;
+  color:#8f2222;
+}
+
+.file-name{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:8px;
+}
+
+@media(max-width:1250px){
+  .cards{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:700px){
+  .sidebar{
+    position:static;
+    width:auto;
+  }
+
+  .main{
+    margin-left:0;
+    padding:20px;
+  }
+
+  .user{
+    position:static;
+    margin-top:25px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .top{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .top-buttons{
+    width:100%;
+  }
+
+  .top-buttons button{
+    flex:1;
+  }
+
+  .filters{
+    flex-direction:column;
+    min-width:100%;
+  }
+
+  .filters input{
+    max-width:none;
+  }
+
+  .result-grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- ==================================================
-       LOGIN
-  ================================================== -->
+<section class="login" id="login">
+  <div class="loginbox">
 
-  <section class="login" id="login">
-
-    <div class="loginbox">
-
-      <div class="logo">
-        COPLAN
-        <span>Controle de O.S. e Demandas</span>
-      </div>
-
-      <h2>Acesso ao sistema</h2>
-
-      <p>
-        Entre para acompanhar as demandas da equipe.
-      </p>
-
-      <form id="loginForm">
-
-        <div class="field">
-
-          <label for="email">
-            E-mail
-          </label>
-
-          <input
-            id="email"
-            type="email"
-            required
-            placeholder="seu@email.com"
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label for="senha">
-            Senha
-          </label>
-
-          <input
-            id="senha"
-            type="password"
-            required
-            placeholder="••••••••"
-          >
-
-        </div>
-
-        <div class="error" id="loginerr">
-          E-mail ou senha inválidos.
-        </div>
-
-        <button
-          class="primary wide"
-          type="submit"
-        >
-          Entrar
-        </button>
-
-      </form>
-
-      <div class="hint">
-        Sistema de controle de Ordens de Serviço e Demandas.
-      </div>
-
+    <div class="logo">
+      COPLAN
+      <span>Controle de O.S. e Demandas</span>
     </div>
 
-  </section>
+    <h2>Acesso ao sistema</h2>
+    <p>Entre para acompanhar as demandas da equipe.</p>
 
-
-  <!-- ==================================================
-       SISTEMA
-  ================================================== -->
-
-  <section class="app" id="app">
-
-    <!-- MENU LATERAL -->
-
-    <aside class="sidebar">
-
-      <div class="side-logo">
-        COPLAN
-
-        <small>
-          CONTROLE DE DEMANDAS
-        </small>
-      </div>
-
-      <div class="nav">
-
-        <div class="active">
-          ▦ Dashboard
-        </div>
-
-        <div>
-          ✓ Ordens de Serviço
-        </div>
-
-        <div>
-          ◉ Relatórios
-        </div>
-
-      </div>
-
-      <div class="user">
-
-        <strong id="useremail">
-          Usuário
-        </strong>
-
-        <br>
-
-        <span style="opacity:.6">
-          Acesso ao sistema
-        </span>
-
-        <button onclick="sair()">
-          Sair
-        </button>
-
-      </div>
-
-    </aside>
-
-
-    <!-- CONTEÚDO -->
-
-    <main class="main">
-
-      <!-- CABEÇALHO -->
-
-      <div class="top">
-
-        <div>
-
-          <h1>
-            Dashboard
-          </h1>
-
-          <p>
-            Visão geral das ordens de serviço
-          </p>
-
-        </div>
-
-        <div class="top-buttons">
-
-          <button
-            class="secondary"
-            onclick="abrirImportacao()"
-          >
-            📥 Importar Excel
-          </button>
-
-          <button
-            class="primary"
-            onclick="abrir()"
-          >
-            + Nova O.S.
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- CARDS -->
-
-      <div class="cards">
-
-        <div class="card green">
-
-          <div class="label">
-            TOTAL DE O.S.
-          </div>
-
-          <div class="num" id="total">
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card yellow">
-
-          <div class="label">
-            FAZENDO
-          </div>
-
-          <div class="num" id="fazendo">
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card blue">
-
-          <div class="label">
-            EM TESTE
-          </div>
-
-          <div class="num" id="teste">
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card purple">
-
-          <div class="label">
-            EM PRODUÇÃO
-          </div>
-
-          <div class="num" id="producao">
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card green">
-
-          <div class="label">
-            CONCLUÍDAS
-          </div>
-
-          <div class="num" id="concluido">
-            0
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- TABELA -->
-
-      <div class="panel">
-
-        <div class="toolbar">
-
-          <div class="filters">
-
-            <input
-              id="busca"
-              placeholder="Buscar O.S. ou descrição..."
-            >
-
-            <select id="status">
-
-              <option value="">
-                Todos os status
-              </option>
-
-              <option value="BACKLOG_DESENVOLVIMENTO">
-                Backlog Desenvolvimento
-              </option>
-
-              <option value="FAZENDO">
-                Fazendo
-              </option>
-
-              <option value="FEITO">
-                Feito
-              </option>
-
-              <option value="DISPONIVEL_TESTE">
-                Disponível para Teste
-              </option>
-
-              <option value="TESTANDO">
-                Testando
-              </option>
-
-              <option value="TESTE_CONCLUIDO">
-                Teste Concluído
-              </option>
-
-              <option value="EM_PRODUCAO">
-                Em Produção
-              </option>
-
-              <option value="CONCLUIDO">
-                Concluído
-              </option>
-
-              <option value="ENTREGUE">
-                Entregue
-              </option>
-
-              <option value="DEVOLVIDO_DEV">
-                Devolvido ao DEV
-              </option>
-
-              <option value="ANALISE_INICIADA">
-                Análise Iniciada
-              </option>
-
-              <option value="ANALISE_CONCLUIDA">
-                Análise Concluída
-              </option>
-
-            </select>
-
-
-            <select id="pendFiltro">
-
-              <option value="">
-                Todas as pendências
-              </option>
-
-              <option value="Empresa">
-                Empresa
-              </option>
-
-              <option value="Cliente">
-                Cliente
-              </option>
-
-            </select>
-
-          </div>
-
-        </div>
-
-
-        <div style="overflow:auto">
-
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>O.S.</th>
-                <th>Data Criação</th>
-                <th>Cliente</th>
-                <th>Usuário</th>
-                <th>Status</th>
-                <th>Produto</th>
-                <th>Grupo</th>
-                <th>Assunto</th>
-                <th>Desenvolvedor</th>
-                <th>Entregue Em</th>
-                <th>Pendência</th>
-                <th>Observação</th>
-                <th>Ações</th>
-
-              </tr>
-
-            </thead>
-
-            <tbody id="tbody"></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </main>
-
-  </section>
-
-
-  <!-- ==================================================
-       MODAL NOVA / EDITAR O.S.
-  ================================================== -->
-
-  <div
-    class="modal"
-    id="modal"
-  >
-
-    <div class="modalbox">
-
-      <h2 id="mt">
-        Nova O.S.
-      </h2>
-
-      <form
-        id="osForm"
-        novalidate
-      >
-
-        <input
-          type="hidden"
-          id="id"
-        >
-
-        <div class="grid">
-
-          <div class="field">
-
-            <label for="os">
-              Nº da O.S.
-            </label>
-
-            <input
-              id="os"
-              type="text"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="dataCriacao">
-              Data de criação
-            </label>
-
-            <input
-              id="dataCriacao"
-              type="date"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="cliente">
-              Cliente
-            </label>
-
-            <input
-              id="cliente"
-              type="text"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="usuario">
-              Usuário
-            </label>
-
-            <input
-              id="usuario"
-              type="text"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="st">
-              Status
-            </label>
-
-            <select id="st">
-
-              <option value="">
-                Selecione
-              </option>
-
-              <option value="BACKLOG_DESENVOLVIMENTO">
-                Backlog Desenvolvimento
-              </option>
-
-              <option value="FAZENDO">
-                Fazendo
-              </option>
-
-              <option value="FEITO">
-                Feito
-              </option>
-
-              <option value="DISPONIVEL_TESTE">
-                Disponível para Teste
-              </option>
-
-              <option value="TESTANDO">
-                Testando
-              </option>
-
-              <option value="TESTE_CONCLUIDO">
-                Teste Concluído
-              </option>
-
-              <option value="EM_PRODUCAO">
-                Em Produção
-              </option>
-
-              <option value="CONCLUIDO">
-                Concluído
-              </option>
-
-              <option value="ENTREGUE">
-                Entregue
-              </option>
-
-              <option value="DEVOLVIDO_DEV">
-                Devolvido ao DEV
-              </option>
-
-              <option value="ANALISE_INICIADA">
-                Análise Iniciada
-              </option>
-
-              <option value="ANALISE_CONCLUIDA">
-                Análise Concluída
-              </option>
-
-              <option value="AGUARDANDO_RETORNO">
-                Aguardando Retorno
-              </option>
-
-              <option value="AGUARDANDO_APROVACAO">
-                Aguardando Aprovação
-              </option>
-
-              <option value="PARALISADO">
-                Desenvolvimento Paralisado
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="produto">
-              Produto
-            </label>
-
-            <input
-              id="produto"
-              type="text"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="grupo">
-              Grupo
-            </label>
-
-            <input
-              id="grupo"
-              type="text"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="assunto">
-              Assunto
-            </label>
-
-            <input
-              id="assunto"
-              type="text"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="desenvolvedor">
-              Desenvolvedor
-            </label>
-
-            <input
-              id="desenvolvedor"
-              type="text"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="entregue">
-              Entregue em
-            </label>
-
-            <input
-              id="entregue"
-              type="date"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="pe">
-              Pendência
-            </label>
-
-            <select id="pe">
-
-              <option value="">
-                Selecione
-              </option>
-
-              <option value="Empresa">
-                Empresa
-              </option>
-
-              <option value="Cliente">
-                Cliente
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <div class="field full">
-
-            <label for="desc">
-              Descrição
-            </label>
-
-            <textarea
-              id="desc"
-              rows="4"
-            ></textarea>
-
-          </div>
-
-
-          <div class="field full">
-
-            <label for="obs">
-              Observação
-            </label>
-
-            <textarea
-              id="obs"
-              rows="3"
-            ></textarea>
-
-          </div>
-
-        </div>
-
-
-        <div class="actions">
-
-          <button
-            type="button"
-            class="cancel-btn"
-            onclick="fechar()"
-          >
-            Cancelar
-          </button>
-
-          <button
-            type="submit"
-            class="primary"
-          >
-            Salvar
-          </button>
-
-        </div>
-
-      </form>
-
-    </div>
-
-  </div>
-
-
-  <!-- ==================================================
-       MODAL IMPORTAR EXCEL
-  ================================================== -->
-
-  <div
-    class="modal"
-    id="importModal"
-  >
-
-    <div class="modalbox">
-
-      <h2>
-        📥 Importar O.S. do Excel
-      </h2>
-
-      <div class="import-help">
-
-        <strong>Formato esperado do Excel:</strong><br><br>
-
-        O.S. |
-        DATA DE CRIAÇÃO |
-        CLIENTE |
-        USUÁRIO |
-        STATUS |
-        PRODUTO |
-        GRUPO |
-        ASSUNTO |
-        DESENVOLVEDOR |
-        ENTREGUE EM
-
-        <br><br>
-
-        A coluna <strong>O.S.</strong> será usada para
-        identificar uma O.S. já existente.
-
-        <br><br>
-
-        Se a O.S. já existir, os dados do Excel serão
-        utilizados para atualizar o cadastro.
-
-        <br><br>
-
-        Se a O.S. não existir, uma nova O.S. será criada.
-
-        <br><br>
-
-        <strong>
-          Prioridade e Prazo não serão alterados pela importação.
-        </strong>
-
-      </div>
-
+    <form id="loginForm">
 
       <div class="field">
-
-        <label for="arquivoExcel">
-          Selecione o arquivo Excel
-        </label>
-
-        <input
-          id="arquivoExcel"
-          type="file"
-          accept=".xlsx,.xls"
-          onchange="mostrarNomeArquivo()"
-        >
-
-        <div
-          class="file-name"
-          id="nomeArquivo"
-        ></div>
-
+        <label>E-mail</label>
+        <input id="email" type="email" required placeholder="seu@email.com">
       </div>
 
-
-      <div
-        class="import-result"
-        id="importResult"
-      >
-
-        <div class="result-grid">
-
-          <div class="result-card">
-
-            Novas O.S.
-
-            <strong
-              class="result-new"
-              id="resultNovas"
-            >
-              0
-            </strong>
-
-          </div>
-
-
-          <div class="result-card">
-
-            O.S. atualizadas
-
-            <strong
-              class="result-update"
-              id="resultAtualizadas"
-            >
-              0
-            </strong>
-
-          </div>
-
-
-          <div class="result-card">
-
-            Erros
-
-            <strong
-              class="result-error"
-              id="resultErros"
-            >
-              0
-            </strong>
-
-          </div>
-
-        </div>
-
-
-        <div
-          class="error-list"
-          id="errorList"
-        ></div>
-
+      <div class="field">
+        <label>Senha</label>
+        <input id="senha" type="password" required placeholder="••••••••">
       </div>
 
-
-      <div class="actions">
-
-        <button
-          type="button"
-          class="cancel-btn"
-          onclick="fecharImportacao()"
-        >
-          Fechar
-        </button>
-
-        <button
-          type="button"
-          class="primary"
-          id="btnImportar"
-          onclick="importarExcel()"
-        >
-          📥 Importar
-        </button>
-
+      <div class="error" id="loginerr">
+        E-mail ou senha inválidos.
       </div>
+
+      <button class="primary wide" type="submit">
+        Entrar
+      </button>
+
+    </form>
+
+  </div>
+</section>
+
+
+<section class="app" id="app">
+
+<aside class="sidebar">
+
+  <div class="side-logo">
+    COPLAN
+    <small>CONTROLE DE DEMANDAS</small>
+  </div>
+
+  <div class="nav">
+    <div class="active">▦ Dashboard</div>
+    <div>✓ Ordens de Serviço</div>
+    <div>◉ Relatórios</div>
+  </div>
+
+  <div class="user">
+    <strong id="useremail">Usuário</strong>
+    <br>
+    <span style="opacity:.6">Acesso ao sistema</span>
+
+    <button onclick="sair()">Sair</button>
+  </div>
+
+</aside>
+
+
+<main class="main">
+
+  <div class="top">
+
+    <div>
+      <h1>Dashboard</h1>
+      <p>Visão geral das ordens de serviço</p>
+    </div>
+
+    <div class="top-buttons">
+
+      <!-- PRIMEIRA IMPORTAÇÃO -->
+      <button
+        class="secondary"
+        onclick="abrirImportacao()">
+        📥 Importar Excel
+      </button>
+
+      <!-- SEGUNDA IMPORTAÇÃO -->
+      <button
+        class="control-button"
+        onclick="abrirImportacaoControle()">
+        📋 Importar Controle
+      </button>
+
+      <button
+        class="primary"
+        onclick="abrir()">
+        + Nova O.S.
+      </button>
 
     </div>
 
   </div>
 
 
-  <!-- ==================================================
-       JAVASCRIPT
-  ================================================== -->
+  <div class="cards">
 
-  <script>
+    <div class="card green">
+      <div class="label">TOTAL DE O.S.</div>
+      <div class="num" id="total">0</div>
+    </div>
 
-    /* =========================
-       SUPABASE
-    ========================= */
+    <div class="card yellow">
+      <div class="label">FAZENDO</div>
+      <div class="num" id="fazendo">0</div>
+    </div>
 
-    const SUPABASE_URL =
-      'https://otzhzpimeawafhguhcae.supabase.co';
+    <div class="card blue">
+      <div class="label">EM TESTE</div>
+      <div class="num" id="teste">0</div>
+    </div>
 
-    const SUPABASE_PUBLISHABLE_KEY =
-      'sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
+    <div class="card purple">
+      <div class="label">EM PRODUÇÃO</div>
+      <div class="num" id="producao">0</div>
+    </div>
 
-    const {
-      createClient
-    } = supabase;
+    <div class="card green">
+      <div class="label">CONCLUÍDAS</div>
+      <div class="num" id="concluido">0</div>
+    </div>
 
-    const db =
-      createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-      );
+  </div>
 
-    let dados = [];
 
-    let carregando = false;
+  <div class="panel">
 
+    <div class="toolbar">
 
-    /* =========================
-       LOGIN
-    ========================= */
+      <div class="filters">
 
-    document
-      .getElementById('loginForm')
-      .addEventListener(
-        'submit',
-        entrar
-      );
+        <input
+          id="busca"
+          placeholder="Buscar O.S., assunto ou descrição...">
 
+        <select id="status">
+          <option value="">Todos os status</option>
+          <option value="BACKLOG_DESENVOLVIMENTO">Backlog Desenvolvimento</option>
+          <option value="FAZENDO">Fazendo</option>
+          <option value="FEITO">Feito</option>
+          <option value="DISPONIVEL_TESTE">Disponível para Teste</option>
+          <option value="TESTANDO">Testando</option>
+          <option value="TESTE_CONCLUIDO">Teste Concluído</option>
+          <option value="EM_PRODUCAO">Em Produção</option>
+          <option value="CONCLUIDO">Concluído</option>
+          <option value="ENTREGUE">Entregue</option>
+          <option value="DEVOLVIDO_DEV">Devolvido ao DEV</option>
+          <option value="ANALISE_INICIADA">Análise Iniciada</option>
+          <option value="ANALISE_CONCLUIDA">Análise Concluída</option>
+          <option value="AGUARDANDO_RETORNO">Aguardando Retorno</option>
+          <option value="AGUARDANDO_APROVACAO">Aguardando Aprovação</option>
+          <option value="PARALISADO">Desenvolvimento Paralisado</option>
+        </select>
 
-    async function entrar(e) {
+        <select id="pendFiltro">
+          <option value="">Todas as pendências</option>
+          <option value="Empresa">Empresa</option>
+          <option value="Cliente">Cliente</option>
+        </select>
 
-      e.preventDefault();
+      </div>
 
-      const email =
-        document
-          .getElementById('email')
-          .value
-          .trim();
+    </div>
 
-      const senha =
-        document
-          .getElementById('senha')
-          .value;
 
-      const erro =
-        document
-          .getElementById('loginerr');
+    <div class="table-wrap">
 
-      erro.style.display = 'none';
+      <table>
 
-      const {
-        error
-      } =
-        await db.auth.signInWithPassword({
-
-          email: email,
-
-          password: senha
-
-        });
-
-
-      if (error) {
-
-        erro.textContent =
-          'E-mail ou senha inválidos.';
-
-        erro.style.display =
-          'block';
-
-      }
-
-    }
-
-
-    /* =========================
-       INICIAR
-    ========================= */
-
-    async function iniciar() {
-
-      const {
-        data: {
-          session
-        }
-      } =
-        await db.auth.getSession();
-
-
-      if (session) {
-
-        mostrarApp(
-          session.user
-        );
-
-      } else {
-
-        mostrarLogin();
-
-      }
-
-
-      db.auth.onAuthStateChange(
-        (
-          _event,
-          session
-        ) => {
-
-          if (session) {
-
-            mostrarApp(
-              session.user
-            );
-
-          } else {
-
-            mostrarLogin();
-
-          }
-
-        }
-      );
-
-    }
-
-
-    function mostrarLogin() {
-
-      document
-        .getElementById('login')
-        .style.display =
-        'grid';
-
-      document
-        .getElementById('app')
-        .style.display =
-        'none';
-
-    }
-
-
-    async function mostrarApp(user) {
-
-      document
-        .getElementById('login')
-        .style.display =
-        'none';
-
-      document
-        .getElementById('app')
-        .style.display =
-        'block';
-
-      document
-        .getElementById('useremail')
-        .textContent =
-        user?.email ||
-        'Usuário';
-
-      await carregarDados();
-
-    }
-
-
-    async function sair() {
-
-      await db.auth.signOut();
-
-    }
-
-
-    /* =========================
-       CARREGAR DADOS
-    ========================= */
-
-    async function carregarDados() {
-
-      carregando = true;
-
-      render();
-
-
-      const {
-        data,
-        error
-      } =
-        await db
-          .from('ordens_servico')
-          .select('*')
-          .order(
-            'os',
-            {
-              ascending: true
-            }
-          );
-
-
-      carregando = false;
-
-
-      if (error) {
-
-        alert(
-          'Não foi possível carregar as O.S.\n\n' +
-          error.message
-        );
-
-        return;
-
-      }
-
-
-      dados =
-        data || [];
-
-      render();
-
-    }
-
-
-    /* =========================
-       NOVA / EDITAR
-    ========================= */
-
-    function abrir(
-      registro = null
-    ) {
-
-      const form =
-        document
-          .getElementById('osForm');
-
-      form.reset();
-
-
-      document
-        .getElementById('id')
-        .value = '';
-
-
-      document
-        .getElementById('mt')
-        .textContent =
-        registro
-          ? 'Editar O.S.'
-          : 'Nova O.S.';
-
-
-      if (registro) {
-
-        document
-          .getElementById('id')
-          .value =
-          registro.id || '';
-
-        document
-          .getElementById('os')
-          .value =
-          registro.os ?? '';
-
-        document
-          .getElementById('dataCriacao')
-          .value =
-          registro.data_criacao ?? '';
-
-        document
-          .getElementById('cliente')
-          .value =
-          registro.cliente ?? '';
-
-        document
-          .getElementById('usuario')
-          .value =
-          registro.usuario ?? '';
-
-        document
-          .getElementById('st')
-          .value =
-          registro.status ?? '';
-
-        document
-          .getElementById('produto')
-          .value =
-          registro.produto ?? '';
-
-        document
-          .getElementById('grupo')
-          .value =
-          registro.grupo ?? '';
-
-        document
-          .getElementById('assunto')
-          .value =
-          registro.assunto ?? '';
-
-        document
-          .getElementById('desenvolvedor')
-          .value =
-          registro.desenvolvedor ?? '';
-
-        document
-          .getElementById('entregue')
-          .value =
-          registro.entregue_em ?? '';
-
-        document
-          .getElementById('pe')
-          .value =
-          registro.pendencia ?? '';
-
-        document
-          .getElementById('desc')
-          .value =
-          registro.descricao ?? '';
-
-        document
-          .getElementById('obs')
-          .value =
-          registro.observacao ?? '';
-
-      }
-
-
-      document
-        .getElementById('modal')
-        .classList
-        .add('open');
-
-    }
-
-
-    function fechar() {
-
-      document
-        .getElementById('modal')
-        .classList
-        .remove('open');
-
-    }
-
-
-    /* =========================
-       SALVAR MANUALMENTE
-    ========================= */
-
-    document
-      .getElementById('osForm')
-      .addEventListener(
-        'submit',
-        salvar
-      );
-
-
-    async function salvar(e) {
-
-      e.preventDefault();
-
-
-      const id =
-        document
-          .getElementById('id')
-          .value
-          .trim();
-
-
-      const registro = {
-
-        os:
-          valorOuNull('os'),
-
-        data_criacao:
-          valorOuNull('dataCriacao'),
-
-        cliente:
-          valorOuNull('cliente'),
-
-        usuario:
-          valorOuNull('usuario'),
-
-        status:
-          valorOuNull('st'),
-
-        produto:
-          valorOuNull('produto'),
-
-        grupo:
-          valorOuNull('grupo'),
-
-        assunto:
-          valorOuNull('assunto'),
-
-        desenvolvedor:
-          valorOuNull('desenvolvedor'),
-
-        entregue_em:
-          valorOuNull('entregue'),
-
-        pendencia:
-          valorOuNull('pe'),
-
-        descricao:
-          valorOuNull('desc'),
-
-        observacao:
-          valorOuNull('obs')
-
-      };
-
-
-      let resultado;
-
-
-      if (id) {
-
-        resultado =
-          await db
-            .from('ordens_servico')
-            .update(registro)
-            .eq('id', id)
-            .select()
-            .single();
-
-      } else {
-
-        resultado =
-          await db
-            .from('ordens_servico')
-            .insert(registro)
-            .select()
-            .single();
-
-      }
-
-
-      if (resultado.error) {
-
-        alert(
-          'Não foi possível salvar a O.S.\n\n' +
-          resultado.error.message
-        );
-
-        return;
-
-      }
-
-
-      fechar();
-
-      await carregarDados();
-
-    }
-
-
-    function valorOuNull(id) {
-
-      const elemento =
-        document
-          .getElementById(id);
-
-      if (!elemento) {
-        return null;
-      }
-
-      const valor =
-        elemento.value
-          .trim();
-
-      return valor === ''
-        ? null
-        : valor;
-
-    }
-
-
-    /* =========================
-       EXCLUIR
-    ========================= */
-
-    async function excluir(id) {
-
-      const registro =
-        dados.find(
-          x =>
-            String(x.id) ===
-            String(id)
-        );
-
-
-      if (!registro) {
-
-        alert(
-          'Não foi possível localizar esta O.S.'
-        );
-
-        return;
-
-      }
-
-
-      const identificacao =
-        registro.os
-          ? `O.S. ${registro.os}`
-          : 'esta O.S.';
-
-
-      const confirmar =
-        confirm(
-          `Deseja realmente excluir ${identificacao}?\n\n` +
-          `Esta ação não poderá ser desfeita.`
-        );
-
-
-      if (!confirmar) {
-        return;
-      }
-
-
-      const {
-        error
-      } =
-        await db
-          .from('ordens_servico')
-          .delete()
-          .eq('id', id);
-
-
-      if (error) {
-
-        alert(
-          'Não foi possível excluir a O.S.\n\n' +
-          error.message
-        );
-
-        return;
-
-      }
-
-
-      await carregarDados();
-
-    }
-
-
-    /* =========================
-       STATUS
-    ========================= */
-
-    const statusNomes = {
-
-      BACKLOG_DESENVOLVIMENTO:
-        'Backlog Desenvolvimento',
-
-      FAZENDO:
-        'Fazendo',
-
-      FEITO:
-        'Feito',
-
-      DISPONIVEL_TESTE:
-        'Disponível para Teste',
-
-      TESTANDO:
-        'Testando',
-
-      TESTE_CONCLUIDO:
-        'Teste Concluído',
-
-      EM_PRODUCAO:
-        'Em Produção',
-
-      CONCLUIDO:
-        'Concluído',
-
-      ENTREGUE:
-        'Entregue',
-
-      DEVOLVIDO_DEV:
-        'Devolvido ao DEV',
-
-      ANALISE_INICIADA:
-        'Análise Iniciada',
-
-      ANALISE_CONCLUIDA:
-        'Análise Concluída',
-
-      AGUARDANDO_RETORNO:
-        'Aguardando Retorno',
-
-      AGUARDANDO_APROVACAO:
-        'Aguardando Aprovação',
-
-      PARALISADO:
-        'Desenvolvimento Paralisado'
-
-    };
-
-
-    const statusClasses = {
-
-      BACKLOG_DESENVOLVIMENTO:
-        'status-backlog',
-
-      FAZENDO:
-        'status-fazendo',
-
-      FEITO:
-        'status-feito',
-
-      DISPONIVEL_TESTE:
-        'status-disponivel',
-
-      TESTANDO:
-        'status-testando',
-
-      TESTE_CONCLUIDO:
-        'status-teste-concluido',
-
-      EM_PRODUCAO:
-        'status-producao',
-
-      CONCLUIDO:
-        'status-concluido',
-
-      ENTREGUE:
-        'status-entregue',
-
-      DEVOLVIDO_DEV:
-        'status-devolvido',
-
-      ANALISE_INICIADA:
-        'status-analise-iniciada',
-
-      ANALISE_CONCLUIDA:
-        'status-analise-concluida',
-
-      AGUARDANDO_RETORNO:
-        'status-aguardando',
-
-      AGUARDANDO_APROVACAO:
-        'status-aguardando',
-
-      PARALISADO:
-        'status-paralisado'
-
-    };
-
-
-    /* =========================
-       RENDER
-    ========================= */
-
-    function render() {
-
-      const busca =
-        (
-          document
-            .getElementById('busca')
-            ?.value ||
-          ''
-        )
-          .toLowerCase()
-          .trim();
-
-
-      const filtroStatus =
-        document
-          .getElementById('status')
-          ?.value ||
-        '';
-
-
-      const filtroPendencia =
-        document
-          .getElementById('pendFiltro')
-          ?.value ||
-        '';
-
-
-      const lista =
-        dados
-          .filter(x => {
-
-            const texto =
-              [
-                x.os,
-                x.descricao,
-                x.cliente,
-                x.usuario,
-                x.produto,
-                x.grupo,
-                x.assunto,
-                x.desenvolvedor
-              ]
-                .map(v => String(v || ''))
-                .join(' ');
-
-
-            return (
-
-              (
-                !busca ||
-                texto
-                  .toLowerCase()
-                  .includes(busca)
-              )
-
-              &&
-
-              (
-                !filtroStatus ||
-                x.status === filtroStatus
-              )
-
-              &&
-
-              (
-                !filtroPendencia ||
-                x.pendencia === filtroPendencia
-              )
-
-            );
-
-          });
-
-
-      const tbody =
-        document
-          .getElementById('tbody');
-
-
-      if (!lista.length) {
-
-        tbody.innerHTML = `
-
+        <thead>
           <tr>
-
-            <td
-              colspan="13"
-              style="
-                text-align:center;
-                padding:40px;
-                color:#71807b;
-              "
-            >
-
-              ${
-                carregando
-                  ? 'Carregando...'
-                  : 'Nenhuma O.S. cadastrada.'
-              }
-
-            </td>
-
+            <th>O.S.</th>
+            <th>Data Criação</th>
+            <th>Cliente</th>
+            <th>Usuário</th>
+            <th>Status</th>
+            <th>Produto</th>
+            <th>Grupo</th>
+            <th>Assunto</th>
+            <th>Desenvolvedor</th>
+            <th>Prioridade</th>
+            <th>Prazo Coplan</th>
+            <th>Entregue Em</th>
+            <th>Pendência</th>
+            <th>Observação</th>
+            <th>Ações</th>
           </tr>
+        </thead>
 
-        `;
+        <tbody id="tbody"></tbody>
 
-      } else {
+      </table>
 
-        tbody.innerHTML =
-          lista
-            .map(montarLinha)
-            .join('');
+    </div>
 
-      }
+  </div>
 
+</main>
+</section>
 
-      document
-        .getElementById('total')
-        .textContent =
-        dados.length;
 
+<!-- MODAL NOVA O.S. -->
 
-      document
-        .getElementById('fazendo')
-        .textContent =
-        contarStatus('FAZENDO');
+<div class="modal" id="modal">
 
+<div class="modalbox">
 
-      document
-        .getElementById('teste')
-        .textContent =
-        dados.filter(
-          x =>
-            [
-              'DISPONIVEL_TESTE',
-              'TESTANDO',
-              'TESTE_CONCLUIDO'
-            ].includes(x.status)
-        ).length;
+<h2 id="mt">Nova O.S.</h2>
 
+<form id="osForm">
 
-      document
-        .getElementById('producao')
-        .textContent =
-        contarStatus('EM_PRODUCAO');
+<input type="hidden" id="id">
 
+<div class="grid">
 
-      document
-        .getElementById('concluido')
-        .textContent =
-        dados.filter(
-          x =>
-            [
-              'CONCLUIDO',
-              'ENTREGUE'
-            ].includes(x.status)
-        ).length;
+<div class="field">
+<label>Nº da O.S.</label>
+<input id="os" type="text">
+</div>
 
-    }
+<div class="field">
+<label>Data de criação</label>
+<input id="dataCriacao" type="date">
+</div>
 
+<div class="field">
+<label>Cliente</label>
+<input id="cliente" type="text">
+</div>
 
-    function contarStatus(status) {
+<div class="field">
+<label>Usuário</label>
+<input id="usuario" type="text">
+</div>
 
-      return dados.filter(
-        x =>
-          x.status === status
-      ).length;
+<div class="field">
+<label>Status</label>
 
-    }
+<select id="st">
+<option value="">Selecione</option>
+<option value="BACKLOG_DESENVOLVIMENTO">Backlog Desenvolvimento</option>
+<option value="FAZENDO">Fazendo</option>
+<option value="FEITO">Feito</option>
+<option value="DISPONIVEL_TESTE">Disponível para Teste</option>
+<option value="TESTANDO">Testando</option>
+<option value="TESTE_CONCLUIDO">Teste Concluído</option>
+<option value="EM_PRODUCAO">Em Produção</option>
+<option value="CONCLUIDO">Concluído</option>
+<option value="ENTREGUE">Entregue</option>
+<option value="DEVOLVIDO_DEV">Devolvido ao DEV</option>
+<option value="ANALISE_INICIADA">Análise Iniciada</option>
+<option value="ANALISE_CONCLUIDA">Análise Concluída</option>
+</select>
 
+</div>
 
-    /* =========================
-       LINHA
-    ========================= */
+<div class="field">
+<label>Produto</label>
+<input id="produto" type="text">
+</div>
 
-    function montarLinha(x) {
+<div class="field">
+<label>Grupo</label>
+<input id="grupo" type="text">
+</div>
 
-      const statusClass =
-        statusClasses[x.status] ||
-        'status-backlog';
+<div class="field">
+<label>Assunto</label>
+<input id="assunto" type="text">
+</div>
 
+<div class="field">
+<label>Desenvolvedor</label>
+<input id="desenvolvedor" type="text">
+</div>
 
-      const statusTexto =
-        statusNomes[x.status] ||
-        x.status ||
-        '—';
+<div class="field">
+<label>Prioridade</label>
+<input id="prioridade" type="number">
+</div>
 
+<div class="field">
+<label>Prazo Coplan</label>
+<input id="prazo" type="date">
+</div>
 
-      const pendClass =
-        x.pendencia === 'Cliente'
-          ? 'pc'
-          : 'pe';
+<div class="field">
+<label>Entregue em</label>
+<input id="entregue" type="date">
+</div>
 
+<div class="field">
+<label>Pendência</label>
 
-      return `
+<select id="pe">
+<option value="">Selecione</option>
+<option value="Empresa">Empresa</option>
+<option value="Cliente">Cliente</option>
+</select>
 
-        <tr>
+</div>
 
-          <td>
-            <b>
-              ${esc(x.os || '—')}
-            </b>
-          </td>
+<div class="field full">
+<label>Descrição</label>
+<textarea id="desc" rows="4"></textarea>
+</div>
 
-          <td>
-            ${
-              x.data_criacao
-                ? br(x.data_criacao)
-                : '—'
-            }
-          </td>
+<div class="field full">
+<label>Observação</label>
+<textarea id="obs" rows="3"></textarea>
+</div>
 
-          <td>
-            ${esc(x.cliente || '—')}
-          </td>
+</div>
 
-          <td>
-            ${esc(x.usuario || '—')}
-          </td>
+<div class="actions">
 
-          <td>
+<button type="button"
+class="cancel-btn"
+onclick="fechar()">
+Cancelar
+</button>
 
-            ${
-              x.status
-                ? `
-                  <span class="badge ${statusClass}">
-                    ${esc(statusTexto)}
-                  </span>
-                `
-                : '—'
-            }
+<button type="submit" class="primary">
+Salvar
+</button>
 
-          </td>
+</div>
 
-          <td>
-            ${esc(x.produto || '—')}
-          </td>
+</form>
 
-          <td>
-            ${esc(x.grupo || '—')}
-          </td>
+</div>
+</div>
 
-          <td>
-            ${esc(x.assunto || '—')}
-          </td>
 
-          <td>
-            ${esc(x.desenvolvedor || '—')}
-          </td>
+<!-- MODAL IMPORTAR EXCEL -->
 
-          <td>
-            ${
-              x.entregue_em
-                ? br(x.entregue_em)
-                : '—'
-            }
-          </td>
+<div class="modal" id="importModal">
 
-          <td>
+<div class="modalbox">
 
-            ${
-              x.pendencia
-                ? `
-                  <span class="badge ${pendClass}">
-                    ${esc(x.pendencia)}
-                  </span>
-                `
-                : '—'
-            }
+<h2>📥 Importar O.S. do Excel</h2>
 
-          </td>
+<div class="import-help">
 
-          <td>
-            ${esc(x.observacao || '—')}
-          </td>
+<strong>Arquivo principal:</strong><br><br>
 
-          <td>
+O.S. | DATA DE CRIAÇÃO | CLIENTE | USUÁRIO | STATUS |
+PRODUTO | GRUPO | ASSUNTO | DESENVOLVEDOR | ENTREGUE EM
 
-            <div class="table-actions">
+<br><br>
 
-              <button
-                class="edit-btn"
-                onclick="editar('${escAttr(x.id)}')"
-              >
-                Editar
-              </button>
+A O.S. será usada para localizar um registro existente.
+Se já existir, os dados principais serão atualizados.
+Se não existir, uma nova O.S. será criada.
 
-              <button
-                class="delete-btn"
-                onclick="excluir('${escAttr(x.id)}')"
-              >
-                Excluir
-              </button>
+<br><br>
 
-            </div>
+<strong>
+Prioridade e Prazo Coplan não são alterados por esta importação.
+</strong>
 
-          </td>
+</div>
 
-        </tr>
+<div class="field">
 
-      `;
+<label>Selecione o arquivo Excel</label>
 
-    }
+<input
+id="arquivoExcel"
+type="file"
+accept=".xlsx,.xls">
 
+<div class="file-name" id="nomeArquivo"></div>
 
-    function editar(id) {
+</div>
 
-      const registro =
-        dados.find(
-          x =>
-            String(x.id) ===
-            String(id)
-        );
+<div class="import-result" id="importResult">
 
+<div class="result-grid">
 
-      if (!registro) {
+<div class="result-card">
+Novas O.S.
+<strong class="result-new" id="resultNovas">0</strong>
+</div>
 
-        alert(
-          'Não foi possível localizar esta O.S.'
-        );
+<div class="result-card">
+O.S. atualizadas
+<strong class="result-update" id="resultAtualizadas">0</strong>
+</div>
 
-        return;
+<div class="result-card">
+Erros
+<strong class="result-error" id="resultErros">0</strong>
+</div>
 
-      }
+</div>
 
+<div class="error-list" id="errorList"></div>
 
-      abrir(registro);
+</div>
 
-    }
+<div class="actions">
 
+<button
+class="cancel-btn"
+onclick="fecharImportacao()">
+Fechar
+</button>
 
-    /* =========================
-       DATAS
-    ========================= */
+<button
+class="primary"
+id="btnImportar"
+onclick="importarExcel()">
+📥 Importar
+</button>
 
-    function br(valor) {
+</div>
 
-      if (!valor) {
-        return '—';
-      }
+</div>
+</div>
 
 
-      const texto =
-        String(valor);
+<!-- MODAL IMPORTAR CONTROLE -->
 
+<div class="modal" id="controleModal">
 
-      if (
-        /^\d{4}-\d{2}-\d{2}$/.test(texto)
-      ) {
+<div class="modalbox">
 
-        const partes =
-          texto.split('-');
+<h2>📋 Importar Controle</h2>
 
-        return (
-          partes[2] +
-          '/' +
-          partes[1] +
-          '/' +
-          partes[0]
-        );
+<div class="import-help">
 
-      }
+<strong>Formato esperado:</strong><br><br>
 
+Ordem | DATA DE CRIAÇÃO | USUÁRIO | Prioridade |
+Prazo Coplan | ASSUNTO
 
-      return texto;
+<br><br>
 
-    }
+A coluna <strong>Ordem</strong> será utilizada para localizar
+a O.S. existente no sistema.
 
+<br><br>
 
-    function converterDataExcel(valor) {
+Esta importação serve somente para atualizar o
+<strong>controle de prioridade e prazo</strong>.
 
-      if (
-        valor === null ||
-        valor === undefined ||
-        valor === ''
-      ) {
-        return null;
-      }
+<br><br>
 
+<strong>
+Ela NÃO altera Cliente, Status, Produto, Grupo,
+Desenvolvedor, Entregue em, Pendência ou Observação.
+</strong>
 
-      if (typeof valor === 'number') {
+<br><br>
 
-        const data =
-          XLSX.SSF.parse_date_code(
-            valor
-          );
+Se a O.S. não existir no sistema, ela será registrada
+como erro e não será criada automaticamente.
 
+</div>
 
-        if (!data) {
-          return null;
-        }
+<div class="field">
 
+<label>Selecione o arquivo de Controle</label>
 
-        return formatarDataBanco(
-          data.y,
-          data.m,
-          data.d
-        );
+<input
+id="arquivoControle"
+type="file"
+accept=".xlsx,.xls">
 
-      }
+<div class="file-name" id="nomeControle"></div>
 
+</div>
 
-      const texto =
-        String(valor)
-          .trim();
 
+<div class="import-result" id="controleResult">
 
-      let match =
-        texto.match(
-          /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/
-        );
+<div class="result-grid">
 
+<div class="result-card">
+Atualizadas
+<strong class="result-update" id="controleAtualizadas">0</strong>
+</div>
 
-      if (match) {
+<div class="result-card">
+Não encontradas
+<strong class="result-error" id="controleNaoEncontradas">0</strong>
+</div>
 
-        return formatarDataBanco(
-          Number(match[3]),
-          Number(match[2]),
-          Number(match[1])
-        );
+<div class="result-card">
+Erros
+<strong class="result-error" id="controleErros">0</strong>
+</div>
 
-      }
+</div>
 
+<div
+class="error-list"
+id="controleErrorList">
+</div>
 
-      match =
-        texto.match(
-          /^(\d{4})-(\d{1,2})-(\d{1,2})/
-        );
+</div>
 
 
-      if (match) {
+<div class="actions">
 
-        return formatarDataBanco(
-          Number(match[1]),
-          Number(match[2]),
-          Number(match[3])
-        );
+<button
+type="button"
+class="cancel-btn"
+onclick="fecharImportacaoControle()">
+Fechar
+</button>
 
-      }
+<button
+type="button"
+class="control-button"
+id="btnImportarControle"
+onclick="importarControle()">
+📋 Importar Controle
+</button>
 
+</div>
 
-      return null;
+</div>
+</div>
 
-    }
 
+<script>
 
-    function formatarDataBanco(
-      ano,
-      mes,
-      dia
-    ) {
+/* =========================
+   SUPABASE
+========================= */
 
-      if (
-        !ano ||
-        !mes ||
-        !dia
-      ) {
-        return null;
-      }
+const SUPABASE_URL =
+'https://otzhzpimeawafhguhcae.supabase.co';
 
+const SUPABASE_PUBLISHABLE_KEY =
+'sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
 
-      const data =
-        new Date(
-          ano,
-          mes - 1,
-          dia
-        );
+const {createClient}=supabase;
 
+const db=createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
-      if (
-        data.getFullYear() !== ano ||
-        data.getMonth() !== mes - 1 ||
-        data.getDate() !== dia
-      ) {
-        return null;
-      }
+let dados=[];
+let carregando=false;
 
 
-      return (
-        String(ano).padStart(4, '0') +
-        '-' +
-        String(mes).padStart(2, '0') +
-        '-' +
-        String(dia).padStart(2, '0')
-      );
+/* =========================
+   LOGIN
+========================= */
 
-    }
+document
+.getElementById('loginForm')
+.addEventListener('submit',entrar);
 
+async function entrar(e){
 
-    /* =========================
-       ESCAPE
-    ========================= */
+e.preventDefault();
 
-    function esc(valor) {
+const email=
+document.getElementById('email').value.trim();
 
-      return String(
-        valor ?? ''
-      ).replace(
-        /[&<>"']/g,
-        c => ({
+const senha=
+document.getElementById('senha').value;
 
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#039;'
+const erro=
+document.getElementById('loginerr');
 
-        })[c]
-      );
+erro.style.display='none';
 
-    }
+const {error}=await db.auth.signInWithPassword({
+email,
+password:senha
+});
 
+if(error){
 
-    function escAttr(valor) {
+erro.textContent='E-mail ou senha inválidos.';
+erro.style.display='block';
 
-      return String(
-        valor ?? ''
-      )
-        .replace(
-          /\\/g,
-          '\\\\'
-        )
-        .replace(
-          /'/g,
-          "\\'"
-        );
+}
 
-    }
+}
 
 
-    /* ==================================================
-       IMPORTAÇÃO EXCEL
-    ================================================== */
+/* =========================
+   INICIAR
+========================= */
 
-    function abrirImportacao() {
+async function iniciar(){
 
-      document
-        .getElementById('importModal')
-        .classList
-        .add('open');
+const {
+data:{session}
+}=await db.auth.getSession();
 
+if(session){
+mostrarApp(session.user);
+}else{
+mostrarLogin();
+}
 
-      document
-        .getElementById('importResult')
-        .classList
-        .remove('show');
+db.auth.onAuthStateChange(
+(event,session)=>{
 
+if(session){
+mostrarApp(session.user);
+}else{
+mostrarLogin();
+}
 
-      document
-        .getElementById('errorList')
-        .innerHTML = '';
+});
 
-      document
-        .getElementById('resultNovas')
-        .textContent = '0';
+}
 
-      document
-        .getElementById('resultAtualizadas')
-        .textContent = '0';
+function mostrarLogin(){
 
-      document
-        .getElementById('resultErros')
-        .textContent = '0';
+document.getElementById('login').style.display='grid';
+document.getElementById('app').style.display='none';
 
-    }
+}
 
+async function mostrarApp(user){
 
-    function fecharImportacao() {
+document.getElementById('login').style.display='none';
+document.getElementById('app').style.display='block';
 
-      document
-        .getElementById('importModal')
-        .classList
-        .remove('open');
+document.getElementById('useremail').textContent=
+user?.email||'Usuário';
 
-    }
+await carregarDados();
 
+}
 
-    function mostrarNomeArquivo() {
+async function sair(){
 
-      const input =
-        document
-          .getElementById('arquivoExcel');
+await db.auth.signOut();
 
+}
 
-      const nome =
-        document
-          .getElementById('nomeArquivo');
 
+/* =========================
+   CARREGAR
+========================= */
 
-      if (
-        input.files &&
-        input.files.length
-      ) {
+async function carregarDados(){
 
-        nome.textContent =
-          'Arquivo selecionado: ' +
-          input.files[0].name;
+carregando=true;
+render();
 
-      } else {
+const {
+data,
+error
+}=await db
+.from('ordens_servico')
+.select('*')
+.order('os',{ascending:true});
 
-        nome.textContent = '';
+carregando=false;
 
-      }
+if(error){
 
-    }
+alert(
+'Não foi possível carregar as O.S.\n\n'+
+error.message
+);
 
+return;
 
-    /* =========================
-       NORMALIZAR COLUNA
-    ========================= */
+}
 
-    function normalizarColuna(valor) {
+dados=data||[];
 
-      return String(
-        valor ?? ''
-      )
-        .normalize('NFD')
-        .replace(
-          /[\u0300-\u036f]/g,
-          ''
-        )
-        .toLowerCase()
-        .replace(
-          /\./g,
-          ''
-        )
-        .replace(
-          /_/g,
-          ' '
-        )
-        .replace(
-          /\s+/g,
-          ' '
-        )
-        .trim();
+render();
 
-    }
+}
 
 
-    /* =========================
-       LOCALIZAR COLUNA
-    ========================= */
+/* =========================
+   NOVA / EDITAR
+========================= */
 
-    function encontrarColuna(
-      mapa,
-      nomes
-    ) {
+function abrir(registro=null){
 
-      for (
-        const nome of nomes
-      ) {
+document.getElementById('osForm').reset();
 
-        const chave =
-          normalizarColuna(nome);
+document.getElementById('id').value='';
 
+document.getElementById('mt').textContent=
+registro?'Editar O.S.':'Nova O.S.';
 
-        if (
-          mapa[chave] !== undefined
-        ) {
+if(registro){
 
-          return mapa[chave];
+document.getElementById('id').value=registro.id||'';
+document.getElementById('os').value=registro.os??'';
+document.getElementById('dataCriacao').value=registro.data_criacao??'';
+document.getElementById('cliente').value=registro.cliente??'';
+document.getElementById('usuario').value=registro.usuario??'';
+document.getElementById('st').value=registro.status??'';
+document.getElementById('produto').value=registro.produto??'';
+document.getElementById('grupo').value=registro.grupo??'';
+document.getElementById('assunto').value=registro.assunto??'';
+document.getElementById('desenvolvedor').value=registro.desenvolvedor??'';
+document.getElementById('prioridade').value=registro.prioridade??'';
+document.getElementById('prazo').value=registro.prazo??'';
+document.getElementById('entregue').value=registro.entregue_em??'';
+document.getElementById('pe').value=registro.pendencia??'';
+document.getElementById('desc').value=registro.descricao??'';
+document.getElementById('obs').value=registro.observacao??'';
 
-        }
+}
 
-      }
+document.getElementById('modal').classList.add('open');
 
+}
 
-      return null;
+function fechar(){
 
-    }
+document.getElementById('modal').classList.remove('open');
 
+}
 
-    /* =========================
-       TEXTO DA CÉLULA
-    ========================= */
 
-    function textoCelula(valor) {
+/* =========================
+   SALVAR
+========================= */
 
-      if (
-        valor === null ||
-        valor === undefined
-      ) {
-        return null;
-      }
+document
+.getElementById('osForm')
+.addEventListener('submit',salvar);
 
+async function salvar(e){
 
-      const texto =
-        String(valor)
-          .trim();
+e.preventDefault();
 
+const id=document.getElementById('id').value.trim();
 
-      return texto === ''
-        ? null
-        : texto;
+const registro={
 
-    }
+os:valorOuNull('os'),
 
+data_criacao:valorOuNull('dataCriacao'),
 
-    /* ==================================================
-       IMPORTAR EXCEL
-       CORREÇÃO DO ERRO DE O.S. DUPLICADA
-    ================================================== */
+cliente:valorOuNull('cliente'),
 
-    async function importarExcel() {
+usuario:valorOuNull('usuario'),
 
-      const input =
-        document
-          .getElementById('arquivoExcel');
+status:valorOuNull('st'),
 
+produto:valorOuNull('produto'),
 
-      if (
-        !input.files ||
-        !input.files.length
-      ) {
+grupo:valorOuNull('grupo'),
 
-        alert(
-          'Selecione um arquivo Excel antes de importar.'
-        );
+assunto:valorOuNull('assunto'),
 
-        return;
+desenvolvedor:valorOuNull('desenvolvedor'),
 
-      }
+prioridade:valorOuNull('prioridade'),
 
+prazo:valorOuNull('prazo'),
 
-      const arquivo =
-        input.files[0];
+entregue_em:valorOuNull('entregue'),
 
+pendencia:valorOuNull('pe'),
 
-      const btn =
-        document
-          .getElementById('btnImportar');
+descricao:valorOuNull('desc'),
 
+observacao:valorOuNull('obs')
 
-      btn.disabled = true;
+};
 
-      btn.textContent =
-        'Importando...';
+let resultado;
 
+if(id){
 
-      let novas = 0;
-      let atualizadas = 0;
-      let erros = 0;
+resultado=await db
+.from('ordens_servico')
+.update(registro)
+.eq('id',id)
+.select()
+.single();
 
-      const errosDetalhes = [];
+}else{
 
+resultado=await db
+.from('ordens_servico')
+.insert(registro)
+.select()
+.single();
 
-      try {
+}
 
-        /* =========================
-           LER ARQUIVO
-        ========================= */
+if(resultado.error){
 
-        const buffer =
-          await arquivo.arrayBuffer();
+alert(
+'Não foi possível salvar a O.S.\n\n'+
+resultado.error.message
+);
 
+return;
 
-        const workbook =
-          XLSX.read(
-            buffer,
-            {
-              type: 'array',
-              cellDates: false
-            }
-          );
+}
 
+fechar();
+await carregarDados();
 
-        if (
-          !workbook.SheetNames.length
-        ) {
+}
 
-          throw new Error(
-            'O arquivo não possui nenhuma planilha.'
-          );
+function valorOuNull(id){
 
-        }
+const el=document.getElementById(id);
 
+if(!el)return null;
 
-        const primeiraAba =
-          workbook
-            .SheetNames[0];
+const valor=el.value.trim();
 
+return valor===''?null:valor;
 
-        const sheet =
-          workbook
-            .Sheets[primeiraAba];
+}
 
 
-        const linhas =
-          XLSX.utils.sheet_to_json(
-            sheet,
-            {
-              defval: '',
-              raw: true
-            }
-          );
+/* =========================
+   EXCLUIR
+========================= */
 
+async function excluir(id){
 
-        if (!linhas.length) {
+const registro=dados.find(
+x=>String(x.id)===String(id)
+);
 
-          throw new Error(
-            'A planilha está vazia.'
-          );
+if(!registro)return;
 
-        }
+if(!confirm(
+`Deseja realmente excluir O.S. ${registro.os}?\n\nEsta ação não poderá ser desfeita.`
+))return;
 
+const {error}=await db
+.from('ordens_servico')
+.delete()
+.eq('id',id);
 
-        /* =========================
-           MAPA DAS COLUNAS
-        ========================= */
+if(error){
 
-        const primeiraLinha =
-          linhas[0];
+alert(
+'Não foi possível excluir a O.S.\n\n'+
+error.message
+);
 
+return;
 
-        const mapa = {};
+}
 
+await carregarDados();
 
-        Object.keys(
-          primeiraLinha
-        ).forEach(
-          chave => {
+}
 
-            mapa[
-              normalizarColuna(chave)
-            ] = chave;
 
-          }
-        );
+/* =========================
+   STATUS
+========================= */
 
+const statusNomes={
 
-        const colOS =
-          encontrarColuna(
-            mapa,
-            [
-              'O.S.',
-              'O.S',
-              'OS',
-              'ORDEM DE SERVICO',
-              'ORDEM DE SERVIÇO'
-            ]
-          );
+BACKLOG_DESENVOLVIMENTO:'Backlog Desenvolvimento',
+FAZENDO:'Fazendo',
+FEITO:'Feito',
+DISPONIVEL_TESTE:'Disponível para Teste',
+TESTANDO:'Testando',
+TESTE_CONCLUIDO:'Teste Concluído',
+EM_PRODUCAO:'Em Produção',
+CONCLUIDO:'Concluído',
+ENTREGUE:'Entregue',
+DEVOLVIDO_DEV:'Devolvido ao DEV',
+ANALISE_INICIADA:'Análise Iniciada',
+ANALISE_CONCLUIDA:'Análise Concluída',
+AGUARDANDO_RETORNO:'Aguardando Retorno',
+AGUARDANDO_APROVACAO:'Aguardando Aprovação',
+PARALISADO:'Desenvolvimento Paralisado'
 
+};
 
-        const colDataCriacao =
-          encontrarColuna(
-            mapa,
-            [
-              'DATA DE CRIAÇÃO',
-              'DATA CRIACAO'
-            ]
-          );
+const statusClasses={
 
+BACKLOG_DESENVOLVIMENTO:'status-backlog',
+FAZENDO:'status-fazendo',
+FEITO:'status-feito',
+DISPONIVEL_TESTE:'status-disponivel',
+TESTANDO:'status-testando',
+TESTE_CONCLUIDO:'status-teste-concluido',
+EM_PRODUCAO:'status-producao',
+CONCLUIDO:'status-concluido',
+ENTREGUE:'status-entregue',
+DEVOLVIDO_DEV:'status-devolvido',
+ANALISE_INICIADA:'status-analise-iniciada',
+ANALISE_CONCLUIDA:'status-analise-concluida',
+AGUARDANDO_RETORNO:'status-aguardando',
+AGUARDANDO_APROVACAO:'status-aguardando',
+PARALISADO:'status-paralisado'
 
-        const colCliente =
-          encontrarColuna(
-            mapa,
-            [
-              'CLIENTE'
-            ]
-          );
+};
 
 
-        const colUsuario =
-          encontrarColuna(
-            mapa,
-            [
-              'USUÁRIO',
-              'USUARIO'
-            ]
-          );
+/* =========================
+   RENDER
+========================= */
 
+function render(){
 
-        const colStatus =
-          encontrarColuna(
-            mapa,
-            [
-              'STATUS',
-              'SITUAÇÃO',
-              'SITUACAO'
-            ]
-          );
+const busca=
+(document.getElementById('busca')?.value||'')
+.toLowerCase()
+.trim();
 
+const filtroStatus=
+document.getElementById('status')?.value||'';
 
-        const colProduto =
-          encontrarColuna(
-            mapa,
-            [
-              'PRODUTO'
-            ]
-          );
+const filtroPendencia=
+document.getElementById('pendFiltro')?.value||'';
 
+const lista=dados.filter(x=>{
 
-        const colGrupo =
-          encontrarColuna(
-            mapa,
-            [
-              'GRUPO'
-            ]
-          );
+const texto=[
+x.os,
+x.descricao,
+x.cliente,
+x.usuario,
+x.produto,
+x.grupo,
+x.assunto,
+x.desenvolvedor
+]
+.map(v=>String(v||''))
+.join(' ');
 
+return(
+(!busca||texto.toLowerCase().includes(busca))&&
+(!filtroStatus||x.status===filtroStatus)&&
+(!filtroPendencia||x.pendencia===filtroPendencia)
+);
 
-        const colAssunto =
-          encontrarColuna(
-            mapa,
-            [
-              'ASSUNTO'
-            ]
-          );
+});
 
+const tbody=document.getElementById('tbody');
 
-        const colDesenvolvedor =
-          encontrarColuna(
-            mapa,
-            [
-              'DESENVOLVEDOR',
-              'DEV'
-            ]
-          );
+if(!lista.length){
 
+tbody.innerHTML=`
+<tr>
+<td colspan="15"
+style="text-align:center;padding:40px;color:#71807b">
+${carregando?'Carregando...':'Nenhuma O.S. cadastrada.'}
+</td>
+</tr>`;
 
-        const colEntregue =
-          encontrarColuna(
-            mapa,
-            [
-              'ENTREGUE EM',
-              'ENTREGUE'
-            ]
-          );
+}else{
 
+tbody.innerHTML=
+lista.map(montarLinha).join('');
 
-        if (!colOS) {
+}
 
-          throw new Error(
-            'Não foi encontrada a coluna "O.S." no Excel.'
-          );
+document.getElementById('total').textContent=dados.length;
 
-        }
+document.getElementById('fazendo').textContent=
+contarStatus('FAZENDO');
 
+document.getElementById('teste').textContent=
+dados.filter(x=>[
+'DISPONIVEL_TESTE',
+'TESTANDO',
+'TESTE_CONCLUIDO'
+].includes(x.status)).length;
 
-        /* =========================
-           BUSCAR O.S. EXISTENTES
-        ========================= */
+document.getElementById('producao').textContent=
+contarStatus('EM_PRODUCAO');
 
-        const {
-          data: existentes,
-          error: erroExistentes
-        } =
-          await db
-            .from('ordens_servico')
-            .select('id, os');
+document.getElementById('concluido').textContent=
+dados.filter(x=>[
+'CONCLUIDO',
+'ENTREGUE'
+].includes(x.status)).length;
 
+}
 
-        if (erroExistentes) {
+function contarStatus(status){
 
-          throw new Error(
-            'Erro ao consultar as O.S. existentes: ' +
-            erroExistentes.message
-          );
+return dados.filter(
+x=>x.status===status
+).length;
 
-        }
+}
 
 
-        const mapaExistentes =
-          new Map();
+/* =========================
+   LINHA
+========================= */
 
+function montarLinha(x){
 
-        (existentes || [])
-          .forEach(
-            item => {
+const statusClass=
+statusClasses[x.status]||'status-backlog';
 
-              if (
-                item.os !== null &&
-                item.os !== undefined
-              ) {
+const statusTexto=
+statusNomes[x.status]||x.status||'—';
 
-                const chave =
-                  String(item.os)
-                    .trim()
-                    .toLowerCase();
+const prioridade=
+x.prioridade??'—';
 
+const prazo=x.prazo?br(x.prazo):'—';
 
-                mapaExistentes.set(
-                  chave,
-                  item.id
-                );
+const atrasado=
+x.prazo &&
+x.entregue_em===null &&
+new Date(x.prazo+'T23:59:59')<new Date();
 
-              }
+const pendClass=
+x.pendencia==='Cliente'?'pc':'pe';
 
-            }
-          );
+return`
 
+<tr>
 
-        /* =========================
-           PROCESSAR LINHAS
-        ========================= */
+<td><b>${esc(x.os||'—')}</b></td>
 
-        for (
-          let i = 0;
-          i < linhas.length;
-          i++
-        ) {
+<td>${x.data_criacao?br(x.data_criacao):'—'}</td>
 
-          const linha =
-            linhas[i];
+<td>${esc(x.cliente||'—')}</td>
 
+<td>${esc(x.usuario||'—')}</td>
 
-          const numeroLinha =
-            i + 2;
+<td>
+${x.status
+?`<span class="badge ${statusClass}">
+${esc(statusTexto)}
+</span>`
+:'—'}
+</td>
 
+<td>${esc(x.produto||'—')}</td>
 
-          try {
+<td>${esc(x.grupo||'—')}</td>
 
-            let os =
-              textoCelula(
-                linha[colOS]
-              );
+<td>${esc(x.assunto||'—')}</td>
 
+<td>${esc(x.desenvolvedor||'—')}</td>
 
-            if (!os) {
+<td>
+<span class="priority">
+${esc(prioridade)}
+</span>
+</td>
 
-              throw new Error(
-                'O.S. não informada.'
-              );
+<td>
+<span class="${atrasado?'late':''}">
+${prazo}
+</span>
+</td>
 
-            }
+<td>${x.entregue_em?br(x.entregue_em):'—'}</td>
 
+<td>
+${x.pendencia
+?`<span class="badge ${pendClass}">
+${esc(x.pendencia)}
+</span>`
+:'—'}
+</td>
 
-            os =
-              String(os)
-                .trim();
+<td>${esc(x.observacao||'—')}</td>
 
+<td>
 
-            const chaveOS =
-              os.toLowerCase();
+<div class="table-actions">
 
+<button
+class="edit-btn"
+onclick="editar('${escAttr(x.id)}')">
+Editar
+</button>
 
-            /* =========================
-               REGISTRO DO EXCEL
+<button
+class="delete-btn"
+onclick="excluir('${escAttr(x.id)}')">
+Excluir
+</button>
 
-               PRIORIDADE E PRAZO
-               NÃO SÃO ENVIADOS
-            ========================= */
+</div>
 
-            const registro = {
+</td>
 
-              os: os,
+</tr>
 
-              data_criacao:
-                colDataCriacao
-                  ? converterDataExcel(
-                      linha[
-                        colDataCriacao
-                      ]
-                    )
-                  : null,
+`;
 
-              cliente:
-                colCliente
-                  ? textoCelula(
-                      linha[
-                        colCliente
-                      ]
-                    )
-                  : null,
+}
 
-              usuario:
-                colUsuario
-                  ? textoCelula(
-                      linha[
-                        colUsuario
-                      ]
-                    )
-                  : null,
+function editar(id){
 
-              status:
-                colStatus
-                  ? textoCelula(
-                      linha[
-                        colStatus
-                      ]
-                    )
-                  : null,
+const registro=dados.find(
+x=>String(x.id)===String(id)
+);
 
-              produto:
-                colProduto
-                  ? textoCelula(
-                      linha[
-                        colProduto
-                      ]
-                    )
-                  : null,
+if(!registro)return;
 
-              grupo:
-                colGrupo
-                  ? textoCelula(
-                      linha[
-                        colGrupo
-                      ]
-                    )
-                  : null,
+abrir(registro);
 
-              assunto:
-                colAssunto
-                  ? textoCelula(
-                      linha[
-                        colAssunto
-                      ]
-                    )
-                  : null,
+}
 
-              desenvolvedor:
-                colDesenvolvedor
-                  ? textoCelula(
-                      linha[
-                        colDesenvolvedor
-                      ]
-                    )
-                  : null,
 
-              entregue_em:
-                colEntregue
-                  ? converterDataExcel(
-                      linha[
-                        colEntregue
-                      ]
-                    )
-                  : null
+/* =========================
+   DATAS
+========================= */
 
-            };
+function br(valor){
 
+if(!valor)return'—';
 
-            /* =========================
-               VERIFICAR MAPA
+const texto=String(valor);
 
-               Se já existe:
-               UPDATE
+if(/^\d{4}-\d{2}-\d{2}$/.test(texto)){
 
-               Se não existe:
-               INSERT
-            ========================= */
+const p=texto.split('-');
 
-            const idExistente =
-              mapaExistentes.get(
-                chaveOS
-              );
+return`${p[2]}/${p[1]}/${p[0]}`;
 
+}
 
-            if (idExistente) {
+return texto;
 
-              /* =========================
-                 ATUALIZAR
-              ========================= */
+}
 
-              const resultado =
-                await db
-                  .from('ordens_servico')
-                  .update(registro)
-                  .eq(
-                    'id',
-                    idExistente
-                  );
+function converterDataExcel(valor){
 
+if(
+valor===null||
+valor===undefined||
+valor===''
+)return null;
 
-              if (resultado.error) {
+if(typeof valor==='number'){
 
-                throw new Error(
-                  resultado.error.message
-                );
+const data=XLSX.SSF.parse_date_code(valor);
 
-              }
+if(!data)return null;
 
+return formatarDataBanco(
+data.y,
+data.m,
+data.d
+);
 
-              atualizadas++;
+}
 
-            } else {
+const texto=String(valor).trim();
 
-              /* =========================
-                 NOVA O.S.
+let match=texto.match(
+/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/
+);
 
-                 Usa INSERT somente quando
-                 realmente não existe.
-              ========================= */
+if(match){
 
-              const resultado =
-                await db
-                  .from('ordens_servico')
-                  .insert(registro)
-                  .select('id, os')
-                  .single();
+return formatarDataBanco(
+Number(match[3]),
+Number(match[2]),
+Number(match[1])
+);
 
+}
 
-              if (resultado.error) {
+match=texto.match(
+/^(\d{4})-(\d{1,2})-(\d{1,2})/
+);
 
-                /*
-                  Se outra linha do Excel
-                  tiver criado a mesma O.S.,
-                  fazemos uma tentativa de UPDATE.
-                */
+if(match){
 
-                if (
-                  resultado.error.code === '23505'
-                ) {
+return formatarDataBanco(
+Number(match[1]),
+Number(match[2]),
+Number(match[3])
+);
 
-                  const novaBusca =
-                    await db
-                      .from('ordens_servico')
-                      .select('id')
-                      .eq(
-                        'os',
-                        os
-                      )
-                      .limit(1);
+}
 
+return null;
 
-                  if (
-                    novaBusca.error
-                  ) {
+}
 
-                    throw new Error(
-                      novaBusca.error.message
-                    );
+function formatarDataBanco(ano,mes,dia){
 
-                  }
+if(!ano||!mes||!dia)return null;
 
+const data=new Date(
+ano,
+mes-1,
+dia
+);
 
-                  if (
-                    novaBusca.data &&
-                    novaBusca.data.length
-                  ) {
+if(
+data.getFullYear()!==ano||
+data.getMonth()!==mes-1||
+data.getDate()!==dia
+)return null;
 
-                    const id =
-                      novaBusca.data[0].id;
+return`${String(ano).padStart(4,'0')}-${String(mes).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
 
+}
 
-                    const atualizacao =
-                      await db
-                        .from('ordens_servico')
-                        .update(registro)
-                        .eq(
-                          'id',
-                          id
-                        );
 
+/* =========================
+   ESCAPE
+========================= */
 
-                    if (
-                      atualizacao.error
-                    ) {
+function esc(valor){
 
-                      throw new Error(
-                        atualizacao.error.message
-                      );
+return String(valor??'')
+.replace(
+/[&<>"']/g,
+c=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#039;'
+})[c]
+);
 
-                    }
+}
 
+function escAttr(valor){
 
-                    mapaExistentes.set(
-                      chaveOS,
-                      id
-                    );
+return String(valor??'')
+.replace(/\\/g,'\\\\')
+.replace(/'/g,"\\'");
 
+}
 
-                    atualizadas++;
 
-                    continue;
+/* =========================
+   MODAL IMPORTAÇÃO
+========================= */
 
-                  }
+function abrirImportacao(){
 
-                }
+document
+.getElementById('importModal')
+.classList.add('open');
 
+document
+.getElementById('importResult')
+.classList.remove('show');
 
-                throw new Error(
-                  resultado.error.message
-                );
+}
 
-              }
+function fecharImportacao(){
 
+document
+.getElementById('importModal')
+.classList.remove('open');
 
-              novas++;
+}
 
 
-              if (
-                resultado.data &&
-                resultado.data.id
-              ) {
+/* =========================
+   IMPORTAÇÃO PRINCIPAL
+========================= */
 
-                mapaExistentes.set(
-                  chaveOS,
-                  resultado.data.id
-                );
+async function importarExcel(){
 
-              }
+const input=
+document.getElementById('arquivoExcel');
 
-            }
+if(!input.files.length){
 
-          } catch (erroLinha) {
+alert('Selecione um arquivo Excel.');
 
-            erros++;
+return;
 
-            errosDetalhes.push(
-              `Linha ${numeroLinha} — O.S.: ${
-                linha[colOS] ||
-                'não informada'
-              } — ${
-                erroLinha.message ||
-                'Erro desconhecido'
-              }`
-            );
+}
 
-          }
+const btn=
+document.getElementById('btnImportar');
 
-        }
+btn.disabled=true;
+btn.textContent='Importando...';
 
+let novas=0;
+let atualizadas=0;
+let erros=0;
 
-        /* =========================
-           RESULTADO
-        ========================= */
+const detalhes=[];
 
-        document
-          .getElementById('resultNovas')
-          .textContent =
-          novas;
+try{
 
+const buffer=
+await input.files[0].arrayBuffer();
 
-        document
-          .getElementById('resultAtualizadas')
-          .textContent =
-          atualizadas;
+const workbook=
+XLSX.read(buffer,{
+type:'array',
+cellDates:false
+});
 
+const sheet=
+workbook.Sheets[workbook.SheetNames[0]];
 
-        document
-          .getElementById('resultErros')
-          .textContent =
-          erros;
+const linhas=
+XLSX.utils.sheet_to_json(
+sheet,
+{
+defval:'',
+raw:true
+}
+);
 
+if(!linhas.length)
+throw new Error('A planilha está vazia.');
 
-        const listaErros =
-          document
-            .getElementById('errorList');
+const mapa={};
 
+Object.keys(linhas[0]).forEach(chave=>{
+mapa[normalizarColuna(chave)]=chave;
+});
 
-        if (errosDetalhes.length) {
+const colOS=
+encontrarColuna(
+mapa,
+[
+'O.S.',
+'O.S',
+'OS',
+'ORDEM',
+'ORDEM DE SERVICO',
+'ORDEM DE SERVIÇO'
+]
+);
 
-          listaErros.innerHTML =
-            '<strong>Detalhes dos erros:</strong><br><br>' +
-            errosDetalhes
-              .map(esc)
-              .join('<br>');
+if(!colOS)
+throw new Error('Coluna O.S. não encontrada.');
 
-        } else {
+const colData=
+encontrarColuna(
+mapa,
+[
+'DATA DE CRIAÇÃO',
+'DATA CRIACAO'
+]
+);
 
-          listaErros.innerHTML =
-            '<strong>Importação concluída sem erros.</strong>';
+const colCliente=
+encontrarColuna(mapa,['CLIENTE']);
 
-        }
+const colUsuario=
+encontrarColuna(mapa,['USUÁRIO','USUARIO']);
 
+const colStatus=
+encontrarColuna(mapa,['STATUS']);
 
-        document
-          .getElementById('importResult')
-          .classList
-          .add('show');
+const colProduto=
+encontrarColuna(mapa,['PRODUTO']);
 
+const colGrupo=
+encontrarColuna(mapa,['GRUPO']);
 
-        await carregarDados();
+const colAssunto=
+encontrarColuna(mapa,['ASSUNTO']);
 
+const colDev=
+encontrarColuna(
+mapa,
+['DESENVOLVEDOR','DEV']
+);
 
-        alert(
-          `Importação concluída!\n\n` +
-          `Novas O.S.: ${novas}\n` +
-          `O.S. atualizadas: ${atualizadas}\n` +
-          `Erros: ${erros}`
-        );
+const colEntregue=
+encontrarColuna(
+mapa,
+['ENTREGUE EM','ENTREGUE']
+);
 
-      } catch (erro) {
 
-        alert(
-          'Não foi possível importar o Excel.\n\n' +
-          (
-            erro.message ||
-            erro
-          )
-        );
+for(let i=0;i<linhas.length;i++){
 
-      } finally {
+const linha=linhas[i];
 
-        btn.disabled = false;
+try{
 
-        btn.textContent =
-          '📥 Importar';
+const os=textoCelula(
+linha[colOS]
+);
 
-      }
+if(!os)
+throw new Error('O.S. não informada.');
 
-    }
+const registro={
 
+os,
 
-    /* =========================
-       FILTROS
-    ========================= */
+data_criacao:colData?
+converterDataExcel(linha[colData]):null,
 
-    document
-      .getElementById('busca')
-      .addEventListener(
-        'input',
-        render
-      );
+cliente:colCliente?
+textoCelula(linha[colCliente]):null,
 
+usuario:colUsuario?
+textoCelula(linha[colUsuario]):null,
 
-    document
-      .getElementById('status')
-      .addEventListener(
-        'change',
-        render
-      );
+status:colStatus?
+textoCelula(linha[colStatus]):null,
 
+produto:colProduto?
+textoCelula(linha[colProduto]):null,
 
-    document
-      .getElementById('pendFiltro')
-      .addEventListener(
-        'change',
-        render
-      );
+grupo:colGrupo?
+textoCelula(linha[colGrupo]):null,
 
+assunto:colAssunto?
+textoCelula(linha[colAssunto]):null,
 
-    /* =========================
-       FECHAR MODAIS
-    ========================= */
+desenvolvedor:colDev?
+textoCelula(linha[colDev]):null,
 
-    document
-      .getElementById('modal')
-      .addEventListener(
-        'click',
-        function(e) {
+entregue_em:colEntregue?
+converterDataExcel(linha[colEntregue]):null
 
-          if (
-            e.target === this
-          ) {
+};
 
-            fechar();
+const busca=await db
+.from('ordens_servico')
+.select('id')
+.eq('os',os)
+.limit(1);
 
-          }
+if(busca.error)
+throw new Error(busca.error.message);
 
-        }
-      );
+if(busca.data?.length){
 
+const id=busca.data[0].id;
 
-    document
-      .getElementById('importModal')
-      .addEventListener(
-        'click',
-        function(e) {
+const resultado=await db
+.from('ordens_servico')
+.update(registro)
+.eq('id',id);
 
-          if (
-            e.target === this
-          ) {
+if(resultado.error)
+throw new Error(resultado.error.message);
 
-            fecharImportacao();
+atualizadas++;
 
-          }
+}else{
 
-        }
-      );
+const resultado=await db
+.from('ordens_servico')
+.insert(registro);
 
+if(resultado.error)
+throw new Error(resultado.error.message);
 
-    /* =========================
-       INICIAR
-    ========================= */
+novas++;
 
-    iniciar();
+}
 
-  </script>
+}catch(e){
+
+erros++;
+
+detalhes.push(
+`Linha ${i+2}: ${e.message}`
+);
+
+}
+
+}
+
+mostrarResultadoImportacao(
+novas,
+atualizadas,
+erros,
+detalhes
+);
+
+await carregarDados();
+
+}catch(e){
+
+alert(
+'Erro ao importar:\n\n'+
+e.message
+);
+
+}finally{
+
+btn.disabled=false;
+btn.textContent='📥 Importar';
+
+}
+
+}
+
+
+/* =========================
+   IMPORTAR CONTROLE
+========================= */
+
+function abrirImportacaoControle(){
+
+document
+.getElementById('controleModal')
+.classList.add('open');
+
+document
+.getElementById('controleResult')
+.classList.remove('show');
+
+document
+.getElementById('controleErrorList')
+.innerHTML='';
+
+}
+
+function fecharImportacaoControle(){
+
+document
+.getElementById('controleModal')
+.classList.remove('open');
+
+}
+
+async function importarControle(){
+
+const input=
+document.getElementById('arquivoControle');
+
+if(!input.files.length){
+
+alert(
+'Selecione o arquivo de Controle.'
+);
+
+return;
+
+}
+
+const btn=
+document.getElementById(
+'btnImportarControle'
+);
+
+btn.disabled=true;
+btn.textContent='Atualizando...';
+
+let atualizadas=0;
+let naoEncontradas=0;
+let erros=0;
+
+const detalhes=[];
+
+try{
+
+const buffer=
+await input.files[0].arrayBuffer();
+
+const workbook=
+XLSX.read(
+buffer,
+{
+type:'array',
+cellDates:false
+}
+);
+
+if(!workbook.SheetNames.length)
+throw new Error(
+'O arquivo não possui planilhas.'
+);
+
+const sheet=
+workbook.Sheets[
+workbook.SheetNames[0]
+];
+
+const linhas=
+XLSX.utils.sheet_to_json(
+sheet,
+{
+defval:'',
+raw:true
+}
+);
+
+if(!linhas.length)
+throw new Error(
+'A planilha de Controle está vazia.'
+);
+
+
+/* MAPA DAS COLUNAS */
+
+const mapa={};
+
+Object.keys(linhas[0]).forEach(chave=>{
+mapa[
+normalizarColuna(chave)
+]=chave;
+});
+
+
+const colOrdem=
+encontrarColuna(
+mapa,
+[
+'ORDEM',
+'O.S.',
+'O.S',
+'OS',
+'ORDEM DE SERVICO',
+'ORDEM DE SERVIÇO'
+]
+);
+
+const colData=
+encontrarColuna(
+mapa,
+[
+'DATA DE CRIAÇÃO',
+'DATA CRIACAO'
+]
+);
+
+const colUsuario=
+encontrarColuna(
+mapa,
+[
+'USUÁRIO',
+'USUARIO'
+]
+);
+
+const colPrioridade=
+encontrarColuna(
+mapa,
+[
+'PRIORIDADE'
+]
+);
+
+const colPrazo=
+encontrarColuna(
+mapa,
+[
+'PRAZO COPLAN',
+'PRAZO'
+]
+);
+
+const colAssunto=
+encontrarColuna(
+mapa,
+[
+'ASSUNTO'
+]
+);
+
+
+if(!colOrdem)
+throw new Error(
+'Não foi encontrada a coluna "Ordem".'
+);
+
+if(!colPrioridade)
+throw new Error(
+'Não foi encontrada a coluna "Prioridade".'
+);
+
+if(!colPrazo)
+throw new Error(
+'Não foi encontrada a coluna "Prazo Coplan".'
+);
+
+
+/* PROCESSAMENTO */
+
+for(
+let i=0;
+i<linhas.length;
+i++
+){
+
+const linha=linhas[i];
+
+try{
+
+const ordem=
+textoCelula(
+linha[colOrdem]
+);
+
+if(!ordem)
+throw new Error(
+'Ordem não informada.'
+);
+
+
+/*
+LOCALIZA A O.S.
+*/
+
+const busca=
+await db
+.from('ordens_servico')
+.select('id,os')
+.eq('os',ordem)
+.limit(1);
+
+if(busca.error)
+throw new Error(
+busca.error.message
+);
+
+
+/*
+SE NÃO EXISTIR,
+NÃO CRIA.
+*/
+
+if(!busca.data?.length){
+
+naoEncontradas++;
+
+detalhes.push(
+`Linha ${i+2} — O.S. ${ordem}: não encontrada no sistema.`
+);
+
+continue;
+
+}
+
+
+const id=
+busca.data[0].id;
+
+
+/*
+SOMENTE ESTES CAMPOS
+SERÃO ALTERADOS.
+*/
+
+const dadosControle={
+
+prioridade:
+converterNumero(
+linha[colPrioridade]
+),
+
+prazo:
+converterDataExcel(
+linha[colPrazo]
+)
+
+};
+
+
+/*
+ATUALIZA SOMENTE
+PRIORIDADE E PRAZO.
+*/
+
+const resultado=
+await db
+.from('ordens_servico')
+.update(dadosControle)
+.eq('id',id);
+
+
+if(resultado.error)
+throw new Error(
+resultado.error.message
+);
+
+atualizadas++;
+
+
+}catch(e){
+
+erros++;
+
+detalhes.push(
+`Linha ${i+2} — ${
+e.message||'Erro desconhecido'
+}`
+);
+
+}
+
+}
+
+
+/* RESULTADO */
+
+document
+.getElementById('controleAtualizadas')
+.textContent=
+atualizadas;
+
+document
+.getElementById('controleNaoEncontradas')
+.textContent=
+naoEncontradas;
+
+document
+.getElementById('controleErros')
+.textContent=
+erros;
+
+const lista=
+document
+.getElementById(
+'controleErrorList'
+);
+
+if(detalhes.length){
+
+lista.innerHTML=
+'<strong>Detalhes:</strong><br><br>'+
+detalhes.map(esc).join('<br>');
+
+}else{
+
+lista.innerHTML=
+'<strong>Controle importado sem erros.</strong>';
+
+}
+
+document
+.getElementById('controleResult')
+.classList.add('show');
+
+await carregarDados();
+
+alert(
+`Importação do Controle concluída!
+
+Atualizadas: ${atualizadas}
+Não encontradas: ${naoEncontradas}
+Erros: ${erros}`
+);
+
+}catch(e){
+
+alert(
+'Erro ao importar o Controle:\n\n'+
+e.message
+);
+
+}finally{
+
+btn.disabled=false;
+btn.textContent='📋 Importar Controle';
+
+}
+
+}
+
+
+/* =========================
+   FUNÇÕES EXCEL
+========================= */
+
+function normalizarColuna(valor){
+
+return String(valor??'')
+.normalize('NFD')
+.replace(/[\u0300-\u036f]/g,'')
+.toLowerCase()
+.replace(/\./g,'')
+.replace(/_/g,' ')
+.replace(/\s+/g,' ')
+.trim();
+
+}
+
+function encontrarColuna(mapa,nomes){
+
+for(const nome of nomes){
+
+const chave=
+normalizarColuna(nome);
+
+if(mapa[chave]!==undefined)
+return mapa[chave];
+
+}
+
+return null;
+
+}
+
+function textoCelula(valor){
+
+if(
+valor===null||
+valor===undefined
+)return null;
+
+const texto=
+String(valor).trim();
+
+return texto===''?null:texto;
+
+}
+
+function converterNumero(valor){
+
+if(
+valor===null||
+valor===undefined||
+valor===''
+)return null;
+
+const numero=
+Number(
+String(valor)
+.replace(',','.')
+.trim()
+);
+
+return Number.isFinite(numero)
+?numero
+:null;
+
+}
+
+
+/* =========================
+   RESULTADO IMPORTAÇÃO
+========================= */
+
+function mostrarResultadoImportacao(
+novas,
+atualizadas,
+erros,
+detalhes
+){
+
+document
+.getElementById('resultNovas')
+.textContent=novas;
+
+document
+.getElementById('resultAtualizadas')
+.textContent=atualizadas;
+
+document
+.getElementById('resultErros')
+.textContent=erros;
+
+document
+.getElementById('errorList')
+.innerHTML=
+detalhes.length
+?
+'<strong>Detalhes:</strong><br><br>'+
+detalhes.map(esc).join('<br>')
+:
+'<strong>Importação concluída sem erros.</strong>';
+
+document
+.getElementById('importResult')
+.classList.add('show');
+
+}
+
+
+/* =========================
+   EVENTOS
+========================= */
+
+document
+.getElementById('arquivoExcel')
+.addEventListener(
+'change',
+function(){
+
+document.getElementById('nomeArquivo')
+.textContent=
+this.files.length
+?'Arquivo selecionado: '+this.files[0].name
+:'';
+
+}
+);
+
+document
+.getElementById('arquivoControle')
+.addEventListener(
+'change',
+function(){
+
+document.getElementById('nomeControle')
+.textContent=
+this.files.length
+?'Arquivo selecionado: '+this.files[0].name
+:'';
+
+}
+);
+
+document
+.getElementById('busca')
+.addEventListener(
+'input',
+render
+);
+
+document
+.getElementById('status')
+.addEventListener(
+'change',
+render
+);
+
+document
+.getElementById('pendFiltro')
+.addEventListener(
+'change',
+render
+);
+
+
+/* =========================
+   FECHAR MODAIS
+========================= */
+
+document
+.getElementById('modal')
+.addEventListener(
+'click',
+function(e){
+
+if(e.target===this)
+fechar();
+
+}
+);
+
+document
+.getElementById('importModal')
+.addEventListener(
+'click',
+function(e){
+
+if(e.target===this)
+fecharImportacao();
+
+}
+);
+
+document
+.getElementById('controleModal')
+.addEventListener(
+'click',
+function(e){
+
+if(e.target===this)
+fecharImportacaoControle();
+
+}
+);
+
+
+/* =========================
+   INICIAR
+========================= */
+
+iniciar();
+
+</script>
 
 </body>
-
 </html>
+```
