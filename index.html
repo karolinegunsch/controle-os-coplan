@@ -139,6 +139,11 @@
       opacity: .92;
     }
 
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
     .primary {
       background: var(--green);
       color: #fff;
@@ -708,7 +713,6 @@
     }
 
   </style>
-
 </head>
 
 <body>
@@ -863,7 +867,6 @@
 
         <div class="top-buttons">
 
-          <!-- BOTÃO IMPORTAR -->
           <button
             class="secondary"
             onclick="abrirImportacao()"
@@ -871,7 +874,6 @@
             📥 Importar Excel
           </button>
 
-          <!-- BOTÃO NOVA OS -->
           <button
             class="primary"
             onclick="abrir()"
@@ -1054,57 +1056,19 @@
 
               <tr>
 
-                <th>
-                  O.S.
-                </th>
-
-                <th>
-                  Data Criação
-                </th>
-
-                <th>
-                  Cliente
-                </th>
-
-                <th>
-                  Usuário
-                </th>
-
-                <th>
-                  Status
-                </th>
-
-                <th>
-                  Produto
-                </th>
-
-                <th>
-                  Grupo
-                </th>
-
-                <th>
-                  Assunto
-                </th>
-
-                <th>
-                  Desenvolvedor
-                </th>
-
-                <th>
-                  Entregue Em
-                </th>
-
-                <th>
-                  Pendência
-                </th>
-
-                <th>
-                  Observação
-                </th>
-
-                <th>
-                  Ações
-                </th>
+                <th>O.S.</th>
+                <th>Data Criação</th>
+                <th>Cliente</th>
+                <th>Usuário</th>
+                <th>Status</th>
+                <th>Produto</th>
+                <th>Grupo</th>
+                <th>Assunto</th>
+                <th>Desenvolvedor</th>
+                <th>Entregue Em</th>
+                <th>Pendência</th>
+                <th>Observação</th>
+                <th>Ações</th>
 
               </tr>
 
@@ -1264,6 +1228,18 @@
 
               <option value="ANALISE_CONCLUIDA">
                 Análise Concluída
+              </option>
+
+              <option value="AGUARDANDO_RETORNO">
+                Aguardando Retorno
+              </option>
+
+              <option value="AGUARDANDO_APROVACAO">
+                Aguardando Aprovação
+              </option>
+
+              <option value="PARALISADO">
+                Desenvolvimento Paralisado
               </option>
 
             </select>
@@ -1454,13 +1430,23 @@
 
         <br><br>
 
-        A coluna <strong>O.S.</strong> será usada para identificar
-        uma O.S. já existente. Se já existir, os dados serão
-        atualizados. Se não existir, será criada uma nova O.S.
+        A coluna <strong>O.S.</strong> será usada para
+        identificar uma O.S. já existente.
 
         <br><br>
 
-        <strong>Prioridade e Prazo não serão alterados pela importação.</strong>
+        Se a O.S. já existir, os dados do Excel serão
+        utilizados para atualizar o cadastro.
+
+        <br><br>
+
+        Se a O.S. não existir, uma nova O.S. será criada.
+
+        <br><br>
+
+        <strong>
+          Prioridade e Prazo não serão alterados pela importação.
+        </strong>
 
       </div>
 
@@ -1481,8 +1467,7 @@
         <div
           class="file-name"
           id="nomeArquivo"
-        >
-        </div>
+        ></div>
 
       </div>
 
@@ -1541,8 +1526,7 @@
         <div
           class="error-list"
           id="errorList"
-        >
-        </div>
+        ></div>
 
       </div>
 
@@ -1599,7 +1583,6 @@
         SUPABASE_PUBLISHABLE_KEY
       );
 
-
     let dados = [];
 
     let carregando = false;
@@ -1637,7 +1620,6 @@
           .getElementById('loginerr');
 
       erro.style.display = 'none';
-
 
       const {
         error
@@ -2356,8 +2338,6 @@
       }
 
 
-      /* CARDS */
-
       document
         .getElementById('total')
         .textContent =
@@ -2447,9 +2427,11 @@
           </td>
 
           <td>
-            ${x.data_criacao
-              ? br(x.data_criacao)
-              : '—'}
+            ${
+              x.data_criacao
+                ? br(x.data_criacao)
+                : '—'
+            }
           </td>
 
           <td>
@@ -2616,13 +2598,9 @@
         valor === undefined ||
         valor === ''
       ) {
-
         return null;
-
       }
 
-
-      /* Excel pode retornar número */
 
       if (typeof valor === 'number') {
 
@@ -2651,8 +2629,6 @@
           .trim();
 
 
-      /* DD/MM/YYYY */
-
       let match =
         texto.match(
           /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/
@@ -2669,8 +2645,6 @@
 
       }
 
-
-      /* YYYY-MM-DD */
 
       match =
         texto.match(
@@ -2705,9 +2679,7 @@
         !mes ||
         !dia
       ) {
-
         return null;
-
       }
 
 
@@ -2724,9 +2696,7 @@
         data.getMonth() !== mes - 1 ||
         data.getDate() !== dia
       ) {
-
         return null;
-
       }
 
 
@@ -2786,7 +2756,6 @@
        IMPORTAÇÃO EXCEL
     ================================================== */
 
-
     function abrirImportacao() {
 
       document
@@ -2804,6 +2773,18 @@
       document
         .getElementById('errorList')
         .innerHTML = '';
+
+      document
+        .getElementById('resultNovas')
+        .textContent = '0';
+
+      document
+        .getElementById('resultAtualizadas')
+        .textContent = '0';
+
+      document
+        .getElementById('resultErros')
+        .textContent = '0';
 
     }
 
@@ -2849,7 +2830,7 @@
 
 
     /* =========================
-       NORMALIZAR NOME COLUNA
+       NORMALIZAR COLUNA
     ========================= */
 
     function normalizarColuna(valor) {
@@ -2923,9 +2904,7 @@
         valor === null ||
         valor === undefined
       ) {
-
         return null;
-
       }
 
 
@@ -2941,9 +2920,10 @@
     }
 
 
-    /* =========================
+    /* ==================================================
        IMPORTAR EXCEL
-    ========================= */
+       CORREÇÃO DO ERRO DE O.S. DUPLICADA
+    ================================================== */
 
     async function importarExcel() {
 
@@ -2989,6 +2969,10 @@
 
 
       try {
+
+        /* =========================
+           LER ARQUIVO
+        ========================= */
 
         const buffer =
           await arquivo.arrayBuffer();
@@ -3052,8 +3036,7 @@
           linhas[0];
 
 
-        const mapa =
-          {};
+        const mapa = {};
 
 
         Object.keys(
@@ -3087,8 +3070,7 @@
             mapa,
             [
               'DATA DE CRIAÇÃO',
-              'DATA CRIACAO',
-              'DATA DE CRIAÇÃO '
+              'DATA CRIACAO'
             ]
           );
 
@@ -3170,8 +3152,6 @@
           );
 
 
-        /* O.S. é obrigatória */
-
         if (!colOS) {
 
           throw new Error(
@@ -3179,6 +3159,59 @@
           );
 
         }
+
+
+        /* =========================
+           BUSCAR O.S. EXISTENTES
+        ========================= */
+
+        const {
+          data: existentes,
+          error: erroExistentes
+        } =
+          await db
+            .from('ordens_servico')
+            .select('id, os');
+
+
+        if (erroExistentes) {
+
+          throw new Error(
+            'Erro ao consultar as O.S. existentes: ' +
+            erroExistentes.message
+          );
+
+        }
+
+
+        const mapaExistentes =
+          new Map();
+
+
+        (existentes || [])
+          .forEach(
+            item => {
+
+              if (
+                item.os !== null &&
+                item.os !== undefined
+              ) {
+
+                const chave =
+                  String(item.os)
+                    .trim()
+                    .toLowerCase();
+
+
+                mapaExistentes.set(
+                  chave,
+                  item.id
+                );
+
+              }
+
+            }
+          );
 
 
         /* =========================
@@ -3201,7 +3234,7 @@
 
           try {
 
-            const os =
+            let os =
               textoCelula(
                 linha[colOS]
               );
@@ -3215,6 +3248,22 @@
 
             }
 
+
+            os =
+              String(os)
+                .trim();
+
+
+            const chaveOS =
+              os.toLowerCase();
+
+
+            /* =========================
+               REGISTRO DO EXCEL
+
+               PRIORIDADE E PRAZO
+               NÃO SÃO ENVIADOS
+            ========================= */
 
             const registro = {
 
@@ -3305,45 +3354,35 @@
 
 
             /* =========================
-               VERIFICAR SE EXISTE
+               VERIFICAR MAPA
+
+               Se já existe:
+               UPDATE
+
+               Se não existe:
+               INSERT
             ========================= */
 
-            const busca =
-              await db
-                .from('ordens_servico')
-                .select('id')
-                .eq('os', os)
-                .limit(1);
-
-
-            if (busca.error) {
-
-              throw new Error(
-                busca.error.message
+            const idExistente =
+              mapaExistentes.get(
+                chaveOS
               );
 
-            }
 
-
-            if (
-              busca.data &&
-              busca.data.length
-            ) {
+            if (idExistente) {
 
               /* =========================
-                 ATUALIZA
-                 NÃO ALTERA PRIORIDADE/PRAZO
+                 ATUALIZAR
               ========================= */
-
-              const id =
-                busca.data[0].id;
-
 
               const resultado =
                 await db
                   .from('ordens_servico')
                   .update(registro)
-                  .eq('id', id);
+                  .eq(
+                    'id',
+                    idExistente
+                  );
 
 
               if (resultado.error) {
@@ -3361,16 +3400,97 @@
 
               /* =========================
                  NOVA O.S.
-                 PRIORIDADE/PRAZO NÃO SÃO ENVIADOS
+
+                 Usa INSERT somente quando
+                 realmente não existe.
               ========================= */
 
               const resultado =
                 await db
                   .from('ordens_servico')
-                  .insert(registro);
+                  .insert(registro)
+                  .select('id, os')
+                  .single();
 
 
               if (resultado.error) {
+
+                /*
+                  Se outra linha do Excel
+                  tiver criado a mesma O.S.,
+                  fazemos uma tentativa de UPDATE.
+                */
+
+                if (
+                  resultado.error.code === '23505'
+                ) {
+
+                  const novaBusca =
+                    await db
+                      .from('ordens_servico')
+                      .select('id')
+                      .eq(
+                        'os',
+                        os
+                      )
+                      .limit(1);
+
+
+                  if (
+                    novaBusca.error
+                  ) {
+
+                    throw new Error(
+                      novaBusca.error.message
+                    );
+
+                  }
+
+
+                  if (
+                    novaBusca.data &&
+                    novaBusca.data.length
+                  ) {
+
+                    const id =
+                      novaBusca.data[0].id;
+
+
+                    const atualizacao =
+                      await db
+                        .from('ordens_servico')
+                        .update(registro)
+                        .eq(
+                          'id',
+                          id
+                        );
+
+
+                    if (
+                      atualizacao.error
+                    ) {
+
+                      throw new Error(
+                        atualizacao.error.message
+                      );
+
+                    }
+
+
+                    mapaExistentes.set(
+                      chaveOS,
+                      id
+                    );
+
+
+                    atualizadas++;
+
+                    continue;
+
+                  }
+
+                }
+
 
                 throw new Error(
                   resultado.error.message
@@ -3381,16 +3501,29 @@
 
               novas++;
 
+
+              if (
+                resultado.data &&
+                resultado.data.id
+              ) {
+
+                mapaExistentes.set(
+                  chaveOS,
+                  resultado.data.id
+                );
+
+              }
+
             }
 
           } catch (erroLinha) {
 
             erros++;
 
-
             errosDetalhes.push(
               `Linha ${numeroLinha} — O.S.: ${
-                linha[colOS] || 'não informada'
+                linha[colOS] ||
+                'não informada'
               } — ${
                 erroLinha.message ||
                 'Erro desconhecido'
@@ -3434,9 +3567,7 @@
           listaErros.innerHTML =
             '<strong>Detalhes dos erros:</strong><br><br>' +
             errosDetalhes
-              .map(
-                esc
-              )
+              .map(esc)
               .join('<br>');
 
         } else {
