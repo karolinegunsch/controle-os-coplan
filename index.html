@@ -7,6 +7,12 @@
 
   <title>Coplan • Controle de O.S.</title>
 
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Biblioteca para leitura de Excel -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
   <style>
 
     :root {
@@ -138,6 +144,11 @@
       color: #fff;
     }
 
+    .secondary {
+      background: #eef3f1;
+      color: var(--dark);
+    }
+
     .wide {
       width: 100%;
       margin-top: 8px;
@@ -234,6 +245,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 25px;
+      gap: 15px;
     }
 
     .top h1 {
@@ -244,6 +256,12 @@
     .top p {
       margin: 5px 0;
       color: var(--muted);
+    }
+
+    .top-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     /* =========================
@@ -330,6 +348,7 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 17px;
+      min-width: 1300px;
     }
 
     th,
@@ -338,6 +357,7 @@
       padding: 13px 10px;
       border-bottom: 1px solid var(--line);
       font-size: 13px;
+      vertical-align: top;
     }
 
     th {
@@ -345,10 +365,11 @@
       text-transform: uppercase;
       color: var(--muted);
       background: #fafcfb;
+      white-space: nowrap;
     }
 
     /* =========================
-       BADGES DOS STATUS
+       BADGES
     ========================= */
 
     .badge {
@@ -420,6 +441,11 @@
       color: #17664f;
     }
 
+    .status-outro {
+      background: #eeeeee;
+      color: #555;
+    }
+
     .pc {
       background: #e4ecff;
       color: #365aa0;
@@ -436,7 +462,7 @@
     }
 
     /* =========================
-       BOTÕES DA TABELA
+       AÇÕES
     ========================= */
 
     .table-actions {
@@ -480,7 +506,7 @@
 
     .modalbox {
       background: #fff;
-      width: min(650px, 100%);
+      width: min(750px, 100%);
       max-height: 90vh;
       overflow-y: auto;
       border-radius: 15px;
@@ -499,6 +525,10 @@
 
     .full {
       grid-column: 1 / -1;
+    }
+
+    .readonly {
+      background: #f5f7f6;
     }
 
     /* =========================
@@ -523,6 +553,40 @@
     .cancel-btn {
       background: #eef1ef;
       color: var(--dark);
+    }
+
+    /* =========================
+       IMPORTAÇÃO
+    ========================= */
+
+    .import-info {
+      background: #eef8f4;
+      border: 1px solid #d4ebe2;
+      color: #17664f;
+      padding: 12px 14px;
+      border-radius: 9px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .import-progress {
+      display: none;
+      margin-top: 15px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      border-radius: 20px;
+      background: #e5ebe8;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--green);
+      transition: width .2s;
     }
 
     /* =========================
@@ -576,7 +640,6 @@
 
       .top {
         align-items: flex-start;
-        gap: 10px;
         flex-direction: column;
       }
 
@@ -604,9 +667,6 @@
     }
 
   </style>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
 
 <body>
@@ -621,15 +681,10 @@
 
       <div class="logo">
         COPLAN
-
-        <span>
-          Controle de O.S. e Demandas
-        </span>
+        <span>Controle de O.S. e Demandas</span>
       </div>
 
-      <h2>
-        Acesso ao sistema
-      </h2>
+      <h2>Acesso ao sistema</h2>
 
       <p>
         Entre para acompanhar as demandas da equipe.
@@ -766,14 +821,39 @@
 
         </div>
 
-        <button
-          class="primary"
-          onclick="abrir()"
-        >
-          + Nova O.S.
-        </button>
+        <div class="top-buttons">
+
+          <!-- IMPORTAR EXCEL -->
+
+          <button
+            class="secondary"
+            onclick="selecionarExcel()"
+          >
+            📥 Importar Excel
+          </button>
+
+          <!-- NOVA O.S. -->
+
+          <button
+            class="primary"
+            onclick="abrir()"
+          >
+            + Nova O.S.
+          </button>
+
+        </div>
 
       </div>
+
+
+      <!-- INPUT OCULTO DO EXCEL -->
+
+      <input
+        type="file"
+        id="excelInput"
+        accept=".xlsx,.xls"
+        style="display:none"
+      >
 
 
       <!-- CARDS -->
@@ -857,7 +937,7 @@
 
             <input
               id="busca"
-              placeholder="Buscar O.S. ou descrição..."
+              placeholder="Buscar O.S., descrição, cliente..."
             >
 
             <select id="status">
@@ -955,15 +1035,27 @@
                 </th>
 
                 <th>
-                  Prazo
+                  Criação
                 </th>
 
                 <th>
-                  Descrição
+                  Cliente
+                </th>
+
+                <th>
+                  Assunto
                 </th>
 
                 <th>
                   Status
+                </th>
+
+                <th>
+                  Desenvolvedor
+                </th>
+
+                <th>
+                  Prazo
                 </th>
 
                 <th>
@@ -1022,6 +1114,23 @@
 
         <div class="grid">
 
+          <!-- Nº O.S. -->
+
+          <div class="field">
+
+            <label for="os">
+              Nº da O.S.
+            </label>
+
+            <input
+              id="os"
+              type="text"
+              required
+            >
+
+          </div>
+
+
           <!-- PRIORIDADE -->
 
           <div class="field">
@@ -1034,22 +1143,6 @@
               id="prioridade"
               type="number"
               min="1"
-            >
-
-          </div>
-
-
-          <!-- Nº O.S. -->
-
-          <div class="field">
-
-            <label for="os">
-              Nº da O.S.
-            </label>
-
-            <input
-              id="os"
-              type="text"
             >
 
           </div>
@@ -1165,17 +1258,145 @@
           </div>
 
 
-          <!-- DESCRIÇÃO -->
+          <!-- DATA CRIAÇÃO -->
+
+          <div class="field">
+
+            <label for="dataCriacao">
+              Data de criação
+            </label>
+
+            <input
+              id="dataCriacao"
+              type="date"
+              class="readonly"
+              readonly
+            >
+
+          </div>
+
+
+          <!-- CLIENTE -->
+
+          <div class="field">
+
+            <label for="cliente">
+              Cliente
+            </label>
+
+            <input
+              id="cliente"
+              type="text"
+              class="readonly"
+              readonly
+            >
+
+          </div>
+
+
+          <!-- USUÁRIO -->
+
+          <div class="field">
+
+            <label for="usuario">
+              Usuário
+            </label>
+
+            <input
+              id="usuario"
+              type="text"
+              class="readonly"
+              readonly
+            >
+
+          </div>
+
+
+          <!-- PRODUTO -->
+
+          <div class="field">
+
+            <label for="produto">
+              Produto
+            </label>
+
+            <input
+              id="produto"
+              type="text"
+              class="readonly"
+              readonly
+            >
+
+          </div>
+
+
+          <!-- GRUPO -->
+
+          <div class="field">
+
+            <label for="grupo">
+              Grupo
+            </label>
+
+            <input
+              id="grupo"
+              type="text"
+              class="readonly"
+              readonly
+            >
+
+          </div>
+
+
+          <!-- DESENVOLVEDOR -->
+
+          <div class="field">
+
+            <label for="desenvolvedor">
+              Desenvolvedor
+            </label>
+
+            <input
+              id="desenvolvedor"
+              type="text"
+              class="readonly"
+              readonly
+            >
+
+          </div>
+
+
+          <!-- ENTREGA -->
+
+          <div class="field">
+
+            <label for="entregueEm">
+              Entregue em
+            </label>
+
+            <input
+              id="entregueEm"
+              type="date"
+              class="readonly"
+              readonly
+            >
+
+          </div>
+
+
+          <!-- ASSUNTO -->
 
           <div class="field full">
 
-            <label for="desc">
-              Descrição
+            <label for="assunto">
+              Assunto
             </label>
 
             <textarea
-              id="desc"
-              rows="4"
+              id="assunto"
+              rows="3"
+              class="readonly"
+              readonly
             ></textarea>
 
           </div>
@@ -1192,6 +1413,7 @@
             <textarea
               id="obs"
               rows="3"
+              placeholder="Digite uma observação..."
             ></textarea>
 
           </div>
@@ -1228,6 +1450,85 @@
 
 
   <!-- ==================================================
+       MODAL IMPORTAÇÃO
+  ================================================== -->
+
+  <div
+    class="modal"
+    id="importModal"
+  >
+
+    <div class="modalbox">
+
+      <h2>
+        📥 Importar O.S. do Excel
+      </h2>
+
+      <div class="import-info">
+
+        O sistema irá importar as O.S. do arquivo Excel
+        e atualizar os registros existentes pelo número
+        da O.S.
+
+        <br><br>
+
+        <strong>
+          Seus controles de prioridade, prazo, pendência
+          e observação não serão alterados.
+        </strong>
+
+      </div>
+
+      <div
+        class="import-progress"
+        id="importProgress"
+      >
+
+        <div id="importStatus">
+          Importando...
+        </div>
+
+        <br>
+
+        <div class="progress-bar">
+
+          <div
+            class="progress-fill"
+            id="progressFill"
+          ></div>
+
+        </div>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          id="cancelImportBtn"
+          onclick="fecharImportacao()"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          class="primary"
+          id="confirmImportBtn"
+          onclick="executarImportacao()"
+        >
+          Importar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==================================================
        JAVASCRIPT
   ================================================== -->
 
@@ -1253,9 +1554,12 @@
         SUPABASE_PUBLISHABLE_KEY
       );
 
+
     let dados = [];
 
     let carregando = false;
+
+    let arquivoExcelSelecionado = null;
 
 
     /* =========================
@@ -1290,6 +1594,7 @@
           .getElementById('loginerr');
 
       erro.style.display = 'none';
+
 
       const {
         error
@@ -1419,6 +1724,7 @@
 
       render();
 
+
       const {
         data,
         error
@@ -1433,6 +1739,7 @@
               nullsFirst: false
             }
           );
+
 
       carregando = false;
 
@@ -1473,9 +1780,11 @@
 
       form.reset();
 
+
       document
         .getElementById('id')
         .value = '';
+
 
       document
         .getElementById('mt')
@@ -1493,14 +1802,14 @@
           registro.id || '';
 
         document
-          .getElementById('prioridade')
-          .value =
-          registro.prioridade ?? '';
-
-        document
           .getElementById('os')
           .value =
           registro.os ?? '';
+
+        document
+          .getElementById('prioridade')
+          .value =
+          registro.prioridade ?? '';
 
         document
           .getElementById('prazo')
@@ -1518,14 +1827,49 @@
           registro.pendencia ?? '';
 
         document
-          .getElementById('desc')
-          .value =
-          registro.descricao ?? '';
-
-        document
           .getElementById('obs')
           .value =
           registro.observacao ?? '';
+
+        document
+          .getElementById('dataCriacao')
+          .value =
+          registro.data_criacao ?? '';
+
+        document
+          .getElementById('cliente')
+          .value =
+          registro.cliente ?? '';
+
+        document
+          .getElementById('usuario')
+          .value =
+          registro.usuario ?? '';
+
+        document
+          .getElementById('produto')
+          .value =
+          registro.produto ?? '';
+
+        document
+          .getElementById('grupo')
+          .value =
+          registro.grupo ?? '';
+
+        document
+          .getElementById('assunto')
+          .value =
+          registro.assunto ?? '';
+
+        document
+          .getElementById('desenvolvedor')
+          .value =
+          registro.desenvolvedor ?? '';
+
+        document
+          .getElementById('entregueEm')
+          .value =
+          registro.entregue_em ?? '';
 
       }
 
@@ -1590,6 +1934,17 @@
           .trim();
 
 
+      if (!os) {
+
+        alert(
+          'Informe o número da O.S.'
+        );
+
+        return;
+
+      }
+
+
       const prazo =
         document
           .getElementById('prazo')
@@ -1611,13 +1966,6 @@
           .trim();
 
 
-      const descricao =
-        document
-          .getElementById('desc')
-          .value
-          .trim();
-
-
       const observacao =
         document
           .getElementById('obs')
@@ -1627,17 +1975,14 @@
 
       const registro = {
 
+        os: os,
+
         prioridade:
           prioridadeValor === ''
             ? null
             : Number(
                 prioridadeValor
               ),
-
-        os:
-          os === ''
-            ? null
-            : os,
 
         prazo:
           prazo === ''
@@ -1653,11 +1998,6 @@
           pendencia === ''
             ? null
             : pendencia,
-
-        descricao:
-          descricao === ''
-            ? null
-            : descricao,
 
         observacao:
           observacao === ''
@@ -1685,9 +2025,7 @@
             .eq(
               'id',
               id
-            )
-            .select()
-            .single();
+            );
 
       }
 
@@ -1703,9 +2041,7 @@
             )
             .insert(
               registro
-            )
-            .select()
-            .single();
+            );
 
       }
 
@@ -1806,7 +2142,7 @@
 
 
     /* =========================
-       NOMES DOS STATUS
+       STATUS
     ========================= */
 
     const statusNomes = {
@@ -1849,10 +2185,6 @@
 
     };
 
-
-    /* =========================
-       CLASSES DOS STATUS
-    ========================= */
 
     const statusClasses = {
 
@@ -1937,6 +2269,22 @@
               ' ' +
               String(
                 x.descricao || ''
+              ) +
+              ' ' +
+              String(
+                x.assunto || ''
+              ) +
+              ' ' +
+              String(
+                x.cliente || ''
+              ) +
+              ' ' +
+              String(
+                x.usuario || ''
+              ) +
+              ' ' +
+              String(
+                x.desenvolvedor || ''
               );
 
 
@@ -1953,7 +2301,9 @@
 
               (
                 !filtroStatus ||
-                x.status ===
+                normalizarStatus(
+                  x.status
+                ) ===
                 filtroStatus
               )
 
@@ -2011,7 +2361,7 @@
           <tr>
 
             <td
-              colspan="8"
+              colspan="11"
               style="
                 text-align:center;
                 padding:40px;
@@ -2043,9 +2393,7 @@
       }
 
 
-      /* =========================
-         CARDS
-      ========================= */
+      /* CARDS */
 
       document
         .getElementById('total')
@@ -2071,7 +2419,9 @@
               'TESTANDO',
               'TESTE_CONCLUIDO'
             ].includes(
-              x.status
+              normalizarStatus(
+                x.status
+              )
             )
         ).length;
 
@@ -2093,9 +2443,100 @@
               'CONCLUIDO',
               'ENTREGUE'
             ].includes(
-              x.status
+              normalizarStatus(
+                x.status
+              )
             )
         ).length;
+
+    }
+
+
+    /* =========================
+       NORMALIZAR STATUS
+    ========================= */
+
+    function normalizarStatus(status) {
+
+      if (!status) {
+        return '';
+      }
+
+      const texto =
+        String(status)
+          .trim()
+          .toUpperCase()
+          .normalize('NFD')
+          .replace(
+            /[\u0300-\u036f]/g,
+            ''
+          )
+          .replace(
+            /\s+/g,
+            '_'
+          );
+
+
+      const mapa = {
+
+        'BACKLOG_DESENVOLVIMENTO':
+          'BACKLOG_DESENVOLVIMENTO',
+
+        'FAZENDO':
+          'FAZENDO',
+
+        'FEITO':
+          'FEITO',
+
+        'DISPONIVEL_PARA_TESTE':
+          'DISPONIVEL_TESTE',
+
+        'DISPONIVEL_TESTE':
+          'DISPONIVEL_TESTE',
+
+        'TESTANDO':
+          'TESTANDO',
+
+        'TESTECONCLUIDO':
+          'TESTE_CONCLUIDO',
+
+        'TESTE_CONCLUIDO':
+          'TESTE_CONCLUIDO',
+
+        'EM_PRODUCAO':
+          'EM_PRODUCAO',
+
+        'CONCLUIDO':
+          'CONCLUIDO',
+
+        'ENTREGUE':
+          'ENTREGUE',
+
+        'DEVOLVIDO':
+          'DEVOLVIDO_DEV',
+
+        'DEVOLVIDO_DEV':
+          'DEVOLVIDO_DEV',
+
+        'DEVOLVIDO_PARA_O_DESENVOLVIMENTO':
+          'DEVOLVIDO_DEV',
+
+        'AGUARDANDO_ANALISE':
+          'ANALISE_INICIADA',
+
+        'AGUARDANDO_PLANEJAMENTO':
+          'ANALISE_CONCLUIDA',
+
+        'ANALISE_INICIADA':
+          'ANALISE_INICIADA',
+
+        'ANALISE_CONCLUIDA':
+          'ANALISE_CONCLUIDA'
+
+      };
+
+
+      return mapa[texto] || texto;
 
     }
 
@@ -2108,7 +2549,9 @@
 
       return dados.filter(
         x =>
-          x.status === status
+          normalizarStatus(
+            x.status
+          ) === status
       ).length;
 
     }
@@ -2124,16 +2567,24 @@
         estaAtrasado(x);
 
 
+      const statusNormalizado =
+        normalizarStatus(
+          x.status
+        );
+
+
       const statusClass =
         statusClasses[
-          x.status
-        ] || 'status-backlog';
+          statusNormalizado
+        ] || 'status-outro';
 
 
       const statusTexto =
         statusNomes[
-          x.status
-        ] || x.status || '—';
+          statusNormalizado
+        ] ||
+        x.status ||
+        '—';
 
 
       const pendClass =
@@ -2175,24 +2626,12 @@
           </td>
 
 
-          <td
-            class="${
-              atrasado
-                ? 'late'
-                : ''
-            }"
-          >
+          <td>
 
             ${
-              x.prazo
-                ? br(x.prazo)
-                : 'Não definido'
-            }
-
-            ${
-              atrasado
-                ? ' • ATRASADO'
-                : ''
+              x.data_criacao
+                ? br(x.data_criacao)
+                : '—'
             }
 
           </td>
@@ -2202,7 +2641,20 @@
 
             ${
               esc(
-                x.descricao ??
+                x.cliente ??
+                '—'
+              )
+            }
+
+          </td>
+
+
+          <td>
+
+            ${
+              esc(
+                x.assunto ||
+                x.descricao ||
                 '—'
               )
             }
@@ -2230,6 +2682,41 @@
                 `
 
                 : '—'
+            }
+
+          </td>
+
+
+          <td>
+
+            ${
+              esc(
+                x.desenvolvedor ??
+                '—'
+              )
+            }
+
+          </td>
+
+
+          <td
+            class="${
+              atrasado
+                ? 'late'
+                : ''
+            }"
+          >
+
+            ${
+              x.prazo
+                ? br(x.prazo)
+                : 'Não definido'
+            }
+
+            ${
+              atrasado
+                ? ' • ATRASADO'
+                : ''
             }
 
           </td>
@@ -2342,9 +2829,13 @@
 
       if (
         !x.prazo ||
-        x.status ===
+        normalizarStatus(
+          x.status
+        ) ===
         'CONCLUIDO' ||
-        x.status ===
+        normalizarStatus(
+          x.status
+        ) ===
         'ENTREGUE'
       ) {
 
@@ -2457,6 +2948,721 @@
 
 
     /* =========================
+       IMPORTAÇÃO EXCEL
+    ========================= */
+
+    function selecionarExcel() {
+
+      document
+        .getElementById(
+          'excelInput'
+        )
+        .click();
+
+    }
+
+
+    document
+      .getElementById(
+        'excelInput'
+      )
+      .addEventListener(
+        'change',
+        selecionarArquivoExcel
+      );
+
+
+    function selecionarArquivoExcel(e) {
+
+      const arquivo =
+        e.target.files[0];
+
+
+      if (!arquivo) {
+
+        return;
+
+      }
+
+
+      arquivoExcelSelecionado =
+        arquivo;
+
+
+      document
+        .getElementById(
+          'importModal'
+        )
+        .classList
+        .add('open');
+
+    }
+
+
+    function fecharImportacao() {
+
+      arquivoExcelSelecionado =
+        null;
+
+      document
+        .getElementById(
+          'excelInput'
+        )
+        .value = '';
+
+      document
+        .getElementById(
+          'importModal'
+        )
+        .classList
+        .remove('open');
+
+    }
+
+
+    async function executarImportacao() {
+
+      if (
+        !arquivoExcelSelecionado
+      ) {
+
+        alert(
+          'Selecione um arquivo Excel.'
+        );
+
+        return;
+
+      }
+
+
+      const botao =
+        document
+          .getElementById(
+            'confirmImportBtn'
+          );
+
+      const cancelar =
+        document
+          .getElementById(
+            'cancelImportBtn'
+          );
+
+
+      botao.disabled = true;
+      cancelar.disabled = true;
+
+
+      document
+        .getElementById(
+          'importProgress'
+        )
+        .style.display =
+        'block';
+
+
+      try {
+
+        const arquivo =
+          arquivoExcelSelecionado;
+
+
+        const buffer =
+          await arquivo.arrayBuffer();
+
+
+        const workbook =
+          XLSX.read(
+            buffer,
+            {
+              type: 'array',
+              cellDates: true
+            }
+          );
+
+
+        const primeiraAba =
+          workbook.SheetNames[0];
+
+
+        const planilha =
+          workbook.Sheets[
+            primeiraAba
+          ];
+
+
+        const linhas =
+          XLSX.utils.sheet_to_json(
+            planilha,
+            {
+              defval: ''
+            }
+          );
+
+
+        if (!linhas.length) {
+
+          throw new Error(
+            'O Excel não possui registros.'
+          );
+
+        }
+
+
+        const existentes =
+          [...dados];
+
+
+        let novas = 0;
+        let atualizadas = 0;
+        let erros = 0;
+
+
+        for (
+          let i = 0;
+          i < linhas.length;
+          i++
+        ) {
+
+          const linha =
+            linhas[i];
+
+
+          atualizarProgresso(
+            i + 1,
+            linhas.length
+          );
+
+
+          const numeroOS =
+            obterColuna(
+              linha,
+              [
+                'O.S.',
+                'OS',
+                'O.S',
+                'Nº O.S.',
+                'NUMERO O.S.'
+              ]
+            );
+
+
+          if (!numeroOS) {
+
+            continue;
+
+          }
+
+
+          const registroExcel = {
+
+            os:
+              numeroOS,
+
+            data_criacao:
+              converterData(
+                obterColuna(
+                  linha,
+                  [
+                    'DATA DE CRIAÇÃO',
+                    'DATA DE CRIACAO'
+                  ]
+                )
+              ),
+
+            cliente:
+              valorExcel(
+                obterColuna(
+                  linha,
+                  [
+                    'CLIENTE'
+                  ]
+                )
+              ),
+
+            usuario:
+              valorExcel(
+                obterColuna(
+                  linha,
+                  [
+                    'USUÁRIO',
+                    'USUARIO'
+                  ]
+                )
+              ),
+
+            status:
+              normalizarStatus(
+                obterColuna(
+                  linha,
+                  [
+                    'STATUS'
+                  ]
+                )
+              ),
+
+            produto:
+              valorExcel(
+                obterColuna(
+                  linha,
+                  [
+                    'PRODUTO'
+                  ]
+                )
+              ),
+
+            grupo:
+              valorExcel(
+                obterColuna(
+                  linha,
+                  [
+                    'GRUPO'
+                  ]
+                )
+              ),
+
+            assunto:
+              valorExcel(
+                obterColuna(
+                  linha,
+                  [
+                    'ASSUNTO'
+                  ]
+                )
+              ),
+
+            desenvolvedor:
+              valorExcel(
+                obterColuna(
+                  linha,
+                  [
+                    'DESENVOLVEDOR'
+                  ]
+                )
+              ),
+
+            entregue_em:
+              converterData(
+                obterColuna(
+                  linha,
+                  [
+                    'ENTREGUE EM',
+                    'ENTREGUE'
+                  ]
+                )
+              )
+
+          };
+
+
+          const existente =
+            existentes.find(
+              x =>
+                String(x.os).trim() ===
+                String(numeroOS).trim()
+            );
+
+
+          let resultado;
+
+
+          /*
+            IMPORTANTE:
+
+            Na atualização, somente os dados
+            vindos do Excel são alterados.
+
+            prioridade
+            prazo
+            pendencia
+            observacao
+
+            NÃO são alterados.
+          */
+
+
+          if (existente) {
+
+            resultado =
+              await db
+                .from(
+                  'ordens_servico'
+                )
+                .update(
+                  registroExcel
+                )
+                .eq(
+                  'id',
+                  existente.id
+                );
+
+
+            if (
+              resultado.error
+            ) {
+
+              console.error(
+                'Erro ao atualizar O.S.',
+                numeroOS,
+                resultado.error
+              );
+
+              erros++;
+
+            } else {
+
+              atualizadas++;
+
+            }
+
+          } else {
+
+            resultado =
+              await db
+                .from(
+                  'ordens_servico'
+                )
+                .insert(
+                  registroExcel
+                );
+
+
+            if (
+              resultado.error
+            ) {
+
+              console.error(
+                'Erro ao inserir O.S.',
+                numeroOS,
+                resultado.error
+              );
+
+              erros++;
+
+            } else {
+
+              novas++;
+
+            }
+
+          }
+
+        }
+
+
+        await carregarDados();
+
+
+        fecharImportacao();
+
+
+        alert(
+
+          'Importação concluída!\n\n' +
+
+          'Novas O.S.: ' +
+          novas +
+          '\n' +
+
+          'O.S. atualizadas: ' +
+          atualizadas +
+          '\n' +
+
+          'Erros: ' +
+          erros
+
+        );
+
+
+      } catch (erro) {
+
+        console.error(
+          erro
+        );
+
+
+        alert(
+          'Não foi possível importar o Excel.\n\n' +
+          erro.message
+        );
+
+      }
+
+
+      botao.disabled = false;
+      cancelar.disabled = false;
+
+    }
+
+
+    /* =========================
+       OBTER COLUNA DO EXCEL
+    ========================= */
+
+    function obterColuna(
+      linha,
+      nomes
+    ) {
+
+      const chaves =
+        Object.keys(
+          linha
+        );
+
+
+      for (
+        const nome of nomes
+      ) {
+
+        const chave =
+          chaves.find(
+            k =>
+              normalizarCabecalho(k) ===
+              normalizarCabecalho(nome)
+          );
+
+
+        if (
+          chave !== undefined
+        ) {
+
+          return linha[chave];
+
+        }
+
+      }
+
+
+      return '';
+
+    }
+
+
+    function normalizarCabecalho(
+      valor
+    ) {
+
+      return String(
+        valor ?? ''
+      )
+        .trim()
+        .toUpperCase()
+        .normalize('NFD')
+        .replace(
+          /[\u0300-\u036f]/g,
+          ''
+        )
+        .replace(
+          /\s+/g,
+          ' '
+        );
+
+    }
+
+
+    /* =========================
+       VALOR DO EXCEL
+    ========================= */
+
+    function valorExcel(
+      valor
+    ) {
+
+      if (
+        valor === null ||
+        valor === undefined ||
+        valor === ''
+      ) {
+
+        return null;
+
+      }
+
+
+      return String(
+        valor
+      ).trim();
+
+    }
+
+
+    /* =========================
+       CONVERTER DATA
+    ========================= */
+
+    function converterData(
+      valor
+    ) {
+
+      if (
+        valor === null ||
+        valor === undefined ||
+        valor === ''
+      ) {
+
+        return null;
+
+      }
+
+
+      if (
+        valor instanceof Date
+      ) {
+
+        const ano =
+          valor.getFullYear();
+
+        const mes =
+          String(
+            valor.getMonth() + 1
+          ).padStart(
+            2,
+            '0'
+          );
+
+        const dia =
+          String(
+            valor.getDate()
+          ).padStart(
+            2,
+            '0'
+          );
+
+
+        return (
+          ano +
+          '-' +
+          mes +
+          '-' +
+          dia
+        );
+
+      }
+
+
+      if (
+        typeof valor ===
+        'number'
+      ) {
+
+        const data =
+          XLSX.SSF.parse_date_code(
+            valor
+          );
+
+
+        if (!data) {
+
+          return null;
+
+        }
+
+
+        return (
+
+          data.y +
+          '-' +
+          String(data.m)
+            .padStart(2, '0') +
+          '-' +
+          String(data.d)
+            .padStart(2, '0')
+
+        );
+
+      }
+
+
+      const texto =
+        String(
+          valor
+        ).trim();
+
+
+      /*
+        DD/MM/YYYY
+      */
+
+      const partes =
+        texto.split('/');
+
+
+      if (
+        partes.length === 3
+      ) {
+
+        return (
+
+          partes[2] +
+          '-' +
+          String(
+            partes[1]
+          ).padStart(
+            2,
+            '0'
+          ) +
+          '-' +
+          String(
+            partes[0]
+          ).padStart(
+            2,
+            '0'
+          )
+
+        );
+
+      }
+
+
+      /*
+        YYYY-MM-DD
+      */
+
+      if (
+        /^\d{4}-\d{2}-\d{2}$/.test(
+          texto
+        )
+      ) {
+
+        return texto;
+
+      }
+
+
+      return null;
+
+    }
+
+
+    function atualizarProgresso(
+      atual,
+      total
+    ) {
+
+      const percentual =
+        Math.round(
+          (atual / total) * 100
+        );
+
+
+      document
+        .getElementById(
+          'progressFill'
+        )
+        .style.width =
+        percentual + '%';
+
+
+      document
+        .getElementById(
+          'importStatus'
+        )
+        .textContent =
+        `Importando ${atual} de ${total} O.S.`;
+
+    }
+
+
+    /* =========================
        FILTROS
     ========================= */
 
@@ -2485,7 +3691,7 @@
 
 
     /* =========================
-       FECHAR MODAL AO CLICAR FORA
+       FECHAR MODAIS
     ========================= */
 
     document
@@ -2500,6 +3706,25 @@
           ) {
 
             fechar();
+
+          }
+
+        }
+      );
+
+
+    document
+      .getElementById('importModal')
+      .addEventListener(
+        'click',
+        function(e) {
+
+          if (
+            e.target ===
+            this
+          ) {
+
+            fecharImportacao();
 
           }
 
