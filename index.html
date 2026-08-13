@@ -32,66 +32,10 @@ body{
   margin:0;
   font-family:Inter,Segoe UI,Arial,sans-serif;
   background:var(--bg);
-  color:var(--text)
+  color:var(--text);
 }
 
-.login{
-  min-height:100vh;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a)
-}
-
-.loginbox{
-  width:min(420px,92%);
-  background:#fff;
-  border-radius:20px;
-  padding:36px;
-  box-shadow:0 20px 60px #0004
-}
-
-.logo{
-  font-weight:900;
-  font-size:34px;
-  color:var(--green)
-}
-
-.logo span{
-  display:block;
-  font-size:13px;
-  color:var(--muted);
-  font-weight:500;
-  margin-top:4px
-}
-
-.login h2{margin:30px 0 6px}
-.login p{color:var(--muted);margin-top:0}
-
-.field{margin:15px 0}
-
-.field label{
-  display:block;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:7px
-}
-
-input,select,textarea{
-  width:100%;
-  padding:12px 13px;
-  border:1px solid #d5dfdb;
-  border-radius:9px;
-  font:inherit;
-  background:#fff;
-  outline:none
-}
-
-input:focus,select:focus,textarea:focus{
-  border-color:var(--green);
-  box-shadow:0 0 0 3px #006b4f14
-}
-
-textarea{resize:vertical}
+button,input,select,textarea{font:inherit}
 
 button{
   border:0;
@@ -99,53 +43,104 @@ button{
   padding:11px 16px;
   font-weight:700;
   cursor:pointer;
-  font-family:inherit
 }
 
 button:hover{opacity:.92}
 
 button:disabled{
-  opacity:.55;
-  cursor:not-allowed
+  opacity:.6;
+  cursor:not-allowed;
 }
+
+input,select,textarea{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #d5dfdb;
+  border-radius:9px;
+  background:#fff;
+  outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px #006b4f14;
+}
+
+textarea{resize:vertical}
 
 .primary{
   background:var(--green);
-  color:#fff
+  color:#fff;
 }
 
 .secondary{
   background:#eef3f1;
-  color:var(--dark)
+  color:var(--dark);
 }
 
-.control-button{
-  background:#7652b8;
-  color:#fff
+.login{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a);
+}
+
+.loginbox{
+  width:min(420px,92%);
+  background:#fff;
+  border-radius:20px;
+  padding:36px;
+  box-shadow:0 20px 60px #0004;
+}
+
+.logo{
+  font-weight:900;
+  font-size:34px;
+  color:var(--green);
+}
+
+.logo span{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+  font-weight:500;
+  margin-top:4px;
+}
+
+.login h2{margin:30px 0 6px}
+.login p{color:var(--muted)}
+
+.field{margin:15px 0}
+
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
 }
 
 .wide{
   width:100%;
-  margin-top:8px
+  margin-top:8px;
 }
 
 .hint{
   font-size:12px;
   color:var(--muted);
   margin-top:14px;
-  line-height:1.5
+  line-height:1.5;
 }
 
 .error{
   color:#b42318;
   font-size:13px;
   margin-top:8px;
-  display:none
+  display:none;
 }
 
 .app{
   display:none;
-  min-height:100vh
+  min-height:100vh;
 }
 
 .sidebar{
@@ -154,13 +149,13 @@ button:disabled{
   width:245px;
   background:#073e31;
   color:#fff;
-  padding:25px 17px
+  padding:25px 17px;
 }
 
 .side-logo{
   font-size:27px;
   font-weight:900;
-  padding:8px 12px 28px
+  padding:8px 12px 28px;
 }
 
 .side-logo small{
@@ -168,7 +163,7 @@ button:disabled{
   font-size:11px;
   font-weight:500;
   opacity:.65;
-  margin-top:3px
+  margin-top:3px;
 }
 
 .nav{padding:8px 0}
@@ -178,12 +173,11 @@ button:disabled{
   border-radius:9px;
   margin:4px 0;
   color:#dcebe6;
-  cursor:pointer
 }
 
-.nav .active,.nav div:hover{
+.nav div.active{
   background:#ffffff16;
-  color:#fff
+  color:#fff;
 }
 
 .user{
@@ -193,19 +187,19 @@ button:disabled{
   right:17px;
   padding:12px;
   border-top:1px solid #ffffff22;
-  font-size:13px
+  font-size:13px;
 }
 
 .user button{
   margin-top:10px;
   width:100%;
   background:#ffffff12;
-  color:#fff
+  color:#fff;
 }
 
 .main{
   margin-left:245px;
-  padding:28px 34px
+  padding:28px 34px;
 }
 
 .top{
@@ -213,50 +207,50 @@ button:disabled{
   justify-content:space-between;
   align-items:center;
   margin-bottom:25px;
-  gap:15px
+  gap:15px;
 }
 
 .top h1{
   margin:0;
-  font-size:25px
+  font-size:25px;
 }
 
 .top p{
   margin:5px 0;
-  color:var(--muted)
+  color:var(--muted);
 }
 
 .top-buttons{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
-  justify-content:flex-end
+  justify-content:flex-end;
 }
 
 .cards{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:14px
+  gap:14px;
 }
 
 .card{
-  background:var(--card);
+  background:#fff;
   border:1px solid var(--line);
   border-radius:13px;
   padding:19px;
-  box-shadow:0 3px 12px #12382f08
+  box-shadow:0 3px 12px #12382f08;
 }
 
 .card .label{
   font-size:12px;
   color:var(--muted);
-  font-weight:700
+  font-weight:700;
 }
 
 .card .num{
   font-size:29px;
   font-weight:800;
-  margin-top:9px
+  margin-top:9px;
 }
 
 .card.green{border-top:3px solid var(--green)}
@@ -269,21 +263,21 @@ button:disabled{
   background:#fff;
   border:1px solid var(--line);
   border-radius:13px;
-  padding:20px
+  padding:20px;
 }
 
 .toolbar{
   display:flex;
   gap:9px;
   justify-content:space-between;
-  flex-wrap:wrap
+  flex-wrap:wrap;
 }
 
 .filters{
   display:flex;
   gap:8px;
   flex:1;
-  min-width:300px
+  min-width:300px;
 }
 
 .filters input{max-width:320px}
@@ -291,21 +285,21 @@ button:disabled{
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:17px
+  margin-top:17px;
 }
 
 th,td{
   text-align:left;
   padding:13px 10px;
   border-bottom:1px solid var(--line);
-  font-size:13px
+  font-size:13px;
 }
 
 th{
   font-size:11px;
   text-transform:uppercase;
   color:var(--muted);
-  background:#fafcfb
+  background:#fafcfb;
 }
 
 .badge{
@@ -314,7 +308,7 @@ th{
   border-radius:99px;
   font-size:10px;
   font-weight:800;
-  white-space:nowrap
+  white-space:nowrap;
 }
 
 .status-backlog{background:#eee;color:#555}
@@ -332,35 +326,28 @@ th{
 .status-aguardando{background:#fff3d6;color:#94600a}
 .status-paralisado{background:#ffe5e5;color:#a52828}
 
-.pc{
-  background:#e4ecff;
-  color:#365aa0
-}
-
-.pe{
-  background:#def5ee;
-  color:#17664f
-}
+.pc{background:#e4ecff;color:#365aa0}
+.pe{background:#def5ee;color:#17664f}
 
 .table-actions{
   display:flex;
   align-items:center;
   gap:6px;
-  white-space:nowrap
+  white-space:nowrap;
 }
 
 .edit-btn{
   background:#eef3f1;
   color:var(--dark);
   padding:7px 10px;
-  font-size:12px
+  font-size:12px;
 }
 
 .delete-btn{
   background:#fee7e7;
   color:#9f2626;
   padding:7px 10px;
-  font-size:12px
+  font-size:12px;
 }
 
 .modal{
@@ -370,28 +357,28 @@ th{
   background:#0007;
   place-items:center;
   padding:20px;
-  z-index:1000
+  z-index:1000;
 }
 
 .modal.open{display:grid}
 
 .modalbox{
   background:#fff;
-  width:min(700px,100%);
+  width:min(850px,100%);
   max-height:90vh;
   overflow-y:auto;
   border-radius:15px;
-  padding:25px
+  padding:25px;
 }
 
 .modalbox h2{
-  margin:0 0 20px
+  margin:0 0 20px;
 }
 
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:13px
+  gap:13px;
 }
 
 .full{grid-column:1/-1}
@@ -399,19 +386,16 @@ th{
 .actions{
   display:flex;
   justify-content:flex-end;
-  align-items:center;
   gap:10px;
   width:100%;
   margin-top:22px;
   padding-top:18px;
-  border-top:1px solid var(--line)
+  border-top:1px solid var(--line);
 }
-
-.actions button{min-width:105px}
 
 .cancel-btn{
   background:#eef1ef;
-  color:var(--dark)
+  color:var(--dark);
 }
 
 .import-help{
@@ -422,18 +406,7 @@ th{
   font-size:12px;
   color:var(--muted);
   line-height:1.5;
-  margin-bottom:15px
-}
-
-.control-help{
-  background:#f4f0fb;
-  border:1px solid #e3d8f3;
-  border-radius:10px;
-  padding:14px;
-  font-size:12px;
-  color:#5b4975;
-  line-height:1.6;
-  margin-bottom:15px
+  margin-bottom:15px;
 }
 
 .import-result{
@@ -442,7 +415,7 @@ th{
   padding:15px;
   border-radius:10px;
   background:#f7f9f8;
-  border:1px solid var(--line)
+  border:1px solid var(--line);
 }
 
 .import-result.show{display:block}
@@ -451,7 +424,7 @@ th{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
-  margin-bottom:12px
+  margin-bottom:12px;
 }
 
 .result-card{
@@ -459,13 +432,13 @@ th{
   border:1px solid var(--line);
   border-radius:9px;
   padding:12px;
-  text-align:center
+  text-align:center;
 }
 
 .result-card strong{
   display:block;
   font-size:22px;
-  margin-top:4px
+  margin-top:4px;
 }
 
 .result-new{color:var(--green)}
@@ -477,13 +450,13 @@ th{
   overflow-y:auto;
   font-size:12px;
   line-height:1.5;
-  color:#8f2222
+  color:#8f2222;
 }
 
 .file-name{
   font-size:12px;
   color:var(--muted);
-  margin-top:8px
+  margin-top:8px;
 }
 
 @media(max-width:1250px){
@@ -497,54 +470,52 @@ th{
 @media(max-width:700px){
   .sidebar{
     position:static;
-    width:auto
+    width:auto;
   }
 
   .main{
     margin-left:0;
-    padding:20px
+    padding:20px;
   }
 
   .user{
     position:static;
-    margin-top:25px
+    margin-top:25px;
   }
 
   .grid{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
-  .full{
-    grid-column:auto
-  }
+  .full{grid-column:auto}
 
   .cards{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
   .top{
     align-items:flex-start;
-    flex-direction:column
+    flex-direction:column;
   }
 
   .top-buttons{
     width:100%;
-    justify-content:stretch
+    justify-content:stretch;
   }
 
   .top-buttons button{
-    flex:1
+    flex:1;
   }
 
   .filters{
     flex-direction:column;
-    min-width:100%
+    min-width:100%;
   }
 
   .filters input{max-width:none}
 
   .result-grid{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 }
 </style>
@@ -568,12 +539,12 @@ th{
 <form id="loginForm">
 
   <div class="field">
-    <label for="email">E-mail</label>
+    <label>E-mail</label>
     <input id="email" type="email" required placeholder="seu@email.com">
   </div>
 
   <div class="field">
-    <label for="senha">Senha</label>
+    <label>Senha</label>
     <input id="senha" type="password" required placeholder="••••••••">
   </div>
 
@@ -608,23 +579,14 @@ th{
 <div class="nav">
   <div class="active">▦ Dashboard</div>
   <div>✓ Ordens de Serviço</div>
-  <div>◉ Relatórios</div>
+  <div>◉ Controle</div>
 </div>
 
 <div class="user">
-
   <strong id="useremail">Usuário</strong>
-
   <br>
-
-  <span style="opacity:.6">
-    Acesso ao sistema
-  </span>
-
-  <button onclick="sair()">
-    Sair
-  </button>
-
+  <span style="opacity:.6">Acesso ao sistema</span>
+  <button onclick="sair()">Sair</button>
 </div>
 ```
 
@@ -642,27 +604,15 @@ th{
 
   <div class="top-buttons">
 
-    <!-- PRIMEIRO BOTÃO -->
-    <button
-      class="secondary"
-      onclick="abrirImportacao()"
-    >
+    <button class="secondary" onclick="abrirImportacao()">
       📥 Importar Excel
     </button>
 
-    <!-- SEGUNDO BOTÃO -->
-    <button
-      class="control-button"
-      onclick="abrirImportacaoControle()"
-    >
+    <button class="secondary" onclick="abrirImportacaoControle()">
       📋 Importar Controle
     </button>
 
-    <!-- NOVA O.S. -->
-    <button
-      class="primary"
-      onclick="abrir()"
-    >
+    <button class="primary" onclick="abrir()">
       + Nova O.S.
     </button>
 
@@ -707,10 +657,7 @@ th{
 
     <div class="filters">
 
-      <input
-        id="busca"
-        placeholder="Buscar O.S. ou descrição..."
-      >
+      <input id="busca" placeholder="Buscar O.S. ou descrição...">
 
       <select id="status">
         <option value="">Todos os status</option>
@@ -755,8 +702,6 @@ th{
           <th>Assunto</th>
           <th>Desenvolvedor</th>
           <th>Entregue Em</th>
-          <th>Prioridade</th>
-          <th>Prazo Coplan</th>
           <th>Pendência</th>
           <th>Observação</th>
           <th>Ações</th>
@@ -776,7 +721,7 @@ th{
 
 </section>
 
-<!-- MODAL NOVA / EDITAR -->
+<!-- MODAL NOVA O.S. -->
 
 <div class="modal" id="modal">
 
@@ -785,7 +730,7 @@ th{
 ```
 <h2 id="mt">Nova O.S.</h2>
 
-<form id="osForm" novalidate>
+<form id="osForm">
 
   <input type="hidden" id="id">
 
@@ -858,16 +803,6 @@ th{
     </div>
 
     <div class="field">
-      <label>Prioridade</label>
-      <input id="prioridade" type="number" min="0">
-    </div>
-
-    <div class="field">
-      <label>Prazo Coplan</label>
-      <input id="prazo" type="date">
-    </div>
-
-    <div class="field">
       <label>Pendência</label>
 
       <select id="pe">
@@ -891,7 +826,6 @@ th{
   </div>
 
   <div class="actions">
-
     <button type="button" class="cancel-btn" onclick="fechar()">
       Cancelar
     </button>
@@ -899,7 +833,6 @@ th{
     <button type="submit" class="primary">
       Salvar
     </button>
-
   </div>
 
 </form>
@@ -909,7 +842,7 @@ th{
 
 </div>
 
-<!-- MODAL IMPORTAR EXCEL PRINCIPAL -->
+<!-- MODAL IMPORTAR EXCEL -->
 
 <div class="modal" id="importModal">
 
@@ -920,24 +853,16 @@ th{
 
 <div class="import-help">
 
-  <strong>Formato esperado:</strong><br><br>
+  <strong>Colunas esperadas:</strong><br><br>
 
-  O.S. |
-  DATA DE CRIAÇÃO |
-  CLIENTE |
-  USUÁRIO |
-  STATUS |
-  PRODUTO |
-  GRUPO |
-  ASSUNTO |
-  DESENVOLVEDOR |
-  ENTREGUE EM
+  O.S. | DATA DE CRIAÇÃO | CLIENTE | USUÁRIO |
+  STATUS | PRODUTO | GRUPO | ASSUNTO |
+  DESENVOLVEDOR | ENTREGUE EM
 
   <br><br>
 
-  A coluna <strong>O.S.</strong> identifica a O.S.
-  existente. Se já existir, os dados principais serão
-  atualizados. Se não existir, uma nova O.S. será criada.
+  A O.S. existente será atualizada.
+  A O.S. que não existir será criada.
 
   <br><br>
 
@@ -949,9 +874,7 @@ th{
 
 <div class="field">
 
-  <label for="arquivoExcel">
-    Selecione o arquivo Excel
-  </label>
+  <label>Selecione o arquivo Excel</label>
 
   <input
     id="arquivoExcel"
@@ -1024,48 +947,38 @@ th{
 ```
 <h2>📋 Importar Controle</h2>
 
-<div class="control-help">
+<div class="import-help">
 
-  <strong>Este é um controle separado da importação principal.</strong>
-
-  <br><br>
-
-  O Excel deve possuir as seguintes colunas:
+  <strong>Este controle é independente das O.S. cadastradas.</strong>
 
   <br><br>
 
-  <strong>
-    Ordem |
-    DATA DE CRIAÇÃO |
-    USUÁRIO |
-    Prioridade |
-    Prazo Coplan |
-    ASSUNTO
-  </strong>
+  <strong>Colunas esperadas:</strong><br><br>
 
-  <br><br>
-
-  A coluna <strong>Ordem</strong> será utilizada para
-  localizar a O.S. já cadastrada no sistema.
+  Ordem | DATA DE CRIAÇÃO | USUÁRIO |
+  Prioridade | Prazo Coplan | ASSUNTO
 
   <br><br>
 
   <strong>
-    Esta importação NÃO cria novas O.S.
+    A coluna Ordem/O.S. NÃO é obrigatória.
   </strong>
 
   <br>
 
-  Ela apenas atualiza o controle da O.S. encontrada:
-  <strong>data de criação, usuário, prioridade, prazo e assunto.</strong>
+  Mesmo que uma linha não tenha número de O.S.,
+  ela será importada normalmente.
+
+  <br><br>
+
+  Se a ordem já existir no controle, os dados serão
+  atualizados. Se não existir, será criada uma nova linha.
 
 </div>
 
 <div class="field">
 
-  <label for="arquivoControle">
-    Selecione o Excel do controle
-  </label>
+  <label>Selecione o arquivo Excel do Controle</label>
 
   <input
     id="arquivoControle"
@@ -1083,50 +996,23 @@ th{
   <div class="result-grid">
 
     <div class="result-card">
+      Importadas
+      <strong class="result-new" id="controleImportadas">0</strong>
+    </div>
 
+    <div class="result-card">
       Atualizadas
-
-      <strong
-        class="result-update"
-        id="controleAtualizadas"
-      >
-        0
-      </strong>
-
+      <strong class="result-update" id="controleAtualizadas">0</strong>
     </div>
 
     <div class="result-card">
-
-      Não encontradas
-
-      <strong
-        class="result-new"
-        id="controleNaoEncontradas"
-      >
-        0
-      </strong>
-
-    </div>
-
-    <div class="result-card">
-
       Erros
-
-      <strong
-        class="result-error"
-        id="controleErros"
-      >
-        0
-      </strong>
-
+      <strong class="result-error" id="controleErros">0</strong>
     </div>
 
   </div>
 
-  <div
-    class="error-list"
-    id="controleErrorList"
-  ></div>
+  <div class="error-list" id="controleErrorList"></div>
 
 </div>
 
@@ -1142,7 +1028,7 @@ th{
 
   <button
     type="button"
-    class="control-button"
+    class="primary"
     id="btnImportarControle"
     onclick="importarControle()"
   >
@@ -1157,10 +1043,6 @@ th{
 </div>
 
 <script>
-
-/* ==================================================
-   SUPABASE
-================================================== */
 
 const SUPABASE_URL =
   'https://otzhzpimeawafhguhcae.supabase.co';
@@ -1180,9 +1062,7 @@ let dados = [];
 let carregando = false;
 
 
-/* ==================================================
-   LOGIN
-================================================== */
+/* LOGIN */
 
 document
   .getElementById('loginForm')
@@ -1201,7 +1081,7 @@ async function entrar(e){
   const erro =
     document.getElementById('loginerr');
 
-  erro.style.display = 'none';
+  erro.style.display='none';
 
   const {error} =
     await db.auth.signInWithPassword({
@@ -1210,18 +1090,14 @@ async function entrar(e){
     });
 
   if(error){
-
-    erro.textContent =
-      'E-mail ou senha inválidos.';
-
-    erro.style.display = 'block';
+    erro.textContent='E-mail ou senha inválidos.';
+    erro.style.display='block';
   }
+
 }
 
 
-/* ==================================================
-   INICIAR
-================================================== */
+/* INICIAR */
 
 async function iniciar(){
 
@@ -1230,28 +1106,18 @@ async function iniciar(){
   } = await db.auth.getSession();
 
   if(session){
-
     mostrarApp(session.user);
-
   }else{
-
     mostrarLogin();
-
   }
 
   db.auth.onAuthStateChange(
     (_event,session)=>{
-
       if(session){
-
         mostrarApp(session.user);
-
       }else{
-
         mostrarLogin();
-
       }
-
     }
   );
 }
@@ -1259,7 +1125,6 @@ async function iniciar(){
 function mostrarLogin(){
 
   document.getElementById('login').style.display='grid';
-
   document.getElementById('app').style.display='none';
 
 }
@@ -1267,13 +1132,13 @@ function mostrarLogin(){
 async function mostrarApp(user){
 
   document.getElementById('login').style.display='none';
-
   document.getElementById('app').style.display='block';
 
   document.getElementById('useremail').textContent =
     user?.email || 'Usuário';
 
   await carregarDados();
+
 }
 
 async function sair(){
@@ -1283,14 +1148,11 @@ async function sair(){
 }
 
 
-/* ==================================================
-   CARREGAR
-================================================== */
+/* CARREGAR O.S. */
 
 async function carregarDados(){
 
   carregando=true;
-
   render();
 
   const {
@@ -1307,7 +1169,7 @@ async function carregarDados(){
   if(error){
 
     alert(
-      'Não foi possível carregar as O.S.\n\n'+
+      'Não foi possível carregar as O.S.\n\n' +
       error.message
     );
 
@@ -1317,17 +1179,15 @@ async function carregarDados(){
   dados=data || [];
 
   render();
+
 }
 
 
-/* ==================================================
-   NOVA / EDITAR
-================================================== */
+/* NOVA / EDITAR */
 
 function abrir(registro=null){
 
   document.getElementById('osForm').reset();
-
   document.getElementById('id').value='';
 
   document.getElementById('mt').textContent =
@@ -1335,73 +1195,35 @@ function abrir(registro=null){
 
   if(registro){
 
-    document.getElementById('id').value =
-      registro.id || '';
+    document.getElementById('id').value=registro.id || '';
+    document.getElementById('os').value=registro.os ?? '';
+    document.getElementById('dataCriacao').value=registro.data_criacao ?? '';
+    document.getElementById('cliente').value=registro.cliente ?? '';
+    document.getElementById('usuario').value=registro.usuario ?? '';
+    document.getElementById('st').value=registro.status ?? '';
+    document.getElementById('produto').value=registro.produto ?? '';
+    document.getElementById('grupo').value=registro.grupo ?? '';
+    document.getElementById('assunto').value=registro.assunto ?? '';
+    document.getElementById('desenvolvedor').value=registro.desenvolvedor ?? '';
+    document.getElementById('entregue').value=registro.entregue_em ?? '';
+    document.getElementById('pe').value=registro.pendencia ?? '';
+    document.getElementById('desc').value=registro.descricao ?? '';
+    document.getElementById('obs').value=registro.observacao ?? '';
 
-    document.getElementById('os').value =
-      registro.os ?? '';
-
-    document.getElementById('dataCriacao').value =
-      registro.data_criacao ?? '';
-
-    document.getElementById('cliente').value =
-      registro.cliente ?? '';
-
-    document.getElementById('usuario').value =
-      registro.usuario ?? '';
-
-    document.getElementById('st').value =
-      registro.status ?? '';
-
-    document.getElementById('produto').value =
-      registro.produto ?? '';
-
-    document.getElementById('grupo').value =
-      registro.grupo ?? '';
-
-    document.getElementById('assunto').value =
-      registro.assunto ?? '';
-
-    document.getElementById('desenvolvedor').value =
-      registro.desenvolvedor ?? '';
-
-    document.getElementById('entregue').value =
-      registro.entregue_em ?? '';
-
-    document.getElementById('prioridade').value =
-      registro.prioridade ?? '';
-
-    document.getElementById('prazo').value =
-      registro.prazo ?? '';
-
-    document.getElementById('pe').value =
-      registro.pendencia ?? '';
-
-    document.getElementById('desc').value =
-      registro.descricao ?? '';
-
-    document.getElementById('obs').value =
-      registro.observacao ?? '';
   }
 
-  document
-    .getElementById('modal')
-    .classList
-    .add('open');
+  document.getElementById('modal').classList.add('open');
+
 }
 
 function fechar(){
 
-  document
-    .getElementById('modal')
-    .classList
-    .remove('open');
+  document.getElementById('modal').classList.remove('open');
+
 }
 
 
-/* ==================================================
-   SALVAR
-================================================== */
+/* SALVAR */
 
 document
   .getElementById('osForm')
@@ -1415,51 +1237,19 @@ async function salvar(e){
     document.getElementById('id').value.trim();
 
   const registro={
-
     os:valorOuNull('os'),
-
-    data_criacao:
-      valorOuNull('dataCriacao'),
-
-    cliente:
-      valorOuNull('cliente'),
-
-    usuario:
-      valorOuNull('usuario'),
-
-    status:
-      valorOuNull('st'),
-
-    produto:
-      valorOuNull('produto'),
-
-    grupo:
-      valorOuNull('grupo'),
-
-    assunto:
-      valorOuNull('assunto'),
-
-    desenvolvedor:
-      valorOuNull('desenvolvedor'),
-
-    entregue_em:
-      valorOuNull('entregue'),
-
-    prioridade:
-      valorNumeroOuNull('prioridade'),
-
-    prazo:
-      valorOuNull('prazo'),
-
-    pendencia:
-      valorOuNull('pe'),
-
-    descricao:
-      valorOuNull('desc'),
-
-    observacao:
-      valorOuNull('obs')
-
+    data_criacao:valorOuNull('dataCriacao'),
+    cliente:valorOuNull('cliente'),
+    usuario:valorOuNull('usuario'),
+    status:valorOuNull('st'),
+    produto:valorOuNull('produto'),
+    grupo:valorOuNull('grupo'),
+    assunto:valorOuNull('assunto'),
+    desenvolvedor:valorOuNull('desenvolvedor'),
+    entregue_em:valorOuNull('entregue'),
+    pendencia:valorOuNull('pe'),
+    descricao:valorOuNull('desc'),
+    observacao:valorOuNull('obs')
   };
 
   let resultado;
@@ -1488,7 +1278,7 @@ async function salvar(e){
   if(resultado.error){
 
     alert(
-      'Não foi possível salvar a O.S.\n\n'+
+      'Não foi possível salvar a O.S.\n\n' +
       resultado.error.message
     );
 
@@ -1496,70 +1286,41 @@ async function salvar(e){
   }
 
   fechar();
-
   await carregarDados();
+
 }
 
 function valorOuNull(id){
 
-  const elemento =
-    document.getElementById(id);
+  const el=document.getElementById(id);
 
-  if(!elemento)return null;
+  if(!el)return null;
 
-  const valor =
-    elemento.value.trim();
+  const valor=el.value.trim();
 
   return valor==='' ? null : valor;
-}
 
-function valorNumeroOuNull(id){
-
-  const elemento =
-    document.getElementById(id);
-
-  if(!elemento)return null;
-
-  const valor =
-    elemento.value.trim();
-
-  if(valor==='')return null;
-
-  const numero=Number(valor);
-
-  return Number.isFinite(numero)
-    ? numero
-    : null;
 }
 
 
-/* ==================================================
-   EXCLUIR
-================================================== */
+/* EXCLUIR */
 
 async function excluir(id){
 
-  const registro =
-    dados.find(
-      x=>String(x.id)===String(id)
-    );
+  const registro=
+    dados.find(x=>String(x.id)===String(id));
 
-  if(!registro){
+  if(!registro)return;
 
-    alert('O.S. não encontrada.');
-
-    return;
-  }
-
-  const confirmar =
+  const confirmar=
     confirm(
-      `Deseja realmente excluir a O.S. ${registro.os}?\n\n`+
+      `Deseja realmente excluir O.S. ${registro.os || ''}?\n\n`+
       `Esta ação não poderá ser desfeita.`
     );
 
   if(!confirmar)return;
 
-  const {error} =
+  const {error}=
     await db
       .from('ordens_servico')
       .delete()
@@ -1576,12 +1337,11 @@ async function excluir(id){
   }
 
   await carregarDados();
+
 }
 
 
-/* ==================================================
-   STATUS
-================================================== */
+/* STATUS */
 
 const statusNomes={
 
@@ -1624,26 +1384,22 @@ const statusClasses={
 };
 
 
-/* ==================================================
-   RENDER
-================================================== */
+/* RENDER */
 
 function render(){
 
-  const busca =
+  const busca=
     (
       document.getElementById('busca')?.value || ''
-    )
-      .toLowerCase()
-      .trim();
+    ).toLowerCase().trim();
 
-  const filtroStatus =
+  const filtroStatus=
     document.getElementById('status')?.value || '';
 
-  const filtroPendencia =
+  const filtroPendencia=
     document.getElementById('pendFiltro')?.value || '';
 
-  const lista =
+  const lista=
     dados.filter(x=>{
 
       const texto=[
@@ -1657,98 +1413,86 @@ function render(){
         x.desenvolvedor
       ]
       .map(v=>String(v||''))
-      .join(' ');
+      .join(' ')
+      .toLowerCase();
 
       return(
-        (!busca || texto.toLowerCase().includes(busca)) &&
+        (!busca || texto.includes(busca)) &&
         (!filtroStatus || x.status===filtroStatus) &&
         (!filtroPendencia || x.pendencia===filtroPendencia)
       );
+
     });
 
-  const tbody =
-    document.getElementById('tbody');
+  const tbody=document.getElementById('tbody');
 
   if(!lista.length){
 
     tbody.innerHTML=`
       <tr>
-        <td colspan="15"
+        <td colspan="13"
           style="text-align:center;padding:40px;color:#71807b">
-          ${
-            carregando
-              ? 'Carregando...'
-              : 'Nenhuma O.S. cadastrada.'
-          }
+          ${carregando?'Carregando...':'Nenhuma O.S. cadastrada.'}
         </td>
       </tr>
     `;
 
   }else{
 
-    tbody.innerHTML =
+    tbody.innerHTML=
       lista.map(montarLinha).join('');
 
   }
 
-  document.getElementById('total').textContent =
-    dados.length;
+  document.getElementById('total').textContent=dados.length;
 
-  document.getElementById('fazendo').textContent =
+  document.getElementById('fazendo').textContent=
     contarStatus('FAZENDO');
 
-  document.getElementById('teste').textContent =
+  document.getElementById('teste').textContent=
     dados.filter(x=>[
       'DISPONIVEL_TESTE',
       'TESTANDO',
       'TESTE_CONCLUIDO'
     ].includes(x.status)).length;
 
-  document.getElementById('producao').textContent =
+  document.getElementById('producao').textContent=
     contarStatus('EM_PRODUCAO');
 
-  document.getElementById('concluido').textContent =
+  document.getElementById('concluido').textContent=
     dados.filter(x=>[
       'CONCLUIDO',
       'ENTREGUE'
     ].includes(x.status)).length;
+
 }
 
 function contarStatus(status){
 
-  return dados.filter(
-    x=>x.status===status
-  ).length;
+  return dados.filter(x=>x.status===status).length;
+
 }
 
 
-/* ==================================================
-   LINHA
-================================================== */
+/* LINHA */
 
 function montarLinha(x){
 
-  const statusClass =
-    statusClasses[x.status] ||
-    'status-backlog';
+  const statusClass=
+    statusClasses[x.status] || 'status-backlog';
 
-  const statusTexto =
-    statusNomes[x.status] ||
-    x.status ||
-    '—';
+  const statusTexto=
+    statusNomes[x.status] || x.status || '—';
 
-  const pendClass =
-    x.pendencia==='Cliente'
-      ? 'pc'
-      : 'pe';
+  const pendClass=
+    x.pendencia==='Cliente' ? 'pc':'pe';
 
   return`
-
     <tr>
 
       <td><b>${esc(x.os||'—')}</b></td>
 
-      <td>${x.data_criacao ? br(x.data_criacao) : '—'}</td>
+      <td>${x.data_criacao?br(x.data_criacao):'—'}</td>
 
       <td>${esc(x.cliente||'—')}</td>
 
@@ -1757,91 +1501,70 @@ function montarLinha(x){
       <td>
         ${
           x.status
-            ? `<span class="badge ${statusClass}">
-                ${esc(statusTexto)}
-              </span>`
-            : '—'
+          ? `<span class="badge ${statusClass}">
+              ${esc(statusTexto)}
+            </span>`
+          :'—'
         }
       </td>
 
       <td>${esc(x.produto||'—')}</td>
-
       <td>${esc(x.grupo||'—')}</td>
-
       <td>${esc(x.assunto||'—')}</td>
-
       <td>${esc(x.desenvolvedor||'—')}</td>
 
-      <td>${x.entregue_em ? br(x.entregue_em) : '—'}</td>
-
-      <td>${x.prioridade ?? '—'}</td>
-
-      <td>${x.prazo ? br(x.prazo) : '—'}</td>
+      <td>${x.entregue_em?br(x.entregue_em):'—'}</td>
 
       <td>
         ${
           x.pendencia
-            ? `<span class="badge ${pendClass}">
-                ${esc(x.pendencia)}
-              </span>`
-            : '—'
+          ? `<span class="badge ${pendClass}">
+              ${esc(x.pendencia)}
+            </span>`
+          :'—'
         }
       </td>
 
       <td>${esc(x.observacao||'—')}</td>
 
       <td>
-
         <div class="table-actions">
 
           <button
             class="edit-btn"
-            onclick="editar('${escAttr(x.id)}')"
-          >
+            onclick="editar('${escAttr(x.id)}')">
             Editar
           </button>
 
           <button
             class="delete-btn"
-            onclick="excluir('${escAttr(x.id)}')"
-          >
+            onclick="excluir('${escAttr(x.id)}')">
             Excluir
           </button>
 
         </div>
-
       </td>
 
     </tr>
-
   `;
+
 }
 
 function editar(id){
 
-  const registro =
-    dados.find(
-      x=>String(x.id)===String(id)
-    );
+  const registro=
+    dados.find(x=>String(x.id)===String(id));
 
-  if(!registro){
+  if(registro)abrir(registro);
 
-    alert('O.S. não encontrada.');
-
-    return;
-  }
-
-  abrir(registro);
 }
 
 
-/* ==================================================
-   DATAS
-================================================== */
+/* DATAS */
 
 function br(valor){
 
-  if(!valor)return '—';
+  if(!valor)return'—';
 
   const texto=String(valor);
 
@@ -1849,10 +1572,12 @@ function br(valor){
 
     const p=texto.split('-');
 
-    return `${p[2]}/${p[1]}/${p[0]}`;
+    return`${p[2]}/${p[1]}/${p[0]}`;
+
   }
 
   return texto;
+
 }
 
 function converterDataExcel(valor){
@@ -1861,63 +1586,57 @@ function converterDataExcel(valor){
     valor===null ||
     valor===undefined ||
     valor===''
-  ){
-    return null;
-  }
+  )return null;
 
   if(typeof valor==='number'){
 
-    const data =
-      XLSX.SSF.parse_date_code(valor);
+    const d=XLSX.SSF.parse_date_code(valor);
 
-    if(!data)return null;
+    if(!d)return null;
 
-    return formatarDataBanco(
-      data.y,
-      data.m,
-      data.d
-    );
+    return formatarDataBanco(d.y,d.m,d.d);
+
   }
 
-  const texto =
-    String(valor).trim();
+  const texto=String(valor).trim();
 
-  let match =
+  let m=
     texto.match(
       /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/
     );
 
-  if(match){
+  if(m){
 
     return formatarDataBanco(
-      Number(match[3]),
-      Number(match[2]),
-      Number(match[1])
+      Number(m[3]),
+      Number(m[2]),
+      Number(m[1])
     );
+
   }
 
-  match =
+  m=
     texto.match(
       /^(\d{4})-(\d{1,2})-(\d{1,2})/
     );
 
-  if(match){
+  if(m){
 
     return formatarDataBanco(
-      Number(match[1]),
-      Number(match[2]),
-      Number(match[3])
+      Number(m[1]),
+      Number(m[2]),
+      Number(m[3])
     );
+
   }
 
   return null;
+
 }
 
 function formatarDataBanco(ano,mes,dia){
 
-  if(!ano||!mes||!dia)return null;
-
-  const data =
+  const d=
     new Date(
       ano,
       mes-1,
@@ -1925,40 +1644,35 @@ function formatarDataBanco(ano,mes,dia){
     );
 
   if(
-    data.getFullYear()!==ano ||
-    data.getMonth()!==mes-1 ||
-    data.getDate()!==dia
-  ){
-    return null;
-  }
+    d.getFullYear()!==ano ||
+    d.getMonth()!==mes-1 ||
+    d.getDate()!==dia
+  )return null;
 
-  return(
-    String(ano).padStart(4,'0')+
-    '-'+
-    String(mes).padStart(2,'0')+
-    '-'+
+  return[
+    String(ano).padStart(4,'0'),
+    String(mes).padStart(2,'0'),
     String(dia).padStart(2,'0')
-  );
+  ].join('-');
+
 }
 
 
-/* ==================================================
-   ESCAPE
-================================================== */
+/* ESCAPE */
 
 function esc(valor){
 
-  return String(valor??'')
-    .replace(
-      /[&<>"']/g,
-      c=>({
-        '&':'&amp;',
-        '<':'&lt;',
-        '>':'&gt;',
-        '"':'&quot;',
-        "'":'&#039;'
-      })[c]
-    );
+  return String(valor??'').replace(
+    /[&<>"']/g,
+    c=>({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#039;'
+    })[c]
+  );
+
 }
 
 function escAttr(valor){
@@ -1966,41 +1680,11 @@ function escAttr(valor){
   return String(valor??'')
     .replace(/\\/g,'\\\\')
     .replace(/'/g,"\\'");
-}
-
-
-/* ==================================================
-   IMPORTAÇÃO PRINCIPAL
-================================================== */
-
-function abrirImportacao(){
-
-  document
-    .getElementById('importModal')
-    .classList
-    .add('open');
 
 }
 
-function fecharImportacao(){
 
-  document
-    .getElementById('importModal')
-    .classList
-    .remove('open');
-
-}
-
-function mostrarNomeArquivo(){
-
-  const input =
-    document.getElementById('arquivoExcel');
-
-  document.getElementById('nomeArquivo').textContent =
-    input.files?.length
-      ? 'Arquivo selecionado: '+input.files[0].name
-      : '';
-}
+/* NORMALIZAÇÃO */
 
 function normalizarColuna(valor){
 
@@ -2012,57 +1696,85 @@ function normalizarColuna(valor){
     .replace(/_/g,' ')
     .replace(/\s+/g,' ')
     .trim();
+
 }
 
 function encontrarColuna(mapa,nomes){
 
   for(const nome of nomes){
 
-    const chave =
+    const chave=
       normalizarColuna(nome);
 
     if(mapa[chave]!==undefined){
       return mapa[chave];
     }
+
   }
 
   return null;
+
 }
 
 function textoCelula(valor){
 
-  if(
-    valor===null ||
-    valor===undefined
-  ){
-    return null;
-  }
+  if(valor===null || valor===undefined)return null;
 
-  const texto =
-    String(valor).trim();
+  const texto=String(valor).trim();
 
-  return texto==='' ? null : texto;
+  return texto===''?null:texto;
+
 }
 
 
-/* ==================================================
-   IMPORTAR EXCEL PRINCIPAL
-================================================== */
+/* IMPORTAÇÃO O.S. */
+
+function abrirImportacao(){
+
+  document
+    .getElementById('importModal')
+    .classList.add('open');
+
+  document
+    .getElementById('importResult')
+    .classList.remove('show');
+
+  document.getElementById('errorList').innerHTML='';
+
+}
+
+function fecharImportacao(){
+
+  document
+    .getElementById('importModal')
+    .classList.remove('open');
+
+}
+
+function mostrarNomeArquivo(){
+
+  const input=document.getElementById('arquivoExcel');
+  const nome=document.getElementById('nomeArquivo');
+
+  nome.textContent=
+    input.files?.length
+    ? 'Arquivo selecionado: '+input.files[0].name
+    :'';
+
+}
 
 async function importarExcel(){
 
-  const input =
-    document.getElementById('arquivoExcel');
+  const input=document.getElementById('arquivoExcel');
 
   if(!input.files?.length){
 
-    alert('Selecione um arquivo Excel.');
-
+    alert('Selecione um arquivo Excel antes de importar.');
     return;
+
   }
 
-  const btn =
-    document.getElementById('btnImportar');
+  const btn=document.getElementById('btnImportar');
 
   btn.disabled=true;
   btn.textContent='Importando...';
@@ -2070,26 +1782,24 @@ async function importarExcel(){
   let novas=0;
   let atualizadas=0;
   let erros=0;
-
-  const detalhes=[];
+  const errosDetalhes=[];
 
   try{
 
-    const buffer =
-      await input.files[0].arrayBuffer();
+    const buffer=await input.files[0].arrayBuffer();
 
-    const workbook =
-      XLSX.read(buffer,{
+    const workbook=XLSX.read(
+      buffer,
+      {
         type:'array',
         cellDates:false
-      });
+      }
+    );
 
-    const sheet =
-      workbook.Sheets[
-        workbook.SheetNames[0]
-      ];
+    const sheet=
+      workbook.Sheets[workbook.SheetNames[0]];
 
-    const linhas =
+    const linhas=
       XLSX.utils.sheet_to_json(
         sheet,
         {
@@ -2108,63 +1818,45 @@ async function importarExcel(){
       mapa[normalizarColuna(chave)]=chave;
     });
 
-    const colOS =
+    const colOS=
       encontrarColuna(
         mapa,
-        [
-          'O.S.',
-          'O.S',
-          'OS',
-          'ORDEM',
-          'ORDEM DE SERVICO',
-          'ORDEM DE SERVIÇO'
-        ]
+        ['O.S.','O.S','OS','ORDEM','ORDEM DE SERVICO','ORDEM DE SERVIÇO']
       );
 
     if(!colOS){
-      throw new Error(
-        'Não foi encontrada a coluna "O.S.".'
-      );
+      throw new Error('Não foi encontrada a coluna O.S.');
     }
 
-    const colData =
+    const colData=
       encontrarColuna(
         mapa,
         ['DATA DE CRIAÇÃO','DATA CRIACAO']
       );
 
-    const colCliente =
+    const colCliente=
       encontrarColuna(mapa,['CLIENTE']);
 
-    const colUsuario =
+    const colUsuario=
       encontrarColuna(mapa,['USUÁRIO','USUARIO']);
 
-    const colStatus =
-      encontrarColuna(
-        mapa,
-        ['STATUS','SITUAÇÃO','SITUACAO']
-      );
+    const colStatus=
+      encontrarColuna(mapa,['STATUS','SITUAÇÃO','SITUACAO']);
 
-    const colProduto =
+    const colProduto=
       encontrarColuna(mapa,['PRODUTO']);
 
-    const colGrupo =
+    const colGrupo=
       encontrarColuna(mapa,['GRUPO']);
 
-    const colAssunto =
+    const colAssunto=
       encontrarColuna(mapa,['ASSUNTO']);
 
-    const colDev =
-      encontrarColuna(
-        mapa,
-        ['DESENVOLVEDOR','DEV']
-      );
+    const colDev=
+      encontrarColuna(mapa,['DESENVOLVEDOR','DEV']);
 
-    const colEntregue =
-      encontrarColuna(
-        mapa,
-        ['ENTREGUE EM','ENTREGUE']
-      );
+    const colEntregue=
+      encontrarColuna(mapa,['ENTREGUE EM','ENTREGUE']);
 
     for(let i=0;i<linhas.length;i++){
 
@@ -2172,65 +1864,26 @@ async function importarExcel(){
 
       try{
 
-        const os =
-          textoCelula(linha[colOS]);
+        const os=textoCelula(linha[colOS]);
 
         if(!os){
           throw new Error('O.S. não informada.');
         }
 
         const registro={
-
           os,
-
-          data_criacao:
-            colData
-              ? converterDataExcel(linha[colData])
-              : null,
-
-          cliente:
-            colCliente
-              ? textoCelula(linha[colCliente])
-              : null,
-
-          usuario:
-            colUsuario
-              ? textoCelula(linha[colUsuario])
-              : null,
-
-          status:
-            colStatus
-              ? textoCelula(linha[colStatus])
-              : null,
-
-          produto:
-            colProduto
-              ? textoCelula(linha[colProduto])
-              : null,
-
-          grupo:
-            colGrupo
-              ? textoCelula(linha[colGrupo])
-              : null,
-
-          assunto:
-            colAssunto
-              ? textoCelula(linha[colAssunto])
-              : null,
-
-          desenvolvedor:
-            colDev
-              ? textoCelula(linha[colDev])
-              : null,
-
-          entregue_em:
-            colEntregue
-              ? converterDataExcel(linha[colEntregue])
-              : null
-
+          data_criacao:colData?converterDataExcel(linha[colData]):null,
+          cliente:colCliente?textoCelula(linha[colCliente]):null,
+          usuario:colUsuario?textoCelula(linha[colUsuario]):null,
+          status:colStatus?textoCelula(linha[colStatus]):null,
+          produto:colProduto?textoCelula(linha[colProduto]):null,
+          grupo:colGrupo?textoCelula(linha[colGrupo]):null,
+          assunto:colAssunto?textoCelula(linha[colAssunto]):null,
+          desenvolvedor:colDev?textoCelula(linha[colDev]):null,
+          entregue_em:colEntregue?converterDataExcel(linha[colEntregue]):null
         };
 
-        const busca =
+        const busca=
           await db
             .from('ordens_servico')
             .select('id')
@@ -2243,11 +1896,13 @@ async function importarExcel(){
 
         if(busca.data?.length){
 
-          const resultado =
+          const id=busca.data[0].id;
+
+          const resultado=
             await db
               .from('ordens_servico')
               .update(registro)
-              .eq('id',busca.data[0].id);
+              .eq('id',id);
 
           if(resultado.error){
             throw new Error(resultado.error.message);
@@ -2257,7 +1912,7 @@ async function importarExcel(){
 
         }else{
 
-          const resultado =
+          const resultado=
             await db
               .from('ordens_servico')
               .insert(registro);
@@ -2267,129 +1922,136 @@ async function importarExcel(){
           }
 
           novas++;
+
         }
 
-      }catch(error){
+      }catch(err){
 
         erros++;
 
-        detalhes.push(
-          `Linha ${i+2} — ${error.message}`
+        errosDetalhes.push(
+          `Linha ${i+2} — O.S.: ${linha[colOS]||'não informada'} — ${err.message}`
         );
+
       }
+
     }
 
     document.getElementById('resultNovas').textContent=novas;
     document.getElementById('resultAtualizadas').textContent=atualizadas;
     document.getElementById('resultErros').textContent=erros;
 
-    document.getElementById('errorList').innerHTML =
-      detalhes.length
-        ? '<strong>Detalhes:</strong><br><br>'+
-          detalhes.map(esc).join('<br>')
-        : '<strong>Importação concluída sem erros.</strong>';
+    document.getElementById('errorList').innerHTML=
+      errosDetalhes.length
+      ? '<strong>Detalhes dos erros:</strong><br><br>'+
+        errosDetalhes.map(esc).join('<br>')
+      : '<strong>Importação concluída sem erros.</strong>';
 
     document
       .getElementById('importResult')
-      .classList
-      .add('show');
+      .classList.add('show');
 
     await carregarDados();
 
-  }catch(error){
+    alert(
+      `Importação concluída!\n\n`+
+      `Novas O.S.: ${novas}\n`+
+      `O.S. atualizadas: ${atualizadas}\n`+
+      `Erros: ${erros}`
+    );
+
+  }catch(err){
 
     alert(
       'Não foi possível importar o Excel.\n\n'+
-      error.message
+      err.message
     );
 
   }finally{
 
     btn.disabled=false;
     btn.textContent='📥 Importar';
+
   }
+
 }
 
 
 /* ==================================================
-   IMPORTAR CONTROLE
-================================================== */
+   IMPORTAÇÃO DO CONTROLE
+   ================================================== */
 
 function abrirImportacaoControle(){
 
   document
     .getElementById('controleModal')
-    .classList
-    .add('open');
+    .classList.add('open');
 
   document
     .getElementById('controleResult')
-    .classList
-    .remove('show');
+    .classList.remove('show');
 
-  document
-    .getElementById('controleErrorList')
-    .innerHTML='';
+  document.getElementById('controleErrorList').innerHTML='';
+
 }
 
 function fecharImportacaoControle(){
 
   document
     .getElementById('controleModal')
-    .classList
-    .remove('open');
+    .classList.remove('open');
+
 }
 
 function mostrarNomeControle(){
 
-  const input =
+  const input=
     document.getElementById('arquivoControle');
 
-  document.getElementById('nomeControle').textContent =
+  const nome=
+    document.getElementById('nomeControle');
+
+  nome.textContent=
     input.files?.length
-      ? 'Arquivo selecionado: '+input.files[0].name
-      : '';
+    ? 'Arquivo selecionado: '+input.files[0].name
+    :'';
+
 }
 
 
-/* ==================================================
-   PROCESSAR EXCEL DO CONTROLE
-================================================== */
-
 async function importarControle(){
 
-  const input =
+  const input=
     document.getElementById('arquivoControle');
 
   if(!input.files?.length){
 
     alert(
-      'Selecione o Excel do controle.'
+      'Selecione o arquivo Excel do Controle.'
     );
 
     return;
+
   }
 
-  const btn =
-    document.getElementById(
-      'btnImportarControle'
-    );
+  const btn=
+    document.getElementById('btnImportarControle');
 
   btn.disabled=true;
   btn.textContent='Importando...';
 
+  let importadas=0;
   let atualizadas=0;
-  let naoEncontradas=0;
   let erros=0;
 
-  const detalhes=[];
+  const errosDetalhes=[];
 
   try{
 
-    const buffer =
+    const buffer=
       await input.files[0].arrayBuffer();
 
-    const workbook =
+    const workbook=
       XLSX.read(
         buffer,
         {
@@ -2399,18 +2061,17 @@ async function importarControle(){
       );
 
     if(!workbook.SheetNames.length){
-
       throw new Error(
         'O arquivo não possui nenhuma planilha.'
       );
     }
 
-    const sheet =
+    const sheet=
       workbook.Sheets[
         workbook.SheetNames[0]
       ];
 
-    const linhas =
+    const linhas=
       XLSX.utils.sheet_to_json(
         sheet,
         {
@@ -2420,27 +2081,23 @@ async function importarControle(){
       );
 
     if(!linhas.length){
-
       throw new Error(
-        'A planilha do controle está vazia.'
+        'A planilha está vazia.'
       );
     }
-
-
-    /* MAPA DAS COLUNAS */
 
     const mapa={};
 
     Object.keys(linhas[0]).forEach(chave=>{
-
-      mapa[
-        normalizarColuna(chave)
-      ]=chave;
-
+      mapa[normalizarColuna(chave)]=chave;
     });
 
 
-    const colOrdem =
+    /*
+      ORDEM É OPCIONAL.
+    */
+
+    const colOrdem=
       encontrarColuna(
         mapa,
         [
@@ -2453,16 +2110,17 @@ async function importarControle(){
         ]
       );
 
-    const colDataCriacao =
+    const colData=
       encontrarColuna(
         mapa,
         [
           'DATA DE CRIAÇÃO',
-          'DATA CRIACAO'
+          'DATA CRIACAO',
+          'DATA'
         ]
       );
 
-    const colUsuario =
+    const colUsuario=
       encontrarColuna(
         mapa,
         [
@@ -2471,7 +2129,7 @@ async function importarControle(){
         ]
       );
 
-    const colPrioridade =
+    const colPrioridade=
       encontrarColuna(
         mapa,
         [
@@ -2479,16 +2137,17 @@ async function importarControle(){
         ]
       );
 
-    const colPrazo =
+    const colPrazo=
       encontrarColuna(
         mapa,
         [
           'PRAZO COPLAN',
-          'PRAZO'
+          'PRAZO',
+          'PRAZO COPLAN '
         ]
       );
 
-    const colAssunto =
+    const colAssunto=
       encontrarColuna(
         mapa,
         [
@@ -2497,267 +2156,259 @@ async function importarControle(){
       );
 
 
-    if(!colOrdem){
+    /*
+      PROCESSAR TODAS AS LINHAS.
 
-      throw new Error(
-        'Não foi encontrada a coluna "Ordem" no Excel.'
-      );
-    }
-
-
-    /* PROCESSAR */
+      MESMO SEM ORDEM, A LINHA SERÁ IMPORTADA.
+    */
 
     for(let i=0;i<linhas.length;i++){
 
-      const linha =
-        linhas[i];
-
-      const numeroLinha =
-        i+2;
+      const linha=linhas[i];
 
       try{
 
-        const ordem =
-          textoCelula(
-            linha[colOrdem]
-          );
+        let ordem=null;
 
-        if(!ordem){
+        if(colOrdem){
 
-          throw new Error(
-            'Ordem não informada.'
-          );
-        }
-
-
-        /*
-          IMPORTANTE:
-          A busca é feita somente pela O.S.
-          Não será criado novo registro.
-        */
-
-        const busca =
-          await db
-            .from('ordens_servico')
-            .select('id')
-            .eq('os',ordem)
-            .limit(1);
-
-
-        if(busca.error){
-
-          throw new Error(
-            busca.error.message
-          );
-        }
-
-
-        if(
-          !busca.data ||
-          !busca.data.length
-        ){
-
-          naoEncontradas++;
-
-          detalhes.push(
-            `Linha ${numeroLinha} — O.S. ${ordem} não encontrada no sistema.`
-          );
-
-          continue;
-        }
-
-
-        const id =
-          busca.data[0].id;
-
-
-        /*
-          SOMENTE CAMPOS DO CONTROLE
-        */
-
-        const atualizacao={};
-
-
-        if(colDataCriacao){
-
-          const data =
-            converterDataExcel(
-              linha[colDataCriacao]
-            );
-
-          atualizacao.data_criacao =
-            data;
-
-        }
-
-
-        if(colUsuario){
-
-          atualizacao.usuario =
+          const valorOrdem=
             textoCelula(
-              linha[colUsuario]
+              linha[colOrdem]
             );
+
+          if(valorOrdem){
+
+            /*
+              Remove .0 quando o Excel
+              transformar número em decimal.
+            */
+
+            ordem=
+              valorOrdem
+                .replace(/\.0$/,'');
+
+          }
 
         }
 
+
+        let prioridade=null;
 
         if(colPrioridade){
 
-          const valor =
-            textoCelula(
-              linha[colPrioridade]
-            );
+          const valor=
+            linha[colPrioridade];
 
-          if(valor===null){
+          if(
+            valor!=='' &&
+            valor!==null &&
+            valor!==undefined
+          ){
 
-            atualizacao.prioridade=null;
+            const numero=
+              Number(valor);
 
-          }else{
-
-            const numero =
-              Number(
-                String(valor)
-                  .replace(',','.')
-              );
-
-            if(Number.isFinite(numero)){
-
-              atualizacao.prioridade =
-                numero;
-
+            if(!Number.isNaN(numero)){
+              prioridade=numero;
             }else{
-
-              throw new Error(
-                `Prioridade inválida: ${valor}`
-              );
+              prioridade=null;
             }
+
           }
-        }
-
-
-        if(colPrazo){
-
-          atualizacao.prazo =
-            converterDataExcel(
-              linha[colPrazo]
-            );
 
         }
 
 
-        if(colAssunto){
+        const registro={
 
-          atualizacao.assunto =
-            textoCelula(
-              linha[colAssunto]
-            );
+          ordem:ordem,
 
-        }
+          data_criacao:
+            colData
+            ? converterDataExcel(
+                linha[colData]
+              )
+            : null,
+
+          usuario:
+            colUsuario
+            ? textoCelula(
+                linha[colUsuario]
+              )
+            : null,
+
+          prioridade:prioridade,
+
+          prazo_coplan:
+            colPrazo
+            ? converterDataExcel(
+                linha[colPrazo]
+              )
+            : null,
+
+          assunto:
+            colAssunto
+            ? textoCelula(
+                linha[colAssunto]
+              )
+            : null
+
+        };
 
 
         /*
-          Atualiza somente o controle.
+          REGRA:
+
+          SEM ORDEM:
+          sempre INSERE.
+
+          COM ORDEM:
+          procura no controle_os.
         */
 
-        if(Object.keys(atualizacao).length){
+        if(!ordem){
 
-          const resultado =
+          const resultado=
             await db
-              .from('ordens_servico')
-              .update(atualizacao)
-              .eq('id',id);
-
+              .from('controle_os')
+              .insert(registro);
 
           if(resultado.error){
-
             throw new Error(
               resultado.error.message
             );
           }
+
+          importadas++;
+
+        }else{
+
+          const busca=
+            await db
+              .from('controle_os')
+              .select('id')
+              .eq('ordem',ordem)
+              .limit(1);
+
+          if(busca.error){
+            throw new Error(
+              busca.error.message
+            );
+          }
+
+
+          if(busca.data?.length){
+
+            const id=
+              busca.data[0].id;
+
+            const resultado=
+              await db
+                .from('controle_os')
+                .update({
+                  ...registro,
+                  atualizado_em:new Date().toISOString()
+                })
+                .eq('id',id);
+
+            if(resultado.error){
+              throw new Error(
+                resultado.error.message
+              );
+            }
+
+            atualizadas++;
+
+          }else{
+
+            const resultado=
+              await db
+                .from('controle_os')
+                .insert(registro);
+
+            if(resultado.error){
+              throw new Error(
+                resultado.error.message
+              );
+            }
+
+            importadas++;
+
+          }
+
         }
 
-
-        atualizadas++;
-
-      }catch(error){
+      }catch(err){
 
         erros++;
 
-        detalhes.push(
-          `Linha ${numeroLinha} — O.S.: ${
-            linha[colOrdem] || 'não informada'
-          } — ${
-            error.message
-          }`
+        errosDetalhes.push(
+          `Linha ${i+2} — ${
+            colOrdem
+            ? (linha[colOrdem]||'sem O.S.')
+            : 'sem O.S.'
+          } — ${err.message}`
         );
+
       }
+
     }
 
 
-    /* RESULTADO */
+    document.getElementById(
+      'controleImportadas'
+    ).textContent=importadas;
 
-    document
-      .getElementById('controleAtualizadas')
-      .textContent =
-      atualizadas;
+    document.getElementById(
+      'controleAtualizadas'
+    ).textContent=atualizadas;
 
-    document
-      .getElementById('controleNaoEncontradas')
-      .textContent =
-      naoEncontradas;
-
-    document
-      .getElementById('controleErros')
-      .textContent =
-      erros;
+    document.getElementById(
+      'controleErros'
+    ).textContent=erros;
 
 
-    document
-      .getElementById('controleErrorList')
-      .innerHTML =
-      detalhes.length
-        ? '<strong>Detalhes:</strong><br><br>'+
-          detalhes.map(esc).join('<br>')
-        : '<strong>Controle importado sem erros.</strong>';
+    document.getElementById(
+      'controleErrorList'
+    ).innerHTML=
+      errosDetalhes.length
+      ? '<strong>Detalhes dos erros:</strong><br><br>'+
+        errosDetalhes.map(esc).join('<br>')
+      : '<strong>Importação concluída sem erros.</strong>';
 
 
     document
       .getElementById('controleResult')
-      .classList
-      .add('show');
-
-
-    await carregarDados();
+      .classList.add('show');
 
 
     alert(
-      `Importação do controle concluída!\n\n`+
-      `O.S. atualizadas: ${atualizadas}\n`+
-      `O.S. não encontradas: ${naoEncontradas}\n`+
+      `Importação do Controle concluída!\n\n`+
+      `Importadas: ${importadas}\n`+
+      `Atualizadas: ${atualizadas}\n`+
       `Erros: ${erros}`
     );
 
 
-  }catch(error){
+  }catch(err){
 
     alert(
-      'Não foi possível importar o controle.\n\n'+
-      error.message
+      'Não foi possível importar o Controle.\n\n'+
+      err.message
     );
 
   }finally{
 
     btn.disabled=false;
+    btn.textContent='📋 Importar Controle';
 
-    btn.textContent =
-      '📋 Importar Controle';
   }
+
 }
 
 
-/* ==================================================
-   FILTROS
-================================================== */
+/* FILTROS */
 
 document
   .getElementById('busca')
@@ -2772,53 +2423,34 @@ document
   .addEventListener('change',render);
 
 
-/* ==================================================
-   FECHAR MODAIS
-================================================== */
+/* FECHAR MODAIS */
 
 document
   .getElementById('modal')
-  .addEventListener(
-    'click',
-    function(e){
+  .addEventListener('click',function(e){
 
-      if(e.target===this){
-        fechar();
-      }
+    if(e.target===this)fechar();
 
-    }
-  );
+  });
 
 document
   .getElementById('importModal')
-  .addEventListener(
-    'click',
-    function(e){
+  .addEventListener('click',function(e){
 
-      if(e.target===this){
-        fecharImportacao();
-      }
+    if(e.target===this)fecharImportacao();
 
-    }
-  );
+  });
 
 document
   .getElementById('controleModal')
-  .addEventListener(
-    'click',
-    function(e){
+  .addEventListener('click',function(e){
 
-      if(e.target===this){
-        fecharImportacaoControle();
-      }
+    if(e.target===this)fecharImportacaoControle();
 
-    }
-  );
+  });
 
 
-/* ==================================================
-   INICIAR
-================================================== */
+/* INICIAR */
 
 iniciar();
 
