@@ -1,5 +1,5 @@
-```html
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -7,6 +7,7 @@
 <title>Coplan • Controle de O.S.</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
@@ -31,14 +32,14 @@ body{
   margin:0;
   font-family:Inter,Segoe UI,Arial,sans-serif;
   background:var(--bg);
-  color:var(--text);
+  color:var(--text)
 }
 
 .login{
   min-height:100vh;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a);
+  background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a)
 }
 
 .loginbox{
@@ -46,13 +47,13 @@ body{
   background:#fff;
   border-radius:20px;
   padding:36px;
-  box-shadow:0 20px 60px #0004;
+  box-shadow:0 20px 60px #0004
 }
 
 .logo{
   font-weight:900;
   font-size:34px;
-  color:var(--green);
+  color:var(--green)
 }
 
 .logo span{
@@ -60,11 +61,11 @@ body{
   font-size:13px;
   color:var(--muted);
   font-weight:500;
-  margin-top:4px;
+  margin-top:4px
 }
 
 .login h2{margin:30px 0 6px}
-.login p{color:var(--muted)}
+.login p{color:var(--muted);margin-top:0}
 
 .field{margin:15px 0}
 
@@ -72,7 +73,7 @@ body{
   display:block;
   font-size:13px;
   font-weight:700;
-  margin-bottom:7px;
+  margin-bottom:7px
 }
 
 input,select,textarea{
@@ -82,15 +83,15 @@ input,select,textarea{
   border-radius:9px;
   font:inherit;
   background:#fff;
-  outline:none;
+  outline:none
 }
 
-input:focus,
-select:focus,
-textarea:focus{
+input:focus,select:focus,textarea:focus{
   border-color:var(--green);
-  box-shadow:0 0 0 3px #006b4f14;
+  box-shadow:0 0 0 3px #006b4f14
 }
+
+textarea{resize:vertical}
 
 button{
   border:0;
@@ -98,42 +99,53 @@ button{
   padding:11px 16px;
   font-weight:700;
   cursor:pointer;
-  font-family:inherit;
+  font-family:inherit
 }
 
 button:hover{opacity:.92}
-button:disabled{opacity:.5;cursor:not-allowed}
+
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed
+}
 
 .primary{
   background:var(--green);
-  color:#fff;
+  color:#fff
 }
 
 .secondary{
   background:#eef3f1;
-  color:var(--dark);
+  color:var(--dark)
 }
 
 .control-button{
-  background:#e7e1ff;
-  color:#5a4199;
+  background:#7652b8;
+  color:#fff
 }
 
 .wide{
   width:100%;
-  margin-top:8px;
+  margin-top:8px
+}
+
+.hint{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:14px;
+  line-height:1.5
 }
 
 .error{
   color:#b42318;
   font-size:13px;
   margin-top:8px;
-  display:none;
+  display:none
 }
 
 .app{
   display:none;
-  min-height:100vh;
+  min-height:100vh
 }
 
 .sidebar{
@@ -142,13 +154,13 @@ button:disabled{opacity:.5;cursor:not-allowed}
   width:245px;
   background:#073e31;
   color:#fff;
-  padding:25px 17px;
+  padding:25px 17px
 }
 
 .side-logo{
   font-size:27px;
   font-weight:900;
-  padding:8px 12px 28px;
+  padding:8px 12px 28px
 }
 
 .side-logo small{
@@ -156,19 +168,22 @@ button:disabled{opacity:.5;cursor:not-allowed}
   font-size:11px;
   font-weight:500;
   opacity:.65;
-  margin-top:3px;
+  margin-top:3px
 }
+
+.nav{padding:8px 0}
 
 .nav div{
   padding:12px;
   border-radius:9px;
   margin:4px 0;
   color:#dcebe6;
+  cursor:pointer
 }
 
-.nav .active{
+.nav .active,.nav div:hover{
   background:#ffffff16;
-  color:#fff;
+  color:#fff
 }
 
 .user{
@@ -178,19 +193,19 @@ button:disabled{opacity:.5;cursor:not-allowed}
   right:17px;
   padding:12px;
   border-top:1px solid #ffffff22;
-  font-size:13px;
+  font-size:13px
 }
 
 .user button{
   margin-top:10px;
   width:100%;
   background:#ffffff12;
-  color:#fff;
+  color:#fff
 }
 
 .main{
   margin-left:245px;
-  padding:28px 34px;
+  padding:28px 34px
 }
 
 .top{
@@ -198,50 +213,50 @@ button:disabled{opacity:.5;cursor:not-allowed}
   justify-content:space-between;
   align-items:center;
   margin-bottom:25px;
-  gap:15px;
+  gap:15px
 }
 
 .top h1{
   margin:0;
-  font-size:25px;
+  font-size:25px
 }
 
 .top p{
   margin:5px 0;
-  color:var(--muted);
+  color:var(--muted)
 }
 
 .top-buttons{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
-  justify-content:flex-end;
+  justify-content:flex-end
 }
 
 .cards{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:14px;
+  gap:14px
 }
 
 .card{
-  background:#fff;
+  background:var(--card);
   border:1px solid var(--line);
   border-radius:13px;
   padding:19px;
-  box-shadow:0 3px 12px #12382f08;
+  box-shadow:0 3px 12px #12382f08
 }
 
 .card .label{
   font-size:12px;
   color:var(--muted);
-  font-weight:700;
+  font-weight:700
 }
 
 .card .num{
   font-size:29px;
   font-weight:800;
-  margin-top:9px;
+  margin-top:9px
 }
 
 .card.green{border-top:3px solid var(--green)}
@@ -254,48 +269,43 @@ button:disabled{opacity:.5;cursor:not-allowed}
   background:#fff;
   border:1px solid var(--line);
   border-radius:13px;
-  padding:20px;
+  padding:20px
 }
 
 .toolbar{
   display:flex;
   gap:9px;
   justify-content:space-between;
-  flex-wrap:wrap;
+  flex-wrap:wrap
 }
 
 .filters{
   display:flex;
   gap:8px;
   flex:1;
-  min-width:300px;
+  min-width:300px
 }
 
 .filters input{max-width:320px}
 
-.table-wrap{
-  overflow:auto;
-}
-
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:17px;
-  min-width:1500px;
+  margin-top:17px
 }
 
 th,td{
   text-align:left;
   padding:13px 10px;
   border-bottom:1px solid var(--line);
-  font-size:13px;
+  font-size:13px
 }
 
 th{
   font-size:11px;
   text-transform:uppercase;
   color:var(--muted);
-  background:#fafcfb;
+  background:#fafcfb
 }
 
 .badge{
@@ -304,7 +314,7 @@ th{
   border-radius:99px;
   font-size:10px;
   font-weight:800;
-  white-space:nowrap;
+  white-space:nowrap
 }
 
 .status-backlog{background:#eee;color:#555}
@@ -324,46 +334,33 @@ th{
 
 .pc{
   background:#e4ecff;
-  color:#365aa0;
+  color:#365aa0
 }
 
 .pe{
   background:#def5ee;
-  color:#17664f;
-}
-
-.priority{
-  font-weight:800;
-}
-
-.priority-1{color:#bd2525}
-.priority-2{color:#c98612}
-.priority-3{color:#3c6edb}
-
-.late{
-  color:#bd2525;
-  font-weight:800;
+  color:#17664f
 }
 
 .table-actions{
   display:flex;
   align-items:center;
   gap:6px;
-  white-space:nowrap;
+  white-space:nowrap
 }
 
 .edit-btn{
   background:#eef3f1;
   color:var(--dark);
   padding:7px 10px;
-  font-size:12px;
+  font-size:12px
 }
 
 .delete-btn{
   background:#fee7e7;
   color:#9f2626;
   padding:7px 10px;
-  font-size:12px;
+  font-size:12px
 }
 
 .modal{
@@ -373,64 +370,70 @@ th{
   background:#0007;
   place-items:center;
   padding:20px;
-  z-index:1000;
+  z-index:1000
 }
 
-.modal.open{
-  display:grid;
-}
+.modal.open{display:grid}
 
 .modalbox{
   background:#fff;
-  width:min(750px,100%);
+  width:min(700px,100%);
   max-height:90vh;
   overflow-y:auto;
   border-radius:15px;
-  padding:25px;
+  padding:25px
 }
 
 .modalbox h2{
-  margin:0 0 20px;
+  margin:0 0 20px
 }
 
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:13px;
+  gap:13px
 }
 
-.full{
-  grid-column:1/-1;
-}
+.full{grid-column:1/-1}
 
 .actions{
   display:flex;
   justify-content:flex-end;
+  align-items:center;
   gap:10px;
   width:100%;
   margin-top:22px;
   padding-top:18px;
-  border-top:1px solid var(--line);
+  border-top:1px solid var(--line)
 }
+
+.actions button{min-width:105px}
 
 .cancel-btn{
   background:#eef1ef;
-  color:var(--dark);
+  color:var(--dark)
 }
 
 .import-help{
   background:#f3f8f6;
   border:1px solid #dcebe5;
   border-radius:10px;
-  padding:13px;
+  padding:12px;
   font-size:12px;
   color:var(--muted);
-  line-height:1.6;
-  margin-bottom:15px;
+  line-height:1.5;
+  margin-bottom:15px
 }
 
-.import-help strong{
-  color:var(--dark);
+.control-help{
+  background:#f4f0fb;
+  border:1px solid #e3d8f3;
+  border-radius:10px;
+  padding:14px;
+  font-size:12px;
+  color:#5b4975;
+  line-height:1.6;
+  margin-bottom:15px
 }
 
 .import-result{
@@ -439,18 +442,16 @@ th{
   padding:15px;
   border-radius:10px;
   background:#f7f9f8;
-  border:1px solid var(--line);
+  border:1px solid var(--line)
 }
 
-.import-result.show{
-  display:block;
-}
+.import-result.show{display:block}
 
 .result-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
-  margin-bottom:12px;
+  margin-bottom:12px
 }
 
 .result-card{
@@ -458,13 +459,13 @@ th{
   border:1px solid var(--line);
   border-radius:9px;
   padding:12px;
-  text-align:center;
+  text-align:center
 }
 
 .result-card strong{
   display:block;
   font-size:22px;
-  margin-top:4px;
+  margin-top:4px
 }
 
 .result-new{color:var(--green)}
@@ -476,76 +477,78 @@ th{
   overflow-y:auto;
   font-size:12px;
   line-height:1.5;
-  color:#8f2222;
+  color:#8f2222
 }
 
 .file-name{
   font-size:12px;
   color:var(--muted);
-  margin-top:8px;
+  margin-top:8px
 }
 
 @media(max-width:1250px){
-  .cards{
-    grid-template-columns:repeat(3,1fr);
-  }
+  .cards{grid-template-columns:repeat(3,1fr)}
+}
+
+@media(max-width:1100px){
+  .cards{grid-template-columns:repeat(2,1fr)}
 }
 
 @media(max-width:700px){
   .sidebar{
     position:static;
-    width:auto;
+    width:auto
   }
 
   .main{
     margin-left:0;
-    padding:20px;
+    padding:20px
   }
 
   .user{
     position:static;
-    margin-top:25px;
+    margin-top:25px
   }
 
   .grid{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr
   }
 
   .full{
-    grid-column:auto;
+    grid-column:auto
   }
 
   .cards{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr
   }
 
   .top{
-    flex-direction:column;
     align-items:flex-start;
+    flex-direction:column
   }
 
   .top-buttons{
     width:100%;
+    justify-content:stretch
   }
 
   .top-buttons button{
-    flex:1;
+    flex:1
   }
 
   .filters{
     flex-direction:column;
-    min-width:100%;
+    min-width:100%
   }
 
-  .filters input{
-    max-width:none;
-  }
+  .filters input{max-width:none}
 
   .result-grid{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr
   }
 }
 </style>
+
 </head>
 
 <body>
@@ -553,2082 +556,2269 @@ th{
 <section class="login" id="login">
   <div class="loginbox">
 
-    <div class="logo">
-      COPLAN
-      <span>Controle de O.S. e Demandas</span>
-    </div>
+```
+<div class="logo">
+  COPLAN
+  <span>Controle de O.S. e Demandas</span>
+</div>
 
-    <h2>Acesso ao sistema</h2>
-    <p>Entre para acompanhar as demandas da equipe.</p>
+<h2>Acesso ao sistema</h2>
+<p>Entre para acompanhar as demandas da equipe.</p>
 
-    <form id="loginForm">
+<form id="loginForm">
 
-      <div class="field">
-        <label>E-mail</label>
-        <input id="email" type="email" required placeholder="seu@email.com">
-      </div>
-
-      <div class="field">
-        <label>Senha</label>
-        <input id="senha" type="password" required placeholder="••••••••">
-      </div>
-
-      <div class="error" id="loginerr">
-        E-mail ou senha inválidos.
-      </div>
-
-      <button class="primary wide" type="submit">
-        Entrar
-      </button>
-
-    </form>
-
-  </div>
-</section>
-
-
-<section class="app" id="app">
-
-<aside class="sidebar">
-
-  <div class="side-logo">
-    COPLAN
-    <small>CONTROLE DE DEMANDAS</small>
+  <div class="field">
+    <label for="email">E-mail</label>
+    <input id="email" type="email" required placeholder="seu@email.com">
   </div>
 
-  <div class="nav">
-    <div class="active">▦ Dashboard</div>
-    <div>✓ Ordens de Serviço</div>
-    <div>◉ Relatórios</div>
+  <div class="field">
+    <label for="senha">Senha</label>
+    <input id="senha" type="password" required placeholder="••••••••">
   </div>
 
-  <div class="user">
-    <strong id="useremail">Usuário</strong>
-    <br>
-    <span style="opacity:.6">Acesso ao sistema</span>
-
-    <button onclick="sair()">Sair</button>
+  <div class="error" id="loginerr">
+    E-mail ou senha inválidos.
   </div>
 
-</aside>
-
-
-<main class="main">
-
-  <div class="top">
-
-    <div>
-      <h1>Dashboard</h1>
-      <p>Visão geral das ordens de serviço</p>
-    </div>
-
-    <div class="top-buttons">
-
-      <!-- PRIMEIRA IMPORTAÇÃO -->
-      <button
-        class="secondary"
-        onclick="abrirImportacao()">
-        📥 Importar Excel
-      </button>
-
-      <!-- SEGUNDA IMPORTAÇÃO -->
-      <button
-        class="control-button"
-        onclick="abrirImportacaoControle()">
-        📋 Importar Controle
-      </button>
-
-      <button
-        class="primary"
-        onclick="abrir()">
-        + Nova O.S.
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="cards">
-
-    <div class="card green">
-      <div class="label">TOTAL DE O.S.</div>
-      <div class="num" id="total">0</div>
-    </div>
-
-    <div class="card yellow">
-      <div class="label">FAZENDO</div>
-      <div class="num" id="fazendo">0</div>
-    </div>
-
-    <div class="card blue">
-      <div class="label">EM TESTE</div>
-      <div class="num" id="teste">0</div>
-    </div>
-
-    <div class="card purple">
-      <div class="label">EM PRODUÇÃO</div>
-      <div class="num" id="producao">0</div>
-    </div>
-
-    <div class="card green">
-      <div class="label">CONCLUÍDAS</div>
-      <div class="num" id="concluido">0</div>
-    </div>
-
-  </div>
-
-
-  <div class="panel">
-
-    <div class="toolbar">
-
-      <div class="filters">
-
-        <input
-          id="busca"
-          placeholder="Buscar O.S., assunto ou descrição...">
-
-        <select id="status">
-          <option value="">Todos os status</option>
-          <option value="BACKLOG_DESENVOLVIMENTO">Backlog Desenvolvimento</option>
-          <option value="FAZENDO">Fazendo</option>
-          <option value="FEITO">Feito</option>
-          <option value="DISPONIVEL_TESTE">Disponível para Teste</option>
-          <option value="TESTANDO">Testando</option>
-          <option value="TESTE_CONCLUIDO">Teste Concluído</option>
-          <option value="EM_PRODUCAO">Em Produção</option>
-          <option value="CONCLUIDO">Concluído</option>
-          <option value="ENTREGUE">Entregue</option>
-          <option value="DEVOLVIDO_DEV">Devolvido ao DEV</option>
-          <option value="ANALISE_INICIADA">Análise Iniciada</option>
-          <option value="ANALISE_CONCLUIDA">Análise Concluída</option>
-          <option value="AGUARDANDO_RETORNO">Aguardando Retorno</option>
-          <option value="AGUARDANDO_APROVACAO">Aguardando Aprovação</option>
-          <option value="PARALISADO">Desenvolvimento Paralisado</option>
-        </select>
-
-        <select id="pendFiltro">
-          <option value="">Todas as pendências</option>
-          <option value="Empresa">Empresa</option>
-          <option value="Cliente">Cliente</option>
-        </select>
-
-      </div>
-
-    </div>
-
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>O.S.</th>
-            <th>Data Criação</th>
-            <th>Cliente</th>
-            <th>Usuário</th>
-            <th>Status</th>
-            <th>Produto</th>
-            <th>Grupo</th>
-            <th>Assunto</th>
-            <th>Desenvolvedor</th>
-            <th>Prioridade</th>
-            <th>Prazo Coplan</th>
-            <th>Entregue Em</th>
-            <th>Pendência</th>
-            <th>Observação</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-
-        <tbody id="tbody"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-</main>
-</section>
-
-
-<!-- MODAL NOVA O.S. -->
-
-<div class="modal" id="modal">
-
-<div class="modalbox">
-
-<h2 id="mt">Nova O.S.</h2>
-
-<form id="osForm">
-
-<input type="hidden" id="id">
-
-<div class="grid">
-
-<div class="field">
-<label>Nº da O.S.</label>
-<input id="os" type="text">
-</div>
-
-<div class="field">
-<label>Data de criação</label>
-<input id="dataCriacao" type="date">
-</div>
-
-<div class="field">
-<label>Cliente</label>
-<input id="cliente" type="text">
-</div>
-
-<div class="field">
-<label>Usuário</label>
-<input id="usuario" type="text">
-</div>
-
-<div class="field">
-<label>Status</label>
-
-<select id="st">
-<option value="">Selecione</option>
-<option value="BACKLOG_DESENVOLVIMENTO">Backlog Desenvolvimento</option>
-<option value="FAZENDO">Fazendo</option>
-<option value="FEITO">Feito</option>
-<option value="DISPONIVEL_TESTE">Disponível para Teste</option>
-<option value="TESTANDO">Testando</option>
-<option value="TESTE_CONCLUIDO">Teste Concluído</option>
-<option value="EM_PRODUCAO">Em Produção</option>
-<option value="CONCLUIDO">Concluído</option>
-<option value="ENTREGUE">Entregue</option>
-<option value="DEVOLVIDO_DEV">Devolvido ao DEV</option>
-<option value="ANALISE_INICIADA">Análise Iniciada</option>
-<option value="ANALISE_CONCLUIDA">Análise Concluída</option>
-</select>
-
-</div>
-
-<div class="field">
-<label>Produto</label>
-<input id="produto" type="text">
-</div>
-
-<div class="field">
-<label>Grupo</label>
-<input id="grupo" type="text">
-</div>
-
-<div class="field">
-<label>Assunto</label>
-<input id="assunto" type="text">
-</div>
-
-<div class="field">
-<label>Desenvolvedor</label>
-<input id="desenvolvedor" type="text">
-</div>
-
-<div class="field">
-<label>Prioridade</label>
-<input id="prioridade" type="number">
-</div>
-
-<div class="field">
-<label>Prazo Coplan</label>
-<input id="prazo" type="date">
-</div>
-
-<div class="field">
-<label>Entregue em</label>
-<input id="entregue" type="date">
-</div>
-
-<div class="field">
-<label>Pendência</label>
-
-<select id="pe">
-<option value="">Selecione</option>
-<option value="Empresa">Empresa</option>
-<option value="Cliente">Cliente</option>
-</select>
-
-</div>
-
-<div class="field full">
-<label>Descrição</label>
-<textarea id="desc" rows="4"></textarea>
-</div>
-
-<div class="field full">
-<label>Observação</label>
-<textarea id="obs" rows="3"></textarea>
-</div>
-
-</div>
-
-<div class="actions">
-
-<button type="button"
-class="cancel-btn"
-onclick="fechar()">
-Cancelar
-</button>
-
-<button type="submit" class="primary">
-Salvar
-</button>
-
-</div>
+  <button class="primary wide" type="submit">
+    Entrar
+  </button>
 
 </form>
 
+<div class="hint">
+  Sistema de controle de Ordens de Serviço e Demandas.
 </div>
+```
+
+  </div>
+</section>
+
+<section class="app" id="app">
+
+  <aside class="sidebar">
+
+```
+<div class="side-logo">
+  COPLAN
+  <small>CONTROLE DE DEMANDAS</small>
+</div>
+
+<div class="nav">
+  <div class="active">▦ Dashboard</div>
+  <div>✓ Ordens de Serviço</div>
+  <div>◉ Relatórios</div>
+</div>
+
+<div class="user">
+
+  <strong id="useremail">Usuário</strong>
+
+  <br>
+
+  <span style="opacity:.6">
+    Acesso ao sistema
+  </span>
+
+  <button onclick="sair()">
+    Sair
+  </button>
+
+</div>
+```
+
+  </aside>
+
+  <main class="main">
+
+```
+<div class="top">
+
+  <div>
+    <h1>Dashboard</h1>
+    <p>Visão geral das ordens de serviço</p>
+  </div>
+
+  <div class="top-buttons">
+
+    <!-- PRIMEIRO BOTÃO -->
+    <button
+      class="secondary"
+      onclick="abrirImportacao()"
+    >
+      📥 Importar Excel
+    </button>
+
+    <!-- SEGUNDO BOTÃO -->
+    <button
+      class="control-button"
+      onclick="abrirImportacaoControle()"
+    >
+      📋 Importar Controle
+    </button>
+
+    <!-- NOVA O.S. -->
+    <button
+      class="primary"
+      onclick="abrir()"
+    >
+      + Nova O.S.
+    </button>
+
+  </div>
+
 </div>
 
 
-<!-- MODAL IMPORTAR EXCEL -->
+<div class="cards">
+
+  <div class="card green">
+    <div class="label">TOTAL DE O.S.</div>
+    <div class="num" id="total">0</div>
+  </div>
+
+  <div class="card yellow">
+    <div class="label">FAZENDO</div>
+    <div class="num" id="fazendo">0</div>
+  </div>
+
+  <div class="card blue">
+    <div class="label">EM TESTE</div>
+    <div class="num" id="teste">0</div>
+  </div>
+
+  <div class="card purple">
+    <div class="label">EM PRODUÇÃO</div>
+    <div class="num" id="producao">0</div>
+  </div>
+
+  <div class="card green">
+    <div class="label">CONCLUÍDAS</div>
+    <div class="num" id="concluido">0</div>
+  </div>
+
+</div>
+
+
+<div class="panel">
+
+  <div class="toolbar">
+
+    <div class="filters">
+
+      <input
+        id="busca"
+        placeholder="Buscar O.S. ou descrição..."
+      >
+
+      <select id="status">
+        <option value="">Todos os status</option>
+        <option value="BACKLOG_DESENVOLVIMENTO">Backlog Desenvolvimento</option>
+        <option value="FAZENDO">Fazendo</option>
+        <option value="FEITO">Feito</option>
+        <option value="DISPONIVEL_TESTE">Disponível para Teste</option>
+        <option value="TESTANDO">Testando</option>
+        <option value="TESTE_CONCLUIDO">Teste Concluído</option>
+        <option value="EM_PRODUCAO">Em Produção</option>
+        <option value="CONCLUIDO">Concluído</option>
+        <option value="ENTREGUE">Entregue</option>
+        <option value="DEVOLVIDO_DEV">Devolvido ao DEV</option>
+        <option value="ANALISE_INICIADA">Análise Iniciada</option>
+        <option value="ANALISE_CONCLUIDA">Análise Concluída</option>
+      </select>
+
+      <select id="pendFiltro">
+        <option value="">Todas as pendências</option>
+        <option value="Empresa">Empresa</option>
+        <option value="Cliente">Cliente</option>
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <div style="overflow:auto">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>O.S.</th>
+          <th>Data Criação</th>
+          <th>Cliente</th>
+          <th>Usuário</th>
+          <th>Status</th>
+          <th>Produto</th>
+          <th>Grupo</th>
+          <th>Assunto</th>
+          <th>Desenvolvedor</th>
+          <th>Entregue Em</th>
+          <th>Prioridade</th>
+          <th>Prazo Coplan</th>
+          <th>Pendência</th>
+          <th>Observação</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody id="tbody"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+```
+
+  </main>
+
+</section>
+
+<!-- MODAL NOVA / EDITAR -->
+
+<div class="modal" id="modal">
+
+  <div class="modalbox">
+
+```
+<h2 id="mt">Nova O.S.</h2>
+
+<form id="osForm" novalidate>
+
+  <input type="hidden" id="id">
+
+  <div class="grid">
+
+    <div class="field">
+      <label>Nº da O.S.</label>
+      <input id="os" type="text">
+    </div>
+
+    <div class="field">
+      <label>Data de criação</label>
+      <input id="dataCriacao" type="date">
+    </div>
+
+    <div class="field">
+      <label>Cliente</label>
+      <input id="cliente" type="text">
+    </div>
+
+    <div class="field">
+      <label>Usuário</label>
+      <input id="usuario" type="text">
+    </div>
+
+    <div class="field">
+      <label>Status</label>
+
+      <select id="st">
+        <option value="">Selecione</option>
+        <option value="BACKLOG_DESENVOLVIMENTO">Backlog Desenvolvimento</option>
+        <option value="FAZENDO">Fazendo</option>
+        <option value="FEITO">Feito</option>
+        <option value="DISPONIVEL_TESTE">Disponível para Teste</option>
+        <option value="TESTANDO">Testando</option>
+        <option value="TESTE_CONCLUIDO">Teste Concluído</option>
+        <option value="EM_PRODUCAO">Em Produção</option>
+        <option value="CONCLUIDO">Concluído</option>
+        <option value="ENTREGUE">Entregue</option>
+        <option value="DEVOLVIDO_DEV">Devolvido ao DEV</option>
+        <option value="ANALISE_INICIADA">Análise Iniciada</option>
+        <option value="ANALISE_CONCLUIDA">Análise Concluída</option>
+      </select>
+
+    </div>
+
+    <div class="field">
+      <label>Produto</label>
+      <input id="produto" type="text">
+    </div>
+
+    <div class="field">
+      <label>Grupo</label>
+      <input id="grupo" type="text">
+    </div>
+
+    <div class="field">
+      <label>Assunto</label>
+      <input id="assunto" type="text">
+    </div>
+
+    <div class="field">
+      <label>Desenvolvedor</label>
+      <input id="desenvolvedor" type="text">
+    </div>
+
+    <div class="field">
+      <label>Entregue em</label>
+      <input id="entregue" type="date">
+    </div>
+
+    <div class="field">
+      <label>Prioridade</label>
+      <input id="prioridade" type="number" min="0">
+    </div>
+
+    <div class="field">
+      <label>Prazo Coplan</label>
+      <input id="prazo" type="date">
+    </div>
+
+    <div class="field">
+      <label>Pendência</label>
+
+      <select id="pe">
+        <option value="">Selecione</option>
+        <option value="Empresa">Empresa</option>
+        <option value="Cliente">Cliente</option>
+      </select>
+
+    </div>
+
+    <div class="field full">
+      <label>Descrição</label>
+      <textarea id="desc" rows="4"></textarea>
+    </div>
+
+    <div class="field full">
+      <label>Observação</label>
+      <textarea id="obs" rows="3"></textarea>
+    </div>
+
+  </div>
+
+  <div class="actions">
+
+    <button type="button" class="cancel-btn" onclick="fechar()">
+      Cancelar
+    </button>
+
+    <button type="submit" class="primary">
+      Salvar
+    </button>
+
+  </div>
+
+</form>
+```
+
+  </div>
+
+</div>
+
+<!-- MODAL IMPORTAR EXCEL PRINCIPAL -->
 
 <div class="modal" id="importModal">
 
-<div class="modalbox">
+  <div class="modalbox">
 
+```
 <h2>📥 Importar O.S. do Excel</h2>
 
 <div class="import-help">
 
-<strong>Arquivo principal:</strong><br><br>
+  <strong>Formato esperado:</strong><br><br>
 
-O.S. | DATA DE CRIAÇÃO | CLIENTE | USUÁRIO | STATUS |
-PRODUTO | GRUPO | ASSUNTO | DESENVOLVEDOR | ENTREGUE EM
+  O.S. |
+  DATA DE CRIAÇÃO |
+  CLIENTE |
+  USUÁRIO |
+  STATUS |
+  PRODUTO |
+  GRUPO |
+  ASSUNTO |
+  DESENVOLVEDOR |
+  ENTREGUE EM
 
-<br><br>
+  <br><br>
 
-A O.S. será usada para localizar um registro existente.
-Se já existir, os dados principais serão atualizados.
-Se não existir, uma nova O.S. será criada.
+  A coluna <strong>O.S.</strong> identifica a O.S.
+  existente. Se já existir, os dados principais serão
+  atualizados. Se não existir, uma nova O.S. será criada.
 
-<br><br>
+  <br><br>
 
-<strong>
-Prioridade e Prazo Coplan não são alterados por esta importação.
-</strong>
+  <strong>
+    Prioridade e Prazo não são alterados por esta importação.
+  </strong>
 
 </div>
 
 <div class="field">
 
-<label>Selecione o arquivo Excel</label>
+  <label for="arquivoExcel">
+    Selecione o arquivo Excel
+  </label>
 
-<input
-id="arquivoExcel"
-type="file"
-accept=".xlsx,.xls">
+  <input
+    id="arquivoExcel"
+    type="file"
+    accept=".xlsx,.xls"
+    onchange="mostrarNomeArquivo()"
+  >
 
-<div class="file-name" id="nomeArquivo"></div>
+  <div class="file-name" id="nomeArquivo"></div>
 
 </div>
 
 <div class="import-result" id="importResult">
 
-<div class="result-grid">
+  <div class="result-grid">
 
-<div class="result-card">
-Novas O.S.
-<strong class="result-new" id="resultNovas">0</strong>
-</div>
+    <div class="result-card">
+      Novas O.S.
+      <strong class="result-new" id="resultNovas">0</strong>
+    </div>
 
-<div class="result-card">
-O.S. atualizadas
-<strong class="result-update" id="resultAtualizadas">0</strong>
-</div>
+    <div class="result-card">
+      O.S. atualizadas
+      <strong class="result-update" id="resultAtualizadas">0</strong>
+    </div>
 
-<div class="result-card">
-Erros
-<strong class="result-error" id="resultErros">0</strong>
-</div>
+    <div class="result-card">
+      Erros
+      <strong class="result-error" id="resultErros">0</strong>
+    </div>
 
-</div>
+  </div>
 
-<div class="error-list" id="errorList"></div>
+  <div class="error-list" id="errorList"></div>
 
 </div>
 
 <div class="actions">
 
-<button
-class="cancel-btn"
-onclick="fecharImportacao()">
-Fechar
-</button>
+  <button
+    type="button"
+    class="cancel-btn"
+    onclick="fecharImportacao()"
+  >
+    Fechar
+  </button>
 
-<button
-class="primary"
-id="btnImportar"
-onclick="importarExcel()">
-📥 Importar
-</button>
+  <button
+    type="button"
+    class="primary"
+    id="btnImportar"
+    onclick="importarExcel()"
+  >
+    📥 Importar
+  </button>
 
 </div>
+```
+
+  </div>
 
 </div>
-</div>
-
 
 <!-- MODAL IMPORTAR CONTROLE -->
 
 <div class="modal" id="controleModal">
 
-<div class="modalbox">
+  <div class="modalbox">
 
+```
 <h2>📋 Importar Controle</h2>
 
-<div class="import-help">
+<div class="control-help">
 
-<strong>Formato esperado:</strong><br><br>
+  <strong>Este é um controle separado da importação principal.</strong>
 
-Ordem | DATA DE CRIAÇÃO | USUÁRIO | Prioridade |
-Prazo Coplan | ASSUNTO
+  <br><br>
 
-<br><br>
+  O Excel deve possuir as seguintes colunas:
 
-A coluna <strong>Ordem</strong> será utilizada para localizar
-a O.S. existente no sistema.
+  <br><br>
 
-<br><br>
+  <strong>
+    Ordem |
+    DATA DE CRIAÇÃO |
+    USUÁRIO |
+    Prioridade |
+    Prazo Coplan |
+    ASSUNTO
+  </strong>
 
-Esta importação serve somente para atualizar o
-<strong>controle de prioridade e prazo</strong>.
+  <br><br>
 
-<br><br>
+  A coluna <strong>Ordem</strong> será utilizada para
+  localizar a O.S. já cadastrada no sistema.
 
-<strong>
-Ela NÃO altera Cliente, Status, Produto, Grupo,
-Desenvolvedor, Entregue em, Pendência ou Observação.
-</strong>
+  <br><br>
 
-<br><br>
+  <strong>
+    Esta importação NÃO cria novas O.S.
+  </strong>
 
-Se a O.S. não existir no sistema, ela será registrada
-como erro e não será criada automaticamente.
+  <br>
+
+  Ela apenas atualiza o controle da O.S. encontrada:
+  <strong>data de criação, usuário, prioridade, prazo e assunto.</strong>
 
 </div>
 
 <div class="field">
 
-<label>Selecione o arquivo de Controle</label>
+  <label for="arquivoControle">
+    Selecione o Excel do controle
+  </label>
 
-<input
-id="arquivoControle"
-type="file"
-accept=".xlsx,.xls">
+  <input
+    id="arquivoControle"
+    type="file"
+    accept=".xlsx,.xls"
+    onchange="mostrarNomeControle()"
+  >
 
-<div class="file-name" id="nomeControle"></div>
+  <div class="file-name" id="nomeControle"></div>
 
 </div>
-
 
 <div class="import-result" id="controleResult">
 
-<div class="result-grid">
+  <div class="result-grid">
 
-<div class="result-card">
-Atualizadas
-<strong class="result-update" id="controleAtualizadas">0</strong>
+    <div class="result-card">
+
+      Atualizadas
+
+      <strong
+        class="result-update"
+        id="controleAtualizadas"
+      >
+        0
+      </strong>
+
+    </div>
+
+    <div class="result-card">
+
+      Não encontradas
+
+      <strong
+        class="result-new"
+        id="controleNaoEncontradas"
+      >
+        0
+      </strong>
+
+    </div>
+
+    <div class="result-card">
+
+      Erros
+
+      <strong
+        class="result-error"
+        id="controleErros"
+      >
+        0
+      </strong>
+
+    </div>
+
+  </div>
+
+  <div
+    class="error-list"
+    id="controleErrorList"
+  ></div>
+
 </div>
-
-<div class="result-card">
-Não encontradas
-<strong class="result-error" id="controleNaoEncontradas">0</strong>
-</div>
-
-<div class="result-card">
-Erros
-<strong class="result-error" id="controleErros">0</strong>
-</div>
-
-</div>
-
-<div
-class="error-list"
-id="controleErrorList">
-</div>
-
-</div>
-
 
 <div class="actions">
 
-<button
-type="button"
-class="cancel-btn"
-onclick="fecharImportacaoControle()">
-Fechar
-</button>
+  <button
+    type="button"
+    class="cancel-btn"
+    onclick="fecharImportacaoControle()"
+  >
+    Fechar
+  </button>
 
-<button
-type="button"
-class="control-button"
-id="btnImportarControle"
-onclick="importarControle()">
-📋 Importar Controle
-</button>
+  <button
+    type="button"
+    class="control-button"
+    id="btnImportarControle"
+    onclick="importarControle()"
+  >
+    📋 Importar Controle
+  </button>
 
 </div>
+```
+
+  </div>
 
 </div>
-</div>
-
 
 <script>
 
-/* =========================
+/* ==================================================
    SUPABASE
-========================= */
+================================================== */
 
 const SUPABASE_URL =
-'https://otzhzpimeawafhguhcae.supabase.co';
+  'https://otzhzpimeawafhguhcae.supabase.co';
 
 const SUPABASE_PUBLISHABLE_KEY =
-'sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
+  'sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
 
-const {createClient}=supabase;
+const {createClient} = supabase;
 
-const db=createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
+const db =
+  createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
-let dados=[];
-let carregando=false;
+let dados = [];
+let carregando = false;
 
 
-/* =========================
+/* ==================================================
    LOGIN
-========================= */
+================================================== */
 
 document
-.getElementById('loginForm')
-.addEventListener('submit',entrar);
+  .getElementById('loginForm')
+  .addEventListener('submit', entrar);
 
 async function entrar(e){
 
-e.preventDefault();
+  e.preventDefault();
 
-const email=
-document.getElementById('email').value.trim();
+  const email =
+    document.getElementById('email').value.trim();
 
-const senha=
-document.getElementById('senha').value;
+  const senha =
+    document.getElementById('senha').value;
 
-const erro=
-document.getElementById('loginerr');
+  const erro =
+    document.getElementById('loginerr');
 
-erro.style.display='none';
+  erro.style.display = 'none';
 
-const {error}=await db.auth.signInWithPassword({
-email,
-password:senha
-});
+  const {error} =
+    await db.auth.signInWithPassword({
+      email,
+      password:senha
+    });
 
-if(error){
+  if(error){
 
-erro.textContent='E-mail ou senha inválidos.';
-erro.style.display='block';
+    erro.textContent =
+      'E-mail ou senha inválidos.';
 
+    erro.style.display = 'block';
+  }
 }
 
-}
 
-
-/* =========================
+/* ==================================================
    INICIAR
-========================= */
+================================================== */
 
 async function iniciar(){
 
-const {
-data:{session}
-}=await db.auth.getSession();
+  const {
+    data:{session}
+  } = await db.auth.getSession();
 
-if(session){
-mostrarApp(session.user);
-}else{
-mostrarLogin();
-}
+  if(session){
 
-db.auth.onAuthStateChange(
-(event,session)=>{
+    mostrarApp(session.user);
 
-if(session){
-mostrarApp(session.user);
-}else{
-mostrarLogin();
-}
+  }else{
 
-});
+    mostrarLogin();
 
+  }
+
+  db.auth.onAuthStateChange(
+    (_event,session)=>{
+
+      if(session){
+
+        mostrarApp(session.user);
+
+      }else{
+
+        mostrarLogin();
+
+      }
+
+    }
+  );
 }
 
 function mostrarLogin(){
 
-document.getElementById('login').style.display='grid';
-document.getElementById('app').style.display='none';
+  document.getElementById('login').style.display='grid';
+
+  document.getElementById('app').style.display='none';
 
 }
 
 async function mostrarApp(user){
 
-document.getElementById('login').style.display='none';
-document.getElementById('app').style.display='block';
+  document.getElementById('login').style.display='none';
 
-document.getElementById('useremail').textContent=
-user?.email||'Usuário';
+  document.getElementById('app').style.display='block';
 
-await carregarDados();
+  document.getElementById('useremail').textContent =
+    user?.email || 'Usuário';
 
+  await carregarDados();
 }
 
 async function sair(){
 
-await db.auth.signOut();
+  await db.auth.signOut();
 
 }
 
 
-/* =========================
+/* ==================================================
    CARREGAR
-========================= */
+================================================== */
 
 async function carregarDados(){
 
-carregando=true;
-render();
+  carregando=true;
 
-const {
-data,
-error
-}=await db
-.from('ordens_servico')
-.select('*')
-.order('os',{ascending:true});
+  render();
 
-carregando=false;
+  const {
+    data,
+    error
+  } =
+    await db
+      .from('ordens_servico')
+      .select('*')
+      .order('os',{ascending:true});
 
-if(error){
+  carregando=false;
 
-alert(
-'Não foi possível carregar as O.S.\n\n'+
-error.message
-);
+  if(error){
 
-return;
+    alert(
+      'Não foi possível carregar as O.S.\n\n'+
+      error.message
+    );
 
+    return;
+  }
+
+  dados=data || [];
+
+  render();
 }
 
-dados=data||[];
 
-render();
-
-}
-
-
-/* =========================
+/* ==================================================
    NOVA / EDITAR
-========================= */
+================================================== */
 
 function abrir(registro=null){
 
-document.getElementById('osForm').reset();
+  document.getElementById('osForm').reset();
 
-document.getElementById('id').value='';
+  document.getElementById('id').value='';
 
-document.getElementById('mt').textContent=
-registro?'Editar O.S.':'Nova O.S.';
+  document.getElementById('mt').textContent =
+    registro ? 'Editar O.S.' : 'Nova O.S.';
 
-if(registro){
+  if(registro){
 
-document.getElementById('id').value=registro.id||'';
-document.getElementById('os').value=registro.os??'';
-document.getElementById('dataCriacao').value=registro.data_criacao??'';
-document.getElementById('cliente').value=registro.cliente??'';
-document.getElementById('usuario').value=registro.usuario??'';
-document.getElementById('st').value=registro.status??'';
-document.getElementById('produto').value=registro.produto??'';
-document.getElementById('grupo').value=registro.grupo??'';
-document.getElementById('assunto').value=registro.assunto??'';
-document.getElementById('desenvolvedor').value=registro.desenvolvedor??'';
-document.getElementById('prioridade').value=registro.prioridade??'';
-document.getElementById('prazo').value=registro.prazo??'';
-document.getElementById('entregue').value=registro.entregue_em??'';
-document.getElementById('pe').value=registro.pendencia??'';
-document.getElementById('desc').value=registro.descricao??'';
-document.getElementById('obs').value=registro.observacao??'';
+    document.getElementById('id').value =
+      registro.id || '';
 
-}
+    document.getElementById('os').value =
+      registro.os ?? '';
 
-document.getElementById('modal').classList.add('open');
+    document.getElementById('dataCriacao').value =
+      registro.data_criacao ?? '';
 
+    document.getElementById('cliente').value =
+      registro.cliente ?? '';
+
+    document.getElementById('usuario').value =
+      registro.usuario ?? '';
+
+    document.getElementById('st').value =
+      registro.status ?? '';
+
+    document.getElementById('produto').value =
+      registro.produto ?? '';
+
+    document.getElementById('grupo').value =
+      registro.grupo ?? '';
+
+    document.getElementById('assunto').value =
+      registro.assunto ?? '';
+
+    document.getElementById('desenvolvedor').value =
+      registro.desenvolvedor ?? '';
+
+    document.getElementById('entregue').value =
+      registro.entregue_em ?? '';
+
+    document.getElementById('prioridade').value =
+      registro.prioridade ?? '';
+
+    document.getElementById('prazo').value =
+      registro.prazo ?? '';
+
+    document.getElementById('pe').value =
+      registro.pendencia ?? '';
+
+    document.getElementById('desc').value =
+      registro.descricao ?? '';
+
+    document.getElementById('obs').value =
+      registro.observacao ?? '';
+  }
+
+  document
+    .getElementById('modal')
+    .classList
+    .add('open');
 }
 
 function fechar(){
 
-document.getElementById('modal').classList.remove('open');
-
+  document
+    .getElementById('modal')
+    .classList
+    .remove('open');
 }
 
 
-/* =========================
+/* ==================================================
    SALVAR
-========================= */
+================================================== */
 
 document
-.getElementById('osForm')
-.addEventListener('submit',salvar);
+  .getElementById('osForm')
+  .addEventListener('submit',salvar);
 
 async function salvar(e){
 
-e.preventDefault();
+  e.preventDefault();
 
-const id=document.getElementById('id').value.trim();
+  const id =
+    document.getElementById('id').value.trim();
 
-const registro={
+  const registro={
 
-os:valorOuNull('os'),
+    os:valorOuNull('os'),
 
-data_criacao:valorOuNull('dataCriacao'),
+    data_criacao:
+      valorOuNull('dataCriacao'),
 
-cliente:valorOuNull('cliente'),
+    cliente:
+      valorOuNull('cliente'),
 
-usuario:valorOuNull('usuario'),
+    usuario:
+      valorOuNull('usuario'),
 
-status:valorOuNull('st'),
+    status:
+      valorOuNull('st'),
 
-produto:valorOuNull('produto'),
+    produto:
+      valorOuNull('produto'),
 
-grupo:valorOuNull('grupo'),
+    grupo:
+      valorOuNull('grupo'),
 
-assunto:valorOuNull('assunto'),
+    assunto:
+      valorOuNull('assunto'),
 
-desenvolvedor:valorOuNull('desenvolvedor'),
+    desenvolvedor:
+      valorOuNull('desenvolvedor'),
 
-prioridade:valorOuNull('prioridade'),
+    entregue_em:
+      valorOuNull('entregue'),
 
-prazo:valorOuNull('prazo'),
+    prioridade:
+      valorNumeroOuNull('prioridade'),
 
-entregue_em:valorOuNull('entregue'),
+    prazo:
+      valorOuNull('prazo'),
 
-pendencia:valorOuNull('pe'),
+    pendencia:
+      valorOuNull('pe'),
 
-descricao:valorOuNull('desc'),
+    descricao:
+      valorOuNull('desc'),
 
-observacao:valorOuNull('obs')
+    observacao:
+      valorOuNull('obs')
 
-};
+  };
 
-let resultado;
+  let resultado;
 
-if(id){
+  if(id){
 
-resultado=await db
-.from('ordens_servico')
-.update(registro)
-.eq('id',id)
-.select()
-.single();
+    resultado =
+      await db
+        .from('ordens_servico')
+        .update(registro)
+        .eq('id',id)
+        .select()
+        .single();
 
-}else{
+  }else{
 
-resultado=await db
-.from('ordens_servico')
-.insert(registro)
-.select()
-.single();
+    resultado =
+      await db
+        .from('ordens_servico')
+        .insert(registro)
+        .select()
+        .single();
 
-}
+  }
 
-if(resultado.error){
+  if(resultado.error){
 
-alert(
-'Não foi possível salvar a O.S.\n\n'+
-resultado.error.message
-);
+    alert(
+      'Não foi possível salvar a O.S.\n\n'+
+      resultado.error.message
+    );
 
-return;
+    return;
+  }
 
-}
+  fechar();
 
-fechar();
-await carregarDados();
-
+  await carregarDados();
 }
 
 function valorOuNull(id){
 
-const el=document.getElementById(id);
+  const elemento =
+    document.getElementById(id);
 
-if(!el)return null;
+  if(!elemento)return null;
 
-const valor=el.value.trim();
+  const valor =
+    elemento.value.trim();
 
-return valor===''?null:valor;
+  return valor==='' ? null : valor;
+}
 
+function valorNumeroOuNull(id){
+
+  const elemento =
+    document.getElementById(id);
+
+  if(!elemento)return null;
+
+  const valor =
+    elemento.value.trim();
+
+  if(valor==='')return null;
+
+  const numero=Number(valor);
+
+  return Number.isFinite(numero)
+    ? numero
+    : null;
 }
 
 
-/* =========================
+/* ==================================================
    EXCLUIR
-========================= */
+================================================== */
 
 async function excluir(id){
 
-const registro=dados.find(
-x=>String(x.id)===String(id)
-);
+  const registro =
+    dados.find(
+      x=>String(x.id)===String(id)
+    );
 
-if(!registro)return;
+  if(!registro){
 
-if(!confirm(
-`Deseja realmente excluir O.S. ${registro.os}?\n\nEsta ação não poderá ser desfeita.`
-))return;
+    alert('O.S. não encontrada.');
 
-const {error}=await db
-.from('ordens_servico')
-.delete()
-.eq('id',id);
+    return;
+  }
 
-if(error){
+  const confirmar =
+    confirm(
+      `Deseja realmente excluir a O.S. ${registro.os}?\n\n`+
+      `Esta ação não poderá ser desfeita.`
+    );
 
-alert(
-'Não foi possível excluir a O.S.\n\n'+
-error.message
-);
+  if(!confirmar)return;
 
-return;
+  const {error} =
+    await db
+      .from('ordens_servico')
+      .delete()
+      .eq('id',id);
 
+  if(error){
+
+    alert(
+      'Não foi possível excluir a O.S.\n\n'+
+      error.message
+    );
+
+    return;
+  }
+
+  await carregarDados();
 }
 
-await carregarDados();
 
-}
-
-
-/* =========================
+/* ==================================================
    STATUS
-========================= */
+================================================== */
 
 const statusNomes={
 
-BACKLOG_DESENVOLVIMENTO:'Backlog Desenvolvimento',
-FAZENDO:'Fazendo',
-FEITO:'Feito',
-DISPONIVEL_TESTE:'Disponível para Teste',
-TESTANDO:'Testando',
-TESTE_CONCLUIDO:'Teste Concluído',
-EM_PRODUCAO:'Em Produção',
-CONCLUIDO:'Concluído',
-ENTREGUE:'Entregue',
-DEVOLVIDO_DEV:'Devolvido ao DEV',
-ANALISE_INICIADA:'Análise Iniciada',
-ANALISE_CONCLUIDA:'Análise Concluída',
-AGUARDANDO_RETORNO:'Aguardando Retorno',
-AGUARDANDO_APROVACAO:'Aguardando Aprovação',
-PARALISADO:'Desenvolvimento Paralisado'
+  BACKLOG_DESENVOLVIMENTO:'Backlog Desenvolvimento',
+  FAZENDO:'Fazendo',
+  FEITO:'Feito',
+  DISPONIVEL_TESTE:'Disponível para Teste',
+  TESTANDO:'Testando',
+  TESTE_CONCLUIDO:'Teste Concluído',
+  EM_PRODUCAO:'Em Produção',
+  CONCLUIDO:'Concluído',
+  ENTREGUE:'Entregue',
+  DEVOLVIDO_DEV:'Devolvido ao DEV',
+  ANALISE_INICIADA:'Análise Iniciada',
+  ANALISE_CONCLUIDA:'Análise Concluída',
+  AGUARDANDO_RETORNO:'Aguardando Retorno',
+  AGUARDANDO_APROVACAO:'Aguardando Aprovação',
+  PARALISADO:'Desenvolvimento Paralisado'
 
 };
 
 const statusClasses={
 
-BACKLOG_DESENVOLVIMENTO:'status-backlog',
-FAZENDO:'status-fazendo',
-FEITO:'status-feito',
-DISPONIVEL_TESTE:'status-disponivel',
-TESTANDO:'status-testando',
-TESTE_CONCLUIDO:'status-teste-concluido',
-EM_PRODUCAO:'status-producao',
-CONCLUIDO:'status-concluido',
-ENTREGUE:'status-entregue',
-DEVOLVIDO_DEV:'status-devolvido',
-ANALISE_INICIADA:'status-analise-iniciada',
-ANALISE_CONCLUIDA:'status-analise-concluida',
-AGUARDANDO_RETORNO:'status-aguardando',
-AGUARDANDO_APROVACAO:'status-aguardando',
-PARALISADO:'status-paralisado'
+  BACKLOG_DESENVOLVIMENTO:'status-backlog',
+  FAZENDO:'status-fazendo',
+  FEITO:'status-feito',
+  DISPONIVEL_TESTE:'status-disponivel',
+  TESTANDO:'status-testando',
+  TESTE_CONCLUIDO:'status-teste-concluido',
+  EM_PRODUCAO:'status-producao',
+  CONCLUIDO:'status-concluido',
+  ENTREGUE:'status-entregue',
+  DEVOLVIDO_DEV:'status-devolvido',
+  ANALISE_INICIADA:'status-analise-iniciada',
+  ANALISE_CONCLUIDA:'status-analise-concluida',
+  AGUARDANDO_RETORNO:'status-aguardando',
+  AGUARDANDO_APROVACAO:'status-aguardando',
+  PARALISADO:'status-paralisado'
 
 };
 
 
-/* =========================
+/* ==================================================
    RENDER
-========================= */
+================================================== */
 
 function render(){
 
-const busca=
-(document.getElementById('busca')?.value||'')
-.toLowerCase()
-.trim();
+  const busca =
+    (
+      document.getElementById('busca')?.value || ''
+    )
+      .toLowerCase()
+      .trim();
 
-const filtroStatus=
-document.getElementById('status')?.value||'';
+  const filtroStatus =
+    document.getElementById('status')?.value || '';
 
-const filtroPendencia=
-document.getElementById('pendFiltro')?.value||'';
+  const filtroPendencia =
+    document.getElementById('pendFiltro')?.value || '';
 
-const lista=dados.filter(x=>{
+  const lista =
+    dados.filter(x=>{
 
-const texto=[
-x.os,
-x.descricao,
-x.cliente,
-x.usuario,
-x.produto,
-x.grupo,
-x.assunto,
-x.desenvolvedor
-]
-.map(v=>String(v||''))
-.join(' ');
+      const texto=[
+        x.os,
+        x.descricao,
+        x.cliente,
+        x.usuario,
+        x.produto,
+        x.grupo,
+        x.assunto,
+        x.desenvolvedor
+      ]
+      .map(v=>String(v||''))
+      .join(' ');
 
-return(
-(!busca||texto.toLowerCase().includes(busca))&&
-(!filtroStatus||x.status===filtroStatus)&&
-(!filtroPendencia||x.pendencia===filtroPendencia)
-);
+      return(
+        (!busca || texto.toLowerCase().includes(busca)) &&
+        (!filtroStatus || x.status===filtroStatus) &&
+        (!filtroPendencia || x.pendencia===filtroPendencia)
+      );
+    });
 
-});
+  const tbody =
+    document.getElementById('tbody');
 
-const tbody=document.getElementById('tbody');
+  if(!lista.length){
 
-if(!lista.length){
+    tbody.innerHTML=`
+      <tr>
+        <td colspan="15"
+          style="text-align:center;padding:40px;color:#71807b">
+          ${
+            carregando
+              ? 'Carregando...'
+              : 'Nenhuma O.S. cadastrada.'
+          }
+        </td>
+      </tr>
+    `;
 
-tbody.innerHTML=`
-<tr>
-<td colspan="15"
-style="text-align:center;padding:40px;color:#71807b">
-${carregando?'Carregando...':'Nenhuma O.S. cadastrada.'}
-</td>
-</tr>`;
+  }else{
 
-}else{
+    tbody.innerHTML =
+      lista.map(montarLinha).join('');
 
-tbody.innerHTML=
-lista.map(montarLinha).join('');
+  }
 
-}
+  document.getElementById('total').textContent =
+    dados.length;
 
-document.getElementById('total').textContent=dados.length;
+  document.getElementById('fazendo').textContent =
+    contarStatus('FAZENDO');
 
-document.getElementById('fazendo').textContent=
-contarStatus('FAZENDO');
+  document.getElementById('teste').textContent =
+    dados.filter(x=>[
+      'DISPONIVEL_TESTE',
+      'TESTANDO',
+      'TESTE_CONCLUIDO'
+    ].includes(x.status)).length;
 
-document.getElementById('teste').textContent=
-dados.filter(x=>[
-'DISPONIVEL_TESTE',
-'TESTANDO',
-'TESTE_CONCLUIDO'
-].includes(x.status)).length;
+  document.getElementById('producao').textContent =
+    contarStatus('EM_PRODUCAO');
 
-document.getElementById('producao').textContent=
-contarStatus('EM_PRODUCAO');
-
-document.getElementById('concluido').textContent=
-dados.filter(x=>[
-'CONCLUIDO',
-'ENTREGUE'
-].includes(x.status)).length;
-
+  document.getElementById('concluido').textContent =
+    dados.filter(x=>[
+      'CONCLUIDO',
+      'ENTREGUE'
+    ].includes(x.status)).length;
 }
 
 function contarStatus(status){
 
-return dados.filter(
-x=>x.status===status
-).length;
-
+  return dados.filter(
+    x=>x.status===status
+  ).length;
 }
 
 
-/* =========================
+/* ==================================================
    LINHA
-========================= */
+================================================== */
 
 function montarLinha(x){
 
-const statusClass=
-statusClasses[x.status]||'status-backlog';
+  const statusClass =
+    statusClasses[x.status] ||
+    'status-backlog';
 
-const statusTexto=
-statusNomes[x.status]||x.status||'—';
+  const statusTexto =
+    statusNomes[x.status] ||
+    x.status ||
+    '—';
 
-const prioridade=
-x.prioridade??'—';
+  const pendClass =
+    x.pendencia==='Cliente'
+      ? 'pc'
+      : 'pe';
 
-const prazo=x.prazo?br(x.prazo):'—';
+  return`
 
-const atrasado=
-x.prazo &&
-x.entregue_em===null &&
-new Date(x.prazo+'T23:59:59')<new Date();
+    <tr>
 
-const pendClass=
-x.pendencia==='Cliente'?'pc':'pe';
+      <td><b>${esc(x.os||'—')}</b></td>
 
-return`
+      <td>${x.data_criacao ? br(x.data_criacao) : '—'}</td>
 
-<tr>
+      <td>${esc(x.cliente||'—')}</td>
 
-<td><b>${esc(x.os||'—')}</b></td>
+      <td>${esc(x.usuario||'—')}</td>
 
-<td>${x.data_criacao?br(x.data_criacao):'—'}</td>
+      <td>
+        ${
+          x.status
+            ? `<span class="badge ${statusClass}">
+                ${esc(statusTexto)}
+              </span>`
+            : '—'
+        }
+      </td>
 
-<td>${esc(x.cliente||'—')}</td>
+      <td>${esc(x.produto||'—')}</td>
 
-<td>${esc(x.usuario||'—')}</td>
+      <td>${esc(x.grupo||'—')}</td>
 
-<td>
-${x.status
-?`<span class="badge ${statusClass}">
-${esc(statusTexto)}
-</span>`
-:'—'}
-</td>
+      <td>${esc(x.assunto||'—')}</td>
 
-<td>${esc(x.produto||'—')}</td>
+      <td>${esc(x.desenvolvedor||'—')}</td>
 
-<td>${esc(x.grupo||'—')}</td>
+      <td>${x.entregue_em ? br(x.entregue_em) : '—'}</td>
 
-<td>${esc(x.assunto||'—')}</td>
+      <td>${x.prioridade ?? '—'}</td>
 
-<td>${esc(x.desenvolvedor||'—')}</td>
+      <td>${x.prazo ? br(x.prazo) : '—'}</td>
 
-<td>
-<span class="priority">
-${esc(prioridade)}
-</span>
-</td>
+      <td>
+        ${
+          x.pendencia
+            ? `<span class="badge ${pendClass}">
+                ${esc(x.pendencia)}
+              </span>`
+            : '—'
+        }
+      </td>
 
-<td>
-<span class="${atrasado?'late':''}">
-${prazo}
-</span>
-</td>
+      <td>${esc(x.observacao||'—')}</td>
 
-<td>${x.entregue_em?br(x.entregue_em):'—'}</td>
+      <td>
 
-<td>
-${x.pendencia
-?`<span class="badge ${pendClass}">
-${esc(x.pendencia)}
-</span>`
-:'—'}
-</td>
+        <div class="table-actions">
 
-<td>${esc(x.observacao||'—')}</td>
+          <button
+            class="edit-btn"
+            onclick="editar('${escAttr(x.id)}')"
+          >
+            Editar
+          </button>
 
-<td>
+          <button
+            class="delete-btn"
+            onclick="excluir('${escAttr(x.id)}')"
+          >
+            Excluir
+          </button>
 
-<div class="table-actions">
+        </div>
 
-<button
-class="edit-btn"
-onclick="editar('${escAttr(x.id)}')">
-Editar
-</button>
+      </td>
 
-<button
-class="delete-btn"
-onclick="excluir('${escAttr(x.id)}')">
-Excluir
-</button>
+    </tr>
 
-</div>
-
-</td>
-
-</tr>
-
-`;
-
+  `;
 }
 
 function editar(id){
 
-const registro=dados.find(
-x=>String(x.id)===String(id)
-);
+  const registro =
+    dados.find(
+      x=>String(x.id)===String(id)
+    );
 
-if(!registro)return;
+  if(!registro){
 
-abrir(registro);
+    alert('O.S. não encontrada.');
 
+    return;
+  }
+
+  abrir(registro);
 }
 
 
-/* =========================
+/* ==================================================
    DATAS
-========================= */
+================================================== */
 
 function br(valor){
 
-if(!valor)return'—';
+  if(!valor)return '—';
 
-const texto=String(valor);
+  const texto=String(valor);
 
-if(/^\d{4}-\d{2}-\d{2}$/.test(texto)){
+  if(/^\d{4}-\d{2}-\d{2}$/.test(texto)){
 
-const p=texto.split('-');
+    const p=texto.split('-');
 
-return`${p[2]}/${p[1]}/${p[0]}`;
+    return `${p[2]}/${p[1]}/${p[0]}`;
+  }
 
-}
-
-return texto;
-
+  return texto;
 }
 
 function converterDataExcel(valor){
 
-if(
-valor===null||
-valor===undefined||
-valor===''
-)return null;
+  if(
+    valor===null ||
+    valor===undefined ||
+    valor===''
+  ){
+    return null;
+  }
 
-if(typeof valor==='number'){
+  if(typeof valor==='number'){
 
-const data=XLSX.SSF.parse_date_code(valor);
+    const data =
+      XLSX.SSF.parse_date_code(valor);
 
-if(!data)return null;
+    if(!data)return null;
 
-return formatarDataBanco(
-data.y,
-data.m,
-data.d
-);
+    return formatarDataBanco(
+      data.y,
+      data.m,
+      data.d
+    );
+  }
 
-}
+  const texto =
+    String(valor).trim();
 
-const texto=String(valor).trim();
+  let match =
+    texto.match(
+      /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/
+    );
 
-let match=texto.match(
-/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/
-);
+  if(match){
 
-if(match){
+    return formatarDataBanco(
+      Number(match[3]),
+      Number(match[2]),
+      Number(match[1])
+    );
+  }
 
-return formatarDataBanco(
-Number(match[3]),
-Number(match[2]),
-Number(match[1])
-);
+  match =
+    texto.match(
+      /^(\d{4})-(\d{1,2})-(\d{1,2})/
+    );
 
-}
+  if(match){
 
-match=texto.match(
-/^(\d{4})-(\d{1,2})-(\d{1,2})/
-);
+    return formatarDataBanco(
+      Number(match[1]),
+      Number(match[2]),
+      Number(match[3])
+    );
+  }
 
-if(match){
-
-return formatarDataBanco(
-Number(match[1]),
-Number(match[2]),
-Number(match[3])
-);
-
-}
-
-return null;
-
+  return null;
 }
 
 function formatarDataBanco(ano,mes,dia){
 
-if(!ano||!mes||!dia)return null;
+  if(!ano||!mes||!dia)return null;
 
-const data=new Date(
-ano,
-mes-1,
-dia
-);
+  const data =
+    new Date(
+      ano,
+      mes-1,
+      dia
+    );
 
-if(
-data.getFullYear()!==ano||
-data.getMonth()!==mes-1||
-data.getDate()!==dia
-)return null;
+  if(
+    data.getFullYear()!==ano ||
+    data.getMonth()!==mes-1 ||
+    data.getDate()!==dia
+  ){
+    return null;
+  }
 
-return`${String(ano).padStart(4,'0')}-${String(mes).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
-
+  return(
+    String(ano).padStart(4,'0')+
+    '-'+
+    String(mes).padStart(2,'0')+
+    '-'+
+    String(dia).padStart(2,'0')
+  );
 }
 
 
-/* =========================
+/* ==================================================
    ESCAPE
-========================= */
+================================================== */
 
 function esc(valor){
 
-return String(valor??'')
-.replace(
-/[&<>"']/g,
-c=>({
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-'"':'&quot;',
-"'":'&#039;'
-})[c]
-);
-
+  return String(valor??'')
+    .replace(
+      /[&<>"']/g,
+      c=>({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#039;'
+      })[c]
+    );
 }
 
 function escAttr(valor){
 
-return String(valor??'')
-.replace(/\\/g,'\\\\')
-.replace(/'/g,"\\'");
-
+  return String(valor??'')
+    .replace(/\\/g,'\\\\')
+    .replace(/'/g,"\\'");
 }
 
 
-/* =========================
-   MODAL IMPORTAÇÃO
-========================= */
+/* ==================================================
+   IMPORTAÇÃO PRINCIPAL
+================================================== */
 
 function abrirImportacao(){
 
-document
-.getElementById('importModal')
-.classList.add('open');
-
-document
-.getElementById('importResult')
-.classList.remove('show');
+  document
+    .getElementById('importModal')
+    .classList
+    .add('open');
 
 }
 
 function fecharImportacao(){
 
-document
-.getElementById('importModal')
-.classList.remove('open');
+  document
+    .getElementById('importModal')
+    .classList
+    .remove('open');
 
 }
 
+function mostrarNomeArquivo(){
 
-/* =========================
-   IMPORTAÇÃO PRINCIPAL
-========================= */
+  const input =
+    document.getElementById('arquivoExcel');
 
-async function importarExcel(){
-
-const input=
-document.getElementById('arquivoExcel');
-
-if(!input.files.length){
-
-alert('Selecione um arquivo Excel.');
-
-return;
-
+  document.getElementById('nomeArquivo').textContent =
+    input.files?.length
+      ? 'Arquivo selecionado: '+input.files[0].name
+      : '';
 }
-
-const btn=
-document.getElementById('btnImportar');
-
-btn.disabled=true;
-btn.textContent='Importando...';
-
-let novas=0;
-let atualizadas=0;
-let erros=0;
-
-const detalhes=[];
-
-try{
-
-const buffer=
-await input.files[0].arrayBuffer();
-
-const workbook=
-XLSX.read(buffer,{
-type:'array',
-cellDates:false
-});
-
-const sheet=
-workbook.Sheets[workbook.SheetNames[0]];
-
-const linhas=
-XLSX.utils.sheet_to_json(
-sheet,
-{
-defval:'',
-raw:true
-}
-);
-
-if(!linhas.length)
-throw new Error('A planilha está vazia.');
-
-const mapa={};
-
-Object.keys(linhas[0]).forEach(chave=>{
-mapa[normalizarColuna(chave)]=chave;
-});
-
-const colOS=
-encontrarColuna(
-mapa,
-[
-'O.S.',
-'O.S',
-'OS',
-'ORDEM',
-'ORDEM DE SERVICO',
-'ORDEM DE SERVIÇO'
-]
-);
-
-if(!colOS)
-throw new Error('Coluna O.S. não encontrada.');
-
-const colData=
-encontrarColuna(
-mapa,
-[
-'DATA DE CRIAÇÃO',
-'DATA CRIACAO'
-]
-);
-
-const colCliente=
-encontrarColuna(mapa,['CLIENTE']);
-
-const colUsuario=
-encontrarColuna(mapa,['USUÁRIO','USUARIO']);
-
-const colStatus=
-encontrarColuna(mapa,['STATUS']);
-
-const colProduto=
-encontrarColuna(mapa,['PRODUTO']);
-
-const colGrupo=
-encontrarColuna(mapa,['GRUPO']);
-
-const colAssunto=
-encontrarColuna(mapa,['ASSUNTO']);
-
-const colDev=
-encontrarColuna(
-mapa,
-['DESENVOLVEDOR','DEV']
-);
-
-const colEntregue=
-encontrarColuna(
-mapa,
-['ENTREGUE EM','ENTREGUE']
-);
-
-
-for(let i=0;i<linhas.length;i++){
-
-const linha=linhas[i];
-
-try{
-
-const os=textoCelula(
-linha[colOS]
-);
-
-if(!os)
-throw new Error('O.S. não informada.');
-
-const registro={
-
-os,
-
-data_criacao:colData?
-converterDataExcel(linha[colData]):null,
-
-cliente:colCliente?
-textoCelula(linha[colCliente]):null,
-
-usuario:colUsuario?
-textoCelula(linha[colUsuario]):null,
-
-status:colStatus?
-textoCelula(linha[colStatus]):null,
-
-produto:colProduto?
-textoCelula(linha[colProduto]):null,
-
-grupo:colGrupo?
-textoCelula(linha[colGrupo]):null,
-
-assunto:colAssunto?
-textoCelula(linha[colAssunto]):null,
-
-desenvolvedor:colDev?
-textoCelula(linha[colDev]):null,
-
-entregue_em:colEntregue?
-converterDataExcel(linha[colEntregue]):null
-
-};
-
-const busca=await db
-.from('ordens_servico')
-.select('id')
-.eq('os',os)
-.limit(1);
-
-if(busca.error)
-throw new Error(busca.error.message);
-
-if(busca.data?.length){
-
-const id=busca.data[0].id;
-
-const resultado=await db
-.from('ordens_servico')
-.update(registro)
-.eq('id',id);
-
-if(resultado.error)
-throw new Error(resultado.error.message);
-
-atualizadas++;
-
-}else{
-
-const resultado=await db
-.from('ordens_servico')
-.insert(registro);
-
-if(resultado.error)
-throw new Error(resultado.error.message);
-
-novas++;
-
-}
-
-}catch(e){
-
-erros++;
-
-detalhes.push(
-`Linha ${i+2}: ${e.message}`
-);
-
-}
-
-}
-
-mostrarResultadoImportacao(
-novas,
-atualizadas,
-erros,
-detalhes
-);
-
-await carregarDados();
-
-}catch(e){
-
-alert(
-'Erro ao importar:\n\n'+
-e.message
-);
-
-}finally{
-
-btn.disabled=false;
-btn.textContent='📥 Importar';
-
-}
-
-}
-
-
-/* =========================
-   IMPORTAR CONTROLE
-========================= */
-
-function abrirImportacaoControle(){
-
-document
-.getElementById('controleModal')
-.classList.add('open');
-
-document
-.getElementById('controleResult')
-.classList.remove('show');
-
-document
-.getElementById('controleErrorList')
-.innerHTML='';
-
-}
-
-function fecharImportacaoControle(){
-
-document
-.getElementById('controleModal')
-.classList.remove('open');
-
-}
-
-async function importarControle(){
-
-const input=
-document.getElementById('arquivoControle');
-
-if(!input.files.length){
-
-alert(
-'Selecione o arquivo de Controle.'
-);
-
-return;
-
-}
-
-const btn=
-document.getElementById(
-'btnImportarControle'
-);
-
-btn.disabled=true;
-btn.textContent='Atualizando...';
-
-let atualizadas=0;
-let naoEncontradas=0;
-let erros=0;
-
-const detalhes=[];
-
-try{
-
-const buffer=
-await input.files[0].arrayBuffer();
-
-const workbook=
-XLSX.read(
-buffer,
-{
-type:'array',
-cellDates:false
-}
-);
-
-if(!workbook.SheetNames.length)
-throw new Error(
-'O arquivo não possui planilhas.'
-);
-
-const sheet=
-workbook.Sheets[
-workbook.SheetNames[0]
-];
-
-const linhas=
-XLSX.utils.sheet_to_json(
-sheet,
-{
-defval:'',
-raw:true
-}
-);
-
-if(!linhas.length)
-throw new Error(
-'A planilha de Controle está vazia.'
-);
-
-
-/* MAPA DAS COLUNAS */
-
-const mapa={};
-
-Object.keys(linhas[0]).forEach(chave=>{
-mapa[
-normalizarColuna(chave)
-]=chave;
-});
-
-
-const colOrdem=
-encontrarColuna(
-mapa,
-[
-'ORDEM',
-'O.S.',
-'O.S',
-'OS',
-'ORDEM DE SERVICO',
-'ORDEM DE SERVIÇO'
-]
-);
-
-const colData=
-encontrarColuna(
-mapa,
-[
-'DATA DE CRIAÇÃO',
-'DATA CRIACAO'
-]
-);
-
-const colUsuario=
-encontrarColuna(
-mapa,
-[
-'USUÁRIO',
-'USUARIO'
-]
-);
-
-const colPrioridade=
-encontrarColuna(
-mapa,
-[
-'PRIORIDADE'
-]
-);
-
-const colPrazo=
-encontrarColuna(
-mapa,
-[
-'PRAZO COPLAN',
-'PRAZO'
-]
-);
-
-const colAssunto=
-encontrarColuna(
-mapa,
-[
-'ASSUNTO'
-]
-);
-
-
-if(!colOrdem)
-throw new Error(
-'Não foi encontrada a coluna "Ordem".'
-);
-
-if(!colPrioridade)
-throw new Error(
-'Não foi encontrada a coluna "Prioridade".'
-);
-
-if(!colPrazo)
-throw new Error(
-'Não foi encontrada a coluna "Prazo Coplan".'
-);
-
-
-/* PROCESSAMENTO */
-
-for(
-let i=0;
-i<linhas.length;
-i++
-){
-
-const linha=linhas[i];
-
-try{
-
-const ordem=
-textoCelula(
-linha[colOrdem]
-);
-
-if(!ordem)
-throw new Error(
-'Ordem não informada.'
-);
-
-
-/*
-LOCALIZA A O.S.
-*/
-
-const busca=
-await db
-.from('ordens_servico')
-.select('id,os')
-.eq('os',ordem)
-.limit(1);
-
-if(busca.error)
-throw new Error(
-busca.error.message
-);
-
-
-/*
-SE NÃO EXISTIR,
-NÃO CRIA.
-*/
-
-if(!busca.data?.length){
-
-naoEncontradas++;
-
-detalhes.push(
-`Linha ${i+2} — O.S. ${ordem}: não encontrada no sistema.`
-);
-
-continue;
-
-}
-
-
-const id=
-busca.data[0].id;
-
-
-/*
-SOMENTE ESTES CAMPOS
-SERÃO ALTERADOS.
-*/
-
-const dadosControle={
-
-prioridade:
-converterNumero(
-linha[colPrioridade]
-),
-
-prazo:
-converterDataExcel(
-linha[colPrazo]
-)
-
-};
-
-
-/*
-ATUALIZA SOMENTE
-PRIORIDADE E PRAZO.
-*/
-
-const resultado=
-await db
-.from('ordens_servico')
-.update(dadosControle)
-.eq('id',id);
-
-
-if(resultado.error)
-throw new Error(
-resultado.error.message
-);
-
-atualizadas++;
-
-
-}catch(e){
-
-erros++;
-
-detalhes.push(
-`Linha ${i+2} — ${
-e.message||'Erro desconhecido'
-}`
-);
-
-}
-
-}
-
-
-/* RESULTADO */
-
-document
-.getElementById('controleAtualizadas')
-.textContent=
-atualizadas;
-
-document
-.getElementById('controleNaoEncontradas')
-.textContent=
-naoEncontradas;
-
-document
-.getElementById('controleErros')
-.textContent=
-erros;
-
-const lista=
-document
-.getElementById(
-'controleErrorList'
-);
-
-if(detalhes.length){
-
-lista.innerHTML=
-'<strong>Detalhes:</strong><br><br>'+
-detalhes.map(esc).join('<br>');
-
-}else{
-
-lista.innerHTML=
-'<strong>Controle importado sem erros.</strong>';
-
-}
-
-document
-.getElementById('controleResult')
-.classList.add('show');
-
-await carregarDados();
-
-alert(
-`Importação do Controle concluída!
-
-Atualizadas: ${atualizadas}
-Não encontradas: ${naoEncontradas}
-Erros: ${erros}`
-);
-
-}catch(e){
-
-alert(
-'Erro ao importar o Controle:\n\n'+
-e.message
-);
-
-}finally{
-
-btn.disabled=false;
-btn.textContent='📋 Importar Controle';
-
-}
-
-}
-
-
-/* =========================
-   FUNÇÕES EXCEL
-========================= */
 
 function normalizarColuna(valor){
 
-return String(valor??'')
-.normalize('NFD')
-.replace(/[\u0300-\u036f]/g,'')
-.toLowerCase()
-.replace(/\./g,'')
-.replace(/_/g,' ')
-.replace(/\s+/g,' ')
-.trim();
-
+  return String(valor??'')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .toLowerCase()
+    .replace(/\./g,'')
+    .replace(/_/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
 }
 
 function encontrarColuna(mapa,nomes){
 
-for(const nome of nomes){
+  for(const nome of nomes){
 
-const chave=
-normalizarColuna(nome);
+    const chave =
+      normalizarColuna(nome);
 
-if(mapa[chave]!==undefined)
-return mapa[chave];
+    if(mapa[chave]!==undefined){
+      return mapa[chave];
+    }
+  }
 
-}
-
-return null;
-
+  return null;
 }
 
 function textoCelula(valor){
 
-if(
-valor===null||
-valor===undefined
-)return null;
+  if(
+    valor===null ||
+    valor===undefined
+  ){
+    return null;
+  }
 
-const texto=
-String(valor).trim();
+  const texto =
+    String(valor).trim();
 
-return texto===''?null:texto;
-
-}
-
-function converterNumero(valor){
-
-if(
-valor===null||
-valor===undefined||
-valor===''
-)return null;
-
-const numero=
-Number(
-String(valor)
-.replace(',','.')
-.trim()
-);
-
-return Number.isFinite(numero)
-?numero
-:null;
-
+  return texto==='' ? null : texto;
 }
 
 
-/* =========================
-   RESULTADO IMPORTAÇÃO
-========================= */
+/* ==================================================
+   IMPORTAR EXCEL PRINCIPAL
+================================================== */
 
-function mostrarResultadoImportacao(
-novas,
-atualizadas,
-erros,
-detalhes
-){
+async function importarExcel(){
 
-document
-.getElementById('resultNovas')
-.textContent=novas;
+  const input =
+    document.getElementById('arquivoExcel');
 
-document
-.getElementById('resultAtualizadas')
-.textContent=atualizadas;
+  if(!input.files?.length){
 
-document
-.getElementById('resultErros')
-.textContent=erros;
+    alert('Selecione um arquivo Excel.');
 
-document
-.getElementById('errorList')
-.innerHTML=
-detalhes.length
-?
-'<strong>Detalhes:</strong><br><br>'+
-detalhes.map(esc).join('<br>')
-:
-'<strong>Importação concluída sem erros.</strong>';
+    return;
+  }
 
-document
-.getElementById('importResult')
-.classList.add('show');
+  const btn =
+    document.getElementById('btnImportar');
 
+  btn.disabled=true;
+  btn.textContent='Importando...';
+
+  let novas=0;
+  let atualizadas=0;
+  let erros=0;
+
+  const detalhes=[];
+
+  try{
+
+    const buffer =
+      await input.files[0].arrayBuffer();
+
+    const workbook =
+      XLSX.read(buffer,{
+        type:'array',
+        cellDates:false
+      });
+
+    const sheet =
+      workbook.Sheets[
+        workbook.SheetNames[0]
+      ];
+
+    const linhas =
+      XLSX.utils.sheet_to_json(
+        sheet,
+        {
+          defval:'',
+          raw:true
+        }
+      );
+
+    if(!linhas.length){
+      throw new Error('A planilha está vazia.');
+    }
+
+    const mapa={};
+
+    Object.keys(linhas[0]).forEach(chave=>{
+      mapa[normalizarColuna(chave)]=chave;
+    });
+
+    const colOS =
+      encontrarColuna(
+        mapa,
+        [
+          'O.S.',
+          'O.S',
+          'OS',
+          'ORDEM',
+          'ORDEM DE SERVICO',
+          'ORDEM DE SERVIÇO'
+        ]
+      );
+
+    if(!colOS){
+      throw new Error(
+        'Não foi encontrada a coluna "O.S.".'
+      );
+    }
+
+    const colData =
+      encontrarColuna(
+        mapa,
+        ['DATA DE CRIAÇÃO','DATA CRIACAO']
+      );
+
+    const colCliente =
+      encontrarColuna(mapa,['CLIENTE']);
+
+    const colUsuario =
+      encontrarColuna(mapa,['USUÁRIO','USUARIO']);
+
+    const colStatus =
+      encontrarColuna(
+        mapa,
+        ['STATUS','SITUAÇÃO','SITUACAO']
+      );
+
+    const colProduto =
+      encontrarColuna(mapa,['PRODUTO']);
+
+    const colGrupo =
+      encontrarColuna(mapa,['GRUPO']);
+
+    const colAssunto =
+      encontrarColuna(mapa,['ASSUNTO']);
+
+    const colDev =
+      encontrarColuna(
+        mapa,
+        ['DESENVOLVEDOR','DEV']
+      );
+
+    const colEntregue =
+      encontrarColuna(
+        mapa,
+        ['ENTREGUE EM','ENTREGUE']
+      );
+
+    for(let i=0;i<linhas.length;i++){
+
+      const linha=linhas[i];
+
+      try{
+
+        const os =
+          textoCelula(linha[colOS]);
+
+        if(!os){
+          throw new Error('O.S. não informada.');
+        }
+
+        const registro={
+
+          os,
+
+          data_criacao:
+            colData
+              ? converterDataExcel(linha[colData])
+              : null,
+
+          cliente:
+            colCliente
+              ? textoCelula(linha[colCliente])
+              : null,
+
+          usuario:
+            colUsuario
+              ? textoCelula(linha[colUsuario])
+              : null,
+
+          status:
+            colStatus
+              ? textoCelula(linha[colStatus])
+              : null,
+
+          produto:
+            colProduto
+              ? textoCelula(linha[colProduto])
+              : null,
+
+          grupo:
+            colGrupo
+              ? textoCelula(linha[colGrupo])
+              : null,
+
+          assunto:
+            colAssunto
+              ? textoCelula(linha[colAssunto])
+              : null,
+
+          desenvolvedor:
+            colDev
+              ? textoCelula(linha[colDev])
+              : null,
+
+          entregue_em:
+            colEntregue
+              ? converterDataExcel(linha[colEntregue])
+              : null
+
+        };
+
+        const busca =
+          await db
+            .from('ordens_servico')
+            .select('id')
+            .eq('os',os)
+            .limit(1);
+
+        if(busca.error){
+          throw new Error(busca.error.message);
+        }
+
+        if(busca.data?.length){
+
+          const resultado =
+            await db
+              .from('ordens_servico')
+              .update(registro)
+              .eq('id',busca.data[0].id);
+
+          if(resultado.error){
+            throw new Error(resultado.error.message);
+          }
+
+          atualizadas++;
+
+        }else{
+
+          const resultado =
+            await db
+              .from('ordens_servico')
+              .insert(registro);
+
+          if(resultado.error){
+            throw new Error(resultado.error.message);
+          }
+
+          novas++;
+        }
+
+      }catch(error){
+
+        erros++;
+
+        detalhes.push(
+          `Linha ${i+2} — ${error.message}`
+        );
+      }
+    }
+
+    document.getElementById('resultNovas').textContent=novas;
+    document.getElementById('resultAtualizadas').textContent=atualizadas;
+    document.getElementById('resultErros').textContent=erros;
+
+    document.getElementById('errorList').innerHTML =
+      detalhes.length
+        ? '<strong>Detalhes:</strong><br><br>'+
+          detalhes.map(esc).join('<br>')
+        : '<strong>Importação concluída sem erros.</strong>';
+
+    document
+      .getElementById('importResult')
+      .classList
+      .add('show');
+
+    await carregarDados();
+
+  }catch(error){
+
+    alert(
+      'Não foi possível importar o Excel.\n\n'+
+      error.message
+    );
+
+  }finally{
+
+    btn.disabled=false;
+    btn.textContent='📥 Importar';
+  }
 }
 
 
-/* =========================
-   EVENTOS
-========================= */
+/* ==================================================
+   IMPORTAR CONTROLE
+================================================== */
 
-document
-.getElementById('arquivoExcel')
-.addEventListener(
-'change',
-function(){
+function abrirImportacaoControle(){
 
-document.getElementById('nomeArquivo')
-.textContent=
-this.files.length
-?'Arquivo selecionado: '+this.files[0].name
-:'';
+  document
+    .getElementById('controleModal')
+    .classList
+    .add('open');
 
+  document
+    .getElementById('controleResult')
+    .classList
+    .remove('show');
+
+  document
+    .getElementById('controleErrorList')
+    .innerHTML='';
 }
-);
 
-document
-.getElementById('arquivoControle')
-.addEventListener(
-'change',
-function(){
+function fecharImportacaoControle(){
 
-document.getElementById('nomeControle')
-.textContent=
-this.files.length
-?'Arquivo selecionado: '+this.files[0].name
-:'';
-
+  document
+    .getElementById('controleModal')
+    .classList
+    .remove('open');
 }
-);
+
+function mostrarNomeControle(){
+
+  const input =
+    document.getElementById('arquivoControle');
+
+  document.getElementById('nomeControle').textContent =
+    input.files?.length
+      ? 'Arquivo selecionado: '+input.files[0].name
+      : '';
+}
+
+
+/* ==================================================
+   PROCESSAR EXCEL DO CONTROLE
+================================================== */
+
+async function importarControle(){
+
+  const input =
+    document.getElementById('arquivoControle');
+
+  if(!input.files?.length){
+
+    alert(
+      'Selecione o Excel do controle.'
+    );
+
+    return;
+  }
+
+  const btn =
+    document.getElementById(
+      'btnImportarControle'
+    );
+
+  btn.disabled=true;
+  btn.textContent='Importando...';
+
+  let atualizadas=0;
+  let naoEncontradas=0;
+  let erros=0;
+
+  const detalhes=[];
+
+  try{
+
+    const buffer =
+      await input.files[0].arrayBuffer();
+
+    const workbook =
+      XLSX.read(
+        buffer,
+        {
+          type:'array',
+          cellDates:false
+        }
+      );
+
+    if(!workbook.SheetNames.length){
+
+      throw new Error(
+        'O arquivo não possui nenhuma planilha.'
+      );
+    }
+
+    const sheet =
+      workbook.Sheets[
+        workbook.SheetNames[0]
+      ];
+
+    const linhas =
+      XLSX.utils.sheet_to_json(
+        sheet,
+        {
+          defval:'',
+          raw:true
+        }
+      );
+
+    if(!linhas.length){
+
+      throw new Error(
+        'A planilha do controle está vazia.'
+      );
+    }
+
+
+    /* MAPA DAS COLUNAS */
+
+    const mapa={};
+
+    Object.keys(linhas[0]).forEach(chave=>{
+
+      mapa[
+        normalizarColuna(chave)
+      ]=chave;
+
+    });
+
+
+    const colOrdem =
+      encontrarColuna(
+        mapa,
+        [
+          'ORDEM',
+          'O.S.',
+          'O.S',
+          'OS',
+          'ORDEM DE SERVICO',
+          'ORDEM DE SERVIÇO'
+        ]
+      );
+
+    const colDataCriacao =
+      encontrarColuna(
+        mapa,
+        [
+          'DATA DE CRIAÇÃO',
+          'DATA CRIACAO'
+        ]
+      );
+
+    const colUsuario =
+      encontrarColuna(
+        mapa,
+        [
+          'USUÁRIO',
+          'USUARIO'
+        ]
+      );
+
+    const colPrioridade =
+      encontrarColuna(
+        mapa,
+        [
+          'PRIORIDADE'
+        ]
+      );
+
+    const colPrazo =
+      encontrarColuna(
+        mapa,
+        [
+          'PRAZO COPLAN',
+          'PRAZO'
+        ]
+      );
+
+    const colAssunto =
+      encontrarColuna(
+        mapa,
+        [
+          'ASSUNTO'
+        ]
+      );
+
+
+    if(!colOrdem){
+
+      throw new Error(
+        'Não foi encontrada a coluna "Ordem" no Excel.'
+      );
+    }
+
+
+    /* PROCESSAR */
+
+    for(let i=0;i<linhas.length;i++){
+
+      const linha =
+        linhas[i];
+
+      const numeroLinha =
+        i+2;
+
+      try{
+
+        const ordem =
+          textoCelula(
+            linha[colOrdem]
+          );
+
+        if(!ordem){
+
+          throw new Error(
+            'Ordem não informada.'
+          );
+        }
+
+
+        /*
+          IMPORTANTE:
+          A busca é feita somente pela O.S.
+          Não será criado novo registro.
+        */
+
+        const busca =
+          await db
+            .from('ordens_servico')
+            .select('id')
+            .eq('os',ordem)
+            .limit(1);
+
+
+        if(busca.error){
+
+          throw new Error(
+            busca.error.message
+          );
+        }
+
+
+        if(
+          !busca.data ||
+          !busca.data.length
+        ){
+
+          naoEncontradas++;
+
+          detalhes.push(
+            `Linha ${numeroLinha} — O.S. ${ordem} não encontrada no sistema.`
+          );
+
+          continue;
+        }
+
+
+        const id =
+          busca.data[0].id;
+
+
+        /*
+          SOMENTE CAMPOS DO CONTROLE
+        */
+
+        const atualizacao={};
+
+
+        if(colDataCriacao){
+
+          const data =
+            converterDataExcel(
+              linha[colDataCriacao]
+            );
+
+          atualizacao.data_criacao =
+            data;
+
+        }
+
+
+        if(colUsuario){
+
+          atualizacao.usuario =
+            textoCelula(
+              linha[colUsuario]
+            );
+
+        }
+
+
+        if(colPrioridade){
+
+          const valor =
+            textoCelula(
+              linha[colPrioridade]
+            );
+
+          if(valor===null){
+
+            atualizacao.prioridade=null;
+
+          }else{
+
+            const numero =
+              Number(
+                String(valor)
+                  .replace(',','.')
+              );
+
+            if(Number.isFinite(numero)){
+
+              atualizacao.prioridade =
+                numero;
+
+            }else{
+
+              throw new Error(
+                `Prioridade inválida: ${valor}`
+              );
+            }
+          }
+        }
+
+
+        if(colPrazo){
+
+          atualizacao.prazo =
+            converterDataExcel(
+              linha[colPrazo]
+            );
+
+        }
+
+
+        if(colAssunto){
+
+          atualizacao.assunto =
+            textoCelula(
+              linha[colAssunto]
+            );
+
+        }
+
+
+        /*
+          Atualiza somente o controle.
+        */
+
+        if(Object.keys(atualizacao).length){
+
+          const resultado =
+            await db
+              .from('ordens_servico')
+              .update(atualizacao)
+              .eq('id',id);
+
+
+          if(resultado.error){
+
+            throw new Error(
+              resultado.error.message
+            );
+          }
+        }
+
+
+        atualizadas++;
+
+      }catch(error){
+
+        erros++;
+
+        detalhes.push(
+          `Linha ${numeroLinha} — O.S.: ${
+            linha[colOrdem] || 'não informada'
+          } — ${
+            error.message
+          }`
+        );
+      }
+    }
+
+
+    /* RESULTADO */
+
+    document
+      .getElementById('controleAtualizadas')
+      .textContent =
+      atualizadas;
+
+    document
+      .getElementById('controleNaoEncontradas')
+      .textContent =
+      naoEncontradas;
+
+    document
+      .getElementById('controleErros')
+      .textContent =
+      erros;
+
+
+    document
+      .getElementById('controleErrorList')
+      .innerHTML =
+      detalhes.length
+        ? '<strong>Detalhes:</strong><br><br>'+
+          detalhes.map(esc).join('<br>')
+        : '<strong>Controle importado sem erros.</strong>';
+
+
+    document
+      .getElementById('controleResult')
+      .classList
+      .add('show');
+
+
+    await carregarDados();
+
+
+    alert(
+      `Importação do controle concluída!\n\n`+
+      `O.S. atualizadas: ${atualizadas}\n`+
+      `O.S. não encontradas: ${naoEncontradas}\n`+
+      `Erros: ${erros}`
+    );
+
+
+  }catch(error){
+
+    alert(
+      'Não foi possível importar o controle.\n\n'+
+      error.message
+    );
+
+  }finally{
+
+    btn.disabled=false;
+
+    btn.textContent =
+      '📋 Importar Controle';
+  }
+}
+
+
+/* ==================================================
+   FILTROS
+================================================== */
 
 document
-.getElementById('busca')
-.addEventListener(
-'input',
-render
-);
+  .getElementById('busca')
+  .addEventListener('input',render);
 
 document
-.getElementById('status')
-.addEventListener(
-'change',
-render
-);
+  .getElementById('status')
+  .addEventListener('change',render);
 
 document
-.getElementById('pendFiltro')
-.addEventListener(
-'change',
-render
-);
+  .getElementById('pendFiltro')
+  .addEventListener('change',render);
 
 
-/* =========================
+/* ==================================================
    FECHAR MODAIS
-========================= */
+================================================== */
 
 document
-.getElementById('modal')
-.addEventListener(
-'click',
-function(e){
+  .getElementById('modal')
+  .addEventListener(
+    'click',
+    function(e){
 
-if(e.target===this)
-fechar();
+      if(e.target===this){
+        fechar();
+      }
 
-}
-);
-
-document
-.getElementById('importModal')
-.addEventListener(
-'click',
-function(e){
-
-if(e.target===this)
-fecharImportacao();
-
-}
-);
+    }
+  );
 
 document
-.getElementById('controleModal')
-.addEventListener(
-'click',
-function(e){
+  .getElementById('importModal')
+  .addEventListener(
+    'click',
+    function(e){
 
-if(e.target===this)
-fecharImportacaoControle();
+      if(e.target===this){
+        fecharImportacao();
+      }
 
-}
-);
+    }
+  );
+
+document
+  .getElementById('controleModal')
+  .addEventListener(
+    'click',
+    function(e){
+
+      if(e.target===this){
+        fecharImportacaoControle();
+      }
+
+    }
+  );
 
 
-/* =========================
+/* ==================================================
    INICIAR
-========================= */
+================================================== */
 
 iniciar();
 
@@ -2636,4 +2826,3 @@ iniciar();
 
 </body>
 </html>
-```
