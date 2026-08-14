@@ -1,1586 +1,391 @@
-\<!DOCTYPE html>
-\<html lang="pt-BR">
-\<head>
-\<meta charset="UTF-8">
-\<meta name="viewport" content="width=device-width,initial-scale=1">
-\<title>Coplan • Controle de O.S.\</title>
-
-\<style>
-\:root{
-  \--green:#006b4f;
-  \--green2:#008b68;
-  \--dark:#12382f;
-  \--bg:#f4f7f6;
-  \--card:#fff;
-  \--line:#e4ebe8;
-  \--text:#1e2b27;
-  \--muted:#71807b;
-  \--red:#c93d3d;
-  \--yellow:#c98612;
-  \--blue:#3c6edb
-}
-
-\*{
-  box-sizing\:border-box
-}
-
-body{
-  margin:0;
-  font-family\:Inter,Segoe UI,Arial,sans-serif;
-  background\:var(--bg);
-  color\:var(--text)
-}
-
-/\* LOGIN \*/
-.login{
-  min-height:100vh;
-  display\:grid;
-  place-items\:center;
-  background\:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a)
-}
-
-.loginbox{
-  width\:min(420px,92%);
-  background:#fff;
-  border-radius:20px;
-  padding:36px;
-  box-shadow:0 20px 60px #0004
-}
-
-.logo{
-  font-weight:900;
-  font-size:34px;
-  color\:var(--green);
-  letter-spacing:-1px
-}
-
-.logo span{
-  display\:block;
-  font-size:13px;
-  color\:var(--muted);
-  font-weight:500;
-  letter-spacing:0;
-  margin-top:4px
-}
-
-.login h2{
-  margin:30px 0 6px
-}
-
-.login p{
-  color\:var(--muted);
-  margin-top:0
-}
-
-.field{
-  margin:15px 0
-}
-
-.field label{
-  display\:block;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:7px
-}
-
-input,
-select,
-textarea{
-  width:100%;
-  padding:12px 13px;
-  border:1px solid #d5dfdb;
-  border-radius:9px;
-  font\:inherit;
-  background:#fff
-}
-
-button{
-  border:0;
-  border-radius:9px;
-  padding:11px 16px;
-  font-weight:700;
-  cursor\:pointer
-}
-
-.primary{
-  background\:var(--green);
-  color:#fff
-}
-
-.primary\:hover{
-  background:#00563f
-}
-
-.wide{
-  width:100%;
-  margin-top:8px
-}
-
-.hint{
-  font-size:12px;
-  color\:var(--muted);
-  margin-top:14px
-}
-
-/\* APP \*/
-.app{
-  display\:none;
-  min-height:100vh
-}
-
-.sidebar{
-  position\:fixed;
-  inset:0 auto 0 0;
-  width:245px;
-  background:#073e31;
-  color:#fff;
-  padding:25px 17px
-}
-
-.side-logo{
-  font-size:27px;
-  font-weight:900;
-  padding:8px 12px 28px
-}
-
-.side-logo small{
-  display\:block;
-  font-size:11px;
-  font-weight:500;
-  opacity:.65;
-  margin-top:3px
-}
-
-.nav{
-  padding:8px 0
-}
-
-.nav div{
-  padding:12px;
-  border-radius:9px;
-  margin:4px 0;
-  color:#dcebe6
-}
-
-.nav .active,
-.nav div\:hover{
-  background:#ffffff16;
-  color:#fff
-}
-
-.user{
-  position\:absolute;
-  bottom:20px;
-  left:17px;
-  right:17px;
-  padding:12px;
-  border-top:1px solid #ffffff22;
-  font-size:13px
-}
-
-.user button{
-  margin-top:10px;
-  width:100%;
-  background:#ffffff12;
-  color:#fff
-}
-
-.main{
-  margin-left:245px;
-  padding:28px 34px
-}
-
-.top{
-  display\:flex;
-  justify-content\:space-between;
-  align-items\:center;
-  margin-bottom:25px
-}
-
-.top h1{
-  margin:0;
-  font-size:25px
-}
-
-.top p{
-  margin:5px 0;
-  color\:var(--muted)
-}
-
-/\* CARDS \*/
-.cards{
-  display\:grid;
-  grid-template-columns\:repeat(5,1fr);
-  gap:14px
-}
-
-.card{
-  background\:var(--card);
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:19px;
-  box-shadow:0 3px 12px #12382f08
-}
-
-.card .label{
-  font-size:12px;
-  color\:var(--muted);
-  font-weight:700
-}
-
-.card .num{
-  font-size:29px;
-  font-weight:800;
-  margin-top:9px
-}
-
-.card.green{
-  border-top:3px solid var(--green)
-}
-
-.card.yellow{
-  border-top:3px solid var(--yellow)
-}
-
-.card.red{
-  border-top:3px solid var(--red)
-}
-
-.card.blue{
-  border-top:3px solid var(--blue)
-}
-
-/\* PAINEL \*/
-.panel{
-  margin-top:20px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:20px
-}
-
-.toolbar{
-  display\:flex;
-  gap:9px;
-  justify-content\:space-between;
-  flex-wrap\:wrap
-}
-
-.filters{
-  display\:flex;
-  gap:8px;
-  flex:1;
-  min-width:300px
-}
-
-.filters input{
-  max-width:320px
-}
-
-table{
-  width:100%;
-  border-collapse\:collapse;
-  margin-top:17px
-}
-
-th,
-td{
-  text-align\:left;
-  padding:13px 10px;
-  border-bottom:1px solid var(--line);
-  font-size:13px
-}
-
-th{
-  font-size:11px;
-  text-transform\:uppercase;
-  color\:var(--muted);
-  background:#fafcfb
-}
-
-/\* BADGES \*/
-.badge{
-  display\:inline-block;
-  padding:5px 9px;
-  border-radius:99px;
-  font-size:11px;
-  font-weight:800
-}
-
-.p{
-  background:#fee7e7;
-  color:#9f2626
-}
-
-.a{
-  background:#fff2d5;
-  color:#94600a
-}
-
-.c{
-  background:#def6e9;
-  color:#17683f
-}
-
-.pc{
-  background:#e4ecff;
-  color:#365aa0
-}
-
-.pe{
-  background:#def5ee;
-  color:#17664f
-}
-
-.late{
-  color:#bd2525;
-  font-weight:800
-}
-
-/\* MODAL \*/
-.modal{
-  display\:none;
-  position\:fixed;
-  inset:0;
-  background:#0007;
-  place-items\:center;
-  padding:20px
-}
-
-.modal.open{
-  display\:grid
-}
-
-.modalbox{
-  background:#fff;
-  width\:min(650px,100%);
-  max-height:90vh;
-  overflow\:auto;
-  border-radius:15px;
-  padding:25px
-}
-
-.grid{
-  display\:grid;
-  grid-template-columns:1fr 1fr;
-  gap:13px
-}
-
-.full{
-  grid-column:1/-1
-}
-
-.actions{
-  display\:flex;
-  justify-content\:flex-end;
-  gap:8px;
-  margin-top:18px
-}
-
-.error{
-  color:#b42318;
-  font-size:13px;
-  margin-top:8px;
-  display\:none
-}
-
-/\* RESPONSIVO \*/
-@media(max-width:1000px){
-
-  .cards{
-    grid-template-columns\:repeat(2,1fr)
-  }
-
-}
-
-@media(max-width:700px){
-
-  .sidebar{
-    position\:static;
-    width\:auto
-  }
-
-  .main{
-    margin-left:0;
-    padding:20px
-  }
-
-  .user{
-    position\:static;
-    margin-top:25px
-  }
-
-  .grid{
-    grid-template-columns:1fr
-  }
-
-  .full{
-    grid-column\:auto
-  }
-
-  .cards{
-    grid-template-columns:1fr
-  }
-
-  .top{
-    align-items\:flex-start;
-    gap:10px;
-    flex-direction\:column
-  }
-
-}
-\</style>
-
-\<script src="[https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2](https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2)">\</script>
-
-\</head>
-
-\<body>
-
-\<!-- LOGIN -->
-\<section class="login" id="login">
-
-  \<div class="loginbox">
-
-    \<div class="logo">
-      COPLAN
-      \<span>Controle de O.S. e Demandas\</span>
-    \</div>
-
-    \<h2>Acesso ao sistema\</h2>
-
-    \<p>Entre para acompanhar as demandas da equipe.\</p>
-
-    \<form onsubmit="entrar(event)">
-
-      \<div class="field">
-        \<label>E-mail\</label>
-        \<input
-          id="email"
-          type="email"
-          required
-          placeholder="seu\@email.com"
-        \>
-      \</div>
-
-      \<div class="field">
-        \<label>Senha\</label>
-        \<input
-          id="senha"
-          type="password"
-          required
-          placeholder="••••••••"
-        \>
-      \</div>
-
-      \<div class="error" id="loginerr">
-        E-mail ou senha inválidos.
-      \</div>
-
-      \<button class="primary wide">
-        Entrar
-      \</button>
-
-    \</form>
-
-    \<div class="hint">
-      Esta versão está preparada para autenticação e banco de dados Supabase.
-    \</div>
-
-  \</div>
-
-\</section>
-
-
-\<!-- SISTEMA -->
-\<section class="app" id="app">
-
-  \<aside class="sidebar">
-
-    \<div class="side-logo">
-      COPLAN
-      \<small>CONTROLE DE DEMANDAS\</small>
-    \</div>
-
-    \<div class="nav">
-      \<div class="active">▦ Dashboard\</div>
-      \<div>✓ Ordens de Serviço\</div>
-      \<div>◉ Relatórios\</div>
-    \</div>
-
-    \<div class="user">
-
-      \<strong id="useremail">
-        Usuário
-      \</strong>
-
-      \<br>
-
-      \<span style="opacity:.6">
-        Acesso ao sistema
-      \</span>
-
-      \<button onclick="sair()">
-        Sair
-      \</button>
-
-    \</div>
-
-  \</aside>
-
-
-  \<main class="main">
-
-    \<div class="top">
-
-      \<div>
-        \<h1>Dashboard\</h1>
-        \<p>Visão geral das ordens de serviço\</p>
-      \</div>
-
-      \<button class="primary" onclick="abrir()">
-        \+ Nova O.S.
-      \</button>
-
-    \</div>
-
-
-    \<!-- CARDS -->
-    \<div class="cards">
-
-      \<div class="card green">
-        \<div class="label">
-          TOTAL DE O.S.
-        \</div>
-
-        \<div class="num" id="total">
-          0
-        \</div>
-      \</div>
-
-
-      \<div class="card red">
-        \<div class="label">
-          PENDENTES
-        \</div>
-
-        \<div class="num" id="pendCount">
-          0
-        \</div>
-      \</div>
-
-
-      \<div class="card yellow">
-        \<div class="label">
-          EM ANDAMENTO
-        \</div>
-
-        \<div class="num" id="and">
-          0
-        \</div>
-      \</div>
-
-
-      \<div class="card blue">
-        \<div class="label">
-          AGUARDANDO CLIENTE
-        \</div>
-
-        \<div class="num" id="cli">
-          0
-        \</div>
-      \</div>
-
-
-      \<div class="card red">
-        \<div class="label">
-          EM ATRASO
-        \</div>
-
-        \<div class="num" id="late">
-          0
-        \</div>
-      \</div>
-
-    \</div>
-
-
-    \<!-- TABELA -->
-    \<div class="panel">
-
-      \<div class="toolbar">
-
-        \<div class="filters">
-
-          \<input
-            id="busca"
-            placeholder="Buscar O.S. ou descrição..."
-            oninput="render()"
-          \>
-
-          \<select id="status" onchange="render()">
-
-            \<option value="">
-              Todos os status
-            \</option>
-
-            \<option>
-              Pendente
-            \</option>
-
-            \<option>
-              Em andamento
-            \</option>
-
-            \<option>
-              Concluído
-            \</option>
-
-          \</select>
-
-
-          \<select id="pendFiltro" onchange="render()">
-
-            \<option value="">
-              Todas as pendências
-            \</option>
-
-            \<option>
-              Empresa
-            \</option>
-
-            \<option>
-              Cliente
-            \</option>
-
-          \</select>
-
-        \</div>
-
-      \</div>
-
-
-      \<div style="overflow\:auto">
-
-        \<table>
-
-          \<thead>
-
-            \<tr>
-              \<th>Prioridade\</th>
-              \<th>O.S.\</th>
-              \<th>Prazo\</th>
-              \<th>Descrição\</th>
-              \<th>Status\</th>
-              \<th>Pendência\</th>
-              \<th>Observação\</th>
-              \<th>\</th>
-            \</tr>
-
-          \</thead>
-
-          \<tbody id="tbody">\</tbody>
-
-        \</table>
-
-      \</div>
-
-    \</div>
-
-  \</main>
-
-\</section>
-
-
-\<!-- MODAL NOVA / EDITAR O.S. -->
-\<div class="modal" id="modal">
-
-  \<div class="modalbox">
-
-    \<h2 id="mt">
-      Nova O.S.
-    \</h2>
-
-    \<form onsubmit="salvar(event)">
-
-      \<input type="hidden" id="id">
-
-      \<div class="grid">
-
-
-        \<!-- PRIORIDADE -->
-        \<div class="field">
-
-          \<label>
-            Prioridade
-          \</label>
-
-          \<input
-            id="prioridade"
-            type="number"
-            min="1"
-            required
-          \>
-
-        \</div>
-
-
-        \<!-- O.S. -->
-        \<div class="field">
-
-          \<label>
-            Nº da O.S.
-          \</label>
-
-          \<input
-            id="os"
-            required
-          \>
-
-        \</div>
-
-
-        \<!-- PRAZO OPCIONAL -->
-        \<div class="field">
-
-          \<label>
-            Prazo
-          \</label>
-
-          \<input
-            id="prazo"
-            type="date"
-          \>
-
-        \</div>
-
-
-        \<!-- STATUS -->
-        \<div class="field">
-
-          \<label>
-            Status
-          \</label>
-
-          \<select id="st">
-
-            \<option>
-              Pendente
-            \</option>
-
-            \<option>
-              Em andamento
-            \</option>
-
-            \<option>
-              Concluído
-            \</option>
-
-          \</select>
-
-        \</div>
-
-
-        \<!-- PENDÊNCIA -->
-        \<div class="field">
-
-          \<label>
-            Pendência
-          \</label>
-
-          \<select id="pe">
-
-            \<option>
-              Empresa
-            \</option>
-
-            \<option>
-              Cliente
-            \</option>
-
-          \</select>
-
-        \</div>
-
-
-        \<!-- DESCRIÇÃO -->
-        \<div class="field full">
-
-          \<label>
-            Descrição
-          \</label>
-
-          \<textarea
-            id="desc"
-            rows="4"
-            required
-          \>\</textarea>
-
-        \</div>
-
-
-        \<!-- OBSERVAÇÃO -->
-        \<div class="field full">
-
-          \<label>
-            Observação
-          \</label>
-
-          \<textarea
-            id="obs"
-            rows="3"
-          \>\</textarea>
-
-        \</div>
-
-      \</div>
-
-
-      \<div class="actions">
-
-        \<button
-          type="button"
-          onclick="fechar()"
-        \>
-          Cancelar
-        \</button>
-
-        \<button class="primary">
-          Salvar
-        \</button>
-
-      \</div>
-
-    \</form>
-
-  \</div>
-
-\</div>
-
-
-\<script>
-
-const SUPABASE\_URL =
-  '[https://otzhzpimeawafhguhcae.supabase.co](https://otzhzpimeawafhguhcae.supabase.co)';
-
-const SUPABASE\_PUBLISHABLE\_KEY =
-  'sb\_publishable\_wAshDtNi1gdWaWy6XRa2qQ\_BHxktO5d';
-
-
-const { createClient } = supabase;
-
-const db = createClient(
-  SUPABASE\_URL,
-  SUPABASE\_PUBLISHABLE\_KEY
-);
-
-
-let dados = [];
-let carregando = false;
-
-
-/\* =========================
-   INICIAR
-\========================= \*/
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coplan • Controle de O.S.</title>
+<style>
+:root{--green:#006b4f;--green2:#008b68;--dark:#12382f;--bg:#f4f7f6;--card:#fff;--line:#e4ebe8;--text:#1e2b27;--muted:#71807b;--red:#c93d3d;--yellow:#c98612;--blue:#3c6edb}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a)}
+.loginbox{width:min(420px,92%);background:#fff;border-radius:20px;padding:36px;box-shadow:0 20px 60px #0004}
+.logo{font-weight:900;font-size:34px;color:var(--green);letter-spacing:-1px}.logo span{display:block;font-size:13px;color:var(--muted);font-weight:500;letter-spacing:0;margin-top:4px}
+.login h2{margin:30px 0 6px}.login p{color:var(--muted);margin-top:0}
+.field{margin:15px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
+input,select,textarea{width:100%;padding:12px 13px;border:1px solid #d5dfdb;border-radius:9px;font:inherit;background:#fff}
+button{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer}
+.primary{background:var(--green);color:#fff}.primary:hover{background:#00563f}.wide{width:100%;margin-top:8px}
+.hint{font-size:12px;color:var(--muted);margin-top:14px}.app{display:none;min-height:100vh}
+.sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:#073e31;color:#fff;padding:25px 17px}
+.side-logo{font-size:27px;font-weight:900;padding:8px 12px 28px}.side-logo small{display:block;font-size:11px;font-weight:500;opacity:.65;margin-top:3px}
+.nav{padding:8px 0}.nav div{padding:12px;border-radius:9px;margin:4px 0;color:#dcebe6}.nav .active,.nav div:hover{background:#ffffff16;color:#fff}
+.user{position:absolute;bottom:20px;left:17px;right:17px;padding:12px;border-top:1px solid #ffffff22;font-size:13px}.user button{margin-top:10px;width:100%;background:#ffffff12;color:#fff}
+.main{margin-left:245px;padding:28px 34px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.top h1{margin:0;font-size:25px}.top p{margin:5px 0;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:19px;box-shadow:0 3px 12px #12382f08}.card .label{font-size:12px;color:var(--muted);font-weight:700}.card .num{font-size:29px;font-weight:800;margin-top:9px}
+.card.green{border-top:3px solid var(--green)}.card.yellow{border-top:3px solid var(--yellow)}.card.red{border-top:3px solid var(--red)}.card.blue{border-top:3px solid var(--blue)}
+.panel{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px}.toolbar{display:flex;gap:9px;justify-content:space-between;flex-wrap:wrap}
+.filters{display:flex;gap:8px;flex:1;min-width:300px}.filters input{max-width:320px}
+.import-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;margin-top:17px}th,td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--line);font-size:13px}
+th{font-size:11px;text-transform:uppercase;color:var(--muted);background:#fafcfb}
+.badge{display:inline-block;padding:5px 9px;border-radius:99px;font-size:11px;font-weight:800}.p{background:#fee7e7;color:#9f2626}.a{background:#fff2d5;color:#94600a}.c{background:#def6e9;color:#17683f}.pc{background:#e4ecff;color:#365aa0}.pe{background:#def5ee;color:#17664f}.late{color:#bd2525;font-weight:800}
+.modal{display:none;position:fixed;inset:0;background:#0007;place-items:center;padding:20px}.modal.open{display:grid}.modalbox{background:#fff;width:min(650px,100%);max-height:90vh;overflow:auto;border-radius:15px;padding:25px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.full{grid-column:1/-1}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+.error{color:#b42318;font-size:13px;margin-top:8px;display:none}.file-input{display:none}
+@media(max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.sidebar{position:static;width:auto}.main{margin-left:0;padding:20px}.user{position:static;margin-top:25px}.grid{grid-template-columns:1fr}.full{grid-column:auto}.cards{grid-template-columns:1fr}.top{align-items:flex-start;gap:10px;flex-direction:column}.filters{min-width:0;flex-direction:column}.filters input{max-width:none}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<section class="login" id="login">
+<div class="loginbox">
+<div class="logo">COPLAN<span>Controle de O.S. e Demandas</span></div>
+<h2>Acesso ao sistema</h2><p>Entre para acompanhar as demandas da equipe.</p>
+<form onsubmit="entrar(event)">
+<div class="field"><label>E-mail</label><input id="email" type="email" required placeholder="seu@email.com"></div>
+<div class="field"><label>Senha</label><input id="senha" type="password" required placeholder="••••••••"></div>
+<div class="error" id="loginerr">E-mail ou senha inválidos.</div>
+<button class="primary wide">Entrar</button>
+</form>
+<div class="hint">Sistema de controle de O.S. e demandas.</div>
+</div>
+</section>
+
+<section class="app" id="app">
+<aside class="sidebar">
+<div class="side-logo">COPLAN<small>CONTROLE DE DEMANDAS</small></div>
+<div class="nav"><div class="active">▦ Dashboard</div><div>✓ Ordens de Serviço</div><div>◉ Relatórios</div></div>
+<div class="user"><strong id="useremail">Usuário</strong><br><span style="opacity:.6">Acesso ao sistema</span><button onclick="sair()">Sair</button></div>
+</aside>
+
+<main class="main">
+<div class="top"><div><h1>Dashboard</h1><p>Visão geral das ordens de serviço</p></div><button class="primary" onclick="abrir()">+ Nova O.S.</button></div>
+
+<div class="cards">
+<div class="card green"><div class="label">TOTAL DE O.S.</div><div class="num" id="total">0</div></div>
+<div class="card red"><div class="label">PENDENTES</div><div class="num" id="pendCount">0</div></div>
+<div class="card yellow"><div class="label">EM ANDAMENTO</div><div class="num" id="and">0</div></div>
+<div class="card blue"><div class="label">AGUARDANDO CLIENTE</div><div class="num" id="cli">0</div></div>
+<div class="card red"><div class="label">EM ATRASO</div><div class="num" id="late">0</div></div>
+</div>
+
+<div class="panel">
+<div class="toolbar">
+<div class="filters">
+<input id="busca" placeholder="Buscar O.S. ou descrição..." oninput="render()">
+<select id="status" onchange="render()"><option value="">Todos os status</option><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select>
+<select id="pendFiltro" onchange="render()"><option value="">Todas as pendências</option><option>Empresa</option><option>Cliente</option></select>
+</div>
+</div>
+
+<div class="import-actions">
+<button class="primary" onclick="document.getElementById('csvInput').click()">Importar CSV</button>
+<button onclick="document.getElementById('excelInput').click()">Importar Excel</button>
+<button onclick="exportarCSV()">Exportar CSV</button>
+<button onclick="excluirImportadas()" style="background:#fee7e7;color:#9f2626">Excluir O.S. importadas</button>
+<input class="file-input" type="file" id="csvInput" accept=".csv,text/csv" onchange="importarArquivo(event,'csv')">
+<input class="file-input" type="file" id="excelInput" accept=".xlsx,.xls,.csv" onchange="importarArquivo(event,'excel')">
+</div>
+
+<div style="overflow:auto"><table><thead><tr><th>Prioridade</th><th>O.S.</th><th>Prazo</th><th>Descrição</th><th>Status</th><th>Pendência</th><th>Observação</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
+</div>
+</main>
+</section>
+
+<div class="modal" id="modal"><div class="modalbox"><h2 id="mt">Nova O.S.</h2>
+<form onsubmit="salvar(event)">
+<input type="hidden" id="id">
+<div class="grid">
+<div class="field"><label>Prioridade</label><input id="prioridade" type="number" min="1" required></div>
+<div class="field"><label>Nº da O.S.</label><input id="os" required></div>
+<div class="field"><label>Prazo</label><input id="prazo" type="date"></div>
+<div class="field"><label>Status</label><select id="st"><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select></div>
+<div class="field"><label>Pendência</label><select id="pe"><option>Empresa</option><option>Cliente</option></select></div>
+<div class="field full"><label>Descrição</label><textarea id="desc" rows="4" required></textarea></div>
+<div class="field full"><label>Observação</label><textarea id="obs" rows="3"></textarea></div>
+</div>
+<div class="actions"><button type="button" onclick="fechar()">Cancelar</button><button class="primary">Salvar</button></div>
+</form></div></div>
+
+<script>
+const SUPABASE_URL='https://otzhzpimeawafhguhcae.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
+const {createClient}=supabase;
+const db=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+let dados=[];
+let carregando=false;
 
 async function iniciar(){
-
-  const {
-    data: { session }
-  } = await db.auth.getSession();
-
-  if(session){
-
-    mostrarApp(session.user);
-
-  }else{
-
-    mostrarLogin();
-
-  }
-
-
-  db.auth.onAuthStateChange(
-    (\_event, session) => {
-
-      if(session){
-
-        mostrarApp(session.user);
-
-      }else{
-
-        mostrarLogin();
-
-      }
-
-    }
-  );
-
+ const {data:{session}}=await db.auth.getSession();
+ if(session) mostrarApp(session.user); else mostrarLogin();
+ db.auth.onAuthStateChange((_event,session)=>{if(session) mostrarApp(session.user);else mostrarLogin();});
 }
-
-
-/\* =========================
-   LOGIN
-\========================= \*/
-
-function mostrarLogin(){
-
-  document.getElementById('login').style.display = 'grid';
-
-  document.getElementById('app').style.display = 'none';
-
-}
-
-
+function mostrarLogin(){document.getElementById('login').style.display='grid';document.getElementById('app').style.display='none'}
 async function entrar(e){
-
-  e.preventDefault();
-
-  const email =
-    document.getElementById('email').value.trim();
-
-  const senha =
-    document.getElementById('senha').value;
-
-  const erro =
-    document.getElementById('loginerr');
-
-  erro.style.display = 'none';
-
-
-  const { error } =
-    await db.auth.signInWithPassword({
-
-      email,
-      password: senha
-
-    });
-
-
-  if(error){
-
-    erro.textContent =
-      'E-mail ou senha inválidos.';
-
-    erro.style.display = 'block';
-
-  }
-
+ e.preventDefault();
+ const email=document.getElementById('email').value.trim(),senha=document.getElementById('senha').value,erro=document.getElementById('loginerr');
+ erro.style.display='none';
+ const {error}=await db.auth.signInWithPassword({email,password:senha});
+ if(error){erro.textContent='E-mail ou senha inválidos.';erro.style.display='block'}
 }
-
-
-/\* =========================
-   ABRIR SISTEMA
-\========================= \*/
-
 async function mostrarApp(user){
-
-  document.getElementById('login').style.display =
-    'none';
-
-  document.getElementById('app').style.display =
-    'block';
-
-  document.getElementById('useremail').textContent =
-    user?.email || 'Usuário';
-
-  await carregarDados();
-
+ document.getElementById('login').style.display='none';
+ document.getElementById('app').style.display='block';
+ document.getElementById('useremail').textContent=user?.email||'Usuário';
+ await carregarDados();
 }
-
-
-/\* =========================
-   SAIR
-\========================= \*/
-
-async function sair(){
-
-  await db.auth.signOut();
-
-}
-
-
-/\* =========================
-   CARREGAR DADOS
-\========================= \*/
+async function sair(){await db.auth.signOut()}
 
 async function carregarDados(){
-
-  carregando = true;
-
-  render();
-
-
-  const {
-    data,
-    error
-  } = await db
-
-    .from('ordens\_servico')
-
-    .select('\*')
-
-    .order(
-      'prioridade',
-      {
-        ascending\:true
-      }
-    );
-
-
-  carregando = false;
-
-
-  if(error){
-
-    alert(
-      'Não foi possível carregar as O.S.\n\n' +
-      error.message
-    );
-
-    render();
-
-    return;
-
-  }
-
-
-  dados = data || [];
-
-  render();
-
+ carregando=true;render();
+ const {data,error}=await db.from('ordens_servico').select('*').order('prioridade',{ascending:true});
+ carregando=false;
+ if(error){alert('Não foi possível carregar as O.S.\n\n'+error.message);render();return}
+ dados=data||[];render();
 }
 
-
-/\* =========================
-   ABRIR MODAL
-\========================= \*/
-
-function abrir(x = null){
-
-  document
-    .getElementById('modal')
-    .classList
-    .add('open');
-
-
-  document
-    .querySelector('#modal form')
-    .reset();
-
-
-  document.getElementById('id').value = '';
-
-  document.getElementById('mt').textContent =
-    x ? 'Editar O.S.' : 'Nova O.S.';
-
-
-  if(x){
-
-    document.getElementById('id').value =
-      x.id || '';
-
-    document.getElementById('prioridade').value =
-      x.prioridade ?? '';
-
-    document.getElementById('os').value =
-      x.os ?? '';
-
-    document.getElementById('prazo').value =
-      x.prazo ?? '';
-
-    document.getElementById('st').value =
-      x.status ?? 'Pendente';
-
-    document.getElementById('pe').value =
-      x.pendencia ?? 'Empresa';
-
-    document.getElementById('desc').value =
-      x.descricao ?? '';
-
-    document.getElementById('obs').value =
-      x.observacao ?? '';
-
-  }
-
+function abrir(x=null){
+ document.getElementById('modal').classList.add('open');
+ document.querySelector('#modal form').reset();
+ document.getElementById('id').value='';
+ document.getElementById('mt').textContent=x?'Editar O.S.':'Nova O.S.';
+ if(x){
+  document.getElementById('id').value=x.id||'';
+  document.getElementById('prioridade').value=x.prioridade??'';
+  document.getElementById('os').value=x.os??'';
+  document.getElementById('prazo').value=normalizarData(x.prazo);
+  document.getElementById('st').value=x.status??'Pendente';
+  document.getElementById('pe').value=x.pendencia??'Empresa';
+  document.getElementById('desc').value=x.descricao??'';
+  document.getElementById('obs').value=x.observacao??'';
+ }
 }
-
-
-/\* =========================
-   FECHAR MODAL
-\========================= \*/
-
-function fechar(){
-
-  document
-    .getElementById('modal')
-    .classList
-    .remove('open');
-
-}
-
-
-/\* =========================
-   SALVAR O.S.
-\========================= \*/
+function fechar(){document.getElementById('modal').classList.remove('open')}
 
 async function salvar(e){
+ e.preventDefault();
+ const id=document.getElementById('id').value;
+ const prioridadeValor=document.getElementById('prioridade').value.trim();
+ const osValor=document.getElementById('os').value.trim();
+ const descricaoValor=document.getElementById('desc').value.trim();
 
-  e.preventDefault();
+ if(!osValor||!descricaoValor||!prioridadeValor){alert('Preencha prioridade, O.S. e descrição.');return}
 
+ const registro={
+  prioridade:Number(prioridadeValor),
+  os:osValor,
+  prazo:document.getElementById('prazo').value||null,
+  status:document.getElementById('st').value,
+  pendencia:document.getElementById('pe').value,
+  descricao:descricaoValor,
+  observacao:document.getElementById('obs').value.trim()
+ };
 
-  const id =
-    document.getElementById('id').value;
+ let resultado;
+ if(id) resultado=await db.from('ordens_servico').update(registro).eq('id',id).select().single();
+ else resultado=await db.from('ordens_servico').insert(registro).select().single();
 
-
-  const registro = {
-
-    prioridade:
-      Number(
-        document.getElementById('prioridade').value
-      ),
-
-    os:
-      document
-        .getElementById('os')
-        .value
-        .trim(),
-
-    /\*
-      PRAZO É OPCIONAL.
-      Se estiver vazio, será salvo como NULL.
-    \*/
-    prazo:
-      document.getElementById('prazo').value || null,
-
-    status:
-      document.getElementById('st').value,
-
-    pendencia:
-      document.getElementById('pe').value,
-
-    descricao:
-      document
-        .getElementById('desc')
-        .value
-        .trim(),
-
-    observacao:
-      document
-        .getElementById('obs')
-        .value
-        .trim()
-
-  };
-
-
-  /\*
-    AQUI ESTÁ A CORREÇÃO.
-
-    O prazo NÃO está sendo validado.
-
-    Portanto:
-    \- O.S. é obrigatória
-    \- Descrição é obrigatória
-    \- Prazo é opcional
-  \*/
-
-  if(!registro.os || !registro.descricao){
-
-    alert(
-      'Preencha O.S. e descrição.'
-    );
-
-    return;
-
-  }
-
-
-  let resultado;
-
-
-  /\* EDITAR \*/
-  if(id){
-
-    resultado =
-      await db
-
-        .from('ordens\_servico')
-
-        .update(registro)
-
-        .eq('id', id)
-
-        .select()
-
-        .single();
-
-
-  /\* NOVA O.S. \*/
-  }else{
-
-    resultado =
-      await db
-
-        .from('ordens\_servico')
-
-        .insert(registro)
-
-        .select()
-
-        .single();
-
-  }
-
-
-  if(resultado.error){
-
-    alert(
-      'Não foi possível salvar a O.S.\n\n' +
-      resultado.error.message
-    );
-
-    return;
-
-  }
-
-
-  fechar();
-
-  await carregarDados();
-
+ if(resultado.error){alert('Não foi possível salvar a O.S.\\n\\n'+resultado.error.message);return}
+ fechar();await carregarDados();
 }
-
-
-/\* =========================
-   RENDERIZAR TABELA
-\========================= \*/
 
 function render(){
-
-  const q =
-    (
-      document.getElementById('busca')?.value || ''
-    )
-    .toLowerCase();
-
-
-  const f =
-    document.getElementById('status')?.value || '';
-
-
-  const p =
-    document.getElementById('pendFiltro')?.value || '';
-
-
-  const a = dados
-
-    .filter(x =>
-
-      (
-        !q ||
-
-        (
-          String(x.os || '') +
-          ' ' +
-          String(x.descricao || '')
-        )
-        .toLowerCase()
-        .includes(q)
-      )
-
-      &&
-
-      (!f || x.status === f)
-
-      &&
-
-      (!p || x.pendencia === p)
-
-    )
-
-    .sort(
-      (x,y) =>
-        Number(x.prioridade || 0) -
-        Number(y.prioridade || 0)
-    );
-
-
-  document.getElementById('tbody').innerHTML =
-
-    a.length
-
-      ?
-
-      a.map(x => {
-
-        /\*
-          Só calcula atraso se existir prazo.
-        \*/
-
-        let atras = false;
-
-        if(x.prazo){
-
-          const d =
-            new Date(
-              x.prazo + 'T00:00:00'
-            );
-
-          const h =
-            new Date();
-
-          h.setHours(
-            0,
-            0,
-            0,
-            0
-          );
-
-          atras =
-            x.status !== 'Concluído' &&
-            d < h;
-
-        }
-
-
-        return \`
-
-          \<tr>
-
-            \<td>
-              \<b>${esc(x.prioridade)}\</b>
-            \</td>
-
-
-            \<td>
-              \<b>${esc(x.os)}\</b>
-            \</td>
-
-
-            \<td class="${atras ? 'late' : ''}">
-
-              ${br(x.prazo)}
-
-              ${atras
-                ? ' • ATRASADO'
-                : ''
-              }
-
-            \</td>
-
-
-            \<td>
-              ${esc(x.descricao)}
-            \</td>
-
-
-            \<td>
-
-              \<span class="badge ${
-                x.status === 'Concluído'
-                  ? 'c'
-                  : x.status === 'Em andamento'
-                    ? 'a'
-                    : 'p'
-              }">
-
-                ${esc(x.status)}
-
-              \</span>
-
-            \</td>
-
-
-            \<td>
-
-              \<span class="badge ${
-                x.pendencia === 'Cliente'
-                  ? 'pc'
-                  : 'pe'
-              }">
-
-                ${esc(x.pendencia)}
-
-              \</span>
-
-            \</td>
-
-
-            \<td>
-              ${esc(x.observacao) || '—'}
-            \</td>
-
-
-            \<td>
-
-              \<button
-                onclick='abrir(${JSON.stringify(x).replace(/'/g, '&#39;')})'
-              \>
-                Editar
-              \</button>
-
-            \</td>
-
-          \</tr>
-
-        \`;
-
-      }).join('')
-
-
-      :
-
-      \`
-
-        \<tr>
-
-          \<td
-            colspan="8"
-            style="
-              text-align\:center;
-              padding:40px;
-              color:#71807b
-            "
-          \>
-
-            ${
-              carregando
-                ? 'Carregando...'
-                : 'Nenhuma O.S. cadastrada.'
-            }
-
-          \</td>
-
-        \</tr>
-
-      \`;
-
-
-  /\* =========================
-     ATUALIZAR CARDS
-  \========================= \*/
-
-  document.getElementById('total').textContent =
-    dados.length;
-
-
-  document.getElementById('pendCount').textContent =
-    dados.filter(
-      x => x.status === 'Pendente'
-    ).length;
-
-
-  document.getElementById('and').textContent =
-    dados.filter(
-      x => x.status === 'Em andamento'
-    ).length;
-
-
-  document.getElementById('cli').textContent =
-    dados.filter(
-      x =>
-        x.pendencia === 'Cliente' &&
-        x.status !== 'Concluído'
-    ).length;
-
-
-  document.getElementById('late').textContent =
-
-    dados.filter(x => {
-
-      if(
-        x.status === 'Concluído' ||
-        !x.prazo
-      ){
-
-        return false;
-
-      }
-
-
-      const prazo =
-        new Date(
-          x.prazo + 'T00:00:00'
-        );
-
-
-      const hoje =
-        new Date();
-
-
-      hoje.setHours(
-        0,
-        0,
-        0,
-        0
-      );
-
-
-      return prazo < hoje;
-
-    }).length;
-
+ const q=(document.getElementById('busca')?.value||'').toLowerCase();
+ const f=document.getElementById('status')?.value||'';
+ const p=document.getElementById('pendFiltro')?.value||'';
+ const a=dados.filter(x=>
+  (!q||(String(x.os||'')+' '+String(x.descricao||'')).toLowerCase().includes(q))&&
+  (!f||x.status===f)&&(!p||x.pendencia===p)
+ ).sort((x,y)=>Number(x.prioridade||0)-Number(y.prioridade||0));
+
+ document.getElementById('tbody').innerHTML=a.length?a.map(x=>{
+  let atras=false;
+  if(x.prazo){const d=new Date(normalizarData(x.prazo)+'T00:00:00'),h=new Date();h.setHours(0,0,0,0);atras=x.status!=='Concluído'&&d<h}
+  return `<tr>
+  <td><b>${esc(x.prioridade??'')}</b></td>
+  <td><b>${esc(x.os)}</b></td>
+  <td class="${atras?'late':''}">${br(x.prazo)}${atras?' • ATRASADO':''}</td>
+  <td>${esc(x.descricao)}</td>
+  <td><span class="badge ${x.status==='Concluído'?'c':x.status==='Em andamento'?'a':'p'}">${esc(x.status)}</span></td>
+  <td><span class="badge ${x.pendencia==='Cliente'?'pc':'pe'}">${esc(x.pendencia)}</span></td>
+  <td>${esc(x.observacao)||'—'}</td>
+  <td><button onclick='abrir(${JSON.stringify(x).replace(/'/g,"&#39;")})'>Editar</button></td>
+  </tr>`
+ }).join(''):`<tr><td colspan="8" style="text-align:center;padding:40px;color:#71807b">${carregando?'Carregando...':'Nenhuma O.S. cadastrada.'}</td></tr>`;
+
+ document.getElementById('total').textContent=dados.length;
+ document.getElementById('pendCount').textContent=dados.filter(x=>x.status==='Pendente').length;
+ document.getElementById('and').textContent=dados.filter(x=>x.status==='Em andamento').length;
+ document.getElementById('cli').textContent=dados.filter(x=>x.pendencia==='Cliente'&&x.status!=='Concluído').length;
+ document.getElementById('late').textContent=dados.filter(x=>{
+  if(x.status==='Concluído'||!x.prazo)return false;
+  const prazo=new Date(normalizarData(x.prazo)+'T00:00:00'),hoje=new Date();hoje.setHours(0,0,0,0);return prazo<hoje;
+ }).length;
 }
 
-
-/\* =========================
-   DATA BRASILEIRA
-\========================= \*/
-
+function normalizarData(valor){
+ if(!valor)return '';
+ const s=String(valor).trim();
+ if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.substring(0,10);
+ const m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+ if(m)return `${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`;
+ return '';
+}
 function br(x){
+ const n=normalizarData(x);if(!n)return 'Não definido';
+ const [y,m,d]=n.split('-');return `${d}/${m}/${y}`;
+}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
 
-  /\*
-    Se não houver prazo,
-    mostra "Não definido".
-  \*/
+/* IMPORTAÇÃO: mantém os DOIS modos */
+async function importarArquivo(event,tipo){
+ const file=event.target.files[0];
+ event.target.value='';
+ if(!file)return;
 
-  if(!x){
-
-    return 'Não definido';
-
+ try{
+  if(tipo==='csv'){
+   const texto=await file.text();
+   const linhas=parseCSV(texto);
+   await processarImportacao(linhas);
+  }else{
+   if(typeof XLSX==='undefined'){
+    await carregarXLSX();
+   }
+   const buffer=await file.arrayBuffer();
+   const wb=XLSX.read(buffer,{type:'array',cellDates:true});
+   const ws=wb.Sheets[wb.SheetNames[0]];
+   const linhas=XLSX.utils.sheet_to_json(ws,{defval:'',raw:false});
+   await processarImportacao(linhas);
   }
-
-
-  const [y,m,d] =
-    x.split('-');
-
-
-  return \`${d}/${m}/${y}\`;
-
+ }catch(err){alert('Erro ao importar arquivo:\n\n'+err.message)}
 }
-
-
-/\* =========================
-   ESCAPAR HTML
-\========================= \*/
-
-function esc(s){
-
-  return String(s ?? '')
-    .replace(
-      /[&<>"']/g,
-      c => ({
-
-        '&':'&amp;',
-        '<':'&lt;',
-        '>':'&gt;',
-        '"':'&quot;',
-        "'":'&#039;'
-
-      }[c])
-    );
-
+function carregarXLSX(){
+ return new Promise((resolve,reject)=>{
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+  s.onload=resolve;s.onerror=()=>reject(new Error('Não foi possível carregar o leitor de Excel.'));
+  document.head.appendChild(s);
+ });
 }
+function parseCSV(texto){
+ const linhas=[],chars=[...texto],rows=[];let row=[],cell='',quoted=false;
+ for(let i=0;i<chars.length;i++){
+  const c=chars[i],n=chars[i+1];
+  if(c==='"'&&quoted&&n==='"'){cell+='"';i++;continue}
+  if(c==='"'){quoted=!quoted;continue}
+  if(c===','&&!quoted){row.push(cell);cell='';continue}
+  if((c==='\n'||c==='\r')&&!quoted){
+   if(c==='\r'&&n==='\n')i++;
+   row.push(cell);cell='';
+   if(row.some(v=>String(v).trim()!==''))rows.push(row);
+   row=[];continue;
+  }
+  cell+=c;
+ }
+ if(cell!==''||row.length){row.push(cell);rows.push(row)}
+ if(!rows.length)return [];
+ const headers=rows[0].map(h=>normalizarCabecalho(h));
+ return rows.slice(1).map(r=>{const o={};headers.forEach((h,i)=>o[h]=r[i]??'');return o});
+}
+function normalizarCabecalho(v){
+ return String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
+}
+function pegar(o,names){
+ for(const n of names){const k=normalizarCabecalho(n);if(Object.prototype.hasOwnProperty.call(o,k)&&String(o[k]).trim()!=='')return o[k]}
+ return '';
+}
+function converterPrioridade(v){
+ if(v===''||v==null)return null;
+ const n=Number(String(v).replace(',','.').replace(/[^\d.-]/g,''));
+ return Number.isFinite(n)?n:null;
+}
+function converterDataImportada(v){
+ if(v===''||v==null)return null;
+ if(v instanceof Date&&!isNaN(v))return `${v.getFullYear()}-${String(v.getMonth()+1).padStart(2,'0')}-${String(v.getDate()).padStart(2,'0')}`;
+ const s=String(v).trim();
+ const n=normalizarData(s);if(n)return n;
+ if(/^\d+(\.\d+)?$/.test(s)){
+  const serial=Number(s),base=new Date(Date.UTC(1899,11,30)),d=new Date(base.getTime()+serial*86400000);
+  if(!isNaN(d))return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;
+ }
+ return null;
+}
+function valorStatus(v){
+ const s=String(v||'').trim().toLowerCase();
+ if(s.includes('concl'))return 'Concluído';
+ if(s.includes('andamento')||s.includes('andamento'))return 'Em andamento';
+ return 'Pendente';
+}
+function valorPendencia(v){
+ const s=String(v||'').trim().toLowerCase();
+ return s.includes('cliente')?'Cliente':'Empresa';
+}
+async function processarImportacao(linhas){
+ if(!linhas.length){alert('Nenhum registro encontrado no arquivo.');return}
+ const registros=linhas.map(o=>{
+  const prioridade=converterPrioridade(pegar(o,['prioridade','prioridade_os','prioridade da o.s.']));
+  const os=String(pegar(o,['os','o.s.','n_os','numero_os','nº da o.s.','ordem','ordem_de_servico'])).trim();
+  const prazo=converterDataImportada(pegar(o,['prazo','data_prazo','prazo_coplan']));
+  const descricao=String(pegar(o,['descricao','descrição','assunto'])).trim();
+  const observacao=String(pegar(o,['observacao','observação'])).trim();
+  const status=valorStatus(pegar(o,['status','situacao','situação']));
+  const pendencia=valorPendencia(pegar(o,['pendencia','pendência']));
+  return {prioridade,os,prazo,status,pendencia,descricao,observacao,_importada:true};
+ }).filter(r=>r.os&&r.descricao&&r.prioridade!==null);
 
+ if(!registros.length){alert('Nenhum registro válido encontrado.\n\nConfira se o arquivo possui as colunas Prioridade, O.S. e Descrição.');return}
 
-/\* =========================
-   INICIAR SISTEMA
-\========================= \*/
-
+ const {error}=await db.from('ordens_servico').insert(registros.map(({_importada,...r})=>r));
+ if(error){alert('Não foi possível importar as O.S.\\n\\n'+error.message);return}
+ alert(`${registros.length} O.S. importada(s) com sucesso.`);
+ await carregarDados();
+}
+async function excluirImportadas(){
+ if(!confirm('Deseja excluir TODAS as O.S. importadas?\\n\\nEsta ação não pode ser desfeita.'))return;
+ /* As importações não criam uma coluna de marcação no banco.
+    Portanto, a exclusão é feita pelos registros atualmente identificados
+    como importados nesta sessão. */
+ if(!window._idsImportados||!window._idsImportados.length){
+  alert('Não há O.S. importadas nesta sessão para excluir.');
+  return;
+ }
+ const {error}=await db.from('ordens_servico').delete().in('id',window._idsImportados);
+ if(error){alert('Não foi possível excluir as O.S. importadas.\\n\\n'+error.message);return}
+ window._idsImportados=[];
+ await carregarDados();
+ alert('O.S. importadas excluídas com sucesso.');
+}
+const _processarImportacaoOriginal=processarImportacao;
+processarImportacao=async function(linhas){
+ if(!linhas.length){alert('Nenhum registro encontrado no arquivo.');return}
+ const registros=linhas.map(o=>{
+  const prioridade=converterPrioridade(pegar(o,['prioridade','prioridade_os','prioridade da o.s.']));
+  const os=String(pegar(o,['os','o.s.','n_os','numero_os','nº da o.s.','ordem','ordem_de_servico'])).trim();
+  const prazo=converterDataImportada(pegar(o,['prazo','data_prazo','prazo_coplan']));
+  const descricao=String(pegar(o,['descricao','descrição','assunto'])).trim();
+  const observacao=String(pegar(o,['observacao','observação'])).trim();
+  const status=valorStatus(pegar(o,['status','situacao','situação']));
+  const pendencia=valorPendencia(pegar(o,['pendencia','pendência']));
+  return {prioridade,os,prazo,status,pendencia,descricao,observacao};
+ }).filter(r=>r.os&&r.descricao&&r.prioridade!==null);
+ if(!registros.length){alert('Nenhum registro válido encontrado.\n\nConfira as colunas Prioridade, O.S. e Descrição.');return}
+ const {data,error}=await db.from('ordens_servico').insert(registros).select('id');
+ if(error){alert('Não foi possível importar as O.S.\\n\\n'+error.message);return}
+ window._idsImportados=[...(window._idsImportados||[]),...(data||[]).map(x=>x.id)];
+ alert(`${registros.length} O.S. importada(s) com sucesso.`);
+ await carregarDados();
+}
+function exportarCSV(){
+ const headers=['Prioridade','O.S.','Prazo','Descrição','Status','Pendência','Observação'];
+ const rows=dados.map(x=>[x.prioridade,x.os,br(x.prazo),x.descricao,x.status,x.pendencia,x.observacao]);
+ const csv=[headers,...rows].map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');
+ const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ordens_servico.csv';a.click();URL.revokeObjectURL(a.href);
+}
 iniciar();
-
-\</script>
-
-\</body>
-\</html>
+</script>
+</body>
+</html>
