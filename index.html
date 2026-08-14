@@ -1,14 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Coplan • Controle de O.S.</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
 :root{
@@ -22,67 +17,26 @@
   --muted:#71807b;
   --red:#c93d3d;
   --yellow:#c98612;
-  --blue:#3c6edb;
-  --purple:#7652b8;
+  --blue:#3c6edb
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box
+}
 
 body{
   margin:0;
   font-family:Inter,Segoe UI,Arial,sans-serif;
   background:var(--bg);
-  color:var(--text);
+  color:var(--text)
 }
 
-button,input,select,textarea{font:inherit}
-
-button{
-  border:0;
-  border-radius:9px;
-  padding:11px 16px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-button:hover{opacity:.92}
-
-button:disabled{
-  opacity:.6;
-  cursor:not-allowed;
-}
-
-input,select,textarea{
-  width:100%;
-  padding:12px 13px;
-  border:1px solid #d5dfdb;
-  border-radius:9px;
-  background:#fff;
-  outline:none;
-}
-
-input:focus,select:focus,textarea:focus{
-  border-color:var(--green);
-  box-shadow:0 0 0 3px #006b4f14;
-}
-
-textarea{resize:vertical}
-
-.primary{
-  background:var(--green);
-  color:#fff;
-}
-
-.secondary{
-  background:#eef3f1;
-  color:var(--dark);
-}
-
+/* LOGIN */
 .login{
   min-height:100vh;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a);
+  background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a)
 }
 
 .loginbox{
@@ -90,13 +44,14 @@ textarea{resize:vertical}
   background:#fff;
   border-radius:20px;
   padding:36px;
-  box-shadow:0 20px 60px #0004;
+  box-shadow:0 20px 60px #0004
 }
 
 .logo{
   font-weight:900;
   font-size:34px;
   color:var(--green);
+  letter-spacing:-1px
 }
 
 .logo span{
@@ -104,43 +59,73 @@ textarea{resize:vertical}
   font-size:13px;
   color:var(--muted);
   font-weight:500;
-  margin-top:4px;
+  letter-spacing:0;
+  margin-top:4px
 }
 
-.login h2{margin:30px 0 6px}
-.login p{color:var(--muted)}
+.login h2{
+  margin:30px 0 6px
+}
 
-.field{margin:15px 0}
+.login p{
+  color:var(--muted);
+  margin-top:0
+}
+
+.field{
+  margin:15px 0
+}
 
 .field label{
   display:block;
   font-size:13px;
   font-weight:700;
-  margin-bottom:7px;
+  margin-bottom:7px
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #d5dfdb;
+  border-radius:9px;
+  font:inherit;
+  background:#fff
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:11px 16px;
+  font-weight:700;
+  cursor:pointer
+}
+
+.primary{
+  background:var(--green);
+  color:#fff
+}
+
+.primary:hover{
+  background:#00563f
 }
 
 .wide{
   width:100%;
-  margin-top:8px;
+  margin-top:8px
 }
 
 .hint{
   font-size:12px;
   color:var(--muted);
-  margin-top:14px;
-  line-height:1.5;
+  margin-top:14px
 }
 
-.error{
-  color:#b42318;
-  font-size:13px;
-  margin-top:8px;
-  display:none;
-}
-
+/* APP */
 .app{
   display:none;
-  min-height:100vh;
+  min-height:100vh
 }
 
 .sidebar{
@@ -149,13 +134,13 @@ textarea{resize:vertical}
   width:245px;
   background:#073e31;
   color:#fff;
-  padding:25px 17px;
+  padding:25px 17px
 }
 
 .side-logo{
   font-size:27px;
   font-weight:900;
-  padding:8px 12px 28px;
+  padding:8px 12px 28px
 }
 
 .side-logo small{
@@ -163,21 +148,24 @@ textarea{resize:vertical}
   font-size:11px;
   font-weight:500;
   opacity:.65;
-  margin-top:3px;
+  margin-top:3px
 }
 
-.nav{padding:8px 0}
+.nav{
+  padding:8px 0
+}
 
 .nav div{
   padding:12px;
   border-radius:9px;
   margin:4px 0;
-  color:#dcebe6;
+  color:#dcebe6
 }
 
-.nav div.active{
+.nav .active,
+.nav div:hover{
   background:#ffffff16;
-  color:#fff;
+  color:#fff
 }
 
 .user{
@@ -187,860 +175,688 @@ textarea{resize:vertical}
   right:17px;
   padding:12px;
   border-top:1px solid #ffffff22;
-  font-size:13px;
+  font-size:13px
 }
 
 .user button{
   margin-top:10px;
   width:100%;
   background:#ffffff12;
-  color:#fff;
+  color:#fff
 }
 
 .main{
   margin-left:245px;
-  padding:28px 34px;
+  padding:28px 34px
 }
 
 .top{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:25px;
-  gap:15px;
+  margin-bottom:25px
 }
 
 .top h1{
   margin:0;
-  font-size:25px;
+  font-size:25px
 }
 
 .top p{
   margin:5px 0;
-  color:var(--muted);
+  color:var(--muted)
 }
 
-.top-buttons{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-}
-
+/* CARDS */
 .cards{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:14px;
+  gap:14px
 }
 
 .card{
-  background:#fff;
+  background:var(--card);
   border:1px solid var(--line);
   border-radius:13px;
   padding:19px;
-  box-shadow:0 3px 12px #12382f08;
+  box-shadow:0 3px 12px #12382f08
 }
 
 .card .label{
   font-size:12px;
   color:var(--muted);
-  font-weight:700;
+  font-weight:700
 }
 
 .card .num{
   font-size:29px;
   font-weight:800;
-  margin-top:9px;
+  margin-top:9px
 }
 
-.card.green{border-top:3px solid var(--green)}
-.card.yellow{border-top:3px solid var(--yellow)}
-.card.blue{border-top:3px solid var(--blue)}
-.card.purple{border-top:3px solid var(--purple)}
+.card.green{
+  border-top:3px solid var(--green)
+}
 
+.card.yellow{
+  border-top:3px solid var(--yellow)
+}
+
+.card.red{
+  border-top:3px solid var(--red)
+}
+
+.card.blue{
+  border-top:3px solid var(--blue)
+}
+
+/* PAINEL */
 .panel{
   margin-top:20px;
   background:#fff;
   border:1px solid var(--line);
   border-radius:13px;
-  padding:20px;
+  padding:20px
 }
 
 .toolbar{
   display:flex;
   gap:9px;
   justify-content:space-between;
-  flex-wrap:wrap;
+  flex-wrap:wrap
 }
 
 .filters{
   display:flex;
   gap:8px;
   flex:1;
-  min-width:300px;
+  min-width:300px
 }
 
-.filters input{max-width:320px}
+.filters input{
+  max-width:320px
+}
 
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:17px;
+  margin-top:17px
 }
 
-th,td{
+th,
+td{
   text-align:left;
   padding:13px 10px;
   border-bottom:1px solid var(--line);
-  font-size:13px;
+  font-size:13px
 }
 
 th{
   font-size:11px;
   text-transform:uppercase;
   color:var(--muted);
-  background:#fafcfb;
+  background:#fafcfb
 }
 
+/* BADGES */
 .badge{
   display:inline-block;
   padding:5px 9px;
   border-radius:99px;
-  font-size:10px;
-  font-weight:800;
-  white-space:nowrap;
+  font-size:11px;
+  font-weight:800
 }
 
-.status-backlog{background:#eee;color:#555}
-.status-fazendo{background:#fff2d5;color:#94600a}
-.status-feito{background:#def6e9;color:#17683f}
-.status-disponivel{background:#e4ecff;color:#365aa0}
-.status-testando{background:#e7e1ff;color:#5a4199}
-.status-teste-concluido{background:#dff4f8;color:#176879}
-.status-producao{background:#ffe7d5;color:#a64d0c}
-.status-concluido{background:#d9f3df;color:#17683f}
-.status-entregue{background:#dcefe9;color:#17664f}
-.status-devolvido{background:#fee7e7;color:#9f2626}
-.status-analise-iniciada{background:#f1e5ff;color:#7440a8}
-.status-analise-concluida{background:#e0f4ed;color:#17664f}
-.status-aguardando{background:#fff3d6;color:#94600a}
-.status-paralisado{background:#ffe5e5;color:#a52828}
-
-.pc{background:#e4ecff;color:#365aa0}
-.pe{background:#def5ee;color:#17664f}
-
-.table-actions{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  white-space:nowrap;
-}
-
-.edit-btn{
-  background:#eef3f1;
-  color:var(--dark);
-  padding:7px 10px;
-  font-size:12px;
-}
-
-.delete-btn{
+.p{
   background:#fee7e7;
-  color:#9f2626;
-  padding:7px 10px;
-  font-size:12px;
+  color:#9f2626
 }
 
+.a{
+  background:#fff2d5;
+  color:#94600a
+}
+
+.c{
+  background:#def6e9;
+  color:#17683f
+}
+
+.pc{
+  background:#e4ecff;
+  color:#365aa0
+}
+
+.pe{
+  background:#def5ee;
+  color:#17664f
+}
+
+.late{
+  color:#bd2525;
+  font-weight:800
+}
+
+/* MODAL */
 .modal{
   display:none;
   position:fixed;
   inset:0;
   background:#0007;
   place-items:center;
-  padding:20px;
-  z-index:1000;
+  padding:20px
 }
 
-.modal.open{display:grid}
+.modal.open{
+  display:grid
+}
 
 .modalbox{
   background:#fff;
-  width:min(850px,100%);
+  width:min(650px,100%);
   max-height:90vh;
-  overflow-y:auto;
+  overflow:auto;
   border-radius:15px;
-  padding:25px;
-}
-
-.modalbox h2{
-  margin:0 0 20px;
+  padding:25px
 }
 
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:13px;
+  gap:13px
 }
 
-.full{grid-column:1/-1}
+.full{
+  grid-column:1/-1
+}
 
 .actions{
   display:flex;
   justify-content:flex-end;
-  gap:10px;
-  width:100%;
-  margin-top:22px;
-  padding-top:18px;
-  border-top:1px solid var(--line);
+  gap:8px;
+  margin-top:18px
 }
 
-.cancel-btn{
-  background:#eef1ef;
-  color:var(--dark);
-}
-
-.import-help{
-  background:#f3f8f6;
-  border:1px solid #dcebe5;
-  border-radius:10px;
-  padding:12px;
-  font-size:12px;
-  color:var(--muted);
-  line-height:1.5;
-  margin-bottom:15px;
-}
-
-.import-result{
-  display:none;
-  margin-top:15px;
-  padding:15px;
-  border-radius:10px;
-  background:#f7f9f8;
-  border:1px solid var(--line);
-}
-
-.import-result.show{display:block}
-
-.result-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-bottom:12px;
-}
-
-.result-card{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:9px;
-  padding:12px;
-  text-align:center;
-}
-
-.result-card strong{
-  display:block;
-  font-size:22px;
-  margin-top:4px;
-}
-
-.result-new{color:var(--green)}
-.result-update{color:var(--blue)}
-.result-error{color:var(--red)}
-
-.error-list{
-  max-height:220px;
-  overflow-y:auto;
-  font-size:12px;
-  line-height:1.5;
-  color:#8f2222;
-}
-
-.file-name{
-  font-size:12px;
-  color:var(--muted);
+.error{
+  color:#b42318;
+  font-size:13px;
   margin-top:8px;
+  display:none
 }
 
-@media(max-width:1250px){
-  .cards{grid-template-columns:repeat(3,1fr)}
-}
+/* RESPONSIVO */
+@media(max-width:1000px){
 
-@media(max-width:1100px){
-  .cards{grid-template-columns:repeat(2,1fr)}
+  .cards{
+    grid-template-columns:repeat(2,1fr)
+  }
+
 }
 
 @media(max-width:700px){
+
   .sidebar{
     position:static;
-    width:auto;
+    width:auto
   }
 
   .main{
     margin-left:0;
-    padding:20px;
+    padding:20px
   }
 
   .user{
     position:static;
-    margin-top:25px;
+    margin-top:25px
   }
 
   .grid{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr
   }
 
-  .full{grid-column:auto}
+  .full{
+    grid-column:auto
+  }
 
   .cards{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr
   }
 
   .top{
     align-items:flex-start;
-    flex-direction:column;
+    gap:10px;
+    flex-direction:column
   }
 
-  .top-buttons{
-    width:100%;
-    justify-content:stretch;
-  }
-
-  .top-buttons button{
-    flex:1;
-  }
-
-  .filters{
-    flex-direction:column;
-    min-width:100%;
-  }
-
-  .filters input{max-width:none}
-
-  .result-grid{
-    grid-template-columns:1fr;
-  }
 }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head>
 
 <body>
 
+<!-- LOGIN -->
 <section class="login" id="login">
+
   <div class="loginbox">
 
-```
-<div class="logo">
-  COPLAN
-  <span>Controle de O.S. e Demandas</span>
-</div>
+    <div class="logo">
+      COPLAN
+      <span>Controle de O.S. e Demandas</span>
+    </div>
 
-<h2>Acesso ao sistema</h2>
-<p>Entre para acompanhar as demandas da equipe.</p>
+    <h2>Acesso ao sistema</h2>
 
-<form id="loginForm">
+    <p>Entre para acompanhar as demandas da equipe.</p>
 
-  <div class="field">
-    <label>E-mail</label>
-    <input id="email" type="email" required placeholder="seu@email.com">
-  </div>
+    <form onsubmit="entrar(event)">
 
-  <div class="field">
-    <label>Senha</label>
-    <input id="senha" type="password" required placeholder="••••••••">
-  </div>
+      <div class="field">
+        <label>E-mail</label>
+        <input
+          id="email"
+          type="email"
+          required
+          placeholder="seu@email.com"
+        >
+      </div>
 
-  <div class="error" id="loginerr">
-    E-mail ou senha inválidos.
-  </div>
+      <div class="field">
+        <label>Senha</label>
+        <input
+          id="senha"
+          type="password"
+          required
+          placeholder="••••••••"
+        >
+      </div>
 
-  <button class="primary wide" type="submit">
-    Entrar
-  </button>
+      <div class="error" id="loginerr">
+        E-mail ou senha inválidos.
+      </div>
 
-</form>
+      <button class="primary wide">
+        Entrar
+      </button>
 
-<div class="hint">
-  Sistema de controle de Ordens de Serviço e Demandas.
-</div>
-```
+    </form>
 
-  </div>
-</section>
-
-<section class="app" id="app">
-
-  <aside class="sidebar">
-
-```
-<div class="side-logo">
-  COPLAN
-  <small>CONTROLE DE DEMANDAS</small>
-</div>
-
-<div class="nav">
-  <div class="active">▦ Dashboard</div>
-  <div>✓ Ordens de Serviço</div>
-  <div>◉ Controle</div>
-</div>
-
-<div class="user">
-  <strong id="useremail">Usuário</strong>
-  <br>
-  <span style="opacity:.6">Acesso ao sistema</span>
-  <button onclick="sair()">Sair</button>
-</div>
-```
-
-  </aside>
-
-  <main class="main">
-
-```
-<div class="top">
-
-  <div>
-    <h1>Dashboard</h1>
-    <p>Visão geral das ordens de serviço</p>
-  </div>
-
-  <div class="top-buttons">
-
-    <button class="secondary" onclick="abrirImportacao()">
-      📥 Importar Excel
-    </button>
-
-    <button class="secondary" onclick="abrirImportacaoControle()">
-      📋 Importar Controle
-    </button>
-
-    <button class="primary" onclick="abrir()">
-      + Nova O.S.
-    </button>
-
-  </div>
-
-</div>
-
-
-<div class="cards">
-
-  <div class="card green">
-    <div class="label">TOTAL DE O.S.</div>
-    <div class="num" id="total">0</div>
-  </div>
-
-  <div class="card yellow">
-    <div class="label">FAZENDO</div>
-    <div class="num" id="fazendo">0</div>
-  </div>
-
-  <div class="card blue">
-    <div class="label">EM TESTE</div>
-    <div class="num" id="teste">0</div>
-  </div>
-
-  <div class="card purple">
-    <div class="label">EM PRODUÇÃO</div>
-    <div class="num" id="producao">0</div>
-  </div>
-
-  <div class="card green">
-    <div class="label">CONCLUÍDAS</div>
-    <div class="num" id="concluido">0</div>
-  </div>
-
-</div>
-
-
-<div class="panel">
-
-  <div class="toolbar">
-
-    <div class="filters">
-
-      <input id="busca" placeholder="Buscar O.S. ou descrição...">
-
-      <select id="status">
-        <option value="">Todos os status</option>
-        <option value="BACKLOG_DESENVOLVIMENTO">Backlog Desenvolvimento</option>
-        <option value="FAZENDO">Fazendo</option>
-        <option value="FEITO">Feito</option>
-        <option value="DISPONIVEL_TESTE">Disponível para Teste</option>
-        <option value="TESTANDO">Testando</option>
-        <option value="TESTE_CONCLUIDO">Teste Concluído</option>
-        <option value="EM_PRODUCAO">Em Produção</option>
-        <option value="CONCLUIDO">Concluído</option>
-        <option value="ENTREGUE">Entregue</option>
-        <option value="DEVOLVIDO_DEV">Devolvido ao DEV</option>
-        <option value="ANALISE_INICIADA">Análise Iniciada</option>
-        <option value="ANALISE_CONCLUIDA">Análise Concluída</option>
-      </select>
-
-      <select id="pendFiltro">
-        <option value="">Todas as pendências</option>
-        <option value="Empresa">Empresa</option>
-        <option value="Cliente">Cliente</option>
-      </select>
-
+    <div class="hint">
+      Esta versão está preparada para autenticação e banco de dados Supabase.
     </div>
 
   </div>
 
+</section>
 
-  <div style="overflow:auto">
 
-    <table>
+<!-- SISTEMA -->
+<section class="app" id="app">
 
-      <thead>
-        <tr>
-          <th>O.S.</th>
-          <th>Data Criação</th>
-          <th>Cliente</th>
-          <th>Usuário</th>
-          <th>Status</th>
-          <th>Produto</th>
-          <th>Grupo</th>
-          <th>Assunto</th>
-          <th>Desenvolvedor</th>
-          <th>Entregue Em</th>
-          <th>Pendência</th>
-          <th>Observação</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
+  <aside class="sidebar">
 
-      <tbody id="tbody"></tbody>
+    <div class="side-logo">
+      COPLAN
+      <small>CONTROLE DE DEMANDAS</small>
+    </div>
 
-    </table>
+    <div class="nav">
+      <div class="active">▦ Dashboard</div>
+      <div>✓ Ordens de Serviço</div>
+      <div>◉ Relatórios</div>
+    </div>
 
-  </div>
+    <div class="user">
 
-</div>
-```
+      <strong id="useremail">
+        Usuário
+      </strong>
+
+      <br>
+
+      <span style="opacity:.6">
+        Acesso ao sistema
+      </span>
+
+      <button onclick="sair()">
+        Sair
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <main class="main">
+
+    <div class="top">
+
+      <div>
+        <h1>Dashboard</h1>
+        <p>Visão geral das ordens de serviço</p>
+      </div>
+
+      <button class="primary" onclick="abrir()">
+        + Nova O.S.
+      </button>
+
+    </div>
+
+
+    <!-- CARDS -->
+    <div class="cards">
+
+      <div class="card green">
+        <div class="label">
+          TOTAL DE O.S.
+        </div>
+
+        <div class="num" id="total">
+          0
+        </div>
+      </div>
+
+
+      <div class="card red">
+        <div class="label">
+          PENDENTES
+        </div>
+
+        <div class="num" id="pendCount">
+          0
+        </div>
+      </div>
+
+
+      <div class="card yellow">
+        <div class="label">
+          EM ANDAMENTO
+        </div>
+
+        <div class="num" id="and">
+          0
+        </div>
+      </div>
+
+
+      <div class="card blue">
+        <div class="label">
+          AGUARDANDO CLIENTE
+        </div>
+
+        <div class="num" id="cli">
+          0
+        </div>
+      </div>
+
+
+      <div class="card red">
+        <div class="label">
+          EM ATRASO
+        </div>
+
+        <div class="num" id="late">
+          0
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- TABELA -->
+    <div class="panel">
+
+      <div class="toolbar">
+
+        <div class="filters">
+
+          <input
+            id="busca"
+            placeholder="Buscar O.S. ou descrição..."
+            oninput="render()"
+          >
+
+          <select id="status" onchange="render()">
+
+            <option value="">
+              Todos os status
+            </option>
+
+            <option>
+              Pendente
+            </option>
+
+            <option>
+              Em andamento
+            </option>
+
+            <option>
+              Concluído
+            </option>
+
+          </select>
+
+
+          <select id="pendFiltro" onchange="render()">
+
+            <option value="">
+              Todas as pendências
+            </option>
+
+            <option>
+              Empresa
+            </option>
+
+            <option>
+              Cliente
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <div style="overflow:auto">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Prioridade</th>
+              <th>O.S.</th>
+              <th>Prazo</th>
+              <th>Descrição</th>
+              <th>Status</th>
+              <th>Pendência</th>
+              <th>Observação</th>
+              <th></th>
+            </tr>
+
+          </thead>
+
+          <tbody id="tbody"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
 
   </main>
 
 </section>
 
-<!-- MODAL NOVA O.S. -->
 
+<!-- MODAL NOVA / EDITAR O.S. -->
 <div class="modal" id="modal">
 
   <div class="modalbox">
 
-```
-<h2 id="mt">Nova O.S.</h2>
+    <h2 id="mt">
+      Nova O.S.
+    </h2>
 
-<form id="osForm">
+    <form onsubmit="salvar(event)">
 
-  <input type="hidden" id="id">
+      <input type="hidden" id="id">
 
-  <div class="grid">
+      <div class="grid">
 
-    <div class="field">
-      <label>Nº da O.S.</label>
-      <input id="os" type="text">
-    </div>
 
-    <div class="field">
-      <label>Data de criação</label>
-      <input id="dataCriacao" type="date">
-    </div>
+        <!-- PRIORIDADE -->
+        <div class="field">
 
-    <div class="field">
-      <label>Cliente</label>
-      <input id="cliente" type="text">
-    </div>
+          <label>
+            Prioridade
+          </label>
 
-    <div class="field">
-      <label>Usuário</label>
-      <input id="usuario" type="text">
-    </div>
+          <input
+            id="prioridade"
+            type="number"
+            min="1"
+            required
+          >
 
-    <div class="field">
-      <label>Status</label>
+        </div>
 
-      <select id="st">
-        <option value="">Selecione</option>
-        <option value="BACKLOG_DESENVOLVIMENTO">Backlog Desenvolvimento</option>
-        <option value="FAZENDO">Fazendo</option>
-        <option value="FEITO">Feito</option>
-        <option value="DISPONIVEL_TESTE">Disponível para Teste</option>
-        <option value="TESTANDO">Testando</option>
-        <option value="TESTE_CONCLUIDO">Teste Concluído</option>
-        <option value="EM_PRODUCAO">Em Produção</option>
-        <option value="CONCLUIDO">Concluído</option>
-        <option value="ENTREGUE">Entregue</option>
-        <option value="DEVOLVIDO_DEV">Devolvido ao DEV</option>
-        <option value="ANALISE_INICIADA">Análise Iniciada</option>
-        <option value="ANALISE_CONCLUIDA">Análise Concluída</option>
-      </select>
 
-    </div>
+        <!-- O.S. -->
+        <div class="field">
 
-    <div class="field">
-      <label>Produto</label>
-      <input id="produto" type="text">
-    </div>
+          <label>
+            Nº da O.S.
+          </label>
 
-    <div class="field">
-      <label>Grupo</label>
-      <input id="grupo" type="text">
-    </div>
+          <input
+            id="os"
+            required
+          >
 
-    <div class="field">
-      <label>Assunto</label>
-      <input id="assunto" type="text">
-    </div>
+        </div>
 
-    <div class="field">
-      <label>Desenvolvedor</label>
-      <input id="desenvolvedor" type="text">
-    </div>
 
-    <div class="field">
-      <label>Entregue em</label>
-      <input id="entregue" type="date">
-    </div>
+        <!-- PRAZO OPCIONAL -->
+        <div class="field">
 
-    <div class="field">
-      <label>Pendência</label>
+          <label>
+            Prazo
+          </label>
 
-      <select id="pe">
-        <option value="">Selecione</option>
-        <option value="Empresa">Empresa</option>
-        <option value="Cliente">Cliente</option>
-      </select>
+          <input
+            id="prazo"
+            type="date"
+          >
 
-    </div>
+        </div>
 
-    <div class="field full">
-      <label>Descrição</label>
-      <textarea id="desc" rows="4"></textarea>
-    </div>
 
-    <div class="field full">
-      <label>Observação</label>
-      <textarea id="obs" rows="3"></textarea>
-    </div>
+        <!-- STATUS -->
+        <div class="field">
 
-  </div>
+          <label>
+            Status
+          </label>
 
-  <div class="actions">
-    <button type="button" class="cancel-btn" onclick="fechar()">
-      Cancelar
-    </button>
+          <select id="st">
 
-    <button type="submit" class="primary">
-      Salvar
-    </button>
-  </div>
+            <option>
+              Pendente
+            </option>
 
-</form>
-```
+            <option>
+              Em andamento
+            </option>
 
-  </div>
+            <option>
+              Concluído
+            </option>
 
-</div>
+          </select>
 
-<!-- MODAL IMPORTAR EXCEL -->
+        </div>
 
-<div class="modal" id="importModal">
 
-  <div class="modalbox">
+        <!-- PENDÊNCIA -->
+        <div class="field">
 
-```
-<h2>📥 Importar O.S. do Excel</h2>
+          <label>
+            Pendência
+          </label>
 
-<div class="import-help">
+          <select id="pe">
 
-  <strong>Colunas esperadas:</strong><br><br>
+            <option>
+              Empresa
+            </option>
 
-  O.S. | DATA DE CRIAÇÃO | CLIENTE | USUÁRIO |
-  STATUS | PRODUTO | GRUPO | ASSUNTO |
-  DESENVOLVEDOR | ENTREGUE EM
+            <option>
+              Cliente
+            </option>
 
-  <br><br>
+          </select>
 
-  A O.S. existente será atualizada.
-  A O.S. que não existir será criada.
+        </div>
 
-  <br><br>
 
-  <strong>
-    Prioridade e Prazo não são alterados por esta importação.
-  </strong>
+        <!-- DESCRIÇÃO -->
+        <div class="field full">
 
-</div>
+          <label>
+            Descrição
+          </label>
 
-<div class="field">
+          <textarea
+            id="desc"
+            rows="4"
+            required
+          ></textarea>
 
-  <label>Selecione o arquivo Excel</label>
+        </div>
 
-  <input
-    id="arquivoExcel"
-    type="file"
-    accept=".xlsx,.xls"
-    onchange="mostrarNomeArquivo()"
-  >
 
-  <div class="file-name" id="nomeArquivo"></div>
+        <!-- OBSERVAÇÃO -->
+        <div class="field full">
 
-</div>
+          <label>
+            Observação
+          </label>
 
-<div class="import-result" id="importResult">
+          <textarea
+            id="obs"
+            rows="3"
+          ></textarea>
 
-  <div class="result-grid">
+        </div>
 
-    <div class="result-card">
-      Novas O.S.
-      <strong class="result-new" id="resultNovas">0</strong>
-    </div>
+      </div>
 
-    <div class="result-card">
-      O.S. atualizadas
-      <strong class="result-update" id="resultAtualizadas">0</strong>
-    </div>
 
-    <div class="result-card">
-      Erros
-      <strong class="result-error" id="resultErros">0</strong>
-    </div>
+      <div class="actions">
 
-  </div>
+        <button
+          type="button"
+          onclick="fechar()"
+        >
+          Cancelar
+        </button>
 
-  <div class="error-list" id="errorList"></div>
+        <button class="primary">
+          Salvar
+        </button>
 
-</div>
+      </div>
 
-<div class="actions">
-
-  <button
-    type="button"
-    class="cancel-btn"
-    onclick="fecharImportacao()"
-  >
-    Fechar
-  </button>
-
-  <button
-    type="button"
-    class="primary"
-    id="btnImportar"
-    onclick="importarExcel()"
-  >
-    📥 Importar
-  </button>
-
-</div>
-```
+    </form>
 
   </div>
 
 </div>
 
-<!-- MODAL IMPORTAR CONTROLE -->
-
-<div class="modal" id="controleModal">
-
-  <div class="modalbox">
-
-```
-<h2>📋 Importar Controle</h2>
-
-<div class="import-help">
-
-  <strong>Este controle é independente das O.S. cadastradas.</strong>
-
-  <br><br>
-
-  <strong>Colunas esperadas:</strong><br><br>
-
-  Ordem | DATA DE CRIAÇÃO | USUÁRIO |
-  Prioridade | Prazo Coplan | ASSUNTO
-
-  <br><br>
-
-  <strong>
-    A coluna Ordem/O.S. NÃO é obrigatória.
-  </strong>
-
-  <br>
-
-  Mesmo que uma linha não tenha número de O.S.,
-  ela será importada normalmente.
-
-  <br><br>
-
-  Se a ordem já existir no controle, os dados serão
-  atualizados. Se não existir, será criada uma nova linha.
-
-</div>
-
-<div class="field">
-
-  <label>Selecione o arquivo Excel do Controle</label>
-
-  <input
-    id="arquivoControle"
-    type="file"
-    accept=".xlsx,.xls"
-    onchange="mostrarNomeControle()"
-  >
-
-  <div class="file-name" id="nomeControle"></div>
-
-</div>
-
-<div class="import-result" id="controleResult">
-
-  <div class="result-grid">
-
-    <div class="result-card">
-      Importadas
-      <strong class="result-new" id="controleImportadas">0</strong>
-    </div>
-
-    <div class="result-card">
-      Atualizadas
-      <strong class="result-update" id="controleAtualizadas">0</strong>
-    </div>
-
-    <div class="result-card">
-      Erros
-      <strong class="result-error" id="controleErros">0</strong>
-    </div>
-
-  </div>
-
-  <div class="error-list" id="controleErrorList"></div>
-
-</div>
-
-<div class="actions">
-
-  <button
-    type="button"
-    class="cancel-btn"
-    onclick="fecharImportacaoControle()"
-  >
-    Fechar
-  </button>
-
-  <button
-    type="button"
-    class="primary"
-    id="btnImportarControle"
-    onclick="importarControle()"
-  >
-    📋 Importar Controle
-  </button>
-
-</div>
-```
-
-  </div>
-
-</div>
 
 <script>
 
@@ -1050,23 +866,71 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
   'sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
 
-const {createClient} = supabase;
 
-const db =
-  createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+const { createClient } = supabase;
+
+const db = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
 
 let dados = [];
 let carregando = false;
 
 
-/* LOGIN */
+/* =========================
+   INICIAR
+========================= */
 
-document
-  .getElementById('loginForm')
-  .addEventListener('submit', entrar);
+async function iniciar(){
+
+  const {
+    data: { session }
+  } = await db.auth.getSession();
+
+  if(session){
+
+    mostrarApp(session.user);
+
+  }else{
+
+    mostrarLogin();
+
+  }
+
+
+  db.auth.onAuthStateChange(
+    (_event, session) => {
+
+      if(session){
+
+        mostrarApp(session.user);
+
+      }else{
+
+        mostrarLogin();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function mostrarLogin(){
+
+  document.getElementById('login').style.display = 'grid';
+
+  document.getElementById('app').style.display = 'none';
+
+}
+
 
 async function entrar(e){
 
@@ -1081,58 +945,41 @@ async function entrar(e){
   const erro =
     document.getElementById('loginerr');
 
-  erro.style.display='none';
+  erro.style.display = 'none';
 
-  const {error} =
+
+  const { error } =
     await db.auth.signInWithPassword({
+
       email,
-      password:senha
+      password: senha
+
     });
 
+
   if(error){
-    erro.textContent='E-mail ou senha inválidos.';
-    erro.style.display='block';
+
+    erro.textContent =
+      'E-mail ou senha inválidos.';
+
+    erro.style.display = 'block';
+
   }
 
 }
 
 
-/* INICIAR */
-
-async function iniciar(){
-
-  const {
-    data:{session}
-  } = await db.auth.getSession();
-
-  if(session){
-    mostrarApp(session.user);
-  }else{
-    mostrarLogin();
-  }
-
-  db.auth.onAuthStateChange(
-    (_event,session)=>{
-      if(session){
-        mostrarApp(session.user);
-      }else{
-        mostrarLogin();
-      }
-    }
-  );
-}
-
-function mostrarLogin(){
-
-  document.getElementById('login').style.display='grid';
-  document.getElementById('app').style.display='none';
-
-}
+/* =========================
+   ABRIR SISTEMA
+========================= */
 
 async function mostrarApp(user){
 
-  document.getElementById('login').style.display='none';
-  document.getElementById('app').style.display='block';
+  document.getElementById('login').style.display =
+    'none';
+
+  document.getElementById('app').style.display =
+    'block';
 
   document.getElementById('useremail').textContent =
     user?.email || 'Usuário';
@@ -1141,6 +988,11 @@ async function mostrarApp(user){
 
 }
 
+
+/* =========================
+   SAIR
+========================= */
+
 async function sair(){
 
   await db.auth.signOut();
@@ -1148,23 +1000,36 @@ async function sair(){
 }
 
 
-/* CARREGAR O.S. */
+/* =========================
+   CARREGAR DADOS
+========================= */
 
 async function carregarDados(){
 
-  carregando=true;
+  carregando = true;
+
   render();
+
 
   const {
     data,
     error
-  } =
-    await db
-      .from('ordens_servico')
-      .select('*')
-      .order('os',{ascending:true});
+  } = await db
 
-  carregando=false;
+    .from('ordens_servico')
+
+    .select('*')
+
+    .order(
+      'prioridade',
+      {
+        ascending:true
+      }
+    );
+
+
+  carregando = false;
+
 
   if(error){
 
@@ -1173,107 +1038,200 @@ async function carregarDados(){
       error.message
     );
 
+    render();
+
     return;
+
   }
 
-  dados=data || [];
+
+  dados = data || [];
 
   render();
 
 }
 
 
-/* NOVA / EDITAR */
+/* =========================
+   ABRIR MODAL
+========================= */
 
-function abrir(registro=null){
+function abrir(x = null){
 
-  document.getElementById('osForm').reset();
-  document.getElementById('id').value='';
+  document
+    .getElementById('modal')
+    .classList
+    .add('open');
+
+
+  document
+    .querySelector('#modal form')
+    .reset();
+
+
+  document.getElementById('id').value = '';
 
   document.getElementById('mt').textContent =
-    registro ? 'Editar O.S.' : 'Nova O.S.';
+    x ? 'Editar O.S.' : 'Nova O.S.';
 
-  if(registro){
 
-    document.getElementById('id').value=registro.id || '';
-    document.getElementById('os').value=registro.os ?? '';
-    document.getElementById('dataCriacao').value=registro.data_criacao ?? '';
-    document.getElementById('cliente').value=registro.cliente ?? '';
-    document.getElementById('usuario').value=registro.usuario ?? '';
-    document.getElementById('st').value=registro.status ?? '';
-    document.getElementById('produto').value=registro.produto ?? '';
-    document.getElementById('grupo').value=registro.grupo ?? '';
-    document.getElementById('assunto').value=registro.assunto ?? '';
-    document.getElementById('desenvolvedor').value=registro.desenvolvedor ?? '';
-    document.getElementById('entregue').value=registro.entregue_em ?? '';
-    document.getElementById('pe').value=registro.pendencia ?? '';
-    document.getElementById('desc').value=registro.descricao ?? '';
-    document.getElementById('obs').value=registro.observacao ?? '';
+  if(x){
+
+    document.getElementById('id').value =
+      x.id || '';
+
+    document.getElementById('prioridade').value =
+      x.prioridade ?? '';
+
+    document.getElementById('os').value =
+      x.os ?? '';
+
+    document.getElementById('prazo').value =
+      x.prazo ?? '';
+
+    document.getElementById('st').value =
+      x.status ?? 'Pendente';
+
+    document.getElementById('pe').value =
+      x.pendencia ?? 'Empresa';
+
+    document.getElementById('desc').value =
+      x.descricao ?? '';
+
+    document.getElementById('obs').value =
+      x.observacao ?? '';
 
   }
 
-  document.getElementById('modal').classList.add('open');
-
 }
+
+
+/* =========================
+   FECHAR MODAL
+========================= */
 
 function fechar(){
 
-  document.getElementById('modal').classList.remove('open');
+  document
+    .getElementById('modal')
+    .classList
+    .remove('open');
 
 }
 
 
-/* SALVAR */
-
-document
-  .getElementById('osForm')
-  .addEventListener('submit',salvar);
+/* =========================
+   SALVAR O.S.
+========================= */
 
 async function salvar(e){
 
   e.preventDefault();
 
-  const id =
-    document.getElementById('id').value.trim();
 
-  const registro={
-    os:valorOuNull('os'),
-    data_criacao:valorOuNull('dataCriacao'),
-    cliente:valorOuNull('cliente'),
-    usuario:valorOuNull('usuario'),
-    status:valorOuNull('st'),
-    produto:valorOuNull('produto'),
-    grupo:valorOuNull('grupo'),
-    assunto:valorOuNull('assunto'),
-    desenvolvedor:valorOuNull('desenvolvedor'),
-    entregue_em:valorOuNull('entregue'),
-    pendencia:valorOuNull('pe'),
-    descricao:valorOuNull('desc'),
-    observacao:valorOuNull('obs')
+  const id =
+    document.getElementById('id').value;
+
+
+  const registro = {
+
+    prioridade:
+      Number(
+        document.getElementById('prioridade').value
+      ),
+
+    os:
+      document
+        .getElementById('os')
+        .value
+        .trim(),
+
+    /*
+      PRAZO É OPCIONAL.
+      Se estiver vazio, será salvo como NULL.
+    */
+    prazo:
+      document.getElementById('prazo').value || null,
+
+    status:
+      document.getElementById('st').value,
+
+    pendencia:
+      document.getElementById('pe').value,
+
+    descricao:
+      document
+        .getElementById('desc')
+        .value
+        .trim(),
+
+    observacao:
+      document
+        .getElementById('obs')
+        .value
+        .trim()
+
   };
+
+
+  /*
+    AQUI ESTÁ A CORREÇÃO.
+
+    O prazo NÃO está sendo validado.
+
+    Portanto:
+    - O.S. é obrigatória
+    - Descrição é obrigatória
+    - Prazo é opcional
+  */
+
+  if(!registro.os || !registro.descricao){
+
+    alert(
+      'Preencha O.S. e descrição.'
+    );
+
+    return;
+
+  }
+
 
   let resultado;
 
+
+  /* EDITAR */
   if(id){
 
     resultado =
       await db
+
         .from('ordens_servico')
+
         .update(registro)
-        .eq('id',id)
+
+        .eq('id', id)
+
         .select()
+
         .single();
 
+
+  /* NOVA O.S. */
   }else{
 
     resultado =
       await db
+
         .from('ordens_servico')
+
         .insert(registro)
+
         .select()
+
         .single();
 
   }
+
 
   if(resultado.error){
 
@@ -1283,1174 +1241,342 @@ async function salvar(e){
     );
 
     return;
+
   }
+
 
   fechar();
-  await carregarDados();
-
-}
-
-function valorOuNull(id){
-
-  const el=document.getElementById(id);
-
-  if(!el)return null;
-
-  const valor=el.value.trim();
-
-  return valor==='' ? null : valor;
-
-}
-
-
-/* EXCLUIR */
-
-async function excluir(id){
-
-  const registro=
-    dados.find(x=>String(x.id)===String(id));
-
-  if(!registro)return;
-
-  const confirmar=
-    confirm(
-      `Deseja realmente excluir O.S. ${registro.os || ''}?\n\n`+
-      `Esta ação não poderá ser desfeita.`
-    );
-
-  if(!confirmar)return;
-
-  const {error}=
-    await db
-      .from('ordens_servico')
-      .delete()
-      .eq('id',id);
-
-  if(error){
-
-    alert(
-      'Não foi possível excluir a O.S.\n\n'+
-      error.message
-    );
-
-    return;
-  }
 
   await carregarDados();
 
 }
 
 
-/* STATUS */
-
-const statusNomes={
-
-  BACKLOG_DESENVOLVIMENTO:'Backlog Desenvolvimento',
-  FAZENDO:'Fazendo',
-  FEITO:'Feito',
-  DISPONIVEL_TESTE:'Disponível para Teste',
-  TESTANDO:'Testando',
-  TESTE_CONCLUIDO:'Teste Concluído',
-  EM_PRODUCAO:'Em Produção',
-  CONCLUIDO:'Concluído',
-  ENTREGUE:'Entregue',
-  DEVOLVIDO_DEV:'Devolvido ao DEV',
-  ANALISE_INICIADA:'Análise Iniciada',
-  ANALISE_CONCLUIDA:'Análise Concluída',
-  AGUARDANDO_RETORNO:'Aguardando Retorno',
-  AGUARDANDO_APROVACAO:'Aguardando Aprovação',
-  PARALISADO:'Desenvolvimento Paralisado'
-
-};
-
-const statusClasses={
-
-  BACKLOG_DESENVOLVIMENTO:'status-backlog',
-  FAZENDO:'status-fazendo',
-  FEITO:'status-feito',
-  DISPONIVEL_TESTE:'status-disponivel',
-  TESTANDO:'status-testando',
-  TESTE_CONCLUIDO:'status-teste-concluido',
-  EM_PRODUCAO:'status-producao',
-  CONCLUIDO:'status-concluido',
-  ENTREGUE:'status-entregue',
-  DEVOLVIDO_DEV:'status-devolvido',
-  ANALISE_INICIADA:'status-analise-iniciada',
-  ANALISE_CONCLUIDA:'status-analise-concluida',
-  AGUARDANDO_RETORNO:'status-aguardando',
-  AGUARDANDO_APROVACAO:'status-aguardando',
-  PARALISADO:'status-paralisado'
-
-};
-
-
-/* RENDER */
+/* =========================
+   RENDERIZAR TABELA
+========================= */
 
 function render(){
 
-  const busca=
+  const q =
     (
       document.getElementById('busca')?.value || ''
-    ).toLowerCase().trim();
+    )
+    .toLowerCase();
 
-  const filtroStatus=
+
+  const f =
     document.getElementById('status')?.value || '';
 
-  const filtroPendencia=
+
+  const p =
     document.getElementById('pendFiltro')?.value || '';
 
-  const lista=
-    dados.filter(x=>{
 
-      const texto=[
-        x.os,
-        x.descricao,
-        x.cliente,
-        x.usuario,
-        x.produto,
-        x.grupo,
-        x.assunto,
-        x.desenvolvedor
-      ]
-      .map(v=>String(v||''))
-      .join(' ')
-      .toLowerCase();
+  const a = dados
 
-      return(
-        (!busca || texto.includes(busca)) &&
-        (!filtroStatus || x.status===filtroStatus) &&
-        (!filtroPendencia || x.pendencia===filtroPendencia)
-      );
+    .filter(x =>
 
-    });
+      (
+        !q ||
 
-  const tbody=document.getElementById('tbody');
+        (
+          String(x.os || '') +
+          ' ' +
+          String(x.descricao || '')
+        )
+        .toLowerCase()
+        .includes(q)
+      )
 
-  if(!lista.length){
+      &&
 
-    tbody.innerHTML=`
-      <tr>
-        <td colspan="13"
-          style="text-align:center;padding:40px;color:#71807b">
-          ${carregando?'Carregando...':'Nenhuma O.S. cadastrada.'}
-        </td>
-      </tr>
-    `;
+      (!f || x.status === f)
 
-  }else{
+      &&
 
-    tbody.innerHTML=
-      lista.map(montarLinha).join('');
+      (!p || x.pendencia === p)
 
-  }
+    )
 
-  document.getElementById('total').textContent=dados.length;
-
-  document.getElementById('fazendo').textContent=
-    contarStatus('FAZENDO');
-
-  document.getElementById('teste').textContent=
-    dados.filter(x=>[
-      'DISPONIVEL_TESTE',
-      'TESTANDO',
-      'TESTE_CONCLUIDO'
-    ].includes(x.status)).length;
-
-  document.getElementById('producao').textContent=
-    contarStatus('EM_PRODUCAO');
-
-  document.getElementById('concluido').textContent=
-    dados.filter(x=>[
-      'CONCLUIDO',
-      'ENTREGUE'
-    ].includes(x.status)).length;
-
-}
-
-function contarStatus(status){
-
-  return dados.filter(x=>x.status===status).length;
-
-}
-
-
-/* LINHA */
-
-function montarLinha(x){
-
-  const statusClass=
-    statusClasses[x.status] || 'status-backlog';
-
-  const statusTexto=
-    statusNomes[x.status] || x.status || '—';
-
-  const pendClass=
-    x.pendencia==='Cliente' ? 'pc':'pe';
-
-  return`
-    <tr>
-
-      <td><b>${esc(x.os||'—')}</b></td>
-
-      <td>${x.data_criacao?br(x.data_criacao):'—'}</td>
-
-      <td>${esc(x.cliente||'—')}</td>
-
-      <td>${esc(x.usuario||'—')}</td>
-
-      <td>
-        ${
-          x.status
-          ? `<span class="badge ${statusClass}">
-              ${esc(statusTexto)}
-            </span>`
-          :'—'
-        }
-      </td>
-
-      <td>${esc(x.produto||'—')}</td>
-      <td>${esc(x.grupo||'—')}</td>
-      <td>${esc(x.assunto||'—')}</td>
-      <td>${esc(x.desenvolvedor||'—')}</td>
-
-      <td>${x.entregue_em?br(x.entregue_em):'—'}</td>
-
-      <td>
-        ${
-          x.pendencia
-          ? `<span class="badge ${pendClass}">
-              ${esc(x.pendencia)}
-            </span>`
-          :'—'
-        }
-      </td>
-
-      <td>${esc(x.observacao||'—')}</td>
-
-      <td>
-        <div class="table-actions">
-
-          <button
-            class="edit-btn"
-            onclick="editar('${escAttr(x.id)}')">
-            Editar
-          </button>
-
-          <button
-            class="delete-btn"
-            onclick="excluir('${escAttr(x.id)}')">
-            Excluir
-          </button>
-
-        </div>
-      </td>
-
-    </tr>
-  `;
-
-}
-
-function editar(id){
-
-  const registro=
-    dados.find(x=>String(x.id)===String(id));
-
-  if(registro)abrir(registro);
-
-}
-
-
-/* DATAS */
-
-function br(valor){
-
-  if(!valor)return'—';
-
-  const texto=String(valor);
-
-  if(/^\d{4}-\d{2}-\d{2}$/.test(texto)){
-
-    const p=texto.split('-');
-
-    return`${p[2]}/${p[1]}/${p[0]}`;
-
-  }
-
-  return texto;
-
-}
-
-function converterDataExcel(valor){
-
-  if(
-    valor===null ||
-    valor===undefined ||
-    valor===''
-  )return null;
-
-  if(typeof valor==='number'){
-
-    const d=XLSX.SSF.parse_date_code(valor);
-
-    if(!d)return null;
-
-    return formatarDataBanco(d.y,d.m,d.d);
-
-  }
-
-  const texto=String(valor).trim();
-
-  let m=
-    texto.match(
-      /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/
+    .sort(
+      (x,y) =>
+        Number(x.prioridade || 0) -
+        Number(y.prioridade || 0)
     );
 
-  if(m){
 
-    return formatarDataBanco(
-      Number(m[3]),
-      Number(m[2]),
-      Number(m[1])
-    );
+  document.getElementById('tbody').innerHTML =
 
-  }
+    a.length
 
-  m=
-    texto.match(
-      /^(\d{4})-(\d{1,2})-(\d{1,2})/
-    );
+      ?
 
-  if(m){
-
-    return formatarDataBanco(
-      Number(m[1]),
-      Number(m[2]),
-      Number(m[3])
-    );
-
-  }
-
-  return null;
-
-}
-
-function formatarDataBanco(ano,mes,dia){
-
-  const d=
-    new Date(
-      ano,
-      mes-1,
-      dia
-    );
-
-  if(
-    d.getFullYear()!==ano ||
-    d.getMonth()!==mes-1 ||
-    d.getDate()!==dia
-  )return null;
-
-  return[
-    String(ano).padStart(4,'0'),
-    String(mes).padStart(2,'0'),
-    String(dia).padStart(2,'0')
-  ].join('-');
-
-}
-
-
-/* ESCAPE */
-
-function esc(valor){
-
-  return String(valor??'').replace(
-    /[&<>"']/g,
-    c=>({
-      '&':'&amp;',
-      '<':'&lt;',
-      '>':'&gt;',
-      '"':'&quot;',
-      "'":'&#039;'
-    })[c]
-  );
-
-}
-
-function escAttr(valor){
-
-  return String(valor??'')
-    .replace(/\\/g,'\\\\')
-    .replace(/'/g,"\\'");
-
-}
-
-
-/* NORMALIZAÇÃO */
-
-function normalizarColuna(valor){
-
-  return String(valor??'')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g,'')
-    .toLowerCase()
-    .replace(/\./g,'')
-    .replace(/_/g,' ')
-    .replace(/\s+/g,' ')
-    .trim();
-
-}
-
-function encontrarColuna(mapa,nomes){
-
-  for(const nome of nomes){
-
-    const chave=
-      normalizarColuna(nome);
-
-    if(mapa[chave]!==undefined){
-      return mapa[chave];
-    }
-
-  }
-
-  return null;
-
-}
-
-function textoCelula(valor){
-
-  if(valor===null || valor===undefined)return null;
-
-  const texto=String(valor).trim();
-
-  return texto===''?null:texto;
-
-}
-
-
-/* IMPORTAÇÃO O.S. */
-
-function abrirImportacao(){
-
-  document
-    .getElementById('importModal')
-    .classList.add('open');
-
-  document
-    .getElementById('importResult')
-    .classList.remove('show');
-
-  document.getElementById('errorList').innerHTML='';
-
-}
-
-function fecharImportacao(){
-
-  document
-    .getElementById('importModal')
-    .classList.remove('open');
-
-}
-
-function mostrarNomeArquivo(){
-
-  const input=document.getElementById('arquivoExcel');
-  const nome=document.getElementById('nomeArquivo');
-
-  nome.textContent=
-    input.files?.length
-    ? 'Arquivo selecionado: '+input.files[0].name
-    :'';
-
-}
-
-async function importarExcel(){
-
-  const input=document.getElementById('arquivoExcel');
-
-  if(!input.files?.length){
-
-    alert('Selecione um arquivo Excel antes de importar.');
-    return;
-
-  }
-
-  const btn=document.getElementById('btnImportar');
-
-  btn.disabled=true;
-  btn.textContent='Importando...';
-
-  let novas=0;
-  let atualizadas=0;
-  let erros=0;
-  const errosDetalhes=[];
-
-  try{
-
-    const buffer=await input.files[0].arrayBuffer();
-
-    const workbook=XLSX.read(
-      buffer,
-      {
-        type:'array',
-        cellDates:false
-      }
-    );
-
-    const sheet=
-      workbook.Sheets[workbook.SheetNames[0]];
-
-    const linhas=
-      XLSX.utils.sheet_to_json(
-        sheet,
-        {
-          defval:'',
-          raw:true
-        }
-      );
-
-    if(!linhas.length){
-      throw new Error('A planilha está vazia.');
-    }
-
-    const mapa={};
-
-    Object.keys(linhas[0]).forEach(chave=>{
-      mapa[normalizarColuna(chave)]=chave;
-    });
-
-    const colOS=
-      encontrarColuna(
-        mapa,
-        ['O.S.','O.S','OS','ORDEM','ORDEM DE SERVICO','ORDEM DE SERVIÇO']
-      );
-
-    if(!colOS){
-      throw new Error('Não foi encontrada a coluna O.S.');
-    }
-
-    const colData=
-      encontrarColuna(
-        mapa,
-        ['DATA DE CRIAÇÃO','DATA CRIACAO']
-      );
-
-    const colCliente=
-      encontrarColuna(mapa,['CLIENTE']);
-
-    const colUsuario=
-      encontrarColuna(mapa,['USUÁRIO','USUARIO']);
-
-    const colStatus=
-      encontrarColuna(mapa,['STATUS','SITUAÇÃO','SITUACAO']);
-
-    const colProduto=
-      encontrarColuna(mapa,['PRODUTO']);
-
-    const colGrupo=
-      encontrarColuna(mapa,['GRUPO']);
-
-    const colAssunto=
-      encontrarColuna(mapa,['ASSUNTO']);
-
-    const colDev=
-      encontrarColuna(mapa,['DESENVOLVEDOR','DEV']);
-
-    const colEntregue=
-      encontrarColuna(mapa,['ENTREGUE EM','ENTREGUE']);
-
-    for(let i=0;i<linhas.length;i++){
-
-      const linha=linhas[i];
-
-      try{
-
-        const os=textoCelula(linha[colOS]);
-
-        if(!os){
-          throw new Error('O.S. não informada.');
-        }
-
-        const registro={
-          os,
-          data_criacao:colData?converterDataExcel(linha[colData]):null,
-          cliente:colCliente?textoCelula(linha[colCliente]):null,
-          usuario:colUsuario?textoCelula(linha[colUsuario]):null,
-          status:colStatus?textoCelula(linha[colStatus]):null,
-          produto:colProduto?textoCelula(linha[colProduto]):null,
-          grupo:colGrupo?textoCelula(linha[colGrupo]):null,
-          assunto:colAssunto?textoCelula(linha[colAssunto]):null,
-          desenvolvedor:colDev?textoCelula(linha[colDev]):null,
-          entregue_em:colEntregue?converterDataExcel(linha[colEntregue]):null
-        };
-
-        const busca=
-          await db
-            .from('ordens_servico')
-            .select('id')
-            .eq('os',os)
-            .limit(1);
-
-        if(busca.error){
-          throw new Error(busca.error.message);
-        }
-
-        if(busca.data?.length){
-
-          const id=busca.data[0].id;
-
-          const resultado=
-            await db
-              .from('ordens_servico')
-              .update(registro)
-              .eq('id',id);
-
-          if(resultado.error){
-            throw new Error(resultado.error.message);
-          }
-
-          atualizadas++;
-
-        }else{
-
-          const resultado=
-            await db
-              .from('ordens_servico')
-              .insert(registro);
-
-          if(resultado.error){
-            throw new Error(resultado.error.message);
-          }
-
-          novas++;
-
-        }
-
-      }catch(err){
-
-        erros++;
-
-        errosDetalhes.push(
-          `Linha ${i+2} — O.S.: ${linha[colOS]||'não informada'} — ${err.message}`
-        );
-
-      }
-
-    }
-
-    document.getElementById('resultNovas').textContent=novas;
-    document.getElementById('resultAtualizadas').textContent=atualizadas;
-    document.getElementById('resultErros').textContent=erros;
-
-    document.getElementById('errorList').innerHTML=
-      errosDetalhes.length
-      ? '<strong>Detalhes dos erros:</strong><br><br>'+
-        errosDetalhes.map(esc).join('<br>')
-      : '<strong>Importação concluída sem erros.</strong>';
-
-    document
-      .getElementById('importResult')
-      .classList.add('show');
-
-    await carregarDados();
-
-    alert(
-      `Importação concluída!\n\n`+
-      `Novas O.S.: ${novas}\n`+
-      `O.S. atualizadas: ${atualizadas}\n`+
-      `Erros: ${erros}`
-    );
-
-  }catch(err){
-
-    alert(
-      'Não foi possível importar o Excel.\n\n'+
-      err.message
-    );
-
-  }finally{
-
-    btn.disabled=false;
-    btn.textContent='📥 Importar';
-
-  }
-
-}
-
-
-/* ==================================================
-   IMPORTAÇÃO DO CONTROLE
-   ================================================== */
-
-function abrirImportacaoControle(){
-
-  document
-    .getElementById('controleModal')
-    .classList.add('open');
-
-  document
-    .getElementById('controleResult')
-    .classList.remove('show');
-
-  document.getElementById('controleErrorList').innerHTML='';
-
-}
-
-function fecharImportacaoControle(){
-
-  document
-    .getElementById('controleModal')
-    .classList.remove('open');
-
-}
-
-function mostrarNomeControle(){
-
-  const input=
-    document.getElementById('arquivoControle');
-
-  const nome=
-    document.getElementById('nomeControle');
-
-  nome.textContent=
-    input.files?.length
-    ? 'Arquivo selecionado: '+input.files[0].name
-    :'';
-
-}
-
-
-async function importarControle(){
-
-  const input=
-    document.getElementById('arquivoControle');
-
-  if(!input.files?.length){
-
-    alert(
-      'Selecione o arquivo Excel do Controle.'
-    );
-
-    return;
-
-  }
-
-  const btn=
-    document.getElementById('btnImportarControle');
-
-  btn.disabled=true;
-  btn.textContent='Importando...';
-
-  let importadas=0;
-  let atualizadas=0;
-  let erros=0;
-
-  const errosDetalhes=[];
-
-  try{
-
-    const buffer=
-      await input.files[0].arrayBuffer();
-
-    const workbook=
-      XLSX.read(
-        buffer,
-        {
-          type:'array',
-          cellDates:false
-        }
-      );
-
-    if(!workbook.SheetNames.length){
-      throw new Error(
-        'O arquivo não possui nenhuma planilha.'
-      );
-    }
-
-    const sheet=
-      workbook.Sheets[
-        workbook.SheetNames[0]
-      ];
-
-    const linhas=
-      XLSX.utils.sheet_to_json(
-        sheet,
-        {
-          defval:'',
-          raw:true
-        }
-      );
-
-    if(!linhas.length){
-      throw new Error(
-        'A planilha está vazia.'
-      );
-    }
-
-    const mapa={};
-
-    Object.keys(linhas[0]).forEach(chave=>{
-      mapa[normalizarColuna(chave)]=chave;
-    });
-
-
-    /*
-      ORDEM É OPCIONAL.
-    */
-
-    const colOrdem=
-      encontrarColuna(
-        mapa,
-        [
-          'ORDEM',
-          'O.S.',
-          'O.S',
-          'OS',
-          'ORDEM DE SERVICO',
-          'ORDEM DE SERVIÇO'
-        ]
-      );
-
-    const colData=
-      encontrarColuna(
-        mapa,
-        [
-          'DATA DE CRIAÇÃO',
-          'DATA CRIACAO',
-          'DATA'
-        ]
-      );
-
-    const colUsuario=
-      encontrarColuna(
-        mapa,
-        [
-          'USUÁRIO',
-          'USUARIO'
-        ]
-      );
-
-    const colPrioridade=
-      encontrarColuna(
-        mapa,
-        [
-          'PRIORIDADE'
-        ]
-      );
-
-    const colPrazo=
-      encontrarColuna(
-        mapa,
-        [
-          'PRAZO COPLAN',
-          'PRAZO',
-          'PRAZO COPLAN '
-        ]
-      );
-
-    const colAssunto=
-      encontrarColuna(
-        mapa,
-        [
-          'ASSUNTO'
-        ]
-      );
-
-
-    /*
-      PROCESSAR TODAS AS LINHAS.
-
-      MESMO SEM ORDEM, A LINHA SERÁ IMPORTADA.
-    */
-
-    for(let i=0;i<linhas.length;i++){
-
-      const linha=linhas[i];
-
-      try{
-
-        let ordem=null;
-
-        if(colOrdem){
-
-          const valorOrdem=
-            textoCelula(
-              linha[colOrdem]
-            );
-
-          if(valorOrdem){
-
-            /*
-              Remove .0 quando o Excel
-              transformar número em decimal.
-            */
-
-            ordem=
-              valorOrdem
-                .replace(/\.0$/,'');
-
-          }
-
-        }
-
-
-        let prioridade=null;
-
-        if(colPrioridade){
-
-          const valor=
-            linha[colPrioridade];
-
-          if(
-            valor!=='' &&
-            valor!==null &&
-            valor!==undefined
-          ){
-
-            const numero=
-              Number(valor);
-
-            if(!Number.isNaN(numero)){
-              prioridade=numero;
-            }else{
-              prioridade=null;
-            }
-
-          }
-
-        }
-
-
-        const registro={
-
-          ordem:ordem,
-
-          data_criacao:
-            colData
-            ? converterDataExcel(
-                linha[colData]
-              )
-            : null,
-
-          usuario:
-            colUsuario
-            ? textoCelula(
-                linha[colUsuario]
-              )
-            : null,
-
-          prioridade:prioridade,
-
-          prazo_coplan:
-            colPrazo
-            ? converterDataExcel(
-                linha[colPrazo]
-              )
-            : null,
-
-          assunto:
-            colAssunto
-            ? textoCelula(
-                linha[colAssunto]
-              )
-            : null
-
-        };
-
+      a.map(x => {
 
         /*
-          REGRA:
-
-          SEM ORDEM:
-          sempre INSERE.
-
-          COM ORDEM:
-          procura no controle_os.
+          Só calcula atraso se existir prazo.
         */
 
-        if(!ordem){
+        let atras = false;
 
-          const resultado=
-            await db
-              .from('controle_os')
-              .insert(registro);
+        if(x.prazo){
 
-          if(resultado.error){
-            throw new Error(
-              resultado.error.message
+          const d =
+            new Date(
+              x.prazo + 'T00:00:00'
             );
-          }
 
-          importadas++;
+          const h =
+            new Date();
 
-        }else{
+          h.setHours(
+            0,
+            0,
+            0,
+            0
+          );
 
-          const busca=
-            await db
-              .from('controle_os')
-              .select('id')
-              .eq('ordem',ordem)
-              .limit(1);
-
-          if(busca.error){
-            throw new Error(
-              busca.error.message
-            );
-          }
-
-
-          if(busca.data?.length){
-
-            const id=
-              busca.data[0].id;
-
-            const resultado=
-              await db
-                .from('controle_os')
-                .update({
-                  ...registro,
-                  atualizado_em:new Date().toISOString()
-                })
-                .eq('id',id);
-
-            if(resultado.error){
-              throw new Error(
-                resultado.error.message
-              );
-            }
-
-            atualizadas++;
-
-          }else{
-
-            const resultado=
-              await db
-                .from('controle_os')
-                .insert(registro);
-
-            if(resultado.error){
-              throw new Error(
-                resultado.error.message
-              );
-            }
-
-            importadas++;
-
-          }
+          atras =
+            x.status !== 'Concluído' &&
+            d < h;
 
         }
 
-      }catch(err){
 
-        erros++;
+        return `
 
-        errosDetalhes.push(
-          `Linha ${i+2} — ${
-            colOrdem
-            ? (linha[colOrdem]||'sem O.S.')
-            : 'sem O.S.'
-          } — ${err.message}`
-        );
+          <tr>
+
+            <td>
+              <b>${esc(x.prioridade)}</b>
+            </td>
+
+
+            <td>
+              <b>${esc(x.os)}</b>
+            </td>
+
+
+            <td class="${atras ? 'late' : ''}">
+
+              ${br(x.prazo)}
+
+              ${atras
+                ? ' • ATRASADO'
+                : ''
+              }
+
+            </td>
+
+
+            <td>
+              ${esc(x.descricao)}
+            </td>
+
+
+            <td>
+
+              <span class="badge ${
+                x.status === 'Concluído'
+                  ? 'c'
+                  : x.status === 'Em andamento'
+                    ? 'a'
+                    : 'p'
+              }">
+
+                ${esc(x.status)}
+
+              </span>
+
+            </td>
+
+
+            <td>
+
+              <span class="badge ${
+                x.pendencia === 'Cliente'
+                  ? 'pc'
+                  : 'pe'
+              }">
+
+                ${esc(x.pendencia)}
+
+              </span>
+
+            </td>
+
+
+            <td>
+              ${esc(x.observacao) || '—'}
+            </td>
+
+
+            <td>
+
+              <button
+                onclick='abrir(${JSON.stringify(x).replace(/'/g, '&#39;')})'
+              >
+                Editar
+              </button>
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }).join('')
+
+
+      :
+
+      `
+
+        <tr>
+
+          <td
+            colspan="8"
+            style="
+              text-align:center;
+              padding:40px;
+              color:#71807b
+            "
+          >
+
+            ${
+              carregando
+                ? 'Carregando...'
+                : 'Nenhuma O.S. cadastrada.'
+            }
+
+          </td>
+
+        </tr>
+
+      `;
+
+
+  /* =========================
+     ATUALIZAR CARDS
+  ========================= */
+
+  document.getElementById('total').textContent =
+    dados.length;
+
+
+  document.getElementById('pendCount').textContent =
+    dados.filter(
+      x => x.status === 'Pendente'
+    ).length;
+
+
+  document.getElementById('and').textContent =
+    dados.filter(
+      x => x.status === 'Em andamento'
+    ).length;
+
+
+  document.getElementById('cli').textContent =
+    dados.filter(
+      x =>
+        x.pendencia === 'Cliente' &&
+        x.status !== 'Concluído'
+    ).length;
+
+
+  document.getElementById('late').textContent =
+
+    dados.filter(x => {
+
+      if(
+        x.status === 'Concluído' ||
+        !x.prazo
+      ){
+
+        return false;
 
       }
 
-    }
+
+      const prazo =
+        new Date(
+          x.prazo + 'T00:00:00'
+        );
 
 
-    document.getElementById(
-      'controleImportadas'
-    ).textContent=importadas;
-
-    document.getElementById(
-      'controleAtualizadas'
-    ).textContent=atualizadas;
-
-    document.getElementById(
-      'controleErros'
-    ).textContent=erros;
+      const hoje =
+        new Date();
 
 
-    document.getElementById(
-      'controleErrorList'
-    ).innerHTML=
-      errosDetalhes.length
-      ? '<strong>Detalhes dos erros:</strong><br><br>'+
-        errosDetalhes.map(esc).join('<br>')
-      : '<strong>Importação concluída sem erros.</strong>';
+      hoje.setHours(
+        0,
+        0,
+        0,
+        0
+      );
 
 
-    document
-      .getElementById('controleResult')
-      .classList.add('show');
+      return prazo < hoje;
 
-
-    alert(
-      `Importação do Controle concluída!\n\n`+
-      `Importadas: ${importadas}\n`+
-      `Atualizadas: ${atualizadas}\n`+
-      `Erros: ${erros}`
-    );
-
-
-  }catch(err){
-
-    alert(
-      'Não foi possível importar o Controle.\n\n'+
-      err.message
-    );
-
-  }finally{
-
-    btn.disabled=false;
-    btn.textContent='📋 Importar Controle';
-
-  }
+    }).length;
 
 }
 
 
-/* FILTROS */
+/* =========================
+   DATA BRASILEIRA
+========================= */
 
-document
-  .getElementById('busca')
-  .addEventListener('input',render);
+function br(x){
 
-document
-  .getElementById('status')
-  .addEventListener('change',render);
+  /*
+    Se não houver prazo,
+    mostra "Não definido".
+  */
 
-document
-  .getElementById('pendFiltro')
-  .addEventListener('change',render);
+  if(!x){
 
+    return 'Não definido';
 
-/* FECHAR MODAIS */
-
-document
-  .getElementById('modal')
-  .addEventListener('click',function(e){
-
-    if(e.target===this)fechar();
-
-  });
-
-document
-  .getElementById('importModal')
-  .addEventListener('click',function(e){
-
-    if(e.target===this)fecharImportacao();
-
-  });
-
-document
-  .getElementById('controleModal')
-  .addEventListener('click',function(e){
-
-    if(e.target===this)fecharImportacaoControle();
-
-  });
+  }
 
 
-/* INICIAR */
+  const [y,m,d] =
+    x.split('-');
+
+
+  return `${d}/${m}/${y}`;
+
+}
+
+
+/* =========================
+   ESCAPAR HTML
+========================= */
+
+function esc(s){
+
+  return String(s ?? '')
+    .replace(
+      /[&<>"']/g,
+      c => ({
+
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#039;'
+
+      }[c])
+    );
+
+}
+
+
+/* =========================
+   INICIAR SISTEMA
+========================= */
 
 iniciar();
 
