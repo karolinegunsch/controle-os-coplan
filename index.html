@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Coplan • Controle de O.S.</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Biblioteca para leitura do Excel -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
 <style>
+
 :root{
   --green:#006b4f;
   --green2:#008b68;
@@ -17,26 +25,34 @@
   --muted:#71807b;
   --red:#c93d3d;
   --yellow:#c98612;
-  --blue:#3c6edb
+  --blue:#3c6edb;
 }
 
 *{
-  box-sizing:border-box
+  box-sizing:border-box;
 }
 
 body{
   margin:0;
   font-family:Inter,Segoe UI,Arial,sans-serif;
   background:var(--bg);
-  color:var(--text)
+  color:var(--text);
 }
 
-/* LOGIN */
+/* =========================
+   LOGIN
+========================= */
+
 .login{
   min-height:100vh;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a)
+  background:linear-gradient(
+    135deg,
+    #073e31,
+    #006b4f 55%,
+    #0d8b6a
+  );
 }
 
 .loginbox{
@@ -44,14 +60,14 @@ body{
   background:#fff;
   border-radius:20px;
   padding:36px;
-  box-shadow:0 20px 60px #0004
+  box-shadow:0 20px 60px #0004;
 }
 
 .logo{
   font-weight:900;
   font-size:34px;
   color:var(--green);
-  letter-spacing:-1px
+  letter-spacing:-1px;
 }
 
 .logo span{
@@ -59,28 +75,27 @@ body{
   font-size:13px;
   color:var(--muted);
   font-weight:500;
-  letter-spacing:0;
-  margin-top:4px
+  margin-top:4px;
 }
 
 .login h2{
-  margin:30px 0 6px
+  margin:30px 0 6px;
 }
 
 .login p{
   color:var(--muted);
-  margin-top:0
+  margin-top:0;
 }
 
 .field{
-  margin:15px 0
+  margin:15px 0;
 }
 
 .field label{
   display:block;
   font-size:13px;
   font-weight:700;
-  margin-bottom:7px
+  margin-bottom:7px;
 }
 
 input,
@@ -91,7 +106,7 @@ textarea{
   border:1px solid #d5dfdb;
   border-radius:9px;
   font:inherit;
-  background:#fff
+  background:#fff;
 }
 
 button{
@@ -99,33 +114,43 @@ button{
   border-radius:9px;
   padding:11px 16px;
   font-weight:700;
-  cursor:pointer
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.92;
 }
 
 .primary{
   background:var(--green);
-  color:#fff
-}
-
-.primary:hover{
-  background:#00563f
+  color:#fff;
 }
 
 .wide{
   width:100%;
-  margin-top:8px
+  margin-top:8px;
 }
 
 .hint{
   font-size:12px;
   color:var(--muted);
-  margin-top:14px
+  margin-top:14px;
 }
 
-/* APP */
+.error{
+  color:#b42318;
+  font-size:13px;
+  margin-top:8px;
+  display:none;
+}
+
+/* =========================
+   APP
+========================= */
+
 .app{
   display:none;
-  min-height:100vh
+  min-height:100vh;
 }
 
 .sidebar{
@@ -134,13 +159,14 @@ button{
   width:245px;
   background:#073e31;
   color:#fff;
-  padding:25px 17px
+  padding:25px 17px;
+  z-index:10;
 }
 
 .side-logo{
   font-size:27px;
   font-weight:900;
-  padding:8px 12px 28px
+  padding:8px 12px 28px;
 }
 
 .side-logo small{
@@ -148,24 +174,24 @@ button{
   font-size:11px;
   font-weight:500;
   opacity:.65;
-  margin-top:3px
+  margin-top:3px;
 }
 
 .nav{
-  padding:8px 0
+  padding:8px 0;
 }
 
 .nav div{
   padding:12px;
   border-radius:9px;
   margin:4px 0;
-  color:#dcebe6
+  color:#dcebe6;
 }
 
 .nav .active,
 .nav div:hover{
   background:#ffffff16;
-  color:#fff
+  color:#fff;
 }
 
 .user{
@@ -175,43 +201,51 @@ button{
   right:17px;
   padding:12px;
   border-top:1px solid #ffffff22;
-  font-size:13px
+  font-size:13px;
 }
 
 .user button{
   margin-top:10px;
   width:100%;
   background:#ffffff12;
-  color:#fff
+  color:#fff;
 }
+
+/* =========================
+   MAIN
+========================= */
 
 .main{
   margin-left:245px;
-  padding:28px 34px
+  padding:28px 34px;
 }
 
 .top{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:25px
+  margin-bottom:25px;
+  gap:15px;
 }
 
 .top h1{
   margin:0;
-  font-size:25px
+  font-size:25px;
 }
 
 .top p{
   margin:5px 0;
-  color:var(--muted)
+  color:var(--muted);
 }
 
-/* CARDS */
+/* =========================
+   CARDS
+========================= */
+
 .cards{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:14px
+  gap:14px;
 }
 
 .card{
@@ -219,68 +253,80 @@ button{
   border:1px solid var(--line);
   border-radius:13px;
   padding:19px;
-  box-shadow:0 3px 12px #12382f08
+  box-shadow:0 3px 12px #12382f08;
 }
 
 .card .label{
   font-size:12px;
   color:var(--muted);
-  font-weight:700
+  font-weight:700;
 }
 
 .card .num{
   font-size:29px;
   font-weight:800;
-  margin-top:9px
+  margin-top:9px;
 }
 
 .card.green{
-  border-top:3px solid var(--green)
+  border-top:3px solid var(--green);
 }
 
 .card.yellow{
-  border-top:3px solid var(--yellow)
+  border-top:3px solid var(--yellow);
 }
 
 .card.red{
-  border-top:3px solid var(--red)
+  border-top:3px solid var(--red);
 }
 
 .card.blue{
-  border-top:3px solid var(--blue)
+  border-top:3px solid var(--blue);
 }
 
-/* PAINEL */
+/* =========================
+   PAINEL
+========================= */
+
 .panel{
   margin-top:20px;
   background:#fff;
   border:1px solid var(--line);
   border-radius:13px;
-  padding:20px
+  padding:20px;
 }
 
 .toolbar{
   display:flex;
   gap:9px;
   justify-content:space-between;
-  flex-wrap:wrap
+  align-items:center;
+  flex-wrap:wrap;
 }
 
 .filters{
   display:flex;
   gap:8px;
   flex:1;
-  min-width:300px
+  min-width:300px;
 }
 
 .filters input{
-  max-width:320px
+  max-width:320px;
+}
+
+/* =========================
+   TABELA
+========================= */
+
+.table-container{
+  overflow:auto;
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:17px
+  margin-top:17px;
 }
 
 th,
@@ -288,107 +334,235 @@ td{
   text-align:left;
   padding:13px 10px;
   border-bottom:1px solid var(--line);
-  font-size:13px
+  font-size:13px;
+  white-space:nowrap;
 }
 
 th{
   font-size:11px;
   text-transform:uppercase;
   color:var(--muted);
-  background:#fafcfb
+  background:#fafcfb;
 }
 
-/* BADGES */
+/* =========================
+   BADGES
+========================= */
+
 .badge{
   display:inline-block;
   padding:5px 9px;
   border-radius:99px;
   font-size:11px;
-  font-weight:800
+  font-weight:800;
 }
 
 .p{
   background:#fee7e7;
-  color:#9f2626
+  color:#9f2626;
 }
 
 .a{
   background:#fff2d5;
-  color:#94600a
+  color:#94600a;
 }
 
 .c{
   background:#def6e9;
-  color:#17683f
+  color:#17683f;
 }
 
 .pc{
   background:#e4ecff;
-  color:#365aa0
+  color:#365aa0;
 }
 
 .pe{
   background:#def5ee;
-  color:#17664f
+  color:#17664f;
 }
 
 .late{
   color:#bd2525;
-  font-weight:800
+  font-weight:800;
 }
 
-/* MODAL */
+/* =========================
+   MODAL
+========================= */
+
 .modal{
   display:none;
   position:fixed;
   inset:0;
   background:#0007;
   place-items:center;
-  padding:20px
+  padding:20px;
+  z-index:100;
 }
 
 .modal.open{
-  display:grid
+  display:grid;
 }
 
 .modalbox{
   background:#fff;
-  width:min(650px,100%);
+  width:min(700px,100%);
   max-height:90vh;
   overflow:auto;
   border-radius:15px;
-  padding:25px
+  padding:25px;
+}
+
+.modalbox h2{
+  margin-top:0;
 }
 
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:13px
+  gap:13px;
 }
 
 .full{
-  grid-column:1/-1
+  grid-column:1/-1;
 }
 
 .actions{
   display:flex;
   justify-content:flex-end;
   gap:8px;
-  margin-top:18px
+  margin-top:18px;
 }
 
-.error{
-  color:#b42318;
+/* =========================
+   MODAL IMPORTAÇÃO
+========================= */
+
+.import-box{
+  width:min(850px,100%);
+  max-height:90vh;
+  overflow:auto;
+}
+
+.import-info{
+  background:#f0f7f4;
+  border:1px solid #d7e9e2;
+  border-radius:10px;
+  padding:14px;
+  margin-bottom:15px;
+  color:#245b4d;
   font-size:13px;
-  margin-top:8px;
-  display:none
 }
 
-/* RESPONSIVO */
-@media(max-width:1000px){
+.import-info strong{
+  display:block;
+  margin-bottom:7px;
+}
+
+.file-area{
+  border:1px solid #d5dfdb;
+  border-radius:10px;
+  padding:14px;
+  background:#fff;
+}
+
+.file-area input{
+  border:0;
+  padding:0;
+}
+
+.arquivo-nome{
+  margin-top:9px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.import-result{
+  display:none;
+  margin-top:15px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:15px;
+  background:#fafcfb;
+}
+
+.import-cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.import-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:15px;
+  text-align:center;
+}
+
+.import-card .label{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.import-card .numero{
+  font-size:24px;
+  font-weight:800;
+  margin-top:6px;
+}
+
+.import-card.novas .numero{
+  color:var(--green);
+}
+
+.import-card.atualizadas .numero{
+  color:var(--blue);
+}
+
+.import-card.erros .numero{
+  color:var(--red);
+}
+
+.erros-titulo{
+  margin-top:15px;
+  font-weight:800;
+  color:#9f2626;
+}
+
+.erros-lista{
+  margin-top:8px;
+  font-size:12px;
+  color:#b42318;
+  max-height:180px;
+  overflow:auto;
+  line-height:1.7;
+}
+
+.import-status{
+  margin-top:12px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.import-status.sucesso{
+  color:var(--green);
+  font-weight:700;
+}
+
+.import-status.erro{
+  color:var(--red);
+  font-weight:700;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media(max-width:1100px){
 
   .cards{
-    grid-template-columns:repeat(2,1fr)
+    grid-template-columns:repeat(2,1fr);
   }
 
 }
@@ -397,47 +571,62 @@ th{
 
   .sidebar{
     position:static;
-    width:auto
+    width:auto;
   }
 
   .main{
     margin-left:0;
-    padding:20px
+    padding:20px;
   }
 
   .user{
     position:static;
-    margin-top:25px
+    margin-top:25px;
   }
 
   .grid{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
   .full{
-    grid-column:auto
+    grid-column:auto;
   }
 
   .cards{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
   .top{
     align-items:flex-start;
-    gap:10px;
-    flex-direction:column
+    flex-direction:column;
+  }
+
+  .filters{
+    flex-direction:column;
+    min-width:100%;
+  }
+
+  .filters input{
+    max-width:none;
+  }
+
+  .import-cards{
+    grid-template-columns:1fr;
   }
 
 }
+
 </style>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
+
 
 <body>
 
-<!-- LOGIN -->
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
 <section class="login" id="login">
 
   <div class="loginbox">
@@ -454,28 +643,37 @@ th{
     <form onsubmit="entrar(event)">
 
       <div class="field">
+
         <label>E-mail</label>
+
         <input
           id="email"
           type="email"
           required
           placeholder="seu@email.com"
         >
+
       </div>
 
+
       <div class="field">
+
         <label>Senha</label>
+
         <input
           id="senha"
           type="password"
           required
           placeholder="••••••••"
         >
+
       </div>
+
 
       <div class="error" id="loginerr">
         E-mail ou senha inválidos.
       </div>
+
 
       <button class="primary wide">
         Entrar
@@ -483,8 +681,9 @@ th{
 
     </form>
 
+
     <div class="hint">
-      Esta versão está preparada para autenticação e banco de dados Supabase.
+      Controle de O.S. e Demandas.
     </div>
 
   </div>
@@ -492,21 +691,43 @@ th{
 </section>
 
 
-<!-- SISTEMA -->
+
+<!-- =====================================================
+     SISTEMA
+===================================================== -->
+
 <section class="app" id="app">
+
 
   <aside class="sidebar">
 
     <div class="side-logo">
+
       COPLAN
-      <small>CONTROLE DE DEMANDAS</small>
+
+      <small>
+        CONTROLE DE DEMANDAS
+      </small>
+
     </div>
 
+
     <div class="nav">
-      <div class="active">▦ Dashboard</div>
-      <div>✓ Ordens de Serviço</div>
-      <div>◉ Relatórios</div>
+
+      <div class="active">
+        ▦ Dashboard
+      </div>
+
+      <div>
+        ✓ Ordens de Serviço
+      </div>
+
+      <div>
+        ◉ Relatórios
+      </div>
+
     </div>
+
 
     <div class="user">
 
@@ -529,88 +750,151 @@ th{
   </aside>
 
 
+
   <main class="main">
+
 
     <div class="top">
 
       <div>
-        <h1>Dashboard</h1>
-        <p>Visão geral das ordens de serviço</p>
+
+        <h1>
+          Dashboard
+        </h1>
+
+        <p>
+          Visão geral das ordens de serviço
+        </p>
+
       </div>
 
-      <button class="primary" onclick="abrir()">
-        + Nova O.S.
-      </button>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+
+        <button
+          class="primary"
+          onclick="abrirImportacao()"
+        >
+          📥 Importar Excel
+        </button>
+
+
+        <button
+          class="primary"
+          onclick="abrir()"
+        >
+          + Nova O.S.
+        </button>
+
+      </div>
 
     </div>
 
 
-    <!-- CARDS -->
+
+    <!-- =====================================================
+         CARDS
+    ===================================================== -->
+
     <div class="cards">
 
+
       <div class="card green">
+
         <div class="label">
           TOTAL DE O.S.
         </div>
 
-        <div class="num" id="total">
+        <div
+          class="num"
+          id="total"
+        >
           0
         </div>
+
       </div>
 
 
       <div class="card red">
+
         <div class="label">
           PENDENTES
         </div>
 
-        <div class="num" id="pendCount">
+        <div
+          class="num"
+          id="pendCount"
+        >
           0
         </div>
+
       </div>
 
 
       <div class="card yellow">
+
         <div class="label">
           EM ANDAMENTO
         </div>
 
-        <div class="num" id="and">
+        <div
+          class="num"
+          id="and"
+        >
           0
         </div>
+
       </div>
 
 
       <div class="card blue">
+
         <div class="label">
           AGUARDANDO CLIENTE
         </div>
 
-        <div class="num" id="cli">
+        <div
+          class="num"
+          id="cli"
+        >
           0
         </div>
+
       </div>
 
 
       <div class="card red">
+
         <div class="label">
           EM ATRASO
         </div>
 
-        <div class="num" id="late">
+        <div
+          class="num"
+          id="late"
+        >
           0
         </div>
+
       </div>
+
 
     </div>
 
 
-    <!-- TABELA -->
+
+    <!-- =====================================================
+         TABELA
+    ===================================================== -->
+
     <div class="panel">
+
 
       <div class="toolbar">
 
+
         <div class="filters">
+
 
           <input
             id="busca"
@@ -618,7 +902,11 @@ th{
             oninput="render()"
           >
 
-          <select id="status" onchange="render()">
+
+          <select
+            id="status"
+            onchange="render()"
+          >
 
             <option value="">
               Todos os status
@@ -639,7 +927,10 @@ th{
           </select>
 
 
-          <select id="pendFiltro" onchange="render()">
+          <select
+            id="pendFiltro"
+            onchange="render()"
+          >
 
             <option value="">
               Todas as pendências
@@ -655,60 +946,110 @@ th{
 
           </select>
 
+
         </div>
+
 
       </div>
 
 
-      <div style="overflow:auto">
+
+      <div class="table-container">
+
 
         <table>
+
 
           <thead>
 
             <tr>
-              <th>Prioridade</th>
-              <th>O.S.</th>
-              <th>Prazo</th>
-              <th>Descrição</th>
-              <th>Status</th>
-              <th>Pendência</th>
-              <th>Observação</th>
-              <th></th>
+
+              <th>
+                Prioridade
+              </th>
+
+              <th>
+                O.S.
+              </th>
+
+              <th>
+                Prazo
+              </th>
+
+              <th>
+                Descrição
+              </th>
+
+              <th>
+                Status
+              </th>
+
+              <th>
+                Pendência
+              </th>
+
+              <th>
+                Observação
+              </th>
+
+              <th>
+              </th>
+
             </tr>
 
           </thead>
 
-          <tbody id="tbody"></tbody>
+
+          <tbody id="tbody">
+          </tbody>
+
 
         </table>
 
+
       </div>
+
 
     </div>
 
+
   </main>
+
 
 </section>
 
 
-<!-- MODAL NOVA / EDITAR O.S. -->
-<div class="modal" id="modal">
+
+<!-- =====================================================
+     MODAL NOVA / EDITAR O.S.
+===================================================== -->
+
+<div
+  class="modal"
+  id="modal"
+>
+
 
   <div class="modalbox">
+
 
     <h2 id="mt">
       Nova O.S.
     </h2>
 
+
     <form onsubmit="salvar(event)">
 
-      <input type="hidden" id="id">
+
+      <input
+        type="hidden"
+        id="id"
+      >
+
 
       <div class="grid">
 
 
-        <!-- PRIORIDADE -->
         <div class="field">
 
           <label>
@@ -725,7 +1066,7 @@ th{
         </div>
 
 
-        <!-- O.S. -->
+
         <div class="field">
 
           <label>
@@ -740,7 +1081,7 @@ th{
         </div>
 
 
-        <!-- PRAZO OPCIONAL -->
+
         <div class="field">
 
           <label>
@@ -755,7 +1096,7 @@ th{
         </div>
 
 
-        <!-- STATUS -->
+
         <div class="field">
 
           <label>
@@ -781,7 +1122,7 @@ th{
         </div>
 
 
-        <!-- PENDÊNCIA -->
+
         <div class="field">
 
           <label>
@@ -803,7 +1144,7 @@ th{
         </div>
 
 
-        <!-- DESCRIÇÃO -->
+
         <div class="field full">
 
           <label>
@@ -819,7 +1160,7 @@ th{
         </div>
 
 
-        <!-- OBSERVAÇÃO -->
+
         <div class="field full">
 
           <label>
@@ -833,10 +1174,13 @@ th{
 
         </div>
 
+
       </div>
 
 
+
       <div class="actions">
+
 
         <button
           type="button"
@@ -845,20 +1189,240 @@ th{
           Cancelar
         </button>
 
-        <button class="primary">
+
+        <button
+          class="primary"
+          type="submit"
+        >
           Salvar
         </button>
 
+
       </div>
+
 
     </form>
 
+
   </div>
+
 
 </div>
 
 
+
+<!-- =====================================================
+     MODAL IMPORTAÇÃO
+===================================================== -->
+
+<div
+  class="modal"
+  id="modalImportacao"
+>
+
+
+  <div class="modalbox import-box">
+
+
+    <h2>
+      Importar O.S. pelo Excel
+    </h2>
+
+
+    <div class="import-info">
+
+      <strong>
+        Como funciona a importação
+      </strong>
+
+      <div>
+        A O.S. existente será atualizada.
+        A O.S. que não existir será criada.
+      </div>
+
+      <br>
+
+      <div>
+        <strong style="display:inline;">
+          Importação dos campos:
+        </strong>
+
+        O.S., Prioridade, Prazo, Status,
+        Pendência, Descrição e Observação.
+      </div>
+
+      <br>
+
+      <div>
+        <strong style="display:inline;">
+          Importante:
+        </strong>
+
+        <b>Prioridade e Prazo também serão importados
+        e atualizados.</b>
+      </div>
+
+    </div>
+
+
+
+    <div class="file-area">
+
+      <label
+        style="
+          display:block;
+          font-size:13px;
+          font-weight:700;
+          margin-bottom:8px;
+        "
+      >
+        Selecione o arquivo Excel
+      </label>
+
+
+      <input
+        type="file"
+        id="arquivoExcel"
+        accept=".xlsx,.xls,.csv"
+        onchange="arquivoSelecionado()"
+      >
+
+
+      <div
+        class="arquivo-nome"
+        id="arquivoNome"
+      >
+        Nenhum arquivo selecionado.
+      </div>
+
+    </div>
+
+
+
+    <div
+      class="import-status"
+      id="importStatus"
+    >
+    </div>
+
+
+
+    <div
+      class="import-result"
+      id="importResult"
+    >
+
+
+      <div class="import-cards">
+
+
+        <div class="import-card novas">
+
+          <div class="label">
+            Novas O.S.
+          </div>
+
+          <div
+            class="numero"
+            id="importNovas"
+          >
+            0
+          </div>
+
+        </div>
+
+
+        <div class="import-card atualizadas">
+
+          <div class="label">
+            O.S. atualizadas
+          </div>
+
+          <div
+            class="numero"
+            id="importAtualizadas"
+          >
+            0
+          </div>
+
+        </div>
+
+
+        <div class="import-card erros">
+
+          <div class="label">
+            Erros
+          </div>
+
+          <div
+            class="numero"
+            id="importErros"
+          >
+            0
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <div
+        class="erros-titulo"
+        id="errosTitulo"
+        style="display:none;"
+      >
+        Detalhes dos erros:
+      </div>
+
+
+      <div
+        class="erros-lista"
+        id="errosLista"
+      >
+      </div>
+
+
+    </div>
+
+
+
+    <div class="actions">
+
+
+      <button
+        type="button"
+        onclick="fecharImportacao()"
+      >
+        Fechar
+      </button>
+
+
+      <button
+        type="button"
+        class="primary"
+        id="btnImportar"
+        onclick="importarExcel()"
+      >
+        📥 Importar
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+
 <script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
   'https://otzhzpimeawafhguhcae.supabase.co';
@@ -876,18 +1440,20 @@ const db = createClient(
 
 
 let dados = [];
+
 let carregando = false;
 
 
-/* =========================
+/* =====================================================
    INICIAR
-========================= */
+===================================================== */
 
 async function iniciar(){
 
   const {
     data: { session }
   } = await db.auth.getSession();
+
 
   if(session){
 
@@ -919,15 +1485,17 @@ async function iniciar(){
 }
 
 
-/* =========================
+/* =====================================================
    LOGIN
-========================= */
+===================================================== */
 
 function mostrarLogin(){
 
-  document.getElementById('login').style.display = 'grid';
+  document.getElementById('login').style.display =
+    'grid';
 
-  document.getElementById('app').style.display = 'none';
+  document.getElementById('app').style.display =
+    'none';
 
 }
 
@@ -936,14 +1504,21 @@ async function entrar(e){
 
   e.preventDefault();
 
+
   const email =
-    document.getElementById('email').value.trim();
+    document.getElementById('email')
+    .value
+    .trim();
+
 
   const senha =
-    document.getElementById('senha').value;
+    document.getElementById('senha')
+    .value;
+
 
   const erro =
     document.getElementById('loginerr');
+
 
   erro.style.display = 'none';
 
@@ -962,16 +1537,17 @@ async function entrar(e){
     erro.textContent =
       'E-mail ou senha inválidos.';
 
-    erro.style.display = 'block';
+    erro.style.display =
+      'block';
 
   }
 
 }
 
 
-/* =========================
+/* =====================================================
    ABRIR SISTEMA
-========================= */
+===================================================== */
 
 async function mostrarApp(user){
 
@@ -984,14 +1560,15 @@ async function mostrarApp(user){
   document.getElementById('useremail').textContent =
     user?.email || 'Usuário';
 
+
   await carregarDados();
 
 }
 
 
-/* =========================
+/* =====================================================
    SAIR
-========================= */
+===================================================== */
 
 async function sair(){
 
@@ -1000,9 +1577,9 @@ async function sair(){
 }
 
 
-/* =========================
+/* =====================================================
    CARREGAR DADOS
-========================= */
+===================================================== */
 
 async function carregarDados(){
 
@@ -1052,9 +1629,9 @@ async function carregarDados(){
 }
 
 
-/* =========================
-   ABRIR MODAL
-========================= */
+/* =====================================================
+   ABRIR O.S.
+===================================================== */
 
 function abrir(x = null){
 
@@ -1069,10 +1646,14 @@ function abrir(x = null){
     .reset();
 
 
-  document.getElementById('id').value = '';
+  document.getElementById('id').value =
+    '';
+
 
   document.getElementById('mt').textContent =
-    x ? 'Editar O.S.' : 'Nova O.S.';
+    x
+      ? 'Editar O.S.'
+      : 'Nova O.S.';
 
 
   if(x){
@@ -1080,23 +1661,30 @@ function abrir(x = null){
     document.getElementById('id').value =
       x.id || '';
 
+
     document.getElementById('prioridade').value =
       x.prioridade ?? '';
+
 
     document.getElementById('os').value =
       x.os ?? '';
 
+
     document.getElementById('prazo').value =
       x.prazo ?? '';
+
 
     document.getElementById('st').value =
       x.status ?? 'Pendente';
 
+
     document.getElementById('pe').value =
       x.pendencia ?? 'Empresa';
 
+
     document.getElementById('desc').value =
       x.descricao ?? '';
+
 
     document.getElementById('obs').value =
       x.observacao ?? '';
@@ -1106,9 +1694,9 @@ function abrir(x = null){
 }
 
 
-/* =========================
-   FECHAR MODAL
-========================= */
+/* =====================================================
+   FECHAR O.S.
+===================================================== */
 
 function fechar(){
 
@@ -1120,9 +1708,9 @@ function fechar(){
 }
 
 
-/* =========================
+/* =====================================================
    SALVAR O.S.
-========================= */
+===================================================== */
 
 async function salvar(e){
 
@@ -1130,60 +1718,57 @@ async function salvar(e){
 
 
   const id =
-    document.getElementById('id').value;
+    document.getElementById('id')
+    .value;
+
+
+  const prioridadeValor =
+    document.getElementById('prioridade')
+    .value;
 
 
   const registro = {
 
     prioridade:
-      Number(
-        document.getElementById('prioridade').value
-      ),
+      prioridadeValor === ''
+        ? null
+        : Number(prioridadeValor),
+
 
     os:
-      document
-        .getElementById('os')
-        .value
-        .trim(),
+      document.getElementById('os')
+      .value
+      .trim(),
 
-    /*
-      PRAZO É OPCIONAL.
-      Se estiver vazio, será salvo como NULL.
-    */
+
     prazo:
-      document.getElementById('prazo').value || null,
+      document.getElementById('prazo')
+      .value || null,
+
 
     status:
-      document.getElementById('st').value,
+      document.getElementById('st')
+      .value,
+
 
     pendencia:
-      document.getElementById('pe').value,
+      document.getElementById('pe')
+      .value,
+
 
     descricao:
-      document
-        .getElementById('desc')
-        .value
-        .trim(),
+      document.getElementById('desc')
+      .value
+      .trim(),
+
 
     observacao:
-      document
-        .getElementById('obs')
-        .value
-        .trim()
+      document.getElementById('obs')
+      .value
+      .trim()
 
   };
 
-
-  /*
-    AQUI ESTÁ A CORREÇÃO.
-
-    O prazo NÃO está sendo validado.
-
-    Portanto:
-    - O.S. é obrigatória
-    - Descrição é obrigatória
-    - Prazo é opcional
-  */
 
   if(!registro.os || !registro.descricao){
 
@@ -1199,7 +1784,6 @@ async function salvar(e){
   let resultado;
 
 
-  /* EDITAR */
   if(id){
 
     resultado =
@@ -1215,8 +1799,6 @@ async function salvar(e){
 
         .single();
 
-
-  /* NOVA O.S. */
   }else{
 
     resultado =
@@ -1252,58 +1834,1117 @@ async function salvar(e){
 }
 
 
-/* =========================
+/* =====================================================
+   MODAL IMPORTAÇÃO
+===================================================== */
+
+function abrirImportacao(){
+
+  document
+    .getElementById('modalImportacao')
+    .classList
+    .add('open');
+
+
+  document.getElementById('arquivoExcel').value =
+    '';
+
+
+  document.getElementById('arquivoNome').textContent =
+    'Nenhum arquivo selecionado.';
+
+
+  document.getElementById('importStatus').textContent =
+    '';
+
+
+  document.getElementById('importStatus').className =
+    'import-status';
+
+
+  document.getElementById('importResult').style.display =
+    'none';
+
+
+  document.getElementById('importNovas').textContent =
+    '0';
+
+
+  document.getElementById('importAtualizadas').textContent =
+    '0';
+
+
+  document.getElementById('importErros').textContent =
+    '0';
+
+
+  document.getElementById('errosLista').innerHTML =
+    '';
+
+
+  document.getElementById('errosTitulo').style.display =
+    'none';
+
+}
+
+
+function fecharImportacao(){
+
+  document
+    .getElementById('modalImportacao')
+    .classList
+    .remove('open');
+
+}
+
+
+function arquivoSelecionado(){
+
+  const arquivo =
+    document.getElementById('arquivoExcel')
+    .files[0];
+
+
+  document.getElementById('arquivoNome').textContent =
+    arquivo
+      ? 'Arquivo selecionado: ' + arquivo.name
+      : 'Nenhum arquivo selecionado.';
+
+}
+
+
+/* =====================================================
+   NORMALIZAR TEXTO
+===================================================== */
+
+function normalizarCabecalho(valor){
+
+  return String(valor ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g,'');
+
+}
+
+
+/* =====================================================
+   ENCONTRAR VALOR DA COLUNA
+===================================================== */
+
+function valorColuna(linha, nomes){
+
+  const chaves =
+    Object.keys(linha);
+
+
+  for(const nome of nomes){
+
+    const alvo =
+      normalizarCabecalho(nome);
+
+
+    const chaveEncontrada =
+      chaves.find(
+        chave =>
+          normalizarCabecalho(chave) === alvo
+      );
+
+
+    if(chaveEncontrada !== undefined){
+
+      return linha[chaveEncontrada];
+
+    }
+
+  }
+
+
+  return null;
+
+}
+
+
+/* =====================================================
+   CONVERTER PRIORIDADE
+===================================================== */
+
+function converterPrioridade(valor){
+
+  if(
+    valor === null ||
+    valor === undefined ||
+    String(valor).trim() === ''
+  ){
+
+    return null;
+
+  }
+
+
+  const numero =
+    Number(
+      String(valor)
+        .replace(',', '.')
+        .trim()
+    );
+
+
+  if(!Number.isFinite(numero)){
+
+    return null;
+
+  }
+
+
+  return Math.round(numero);
+
+}
+
+
+/* =====================================================
+   CONVERTER DATA DO EXCEL
+===================================================== */
+
+function converterDataExcel(valor){
+
+  if(
+    valor === null ||
+    valor === undefined ||
+    String(valor).trim() === ''
+  ){
+
+    return null;
+
+  }
+
+
+  /* Se já for Date */
+
+  if(valor instanceof Date){
+
+    if(isNaN(valor.getTime())){
+
+      return null;
+
+    }
+
+
+    return formatarDataISO(valor);
+
+  }
+
+
+  const texto =
+    String(valor).trim();
+
+
+  /* Data no padrão DD/MM/AAAA */
+
+  let match =
+    texto.match(
+      /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/
+    );
+
+
+  if(match){
+
+    const dia =
+      Number(match[1]);
+
+    const mes =
+      Number(match[2]);
+
+    const ano =
+      Number(match[3]);
+
+
+    const data =
+      new Date(
+        ano,
+        mes - 1,
+        dia
+      );
+
+
+    if(
+      data.getFullYear() === ano &&
+      data.getMonth() === mes - 1 &&
+      data.getDate() === dia
+    ){
+
+      return formatarDataISO(data);
+
+    }
+
+
+    return null;
+
+  }
+
+
+  /* Data no padrão AAAA-MM-DD */
+
+  match =
+    texto.match(
+      /^(\d{4})-(\d{1,2})-(\d{1,2})$/
+    );
+
+
+  if(match){
+
+    const ano =
+      Number(match[1]);
+
+    const mes =
+      Number(match[2]);
+
+    const dia =
+      Number(match[3]);
+
+
+    const data =
+      new Date(
+        ano,
+        mes - 1,
+        dia
+      );
+
+
+    if(
+      data.getFullYear() === ano &&
+      data.getMonth() === mes - 1 &&
+      data.getDate() === dia
+    ){
+
+      return formatarDataISO(data);
+
+    }
+
+
+    return null;
+
+  }
+
+
+  /* Número serial do Excel */
+
+  if(
+    typeof valor === 'number' &&
+    Number.isFinite(valor)
+  ){
+
+    const data =
+      XLSX.SSF.parse_date_code(valor);
+
+
+    if(data){
+
+      const dataJS =
+        new Date(
+          data.y,
+          data.m - 1,
+          data.d
+        );
+
+
+      return formatarDataISO(dataJS);
+
+    }
+
+  }
+
+
+  /* Última tentativa */
+
+  const tentativa =
+    new Date(texto);
+
+
+  if(!isNaN(tentativa.getTime())){
+
+    return formatarDataISO(tentativa);
+
+  }
+
+
+  return null;
+
+}
+
+
+function formatarDataISO(data){
+
+  const ano =
+    data.getFullYear();
+
+
+  const mes =
+    String(
+      data.getMonth() + 1
+    ).padStart(2,'0');
+
+
+  const dia =
+    String(
+      data.getDate()
+    ).padStart(2,'0');
+
+
+  return `${ano}-${mes}-${dia}`;
+
+}
+
+
+/* =====================================================
+   NORMALIZAR STATUS
+===================================================== */
+
+function normalizarStatus(valor){
+
+  if(
+    valor === null ||
+    valor === undefined ||
+    String(valor).trim() === ''
+  ){
+
+    return 'Pendente';
+
+  }
+
+
+  const texto =
+    String(valor)
+      .trim()
+      .toLowerCase();
+
+
+  if(
+    texto === 'concluido' ||
+    texto === 'concluído' ||
+    texto === 'concluida' ||
+    texto === 'concluída'
+  ){
+
+    return 'Concluído';
+
+  }
+
+
+  if(
+    texto === 'em andamento' ||
+    texto === 'andamento' ||
+    texto === 'emandamento'
+  ){
+
+    return 'Em andamento';
+
+  }
+
+
+  return 'Pendente';
+
+}
+
+
+/* =====================================================
+   NORMALIZAR PENDÊNCIA
+===================================================== */
+
+function normalizarPendencia(valor){
+
+  if(
+    valor === null ||
+    valor === undefined ||
+    String(valor).trim() === ''
+  ){
+
+    return 'Empresa';
+
+  }
+
+
+  const texto =
+    String(valor)
+      .trim()
+      .toLowerCase();
+
+
+  if(
+    texto.includes('cliente')
+  ){
+
+    return 'Cliente';
+
+  }
+
+
+  return 'Empresa';
+
+}
+
+
+/* =====================================================
+   IMPORTAR EXCEL
+===================================================== */
+
+async function importarExcel(){
+
+  const input =
+    document.getElementById('arquivoExcel');
+
+
+  const arquivo =
+    input.files[0];
+
+
+  if(!arquivo){
+
+    alert(
+      'Selecione um arquivo Excel antes de importar.'
+    );
+
+    return;
+
+  }
+
+
+  const btn =
+    document.getElementById('btnImportar');
+
+
+  btn.disabled = true;
+
+  btn.textContent =
+    '⏳ Importando...';
+
+
+  const status =
+    document.getElementById('importStatus');
+
+
+  status.className =
+    'import-status';
+
+
+  status.textContent =
+    'Lendo arquivo Excel...';
+
+
+  try{
+
+    const buffer =
+      await arquivo.arrayBuffer();
+
+
+    const workbook =
+      XLSX.read(
+        buffer,
+        {
+          type:'array',
+          cellDates:true
+        }
+      );
+
+
+    const primeiraAba =
+      workbook.SheetNames[0];
+
+
+    if(!primeiraAba){
+
+      throw new Error(
+        'O arquivo não possui nenhuma planilha.'
+      );
+
+    }
+
+
+    const worksheet =
+      workbook.Sheets[primeiraAba];
+
+
+    const linhas =
+      XLSX.utils.sheet_to_json(
+        worksheet,
+        {
+          defval:'',
+          raw:true
+        }
+      );
+
+
+    if(!linhas.length){
+
+      throw new Error(
+        'A planilha está vazia.'
+      );
+
+    }
+
+
+    status.textContent =
+      `Foram encontradas ${linhas.length} linha(s). Processando...`;
+
+
+    let novas = 0;
+
+    let atualizadas = 0;
+
+    let erros = [];
+
+
+    /*
+       Buscar as O.S. existentes no banco.
+    */
+
+    const {
+      data: existentes,
+      error: erroBusca
+    } = await db
+
+      .from('ordens_servico')
+
+      .select('*');
+
+
+    if(erroBusca){
+
+      throw new Error(
+        'Não foi possível consultar as O.S. existentes: ' +
+        erroBusca.message
+      );
+
+    }
+
+
+    const mapaOS =
+      new Map();
+
+
+    (existentes || []).forEach(item => {
+
+      const chave =
+        normalizarOS(item.os);
+
+
+      if(chave){
+
+        mapaOS.set(
+          chave,
+          item
+        );
+
+      }
+
+    });
+
+
+    /*
+       Processar cada linha.
+    */
+
+    for(
+      let i = 0;
+      i < linhas.length;
+      i++
+    ){
+
+      const linha =
+        linhas[i];
+
+
+      const numeroLinha =
+        i + 2;
+
+
+      try{
+
+        /*
+           Localizar O.S.
+        */
+
+        const osValor =
+          valorColuna(
+            linha,
+            [
+              'O.S.',
+              'OS',
+              'O.S',
+              'Nº da O.S.',
+              'Nº O.S.',
+              'Numero da OS',
+              'Número da OS',
+              'Ordem de Serviço',
+              'Ordem de Servico'
+            ]
+          );
+
+
+        const os =
+          osValor === null ||
+          osValor === undefined
+            ? ''
+            : String(osValor).trim();
+
+
+        if(!os){
+
+          throw new Error(
+            'O.S. não informada'
+          );
+
+        }
+
+
+        /*
+           PRIORIDADE
+           
+           ESTA É UMA DAS CORREÇÕES PRINCIPAIS.
+           
+           Agora a prioridade do Excel é lida
+           e também atualiza a O.S. existente.
+        */
+
+        const prioridadeValor =
+          valorColuna(
+            linha,
+            [
+              'Prioridade',
+              'Prioridade da OS',
+              'Prioridade O.S.'
+            ]
+          );
+
+
+        const prioridade =
+          converterPrioridade(
+            prioridadeValor
+          );
+
+
+        /*
+           PRAZO
+           
+           ESTA É A SEGUNDA CORREÇÃO PRINCIPAL.
+           
+           O prazo agora é lido do Excel,
+           convertido para AAAA-MM-DD
+           e salvo no banco.
+        */
+
+        const prazoValor =
+          valorColuna(
+            linha,
+            [
+              'Prazo',
+              'Data Prazo',
+              'Data do Prazo',
+              'Prazo da OS',
+              'Prazo O.S.'
+            ]
+          );
+
+
+        const prazo =
+          converterDataExcel(
+            prazoValor
+          );
+
+
+        /*
+           Demais campos.
+        */
+
+        const statusValor =
+          valorColuna(
+            linha,
+            [
+              'Status',
+              'Situação',
+              'Situacao'
+            ]
+          );
+
+
+        const pendenciaValor =
+          valorColuna(
+            linha,
+            [
+              'Pendência',
+              'Pendencia'
+            ]
+          );
+
+
+        const descricaoValor =
+          valorColuna(
+            linha,
+            [
+              'Descrição',
+              'Descricao',
+              'Assunto'
+            ]
+          );
+
+
+        const observacaoValor =
+          valorColuna(
+            linha,
+            [
+              'Observação',
+              'Observacao'
+            ]
+          );
+
+
+        const descricao =
+          descricaoValor === null ||
+          descricaoValor === undefined
+            ? ''
+            : String(
+                descricaoValor
+              ).trim();
+
+
+        const observacao =
+          observacaoValor === null ||
+          observacaoValor === undefined
+            ? ''
+            : String(
+                observacaoValor
+              ).trim();
+
+
+        if(!descricao){
+
+          throw new Error(
+            'Descrição não informada'
+          );
+
+        }
+
+
+        const registro = {
+
+          prioridade:
+            prioridade,
+
+          os:
+            os,
+
+          prazo:
+            prazo,
+
+          status:
+            normalizarStatus(
+              statusValor
+            ),
+
+          pendencia:
+            normalizarPendencia(
+              pendenciaValor
+            ),
+
+          descricao:
+            descricao,
+
+          observacao:
+            observacao
+
+        };
+
+
+        /*
+           Verificar se a O.S. já existe.
+        */
+
+        const chave =
+          normalizarOS(os);
+
+
+        const existente =
+          mapaOS.get(chave);
+
+
+        if(existente){
+
+          /*
+             ATUALIZA A O.S. EXISTENTE.
+
+             IMPORTANTE:
+             prioridade e prazo estão
+             dentro do objeto registro.
+
+             Portanto serão atualizados.
+          */
+
+          const {
+            data: atualizada,
+            error
+          } = await db
+
+            .from('ordens_servico')
+
+            .update(registro)
+
+            .eq('id', existente.id)
+
+            .select()
+            
+            .single();
+
+
+          if(error){
+
+            throw new Error(
+              error.message
+            );
+
+          }
+
+
+          atualizadas++;
+
+
+          /*
+             Atualizar o mapa para evitar
+             inconsistências em linhas repetidas.
+          */
+
+          mapaOS.set(
+            chave,
+            atualizada
+          );
+
+
+        }else{
+
+          /*
+             CRIAR NOVA O.S.
+          */
+
+          const {
+            data: criada,
+            error
+          } = await db
+
+            .from('ordens_servico')
+
+            .insert(registro)
+
+            .select()
+
+            .single();
+
+
+          if(error){
+
+            throw new Error(
+              error.message
+            );
+
+          }
+
+
+          novas++;
+
+
+          mapaOS.set(
+            chave,
+            criada
+          );
+
+        }
+
+      }catch(error){
+
+        erros.push(
+          `Linha ${numeroLinha} — O.S.: ${
+            error.message || 'Erro desconhecido'
+          }`
+        );
+
+      }
+
+    }
+
+
+    /*
+       Mostrar resultado.
+    */
+
+    document.getElementById('importNovas').textContent =
+      novas;
+
+
+    document.getElementById('importAtualizadas').textContent =
+      atualizadas;
+
+
+    document.getElementById('importErros').textContent =
+      erros.length;
+
+
+    document.getElementById('importResult').style.display =
+      'block';
+
+
+    if(erros.length){
+
+      document.getElementById('errosTitulo').style.display =
+        'block';
+
+
+      document.getElementById('errosLista').innerHTML =
+        erros
+          .map(
+            erro =>
+              `<div>${esc(erro)}</div>`
+          )
+          .join('');
+
+
+      status.className =
+        'import-status erro';
+
+
+      status.textContent =
+        'Importação concluída com algumas ocorrências.';
+
+    }else{
+
+      document.getElementById('errosTitulo').style.display =
+        'none';
+
+
+      document.getElementById('errosLista').innerHTML =
+        '';
+
+
+      status.className =
+        'import-status sucesso';
+
+
+      status.textContent =
+        'Importação concluída com sucesso.';
+
+    }
+
+
+    /*
+       Recarregar dados do banco
+       para atualizar dashboard e tabela.
+    */
+
+    await carregarDados();
+
+
+  }catch(error){
+
+    console.error(error);
+
+
+    status.className =
+      'import-status erro';
+
+
+    status.textContent =
+      error.message ||
+      'Não foi possível importar o arquivo.';
+
+  }finally{
+
+    btn.disabled = false;
+
+    btn.textContent =
+      '📥 Importar';
+
+  }
+
+}
+
+
+/* =====================================================
+   NORMALIZAR O.S.
+===================================================== */
+
+function normalizarOS(valor){
+
+  if(
+    valor === null ||
+    valor === undefined
+  ){
+
+    return '';
+
+  }
+
+
+  return String(valor)
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g,' ');
+
+}
+
+
+/* =====================================================
    RENDERIZAR TABELA
-========================= */
+===================================================== */
 
 function render(){
 
   const q =
     (
-      document.getElementById('busca')?.value || ''
+      document.getElementById('busca')?.value ||
+      ''
     )
     .toLowerCase();
 
 
   const f =
-    document.getElementById('status')?.value || '';
+    document.getElementById('status')?.value ||
+    '';
 
 
   const p =
-    document.getElementById('pendFiltro')?.value || '';
+    document.getElementById('pendFiltro')?.value ||
+    '';
 
 
-  const a = dados
+  const a =
+    dados
 
-    .filter(x =>
-
-      (
-        !q ||
+      .filter(x =>
 
         (
-          String(x.os || '') +
-          ' ' +
-          String(x.descricao || '')
+          !q ||
+
+          (
+            String(x.os || '') +
+            ' ' +
+            String(x.descricao || '')
+          )
+          .toLowerCase()
+          .includes(q)
         )
-        .toLowerCase()
-        .includes(q)
+
+        &&
+
+        (!f || x.status === f)
+
+        &&
+
+        (!p || x.pendencia === p)
+
       )
 
-      &&
-
-      (!f || x.status === f)
-
-      &&
-
-      (!p || x.pendencia === p)
-
-    )
-
-    .sort(
-      (x,y) =>
-        Number(x.prioridade || 0) -
-        Number(y.prioridade || 0)
-    );
+      .sort(
+        (x,y) =>
+          Number(x.prioridade || 999999) -
+          Number(y.prioridade || 999999)
+      );
 
 
   document.getElementById('tbody').innerHTML =
@@ -1314,21 +2955,22 @@ function render(){
 
       a.map(x => {
 
-        /*
-          Só calcula atraso se existir prazo.
-        */
 
         let atras = false;
+
 
         if(x.prazo){
 
           const d =
             new Date(
-              x.prazo + 'T00:00:00'
+              x.prazo +
+              'T00:00:00'
             );
+
 
           const h =
             new Date();
+
 
           h.setHours(
             0,
@@ -1337,6 +2979,7 @@ function render(){
             0
           );
 
+
           atras =
             x.status !== 'Concluído' &&
             d < h;
@@ -1344,17 +2987,37 @@ function render(){
         }
 
 
+        const statusClasse =
+          x.status === 'Concluído'
+            ? 'c'
+            : x.status === 'Em andamento'
+              ? 'a'
+              : 'p';
+
+
+        const pendClasse =
+          x.pendencia === 'Cliente'
+            ? 'pc'
+            : 'pe';
+
+
         return `
 
           <tr>
 
             <td>
-              <b>${esc(x.prioridade)}</b>
+              <b>
+                ${esc(
+                  x.prioridade ?? '—'
+                )}
+              </b>
             </td>
 
 
             <td>
-              <b>${esc(x.os)}</b>
+              <b>
+                ${esc(x.os)}
+              </b>
             </td>
 
 
@@ -1362,9 +3025,10 @@ function render(){
 
               ${br(x.prazo)}
 
-              ${atras
-                ? ' • ATRASADO'
-                : ''
+              ${
+                atras
+                  ? ' • ATRASADO'
+                  : ''
               }
 
             </td>
@@ -1377,16 +3041,10 @@ function render(){
 
             <td>
 
-              <span class="badge ${
-                x.status === 'Concluído'
-                  ? 'c'
-                  : x.status === 'Em andamento'
-                    ? 'a'
-                    : 'p'
-              }">
-
+              <span
+                class="badge ${statusClasse}"
+              >
                 ${esc(x.status)}
-
               </span>
 
             </td>
@@ -1394,14 +3052,10 @@ function render(){
 
             <td>
 
-              <span class="badge ${
-                x.pendencia === 'Cliente'
-                  ? 'pc'
-                  : 'pe'
-              }">
-
+              <span
+                class="badge ${pendClasse}"
+              >
                 ${esc(x.pendencia)}
-
               </span>
 
             </td>
@@ -1415,7 +3069,7 @@ function render(){
             <td>
 
               <button
-                onclick='abrir(${JSON.stringify(x).replace(/'/g, '&#39;')})'
+                onclick="editarPorId('${escJS(x.id)}')"
               >
                 Editar
               </button>
@@ -1431,6 +3085,7 @@ function render(){
 
       :
 
+
       `
 
         <tr>
@@ -1440,7 +3095,7 @@ function render(){
             style="
               text-align:center;
               padding:40px;
-              color:#71807b
+              color:#71807b;
             "
           >
 
@@ -1457,9 +3112,9 @@ function render(){
       `;
 
 
-  /* =========================
-     ATUALIZAR CARDS
-  ========================= */
+  /*
+     CARDS
+  */
 
   document.getElementById('total').textContent =
     dados.length;
@@ -1467,13 +3122,15 @@ function render(){
 
   document.getElementById('pendCount').textContent =
     dados.filter(
-      x => x.status === 'Pendente'
+      x =>
+        x.status === 'Pendente'
     ).length;
 
 
   document.getElementById('and').textContent =
     dados.filter(
-      x => x.status === 'Em andamento'
+      x =>
+        x.status === 'Em andamento'
     ).length;
 
 
@@ -1501,7 +3158,8 @@ function render(){
 
       const prazo =
         new Date(
-          x.prazo + 'T00:00:00'
+          x.prazo +
+          'T00:00:00'
         );
 
 
@@ -1524,16 +3182,40 @@ function render(){
 }
 
 
-/* =========================
+/* =====================================================
+   EDITAR POR ID
+===================================================== */
+
+function editarPorId(id){
+
+  const registro =
+    dados.find(
+      x =>
+        String(x.id) === String(id)
+    );
+
+
+  if(!registro){
+
+    alert(
+      'Não foi possível localizar a O.S.'
+    );
+
+    return;
+
+  }
+
+
+  abrir(registro);
+
+}
+
+
+/* =====================================================
    DATA BRASILEIRA
-========================= */
+===================================================== */
 
 function br(x){
-
-  /*
-    Se não houver prazo,
-    mostra "Não definido".
-  */
 
   if(!x){
 
@@ -1542,8 +3224,22 @@ function br(x){
   }
 
 
-  const [y,m,d] =
-    x.split('-');
+  const partes =
+    String(x).split('-');
+
+
+  if(partes.length !== 3){
+
+    return String(x);
+
+  }
+
+
+  const [
+    y,
+    m,
+    d
+  ] = partes;
 
 
   return `${d}/${m}/${y}`;
@@ -1551,9 +3247,9 @@ function br(x){
 }
 
 
-/* =========================
+/* =====================================================
    ESCAPAR HTML
-========================= */
+===================================================== */
 
 function esc(s){
 
@@ -1574,9 +3270,24 @@ function esc(s){
 }
 
 
-/* =========================
-   INICIAR SISTEMA
-========================= */
+/* =====================================================
+   ESCAPAR JAVASCRIPT
+===================================================== */
+
+function escJS(s){
+
+  return String(s ?? '')
+    .replace(/\\/g,'\\\\')
+    .replace(/'/g,"\\'")
+    .replace(/\n/g,'\\n')
+    .replace(/\r/g,'\\r');
+
+}
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
 
 iniciar();
 
