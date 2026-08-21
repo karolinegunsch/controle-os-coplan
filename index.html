@@ -1,391 +1,2520 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Coplan • Controle de O.S.</title>
-<style>
-:root{--green:#006b4f;--green2:#008b68;--dark:#12382f;--bg:#f4f7f6;--card:#fff;--line:#e4ebe8;--text:#1e2b27;--muted:#71807b;--red:#c93d3d;--yellow:#c98612;--blue:#3c6edb}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
-.login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a)}
-.loginbox{width:min(420px,92%);background:#fff;border-radius:20px;padding:36px;box-shadow:0 20px 60px #0004}
-.logo{font-weight:900;font-size:34px;color:var(--green);letter-spacing:-1px}.logo span{display:block;font-size:13px;color:var(--muted);font-weight:500;letter-spacing:0;margin-top:4px}
-.login h2{margin:30px 0 6px}.login p{color:var(--muted);margin-top:0}
-.field{margin:15px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
-input,select,textarea{width:100%;padding:12px 13px;border:1px solid #d5dfdb;border-radius:9px;font:inherit;background:#fff}
-button{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer}
-.primary{background:var(--green);color:#fff}.primary:hover{background:#00563f}.wide{width:100%;margin-top:8px}
-.hint{font-size:12px;color:var(--muted);margin-top:14px}.app{display:none;min-height:100vh}
-.sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:#073e31;color:#fff;padding:25px 17px}
-.side-logo{font-size:27px;font-weight:900;padding:8px 12px 28px}.side-logo small{display:block;font-size:11px;font-weight:500;opacity:.65;margin-top:3px}
-.nav{padding:8px 0}.nav div{padding:12px;border-radius:9px;margin:4px 0;color:#dcebe6}.nav .active,.nav div:hover{background:#ffffff16;color:#fff}
-.user{position:absolute;bottom:20px;left:17px;right:17px;padding:12px;border-top:1px solid #ffffff22;font-size:13px}.user button{margin-top:10px;width:100%;background:#ffffff12;color:#fff}
-.main{margin-left:245px;padding:28px 34px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.top h1{margin:0;font-size:25px}.top p{margin:5px 0;color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:19px;box-shadow:0 3px 12px #12382f08}.card .label{font-size:12px;color:var(--muted);font-weight:700}.card .num{font-size:29px;font-weight:800;margin-top:9px}
-.card.green{border-top:3px solid var(--green)}.card.yellow{border-top:3px solid var(--yellow)}.card.red{border-top:3px solid var(--red)}.card.blue{border-top:3px solid var(--blue)}
-.panel{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px}.toolbar{display:flex;gap:9px;justify-content:space-between;flex-wrap:wrap}
-.filters{display:flex;gap:8px;flex:1;min-width:300px}.filters input{max-width:320px}
-.import-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
-table{width:100%;border-collapse:collapse;margin-top:17px}th,td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--line);font-size:13px}
-th{font-size:11px;text-transform:uppercase;color:var(--muted);background:#fafcfb}
-.badge{display:inline-block;padding:5px 9px;border-radius:99px;font-size:11px;font-weight:800}.p{background:#fee7e7;color:#9f2626}.a{background:#fff2d5;color:#94600a}.c{background:#def6e9;color:#17683f}.pc{background:#e4ecff;color:#365aa0}.pe{background:#def5ee;color:#17664f}.late{color:#bd2525;font-weight:800}
-.modal{display:none;position:fixed;inset:0;background:#0007;place-items:center;padding:20px}.modal.open{display:grid}.modalbox{background:#fff;width:min(650px,100%);max-height:90vh;overflow:auto;border-radius:15px;padding:25px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.full{grid-column:1/-1}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
-.error{color:#b42318;font-size:13px;margin-top:8px;display:none}.file-input{display:none}
-@media(max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.sidebar{position:static;width:auto}.main{margin-left:0;padding:20px}.user{position:static;margin-top:25px}.grid{grid-template-columns:1fr}.full{grid-column:auto}.cards{grid-template-columns:1fr}.top{align-items:flex-start;gap:10px;flex-direction:column}.filters{min-width:0;flex-direction:column}.filters input{max-width:none}}
-</style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Coplan • Controle de O.S.</title>
+
+  <style>
+
+    :root {
+      --green: #006b4f;
+      --green2: #008b68;
+      --dark: #12382f;
+      --bg: #f4f7f6;
+      --card: #fff;
+      --line: #e4ebe8;
+      --text: #1e2b27;
+      --muted: #71807b;
+
+      --red: #c93d3d;
+      --yellow: #c98612;
+      --blue: #3c6edb;
+      --purple: #7652b8;
+      --orange: #d66b16;
+      --cyan: #23879b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    .login {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(
+        135deg,
+        #073e31,
+        #006b4f 55%,
+        #0d8b6a
+      );
+    }
+
+    .loginbox {
+      width: min(420px, 92%);
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 20px 60px #0004;
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 34px;
+      color: var(--green);
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    .login h2 {
+      margin: 30px 0 6px;
+    }
+
+    .login p {
+      color: var(--muted);
+      margin-top: 0;
+    }
+
+    .field {
+      margin: 15px 0;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid #d5dfdb;
+      border-radius: 9px;
+      font: inherit;
+      background: #fff;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px #006b4f14;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    button:hover {
+      opacity: .92;
+    }
+
+    .primary {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .wide {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+
+    .error {
+      color: #b42318;
+      font-size: 13px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    /* =========================
+       APP
+    ========================= */
+
+    .app {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 245px;
+      background: #073e31;
+      color: #fff;
+      padding: 25px 17px;
+    }
+
+    .side-logo {
+      font-size: 27px;
+      font-weight: 900;
+      padding: 8px 12px 28px;
+    }
+
+    .side-logo small {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      opacity: .65;
+      margin-top: 3px;
+    }
+
+    .nav {
+      padding: 8px 0;
+    }
+
+    .nav div {
+      padding: 12px;
+      border-radius: 9px;
+      margin: 4px 0;
+      color: #dcebe6;
+      cursor: pointer;
+    }
+
+    .nav .active,
+    .nav div:hover {
+      background: #ffffff16;
+      color: #fff;
+    }
+
+    .user {
+      position: absolute;
+      bottom: 20px;
+      left: 17px;
+      right: 17px;
+      padding: 12px;
+      border-top: 1px solid #ffffff22;
+      font-size: 13px;
+    }
+
+    .user button {
+      margin-top: 10px;
+      width: 100%;
+      background: #ffffff12;
+      color: #fff;
+    }
+
+    .main {
+      margin-left: 245px;
+      padding: 28px 34px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .top h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .top p {
+      margin: 5px 0;
+      color: var(--muted);
+    }
+
+    /* =========================
+       CARDS
+    ========================= */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 19px;
+      box-shadow: 0 3px 12px #12382f08;
+    }
+
+    .card .label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .card .num {
+      font-size: 29px;
+      font-weight: 800;
+      margin-top: 9px;
+    }
+
+    .card.green {
+      border-top: 3px solid var(--green);
+    }
+
+    .card.yellow {
+      border-top: 3px solid var(--yellow);
+    }
+
+    .card.red {
+      border-top: 3px solid var(--red);
+    }
+
+    .card.blue {
+      border-top: 3px solid var(--blue);
+    }
+
+    .card.purple {
+      border-top: 3px solid var(--purple);
+    }
+
+    /* =========================
+       PAINEL
+    ========================= */
+
+    .panel {
+      margin-top: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 20px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 9px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .filters input {
+      max-width: 320px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 17px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 13px 10px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    th {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: #fafcfb;
+    }
+
+    /* =========================
+       BADGES DOS STATUS
+    ========================= */
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .status-backlog {
+      background: #eeeeee;
+      color: #555;
+    }
+
+    .status-fazendo {
+      background: #fff2d5;
+      color: #94600a;
+    }
+
+    .status-feito {
+      background: #def6e9;
+      color: #17683f;
+    }
+
+    .status-disponivel {
+      background: #e4ecff;
+      color: #365aa0;
+    }
+
+    .status-testando {
+      background: #e7e1ff;
+      color: #5a4199;
+    }
+
+    .status-teste-concluido {
+      background: #dff4f8;
+      color: #176879;
+    }
+
+    .status-producao {
+      background: #ffe7d5;
+      color: #a64d0c;
+    }
+
+    .status-concluido {
+      background: #d9f3df;
+      color: #17683f;
+    }
+
+    .status-entregue {
+      background: #dcefe9;
+      color: #17664f;
+    }
+
+    .status-devolvido {
+      background: #fee7e7;
+      color: #9f2626;
+    }
+
+    .status-analise-iniciada {
+      background: #f1e5ff;
+      color: #7440a8;
+    }
+
+    .status-analise-concluida {
+      background: #e0f4ed;
+      color: #17664f;
+    }
+
+    .pc {
+      background: #e4ecff;
+      color: #365aa0;
+    }
+
+    .pe {
+      background: #def5ee;
+      color: #17664f;
+    }
+
+    .late {
+      color: #bd2525;
+      font-weight: 800;
+    }
+
+    /* =========================
+       BOTÕES DA TABELA
+    ========================= */
+
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .edit-btn {
+      background: #eef3f1;
+      color: var(--dark);
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    .delete-btn {
+      background: #fee7e7;
+      color: #9f2626;
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #0007;
+      place-items: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .modal.open {
+      display: grid;
+    }
+
+    .modalbox {
+      background: #fff;
+      width: min(650px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 15px;
+      padding: 25px;
+    }
+
+    .modalbox h2 {
+      margin: 0 0 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    /* =========================
+       BOTÕES DO MODAL
+    ========================= */
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .actions button {
+      min-width: 105px;
+    }
+
+    .cancel-btn {
+      background: #eef1ef;
+      color: var(--dark);
+    }
+
+    /* =========================
+       RESPONSIVO
+    ========================= */
+
+    @media (max-width: 1250px) {
+
+      .cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+    }
+
+    @media (max-width: 1100px) {
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+    }
+
+    @media (max-width: 700px) {
+
+      .sidebar {
+        position: static;
+        width: auto;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 20px;
+      }
+
+      .user {
+        position: static;
+        margin-top: 25px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .top {
+        align-items: flex-start;
+        gap: 10px;
+        flex-direction: column;
+      }
+
+      .filters {
+        flex-direction: column;
+        min-width: 100%;
+      }
+
+      .filters input {
+        max-width: none;
+      }
+
+      .actions {
+        justify-content: stretch;
+      }
+
+      .actions button {
+        flex: 1;
+      }
+
+      .table-actions {
+        flex-direction: column;
+      }
+
+    }
+
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
+
 <body>
 
-<section class="login" id="login">
-<div class="loginbox">
-<div class="logo">COPLAN<span>Controle de O.S. e Demandas</span></div>
-<h2>Acesso ao sistema</h2><p>Entre para acompanhar as demandas da equipe.</p>
-<form onsubmit="entrar(event)">
-<div class="field"><label>E-mail</label><input id="email" type="email" required placeholder="seu@email.com"></div>
-<div class="field"><label>Senha</label><input id="senha" type="password" required placeholder="••••••••"></div>
-<div class="error" id="loginerr">E-mail ou senha inválidos.</div>
-<button class="primary wide">Entrar</button>
-</form>
-<div class="hint">Sistema de controle de O.S. e demandas.</div>
-</div>
-</section>
+  <!-- ==================================================
+       LOGIN
+  ================================================== -->
 
-<section class="app" id="app">
-<aside class="sidebar">
-<div class="side-logo">COPLAN<small>CONTROLE DE DEMANDAS</small></div>
-<div class="nav"><div class="active">▦ Dashboard</div><div>✓ Ordens de Serviço</div><div>◉ Relatórios</div></div>
-<div class="user"><strong id="useremail">Usuário</strong><br><span style="opacity:.6">Acesso ao sistema</span><button onclick="sair()">Sair</button></div>
-</aside>
+  <section class="login" id="login">
 
-<main class="main">
-<div class="top"><div><h1>Dashboard</h1><p>Visão geral das ordens de serviço</p></div><button class="primary" onclick="abrir()">+ Nova O.S.</button></div>
+    <div class="loginbox">
 
-<div class="cards">
-<div class="card green"><div class="label">TOTAL DE O.S.</div><div class="num" id="total">0</div></div>
-<div class="card red"><div class="label">PENDENTES</div><div class="num" id="pendCount">0</div></div>
-<div class="card yellow"><div class="label">EM ANDAMENTO</div><div class="num" id="and">0</div></div>
-<div class="card blue"><div class="label">AGUARDANDO CLIENTE</div><div class="num" id="cli">0</div></div>
-<div class="card red"><div class="label">EM ATRASO</div><div class="num" id="late">0</div></div>
-</div>
+      <div class="logo">
+        COPLAN
 
-<div class="panel">
-<div class="toolbar">
-<div class="filters">
-<input id="busca" placeholder="Buscar O.S. ou descrição..." oninput="render()">
-<select id="status" onchange="render()"><option value="">Todos os status</option><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select>
-<select id="pendFiltro" onchange="render()"><option value="">Todas as pendências</option><option>Empresa</option><option>Cliente</option></select>
-</div>
-</div>
+        <span>
+          Controle de O.S. e Demandas
+        </span>
+      </div>
 
-<div class="import-actions">
-<button class="primary" onclick="document.getElementById('csvInput').click()">Importar CSV</button>
-<button onclick="document.getElementById('excelInput').click()">Importar Excel</button>
-<button onclick="exportarCSV()">Exportar CSV</button>
-<button onclick="excluirImportadas()" style="background:#fee7e7;color:#9f2626">Excluir O.S. importadas</button>
-<input class="file-input" type="file" id="csvInput" accept=".csv,text/csv" onchange="importarArquivo(event,'csv')">
-<input class="file-input" type="file" id="excelInput" accept=".xlsx,.xls,.csv" onchange="importarArquivo(event,'excel')">
-</div>
+      <h2>
+        Acesso ao sistema
+      </h2>
 
-<div style="overflow:auto"><table><thead><tr><th>Prioridade</th><th>O.S.</th><th>Prazo</th><th>Descrição</th><th>Status</th><th>Pendência</th><th>Observação</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
-</div>
-</main>
-</section>
+      <p>
+        Entre para acompanhar as demandas da equipe.
+      </p>
 
-<div class="modal" id="modal"><div class="modalbox"><h2 id="mt">Nova O.S.</h2>
-<form onsubmit="salvar(event)">
-<input type="hidden" id="id">
-<div class="grid">
-<div class="field"><label>Prioridade</label><input id="prioridade" type="number" min="1" required></div>
-<div class="field"><label>Nº da O.S.</label><input id="os" required></div>
-<div class="field"><label>Prazo</label><input id="prazo" type="date"></div>
-<div class="field"><label>Status</label><select id="st"><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select></div>
-<div class="field"><label>Pendência</label><select id="pe"><option>Empresa</option><option>Cliente</option></select></div>
-<div class="field full"><label>Descrição</label><textarea id="desc" rows="4" required></textarea></div>
-<div class="field full"><label>Observação</label><textarea id="obs" rows="3"></textarea></div>
-</div>
-<div class="actions"><button type="button" onclick="fechar()">Cancelar</button><button class="primary">Salvar</button></div>
-</form></div></div>
+      <form id="loginForm">
 
-<script>
-const SUPABASE_URL='https://otzhzpimeawafhguhcae.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY='sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
-const {createClient}=supabase;
-const db=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-let dados=[];
-let carregando=false;
+        <div class="field">
 
-async function iniciar(){
- const {data:{session}}=await db.auth.getSession();
- if(session) mostrarApp(session.user); else mostrarLogin();
- db.auth.onAuthStateChange((_event,session)=>{if(session) mostrarApp(session.user);else mostrarLogin();});
-}
-function mostrarLogin(){document.getElementById('login').style.display='grid';document.getElementById('app').style.display='none'}
-async function entrar(e){
- e.preventDefault();
- const email=document.getElementById('email').value.trim(),senha=document.getElementById('senha').value,erro=document.getElementById('loginerr');
- erro.style.display='none';
- const {error}=await db.auth.signInWithPassword({email,password:senha});
- if(error){erro.textContent='E-mail ou senha inválidos.';erro.style.display='block'}
-}
-async function mostrarApp(user){
- document.getElementById('login').style.display='none';
- document.getElementById('app').style.display='block';
- document.getElementById('useremail').textContent=user?.email||'Usuário';
- await carregarDados();
-}
-async function sair(){await db.auth.signOut()}
+          <label for="email">
+            E-mail
+          </label>
 
-async function carregarDados(){
- carregando=true;render();
- const {data,error}=await db.from('ordens_servico').select('*').order('prioridade',{ascending:true});
- carregando=false;
- if(error){alert('Não foi possível carregar as O.S.\n\n'+error.message);render();return}
- dados=data||[];render();
-}
+          <input
+            id="email"
+            type="email"
+            required
+            placeholder="seu@email.com"
+          >
 
-function abrir(x=null){
- document.getElementById('modal').classList.add('open');
- document.querySelector('#modal form').reset();
- document.getElementById('id').value='';
- document.getElementById('mt').textContent=x?'Editar O.S.':'Nova O.S.';
- if(x){
-  document.getElementById('id').value=x.id||'';
-  document.getElementById('prioridade').value=x.prioridade??'';
-  document.getElementById('os').value=x.os??'';
-  document.getElementById('prazo').value=normalizarData(x.prazo);
-  document.getElementById('st').value=x.status??'Pendente';
-  document.getElementById('pe').value=x.pendencia??'Empresa';
-  document.getElementById('desc').value=x.descricao??'';
-  document.getElementById('obs').value=x.observacao??'';
- }
-}
-function fechar(){document.getElementById('modal').classList.remove('open')}
+        </div>
 
-async function salvar(e){
- e.preventDefault();
- const id=document.getElementById('id').value;
- const prioridadeValor=document.getElementById('prioridade').value.trim();
- const osValor=document.getElementById('os').value.trim();
- const descricaoValor=document.getElementById('desc').value.trim();
+        <div class="field">
 
- if(!osValor||!descricaoValor||!prioridadeValor){alert('Preencha prioridade, O.S. e descrição.');return}
+          <label for="senha">
+            Senha
+          </label>
 
- const registro={
-  prioridade:Number(prioridadeValor),
-  os:osValor,
-  prazo:document.getElementById('prazo').value||null,
-  status:document.getElementById('st').value,
-  pendencia:document.getElementById('pe').value,
-  descricao:descricaoValor,
-  observacao:document.getElementById('obs').value.trim()
- };
+          <input
+            id="senha"
+            type="password"
+            required
+            placeholder="••••••••"
+          >
 
- let resultado;
- if(id) resultado=await db.from('ordens_servico').update(registro).eq('id',id).select().single();
- else resultado=await db.from('ordens_servico').insert(registro).select().single();
+        </div>
 
- if(resultado.error){alert('Não foi possível salvar a O.S.\\n\\n'+resultado.error.message);return}
- fechar();await carregarDados();
-}
+        <div class="error" id="loginerr">
+          E-mail ou senha inválidos.
+        </div>
 
-function render(){
- const q=(document.getElementById('busca')?.value||'').toLowerCase();
- const f=document.getElementById('status')?.value||'';
- const p=document.getElementById('pendFiltro')?.value||'';
- const a=dados.filter(x=>
-  (!q||(String(x.os||'')+' '+String(x.descricao||'')).toLowerCase().includes(q))&&
-  (!f||x.status===f)&&(!p||x.pendencia===p)
- ).sort((x,y)=>Number(x.prioridade||0)-Number(y.prioridade||0));
+        <button
+          class="primary wide"
+          type="submit"
+        >
+          Entrar
+        </button>
 
- document.getElementById('tbody').innerHTML=a.length?a.map(x=>{
-  let atras=false;
-  if(x.prazo){const d=new Date(normalizarData(x.prazo)+'T00:00:00'),h=new Date();h.setHours(0,0,0,0);atras=x.status!=='Concluído'&&d<h}
-  return `<tr>
-  <td><b>${esc(x.prioridade??'')}</b></td>
-  <td><b>${esc(x.os)}</b></td>
-  <td class="${atras?'late':''}">${br(x.prazo)}${atras?' • ATRASADO':''}</td>
-  <td>${esc(x.descricao)}</td>
-  <td><span class="badge ${x.status==='Concluído'?'c':x.status==='Em andamento'?'a':'p'}">${esc(x.status)}</span></td>
-  <td><span class="badge ${x.pendencia==='Cliente'?'pc':'pe'}">${esc(x.pendencia)}</span></td>
-  <td>${esc(x.observacao)||'—'}</td>
-  <td><button onclick='abrir(${JSON.stringify(x).replace(/'/g,"&#39;")})'>Editar</button></td>
-  </tr>`
- }).join(''):`<tr><td colspan="8" style="text-align:center;padding:40px;color:#71807b">${carregando?'Carregando...':'Nenhuma O.S. cadastrada.'}</td></tr>`;
+      </form>
 
- document.getElementById('total').textContent=dados.length;
- document.getElementById('pendCount').textContent=dados.filter(x=>x.status==='Pendente').length;
- document.getElementById('and').textContent=dados.filter(x=>x.status==='Em andamento').length;
- document.getElementById('cli').textContent=dados.filter(x=>x.pendencia==='Cliente'&&x.status!=='Concluído').length;
- document.getElementById('late').textContent=dados.filter(x=>{
-  if(x.status==='Concluído'||!x.prazo)return false;
-  const prazo=new Date(normalizarData(x.prazo)+'T00:00:00'),hoje=new Date();hoje.setHours(0,0,0,0);return prazo<hoje;
- }).length;
-}
+      <div class="hint">
+        Sistema de controle de Ordens de Serviço e Demandas.
+      </div>
 
-function normalizarData(valor){
- if(!valor)return '';
- const s=String(valor).trim();
- if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.substring(0,10);
- const m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
- if(m)return `${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`;
- return '';
-}
-function br(x){
- const n=normalizarData(x);if(!n)return 'Não definido';
- const [y,m,d]=n.split('-');return `${d}/${m}/${y}`;
-}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+    </div>
 
-/* IMPORTAÇÃO: mantém os DOIS modos */
-async function importarArquivo(event,tipo){
- const file=event.target.files[0];
- event.target.value='';
- if(!file)return;
+  </section>
 
- try{
-  if(tipo==='csv'){
-   const texto=await file.text();
-   const linhas=parseCSV(texto);
-   await processarImportacao(linhas);
-  }else{
-   if(typeof XLSX==='undefined'){
-    await carregarXLSX();
-   }
-   const buffer=await file.arrayBuffer();
-   const wb=XLSX.read(buffer,{type:'array',cellDates:true});
-   const ws=wb.Sheets[wb.SheetNames[0]];
-   const linhas=XLSX.utils.sheet_to_json(ws,{defval:'',raw:false});
-   await processarImportacao(linhas);
-  }
- }catch(err){alert('Erro ao importar arquivo:\n\n'+err.message)}
-}
-function carregarXLSX(){
- return new Promise((resolve,reject)=>{
-  const s=document.createElement('script');
-  s.src='https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
-  s.onload=resolve;s.onerror=()=>reject(new Error('Não foi possível carregar o leitor de Excel.'));
-  document.head.appendChild(s);
- });
-}
-function parseCSV(texto){
- const linhas=[],chars=[...texto],rows=[];let row=[],cell='',quoted=false;
- for(let i=0;i<chars.length;i++){
-  const c=chars[i],n=chars[i+1];
-  if(c==='"'&&quoted&&n==='"'){cell+='"';i++;continue}
-  if(c==='"'){quoted=!quoted;continue}
-  if(c===','&&!quoted){row.push(cell);cell='';continue}
-  if((c==='\n'||c==='\r')&&!quoted){
-   if(c==='\r'&&n==='\n')i++;
-   row.push(cell);cell='';
-   if(row.some(v=>String(v).trim()!==''))rows.push(row);
-   row=[];continue;
-  }
-  cell+=c;
- }
- if(cell!==''||row.length){row.push(cell);rows.push(row)}
- if(!rows.length)return [];
- const headers=rows[0].map(h=>normalizarCabecalho(h));
- return rows.slice(1).map(r=>{const o={};headers.forEach((h,i)=>o[h]=r[i]??'');return o});
-}
-function normalizarCabecalho(v){
- return String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
-}
-function pegar(o,names){
- for(const n of names){const k=normalizarCabecalho(n);if(Object.prototype.hasOwnProperty.call(o,k)&&String(o[k]).trim()!=='')return o[k]}
- return '';
-}
-function converterPrioridade(v){
- if(v===''||v==null)return null;
- const n=Number(String(v).replace(',','.').replace(/[^\d.-]/g,''));
- return Number.isFinite(n)?n:null;
-}
-function converterDataImportada(v){
- if(v===''||v==null)return null;
- if(v instanceof Date&&!isNaN(v))return `${v.getFullYear()}-${String(v.getMonth()+1).padStart(2,'0')}-${String(v.getDate()).padStart(2,'0')}`;
- const s=String(v).trim();
- const n=normalizarData(s);if(n)return n;
- if(/^\d+(\.\d+)?$/.test(s)){
-  const serial=Number(s),base=new Date(Date.UTC(1899,11,30)),d=new Date(base.getTime()+serial*86400000);
-  if(!isNaN(d))return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;
- }
- return null;
-}
-function valorStatus(v){
- const s=String(v||'').trim().toLowerCase();
- if(s.includes('concl'))return 'Concluído';
- if(s.includes('andamento')||s.includes('andamento'))return 'Em andamento';
- return 'Pendente';
-}
-function valorPendencia(v){
- const s=String(v||'').trim().toLowerCase();
- return s.includes('cliente')?'Cliente':'Empresa';
-}
-async function processarImportacao(linhas){
- if(!linhas.length){alert('Nenhum registro encontrado no arquivo.');return}
- const registros=linhas.map(o=>{
-  const prioridade=converterPrioridade(pegar(o,['prioridade','prioridade_os','prioridade da o.s.']));
-  const os=String(pegar(o,['os','o.s.','n_os','numero_os','nº da o.s.','ordem','ordem_de_servico'])).trim();
-  const prazo=converterDataImportada(pegar(o,['prazo','data_prazo','prazo_coplan']));
-  const descricao=String(pegar(o,['descricao','descrição','assunto'])).trim();
-  const observacao=String(pegar(o,['observacao','observação'])).trim();
-  const status=valorStatus(pegar(o,['status','situacao','situação']));
-  const pendencia=valorPendencia(pegar(o,['pendencia','pendência']));
-  return {prioridade,os,prazo,status,pendencia,descricao,observacao,_importada:true};
- }).filter(r=>r.os&&r.descricao&&r.prioridade!==null);
 
- if(!registros.length){alert('Nenhum registro válido encontrado.\n\nConfira se o arquivo possui as colunas Prioridade, O.S. e Descrição.');return}
+  <!-- ==================================================
+       SISTEMA
+  ================================================== -->
 
- const {error}=await db.from('ordens_servico').insert(registros.map(({_importada,...r})=>r));
- if(error){alert('Não foi possível importar as O.S.\\n\\n'+error.message);return}
- alert(`${registros.length} O.S. importada(s) com sucesso.`);
- await carregarDados();
-}
-async function excluirImportadas(){
- if(!confirm('Deseja excluir TODAS as O.S. importadas?\\n\\nEsta ação não pode ser desfeita.'))return;
- /* As importações não criam uma coluna de marcação no banco.
-    Portanto, a exclusão é feita pelos registros atualmente identificados
-    como importados nesta sessão. */
- if(!window._idsImportados||!window._idsImportados.length){
-  alert('Não há O.S. importadas nesta sessão para excluir.');
-  return;
- }
- const {error}=await db.from('ordens_servico').delete().in('id',window._idsImportados);
- if(error){alert('Não foi possível excluir as O.S. importadas.\\n\\n'+error.message);return}
- window._idsImportados=[];
- await carregarDados();
- alert('O.S. importadas excluídas com sucesso.');
-}
-const _processarImportacaoOriginal=processarImportacao;
-processarImportacao=async function(linhas){
- if(!linhas.length){alert('Nenhum registro encontrado no arquivo.');return}
- const registros=linhas.map(o=>{
-  const prioridade=converterPrioridade(pegar(o,['prioridade','prioridade_os','prioridade da o.s.']));
-  const os=String(pegar(o,['os','o.s.','n_os','numero_os','nº da o.s.','ordem','ordem_de_servico'])).trim();
-  const prazo=converterDataImportada(pegar(o,['prazo','data_prazo','prazo_coplan']));
-  const descricao=String(pegar(o,['descricao','descrição','assunto'])).trim();
-  const observacao=String(pegar(o,['observacao','observação'])).trim();
-  const status=valorStatus(pegar(o,['status','situacao','situação']));
-  const pendencia=valorPendencia(pegar(o,['pendencia','pendência']));
-  return {prioridade,os,prazo,status,pendencia,descricao,observacao};
- }).filter(r=>r.os&&r.descricao&&r.prioridade!==null);
- if(!registros.length){alert('Nenhum registro válido encontrado.\n\nConfira as colunas Prioridade, O.S. e Descrição.');return}
- const {data,error}=await db.from('ordens_servico').insert(registros).select('id');
- if(error){alert('Não foi possível importar as O.S.\\n\\n'+error.message);return}
- window._idsImportados=[...(window._idsImportados||[]),...(data||[]).map(x=>x.id)];
- alert(`${registros.length} O.S. importada(s) com sucesso.`);
- await carregarDados();
-}
-function exportarCSV(){
- const headers=['Prioridade','O.S.','Prazo','Descrição','Status','Pendência','Observação'];
- const rows=dados.map(x=>[x.prioridade,x.os,br(x.prazo),x.descricao,x.status,x.pendencia,x.observacao]);
- const csv=[headers,...rows].map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');
- const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
- const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ordens_servico.csv';a.click();URL.revokeObjectURL(a.href);
-}
-iniciar();
-</script>
+  <section class="app" id="app">
+
+    <!-- MENU LATERAL -->
+
+    <aside class="sidebar">
+
+      <div class="side-logo">
+
+        COPLAN
+
+        <small>
+          CONTROLE DE DEMANDAS
+        </small>
+
+      </div>
+
+      <div class="nav">
+
+        <div class="active">
+          ▦ Dashboard
+        </div>
+
+        <div>
+          ✓ Ordens de Serviço
+        </div>
+
+        <div>
+          ◉ Relatórios
+        </div>
+
+      </div>
+
+      <div class="user">
+
+        <strong id="useremail">
+          Usuário
+        </strong>
+
+        <br>
+
+        <span style="opacity:.6">
+          Acesso ao sistema
+        </span>
+
+        <button onclick="sair()">
+          Sair
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- CONTEÚDO -->
+
+    <main class="main">
+
+      <!-- CABEÇALHO -->
+
+      <div class="top">
+
+        <div>
+
+          <h1>
+            Dashboard
+          </h1>
+
+          <p>
+            Visão geral das ordens de serviço
+          </p>
+
+        </div>
+
+        <button
+          class="primary"
+          onclick="abrir()"
+        >
+          + Nova O.S.
+        </button>
+
+      </div>
+
+
+      <!-- CARDS -->
+
+      <div class="cards">
+
+        <div class="card green">
+
+          <div class="label">
+            TOTAL DE O.S.
+          </div>
+
+          <div class="num" id="total">
+            0
+          </div>
+
+        </div>
+
+
+        <div class="card yellow">
+
+          <div class="label">
+            FAZENDO
+          </div>
+
+          <div class="num" id="fazendo">
+            0
+          </div>
+
+        </div>
+
+
+        <div class="card blue">
+
+          <div class="label">
+            EM TESTE
+          </div>
+
+          <div class="num" id="teste">
+            0
+          </div>
+
+        </div>
+
+
+        <div class="card purple">
+
+          <div class="label">
+            EM PRODUÇÃO
+          </div>
+
+          <div class="num" id="producao">
+            0
+          </div>
+
+        </div>
+
+
+        <div class="card green">
+
+          <div class="label">
+            CONCLUÍDAS
+          </div>
+
+          <div class="num" id="concluido">
+            0
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- TABELA -->
+
+      <div class="panel">
+
+        <div class="toolbar">
+
+          <div class="filters">
+
+            <input
+              id="busca"
+              placeholder="Buscar O.S. ou descrição..."
+            >
+
+            <select id="status">
+
+              <option value="">
+                Todos os status
+              </option>
+
+              <option value="BACKLOG_DESENVOLVIMENTO">
+                Backlog Desenvolvimento
+              </option>
+
+              <option value="FAZENDO">
+                Fazendo
+              </option>
+
+              <option value="FEITO">
+                Feito
+              </option>
+
+              <option value="DISPONIVEL_TESTE">
+                Disponível para Teste
+              </option>
+
+              <option value="TESTANDO">
+                Testando
+              </option>
+
+              <option value="TESTE_CONCLUIDO">
+                Teste Concluído
+              </option>
+
+              <option value="EM_PRODUCAO">
+                Em Produção
+              </option>
+
+              <option value="CONCLUIDO">
+                Concluído
+              </option>
+
+              <option value="ENTREGUE">
+                Entregue
+              </option>
+
+              <option value="DEVOLVIDO_DEV">
+                Devolvido ao DEV
+              </option>
+
+              <option value="ANALISE_INICIADA">
+                Análise Iniciada
+              </option>
+
+              <option value="ANALISE_CONCLUIDA">
+                Análise Concluída
+              </option>
+
+            </select>
+
+
+            <select id="pendFiltro">
+
+              <option value="">
+                Todas as pendências
+              </option>
+
+              <option value="Empresa">
+                Empresa
+              </option>
+
+              <option value="Cliente">
+                Cliente
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <div style="overflow:auto">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Prioridade
+                </th>
+
+                <th>
+                  O.S.
+                </th>
+
+                <th>
+                  Prazo
+                </th>
+
+                <th>
+                  Descrição
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+                <th>
+                  Pendência
+                </th>
+
+                <th>
+                  Observação
+                </th>
+
+                <th>
+                  Ações
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="tbody"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </section>
+
+
+  <!-- ==================================================
+       MODAL NOVA / EDITAR O.S.
+  ================================================== -->
+
+  <div
+    class="modal"
+    id="modal"
+  >
+
+    <div class="modalbox">
+
+      <h2 id="mt">
+        Nova O.S.
+      </h2>
+
+      <form
+        id="osForm"
+        novalidate
+      >
+
+        <input
+          type="hidden"
+          id="id"
+        >
+
+        <div class="grid">
+
+          <!-- PRIORIDADE -->
+
+          <div class="field">
+
+            <label for="prioridade">
+              Prioridade
+            </label>
+
+            <input
+              id="prioridade"
+              type="number"
+              min="1"
+            >
+
+          </div>
+
+
+          <!-- Nº O.S. -->
+
+          <div class="field">
+
+            <label for="os">
+              Nº da O.S.
+            </label>
+
+            <input
+              id="os"
+              type="text"
+            >
+
+          </div>
+
+
+          <!-- PRAZO -->
+
+          <div class="field">
+
+            <label for="prazo">
+              Prazo
+            </label>
+
+            <input
+              id="prazo"
+              type="date"
+            >
+
+          </div>
+
+
+          <!-- STATUS -->
+
+          <div class="field">
+
+            <label for="st">
+              Status
+            </label>
+
+            <select id="st">
+
+              <option value="">
+                Selecione
+              </option>
+
+              <option value="BACKLOG_DESENVOLVIMENTO">
+                Backlog Desenvolvimento
+              </option>
+
+              <option value="FAZENDO">
+                Fazendo
+              </option>
+
+              <option value="FEITO">
+                Feito
+              </option>
+
+              <option value="DISPONIVEL_TESTE">
+                Disponível para Teste
+              </option>
+
+              <option value="TESTANDO">
+                Testando
+              </option>
+
+              <option value="TESTE_CONCLUIDO">
+                Teste Concluído
+              </option>
+
+              <option value="EM_PRODUCAO">
+                Em Produção
+              </option>
+
+              <option value="CONCLUIDO">
+                Concluído
+              </option>
+
+              <option value="ENTREGUE">
+                Entregue
+              </option>
+
+              <option value="DEVOLVIDO_DEV">
+                Devolvido ao DEV
+              </option>
+
+              <option value="ANALISE_INICIADA">
+                Análise Iniciada
+              </option>
+
+              <option value="ANALISE_CONCLUIDA">
+                Análise Concluída
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- PENDÊNCIA -->
+
+          <div class="field">
+
+            <label for="pe">
+              Pendência
+            </label>
+
+            <select id="pe">
+
+              <option value="">
+                Selecione
+              </option>
+
+              <option value="Empresa">
+                Empresa
+              </option>
+
+              <option value="Cliente">
+                Cliente
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- DESCRIÇÃO -->
+
+          <div class="field full">
+
+            <label for="desc">
+              Descrição
+            </label>
+
+            <textarea
+              id="desc"
+              rows="4"
+            ></textarea>
+
+          </div>
+
+
+          <!-- OBSERVAÇÃO -->
+
+          <div class="field full">
+
+            <label for="obs">
+              Observação
+            </label>
+
+            <textarea
+              id="obs"
+              rows="3"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+
+        <!-- BOTÕES -->
+
+        <div class="actions">
+
+          <button
+            type="button"
+            class="cancel-btn"
+            onclick="fechar()"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="primary"
+          >
+            Salvar
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==================================================
+       JAVASCRIPT
+  ================================================== -->
+
+  <script>
+
+    /* =========================
+       SUPABASE
+    ========================= */
+
+    const SUPABASE_URL =
+      'https://otzhzpimeawafhguhcae.supabase.co';
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      'sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
+
+    const {
+      createClient
+    } = supabase;
+
+    const db =
+      createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+    let dados = [];
+
+    let carregando = false;
+
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    document
+      .getElementById('loginForm')
+      .addEventListener(
+        'submit',
+        entrar
+      );
+
+
+    async function entrar(e) {
+
+      e.preventDefault();
+
+      const email =
+        document
+          .getElementById('email')
+          .value
+          .trim();
+
+      const senha =
+        document
+          .getElementById('senha')
+          .value;
+
+      const erro =
+        document
+          .getElementById('loginerr');
+
+      erro.style.display = 'none';
+
+      const {
+        error
+      } =
+        await db.auth.signInWithPassword({
+
+          email: email,
+
+          password: senha
+
+        });
+
+
+      if (error) {
+
+        erro.textContent =
+          'E-mail ou senha inválidos.';
+
+        erro.style.display =
+          'block';
+
+      }
+
+    }
+
+
+    /* =========================
+       INICIAR SISTEMA
+    ========================= */
+
+    async function iniciar() {
+
+      const {
+        data: {
+          session
+        }
+      } =
+        await db.auth.getSession();
+
+
+      if (session) {
+
+        mostrarApp(
+          session.user
+        );
+
+      } else {
+
+        mostrarLogin();
+
+      }
+
+
+      db.auth.onAuthStateChange(
+        (_event, session) => {
+
+          if (session) {
+
+            mostrarApp(
+              session.user
+            );
+
+          } else {
+
+            mostrarLogin();
+
+          }
+
+        }
+      );
+
+    }
+
+
+    function mostrarLogin() {
+
+      document
+        .getElementById('login')
+        .style.display =
+        'grid';
+
+      document
+        .getElementById('app')
+        .style.display =
+        'none';
+
+    }
+
+
+    async function mostrarApp(user) {
+
+      document
+        .getElementById('login')
+        .style.display =
+        'none';
+
+      document
+        .getElementById('app')
+        .style.display =
+        'block';
+
+      document
+        .getElementById('useremail')
+        .textContent =
+        user?.email ||
+        'Usuário';
+
+      await carregarDados();
+
+    }
+
+
+    async function sair() {
+
+      await db.auth.signOut();
+
+    }
+
+
+    /* =========================
+       CARREGAR DADOS
+    ========================= */
+
+    async function carregarDados() {
+
+      carregando = true;
+
+      render();
+
+      const {
+        data,
+        error
+      } =
+        await db
+          .from('ordens_servico')
+          .select('*')
+          .order(
+            'prioridade',
+            {
+              ascending: true,
+              nullsFirst: false
+            }
+          );
+
+      carregando = false;
+
+
+      if (error) {
+
+        alert(
+          'Não foi possível carregar as O.S.\n\n' +
+          error.message
+        );
+
+        return;
+
+      }
+
+
+      dados =
+        data || [];
+
+      render();
+
+    }
+
+
+    /* =========================
+       ABRIR MODAL
+    ========================= */
+
+    function abrir(
+      registro = null
+    ) {
+
+      const form =
+        document
+          .getElementById(
+            'osForm'
+          );
+
+      form.reset();
+
+      document
+        .getElementById('id')
+        .value = '';
+
+      document
+        .getElementById('mt')
+        .textContent =
+        registro
+          ? 'Editar O.S.'
+          : 'Nova O.S.';
+
+
+      if (registro) {
+
+        document
+          .getElementById('id')
+          .value =
+          registro.id || '';
+
+        document
+          .getElementById('prioridade')
+          .value =
+          registro.prioridade ?? '';
+
+        document
+          .getElementById('os')
+          .value =
+          registro.os ?? '';
+
+        document
+          .getElementById('prazo')
+          .value =
+          registro.prazo ?? '';
+
+        document
+          .getElementById('st')
+          .value =
+          registro.status ?? '';
+
+        document
+          .getElementById('pe')
+          .value =
+          registro.pendencia ?? '';
+
+        document
+          .getElementById('desc')
+          .value =
+          registro.descricao ?? '';
+
+        document
+          .getElementById('obs')
+          .value =
+          registro.observacao ?? '';
+
+      }
+
+
+      document
+        .getElementById('modal')
+        .classList
+        .add('open');
+
+    }
+
+
+    /* =========================
+       FECHAR MODAL
+    ========================= */
+
+    function fechar() {
+
+      document
+        .getElementById('modal')
+        .classList
+        .remove('open');
+
+    }
+
+
+    /* =========================
+       SALVAR
+    ========================= */
+
+    document
+      .getElementById('osForm')
+      .addEventListener(
+        'submit',
+        salvar
+      );
+
+
+    async function salvar(e) {
+
+      e.preventDefault();
+
+
+      const id =
+        document
+          .getElementById('id')
+          .value
+          .trim();
+
+
+      const prioridadeValor =
+        document
+          .getElementById('prioridade')
+          .value
+          .trim();
+
+
+      const os =
+        document
+          .getElementById('os')
+          .value
+          .trim();
+
+
+      const prazo =
+        document
+          .getElementById('prazo')
+          .value
+          .trim();
+
+
+      const status =
+        document
+          .getElementById('st')
+          .value
+          .trim();
+
+
+      const pendencia =
+        document
+          .getElementById('pe')
+          .value
+          .trim();
+
+
+      const descricao =
+        document
+          .getElementById('desc')
+          .value
+          .trim();
+
+
+      const observacao =
+        document
+          .getElementById('obs')
+          .value
+          .trim();
+
+
+      const registro = {
+
+        prioridade:
+          prioridadeValor === ''
+            ? null
+            : Number(
+                prioridadeValor
+              ),
+
+        os:
+          os === ''
+            ? null
+            : os,
+
+        prazo:
+          prazo === ''
+            ? null
+            : prazo,
+
+        status:
+          status === ''
+            ? null
+            : status,
+
+        pendencia:
+          pendencia === ''
+            ? null
+            : pendencia,
+
+        descricao:
+          descricao === ''
+            ? null
+            : descricao,
+
+        observacao:
+          observacao === ''
+            ? null
+            : observacao
+
+      };
+
+
+      let resultado;
+
+
+      /* EDITAR */
+
+      if (id) {
+
+        resultado =
+          await db
+            .from(
+              'ordens_servico'
+            )
+            .update(
+              registro
+            )
+            .eq(
+              'id',
+              id
+            )
+            .select()
+            .single();
+
+      }
+
+
+      /* NOVA O.S. */
+
+      else {
+
+        resultado =
+          await db
+            .from(
+              'ordens_servico'
+            )
+            .insert(
+              registro
+            )
+            .select()
+            .single();
+
+      }
+
+
+      if (resultado.error) {
+
+        alert(
+          'Não foi possível salvar a O.S.\n\n' +
+          resultado.error.message
+        );
+
+        return;
+
+      }
+
+
+      fechar();
+
+      await carregarDados();
+
+    }
+
+
+    /* =========================
+       EXCLUIR O.S.
+    ========================= */
+
+    async function excluir(id) {
+
+      const registro =
+        dados.find(
+          x =>
+            String(x.id) ===
+            String(id)
+        );
+
+
+      if (!registro) {
+
+        alert(
+          'Não foi possível localizar esta O.S.'
+        );
+
+        return;
+
+      }
+
+
+      const identificacao =
+        registro.os
+          ? `O.S. ${registro.os}`
+          : 'esta O.S.';
+
+
+      const confirmar =
+        confirm(
+          `Deseja realmente excluir ${identificacao}?\n\n` +
+          `Esta ação não poderá ser desfeita.`
+        );
+
+
+      if (!confirmar) {
+
+        return;
+
+      }
+
+
+      const {
+        error
+      } =
+        await db
+          .from(
+            'ordens_servico'
+          )
+          .delete()
+          .eq(
+            'id',
+            id
+          );
+
+
+      if (error) {
+
+        alert(
+          'Não foi possível excluir a O.S.\n\n' +
+          error.message
+        );
+
+        return;
+
+      }
+
+
+      await carregarDados();
+
+    }
+
+
+    /* =========================
+       NOMES DOS STATUS
+    ========================= */
+
+    const statusNomes = {
+
+      BACKLOG_DESENVOLVIMENTO:
+        'Backlog Desenvolvimento',
+
+      FAZENDO:
+        'Fazendo',
+
+      FEITO:
+        'Feito',
+
+      DISPONIVEL_TESTE:
+        'Disponível para Teste',
+
+      TESTANDO:
+        'Testando',
+
+      TESTE_CONCLUIDO:
+        'Teste Concluído',
+
+      EM_PRODUCAO:
+        'Em Produção',
+
+      CONCLUIDO:
+        'Concluído',
+
+      ENTREGUE:
+        'Entregue',
+
+      DEVOLVIDO_DEV:
+        'Devolvido ao DEV',
+
+      ANALISE_INICIADA:
+        'Análise Iniciada',
+
+      ANALISE_CONCLUIDA:
+        'Análise Concluída'
+
+    };
+
+
+    /* =========================
+       CLASSES DOS STATUS
+    ========================= */
+
+    const statusClasses = {
+
+      BACKLOG_DESENVOLVIMENTO:
+        'status-backlog',
+
+      FAZENDO:
+        'status-fazendo',
+
+      FEITO:
+        'status-feito',
+
+      DISPONIVEL_TESTE:
+        'status-disponivel',
+
+      TESTANDO:
+        'status-testando',
+
+      TESTE_CONCLUIDO:
+        'status-teste-concluido',
+
+      EM_PRODUCAO:
+        'status-producao',
+
+      CONCLUIDO:
+        'status-concluido',
+
+      ENTREGUE:
+        'status-entregue',
+
+      DEVOLVIDO_DEV:
+        'status-devolvido',
+
+      ANALISE_INICIADA:
+        'status-analise-iniciada',
+
+      ANALISE_CONCLUIDA:
+        'status-analise-concluida'
+
+    };
+
+
+    /* =========================
+       RENDER
+    ========================= */
+
+    function render() {
+
+      const busca =
+        (
+          document
+            .getElementById('busca')
+            ?.value ||
+          ''
+        )
+          .toLowerCase()
+          .trim();
+
+
+      const filtroStatus =
+        document
+          .getElementById('status')
+          ?.value ||
+        '';
+
+
+      const filtroPendencia =
+        document
+          .getElementById('pendFiltro')
+          ?.value ||
+        '';
+
+
+      const lista =
+        dados
+          .filter(x => {
+
+            const texto =
+              String(
+                x.os || ''
+              ) +
+              ' ' +
+              String(
+                x.descricao || ''
+              );
+
+
+            return (
+
+              (
+                !busca ||
+                texto
+                  .toLowerCase()
+                  .includes(busca)
+              )
+
+              &&
+
+              (
+                !filtroStatus ||
+                x.status ===
+                filtroStatus
+              )
+
+              &&
+
+              (
+                !filtroPendencia ||
+                x.pendencia ===
+                filtroPendencia
+              )
+
+            );
+
+          })
+          .sort(
+            (a, b) => {
+
+              const pa =
+                a.prioridade === null ||
+                a.prioridade === undefined ||
+                a.prioridade === ''
+                  ? 999999
+                  : Number(
+                      a.prioridade
+                    );
+
+
+              const pb =
+                b.prioridade === null ||
+                b.prioridade === undefined ||
+                b.prioridade === ''
+                  ? 999999
+                  : Number(
+                      b.prioridade
+                    );
+
+
+              return pa - pb;
+
+            }
+          );
+
+
+      const tbody =
+        document
+          .getElementById(
+            'tbody'
+          );
+
+
+      if (!lista.length) {
+
+        tbody.innerHTML = `
+
+          <tr>
+
+            <td
+              colspan="8"
+              style="
+                text-align:center;
+                padding:40px;
+                color:#71807b;
+              "
+            >
+
+              ${
+                carregando
+                  ? 'Carregando...'
+                  : 'Nenhuma O.S. cadastrada.'
+              }
+
+            </td>
+
+          </tr>
+
+        `;
+
+      } else {
+
+        tbody.innerHTML =
+          lista
+            .map(
+              montarLinha
+            )
+            .join('');
+
+      }
+
+
+      /* =========================
+         CARDS
+      ========================= */
+
+      document
+        .getElementById('total')
+        .textContent =
+        dados.length;
+
+
+      document
+        .getElementById('fazendo')
+        .textContent =
+        contarStatus(
+          'FAZENDO'
+        );
+
+
+      document
+        .getElementById('teste')
+        .textContent =
+        dados.filter(
+          x =>
+            [
+              'DISPONIVEL_TESTE',
+              'TESTANDO',
+              'TESTE_CONCLUIDO'
+            ].includes(
+              x.status
+            )
+        ).length;
+
+
+      document
+        .getElementById('producao')
+        .textContent =
+        contarStatus(
+          'EM_PRODUCAO'
+        );
+
+
+      document
+        .getElementById('concluido')
+        .textContent =
+        dados.filter(
+          x =>
+            [
+              'CONCLUIDO',
+              'ENTREGUE'
+            ].includes(
+              x.status
+            )
+        ).length;
+
+    }
+
+
+    /* =========================
+       CONTAR STATUS
+    ========================= */
+
+    function contarStatus(status) {
+
+      return dados.filter(
+        x =>
+          x.status === status
+      ).length;
+
+    }
+
+
+    /* =========================
+       MONTAR LINHA
+    ========================= */
+
+    function montarLinha(x) {
+
+      const atrasado =
+        estaAtrasado(x);
+
+
+      const statusClass =
+        statusClasses[
+          x.status
+        ] || 'status-backlog';
+
+
+      const statusTexto =
+        statusNomes[
+          x.status
+        ] || x.status || '—';
+
+
+      const pendClass =
+        x.pendencia ===
+        'Cliente'
+          ? 'pc'
+          : 'pe';
+
+
+      return `
+
+        <tr>
+
+          <td>
+
+            <b>
+              ${
+                esc(
+                  x.prioridade ??
+                  '—'
+                )
+              }
+            </b>
+
+          </td>
+
+
+          <td>
+
+            <b>
+              ${
+                esc(
+                  x.os ??
+                  '—'
+                )
+              }
+            </b>
+
+          </td>
+
+
+          <td
+            class="${
+              atrasado
+                ? 'late'
+                : ''
+            }"
+          >
+
+            ${
+              x.prazo
+                ? br(x.prazo)
+                : 'Não definido'
+            }
+
+            ${
+              atrasado
+                ? ' • ATRASADO'
+                : ''
+            }
+
+          </td>
+
+
+          <td>
+
+            ${
+              esc(
+                x.descricao ??
+                '—'
+              )
+            }
+
+          </td>
+
+
+          <td>
+
+            ${
+              x.status
+
+                ? `
+
+                  <span
+                    class="badge ${statusClass}"
+                  >
+
+                    ${esc(
+                      statusTexto
+                    )}
+
+                  </span>
+
+                `
+
+                : '—'
+            }
+
+          </td>
+
+
+          <td>
+
+            ${
+              x.pendencia
+
+                ? `
+
+                  <span
+                    class="badge ${pendClass}"
+                  >
+
+                    ${esc(
+                      x.pendencia
+                    )}
+
+                  </span>
+
+                `
+
+                : '—'
+            }
+
+          </td>
+
+
+          <td>
+
+            ${
+              esc(
+                x.observacao ??
+                '—'
+              )
+            }
+
+          </td>
+
+
+          <td>
+
+            <div class="table-actions">
+
+              <button
+                class="edit-btn"
+                onclick="editar('${escAttr(x.id)}')"
+              >
+                Editar
+              </button>
+
+
+              <button
+                class="delete-btn"
+                onclick="excluir('${escAttr(x.id)}')"
+              >
+                Excluir
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+
+
+    /* =========================
+       EDITAR
+    ========================= */
+
+    function editar(id) {
+
+      const registro =
+        dados.find(
+          x =>
+            String(x.id) ===
+            String(id)
+        );
+
+
+      if (!registro) {
+
+        alert(
+          'Não foi possível localizar esta O.S.'
+        );
+
+        return;
+
+      }
+
+
+      abrir(
+        registro
+      );
+
+    }
+
+
+    /* =========================
+       VERIFICAR ATRASO
+    ========================= */
+
+    function estaAtrasado(x) {
+
+      if (
+        !x.prazo ||
+        x.status ===
+        'CONCLUIDO' ||
+        x.status ===
+        'ENTREGUE'
+      ) {
+
+        return false;
+
+      }
+
+
+      const prazo =
+        new Date(
+          x.prazo +
+          'T00:00:00'
+        );
+
+
+      const hoje =
+        new Date();
+
+
+      hoje.setHours(
+        0,
+        0,
+        0,
+        0
+      );
+
+
+      return prazo < hoje;
+
+    }
+
+
+    /* =========================
+       FORMATAR DATA
+    ========================= */
+
+    function br(valor) {
+
+      if (!valor) {
+
+        return 'Não definido';
+
+      }
+
+
+      const partes =
+        String(valor)
+          .split('-');
+
+
+      if (
+        partes.length !== 3
+      ) {
+
+        return valor;
+
+      }
+
+
+      return (
+        partes[2] +
+        '/' +
+        partes[1] +
+        '/' +
+        partes[0]
+      );
+
+    }
+
+
+    /* =========================
+       ESCAPAR HTML
+    ========================= */
+
+    function esc(valor) {
+
+      return String(
+        valor ?? ''
+      ).replace(
+        /[&<>"']/g,
+        c => ({
+
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+
+        })[c]
+      );
+
+    }
+
+
+    function escAttr(valor) {
+
+      return String(
+        valor ?? ''
+      )
+        .replace(
+          /\\/g,
+          '\\\\'
+        )
+        .replace(
+          /'/g,
+          "\\'"
+        );
+
+    }
+
+
+    /* =========================
+       FILTROS
+    ========================= */
+
+    document
+      .getElementById('busca')
+      .addEventListener(
+        'input',
+        render
+      );
+
+
+    document
+      .getElementById('status')
+      .addEventListener(
+        'change',
+        render
+      );
+
+
+    document
+      .getElementById('pendFiltro')
+      .addEventListener(
+        'change',
+        render
+      );
+
+
+    /* =========================
+       FECHAR MODAL AO CLICAR FORA
+    ========================= */
+
+    document
+      .getElementById('modal')
+      .addEventListener(
+        'click',
+        function(e) {
+
+          if (
+            e.target ===
+            this
+          ) {
+
+            fechar();
+
+          }
+
+        }
+      );
+
+
+    /* =========================
+       INICIAR
+    ========================= */
+
+    iniciar();
+
+  </script>
+
 </body>
+
 </html>
