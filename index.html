@@ -4,260 +4,1643 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Coplan • Controle de O.S.</title>
+
 <style>
-:root{--green:#006b4f;--green2:#008b68;--dark:#12382f;--bg:#f4f7f6;--card:#fff;--line:#e4ebe8;--text:#1e2b27;--muted:#71807b;--red:#c93d3d;--yellow:#c98612;--blue:#3c6edb}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
-.login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a)}
-.loginbox{width:min(420px,92%);background:#fff;border-radius:20px;padding:36px;box-shadow:0 20px 60px #0004}.logo{font-weight:900;font-size:34px;color:var(--green);letter-spacing:-1px}.logo span{display:block;font-size:13px;color:var(--muted);font-weight:500;letter-spacing:0;margin-top:4px}
-.login h2{margin:30px 0 6px}.login p{color:var(--muted);margin-top:0}.field{margin:15px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}input,select,textarea{width:100%;padding:12px 13px;border:1px solid #d5dfdb;border-radius:9px;font:inherit;background:#fff}button{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer}.primary{background:var(--green);color:#fff}.primary:hover{background:#00563f}.wide{width:100%;margin-top:8px}.hint{font-size:12px;color:var(--muted);margin-top:14px}.app{display:none;min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:#073e31;color:#fff;padding:25px 17px}.side-logo{font-size:27px;font-weight:900;padding:8px 12px 28px}.side-logo small{display:block;font-size:11px;font-weight:500;opacity:.65;margin-top:3px}.nav{padding:8px 0}.nav div{padding:12px;border-radius:9px;margin:4px 0;color:#dcebe6}.nav .active,.nav div:hover{background:#ffffff16;color:#fff}.user{position:absolute;bottom:20px;left:17px;right:17px;padding:12px;border-top:1px solid #ffffff22;font-size:13px}.user button{margin-top:10px;width:100%;background:#ffffff12;color:#fff}.main{margin-left:245px;padding:28px 34px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.top h1{margin:0;font-size:25px}.top p{margin:5px 0;color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:19px;box-shadow:0 3px 12px #12382f08}.card .label{font-size:12px;color:var(--muted);font-weight:700}.card .num{font-size:29px;font-weight:800;margin-top:9px}.card.green{border-top:3px solid var(--green)}.card.yellow{border-top:3px solid var(--yellow)}.card.red{border-top:3px solid var(--red)}.card.blue{border-top:3px solid var(--blue)}.panel{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px}.toolbar{display:flex;gap:9px;justify-content:space-between;flex-wrap:wrap}.filters{display:flex;gap:8px;flex:1;min-width:300px}.filters input{max-width:320px}table{width:100%;border-collapse:collapse;margin-top:17px}th,td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--line);font-size:13px}th{font-size:11px;text-transform:uppercase;color:var(--muted);background:#fafcfb}.badge{display:inline-block;padding:5px 9px;border-radius:99px;font-size:11px;font-weight:800}.p{background:#fee7e7;color:#9f2626}.a{background:#fff2d5;color:#94600a}.c{background:#def6e9;color:#17683f}.pc{background:#e4ecff;color:#365aa0}.pe{background:#def5ee;color:#17664f}.late{color:#bd2525;font-weight:800}.modal{display:none;position:fixed;inset:0;background:#0007;place-items:center;padding:20px}.modal.open{display:grid}.modalbox{background:#fff;width:min(650px,100%);max-height:90vh;overflow:auto;border-radius:15px;padding:25px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.full{grid-column:1/-1}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.error{color:#b42318;font-size:13px;margin-top:8px;display:none}
-@media(max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.sidebar{position:static;width:auto}.main{margin-left:0;padding:20px}.user{position:static;margin-top:25px}.grid{grid-template-columns:1fr}.full{grid-column:auto}.cards{grid-template-columns:1fr}.top{align-items:flex-start;gap:10px;flex-direction:column}}
+:root{
+--green:#006b4f;
+--green2:#008b68;
+--dark:#12382f;
+--bg:#f4f7f6;
+--card:#fff;
+--line:#e4ebe8;
+--text:#1e2b27;
+--muted:#71807b;
+--red:#c93d3d;
+--yellow:#c98612;
+--blue:#3c6edb
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Inter,Segoe UI,Arial,sans-serif;
+background:var(--bg);
+color:var(--text)
+}
+
+.login{
+min-height:100vh;
+display:grid;
+place-items:center;
+background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a)
+}
+
+.loginbox{
+width:min(420px,92%);
+background:#fff;
+border-radius:20px;
+padding:36px;
+box-shadow:0 20px 60px #0004
+}
+
+.logo{
+font-weight:900;
+font-size:34px;
+color:var(--green);
+letter-spacing:-1px
+}
+
+.logo span{
+display:block;
+font-size:13px;
+color:var(--muted);
+font-weight:500;
+letter-spacing:0;
+margin-top:4px
+}
+
+.login h2{
+margin:30px 0 6px
+}
+
+.login p{
+color:var(--muted);
+margin-top:0
+}
+
+.field{
+margin:15px 0
+}
+
+.field label{
+display:block;
+font-size:13px;
+font-weight:700;
+margin-bottom:7px
+}
+
+input,select,textarea{
+width:100%;
+padding:12px 13px;
+border:1px solid #d5dfdb;
+border-radius:9px;
+font:inherit;
+background:#fff
+}
+
+button{
+border:0;
+border-radius:9px;
+padding:11px 16px;
+font-weight:700;
+cursor:pointer
+}
+
+.primary{
+background:var(--green);
+color:#fff
+}
+
+.primary:hover{
+background:#00563f
+}
+
+.wide{
+width:100%;
+margin-top:8px
+}
+
+.hint{
+font-size:12px;
+color:var(--muted);
+margin-top:14px
+}
+
+.app{
+display:none;
+min-height:100vh
+}
+
+.sidebar{
+position:fixed;
+inset:0 auto 0 0;
+width:245px;
+background:#073e31;
+color:#fff;
+padding:25px 17px
+}
+
+.side-logo{
+font-size:27px;
+font-weight:900;
+padding:8px 12px 28px
+}
+
+.side-logo small{
+display:block;
+font-size:11px;
+font-weight:500;
+opacity:.65;
+margin-top:3px
+}
+
+.nav{
+padding:8px 0
+}
+
+.nav div{
+padding:12px;
+border-radius:9px;
+margin:4px 0;
+color:#dcebe6
+}
+
+.nav .active,
+.nav div:hover{
+background:#ffffff16;
+color:#fff
+}
+
+.user{
+position:absolute;
+bottom:20px;
+left:17px;
+right:17px;
+padding:12px;
+border-top:1px solid #ffffff22;
+font-size:13px
+}
+
+.user button{
+margin-top:10px;
+width:100%;
+background:#ffffff12;
+color:#fff
+}
+
+.main{
+margin-left:245px;
+padding:28px 34px
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px
+}
+
+.top h1{
+margin:0;
+font-size:25px
+}
+
+.top p{
+margin:5px 0;
+color:var(--muted)
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:14px
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:13px;
+padding:19px;
+box-shadow:0 3px 12px #12382f08
+}
+
+.card .label{
+font-size:12px;
+color:var(--muted);
+font-weight:700
+}
+
+.card .num{
+font-size:29px;
+font-weight:800;
+margin-top:9px
+}
+
+.card.green{
+border-top:3px solid var(--green)
+}
+
+.card.yellow{
+border-top:3px solid var(--yellow)
+}
+
+.card.red{
+border-top:3px solid var(--red)
+}
+
+.card.blue{
+border-top:3px solid var(--blue)
+}
+
+.panel{
+margin-top:20px;
+background:#fff;
+border:1px solid var(--line);
+border-radius:13px;
+padding:20px
+}
+
+.toolbar{
+display:flex;
+gap:9px;
+justify-content:space-between;
+flex-wrap:wrap
+}
+
+.filters{
+display:flex;
+gap:8px;
+flex:1;
+min-width:300px
+}
+
+.filters input{
+max-width:320px
+}
+
+/* ÁREA DE EXCLUSÃO */
+.selection-bar{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+margin-top:15px;
+padding:12px 14px;
+background:#f8faf9;
+border:1px solid var(--line);
+border-radius:9px
+}
+
+.selection-left{
+display:flex;
+align-items:center;
+gap:9px;
+font-size:13px;
+font-weight:700
+}
+
+.delete-selected{
+background:#c93d3d;
+color:#fff;
+display:none
+}
+
+.delete-selected:hover{
+background:#a82f2f
+}
+
+.delete-selected.show{
+display:block
+}
+
+input[type="checkbox"]{
+width:17px;
+height:17px;
+cursor:pointer;
+accent-color:var(--green)
+}
+
+.checkbox-cell{
+width:45px;
+text-align:center
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:17px
+}
+
+th,td{
+text-align:left;
+padding:13px 10px;
+border-bottom:1px solid var(--line);
+font-size:13px
+}
+
+th{
+font-size:11px;
+text-transform:uppercase;
+color:var(--muted);
+background:#fafcfb
+}
+
+.badge{
+display:inline-block;
+padding:5px 9px;
+border-radius:99px;
+font-size:11px;
+font-weight:800
+}
+
+.p{
+background:#fee7e7;
+color:#9f2626
+}
+
+.a{
+background:#fff2d5;
+color:#94600a
+}
+
+.c{
+background:#def6e9;
+color:#17683f
+}
+
+.pc{
+background:#e4ecff;
+color:#365aa0
+}
+
+.pe{
+background:#def5ee;
+color:#17664f
+}
+
+.late{
+color:#bd2525;
+font-weight:800
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:#0007;
+place-items:center;
+padding:20px
+}
+
+.modal.open{
+display:grid
+}
+
+.modalbox{
+background:#fff;
+width:min(650px,100%);
+max-height:90vh;
+overflow:auto;
+border-radius:15px;
+padding:25px
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:13px
+}
+
+.full{
+grid-column:1/-1
+}
+
+.actions{
+display:flex;
+justify-content:flex-end;
+gap:8px;
+margin-top:18px
+}
+
+.error{
+color:#b42318;
+font-size:13px;
+margin-top:8px;
+display:none
+}
+
+@media(max-width:1000px){
+.cards{
+grid-template-columns:repeat(2,1fr)
+}
+}
+
+@media(max-width:700px){
+.sidebar{
+position:static;
+width:auto
+}
+
+.main{
+margin-left:0;
+padding:20px
+}
+
+.user{
+position:static;
+margin-top:25px
+}
+
+.grid{
+grid-template-columns:1fr
+}
+
+.full{
+grid-column:auto
+}
+
+.cards{
+grid-template-columns:1fr
+}
+
+.top{
+align-items:flex-start;
+gap:10px;
+flex-direction:column
+}
+
+.selection-bar{
+align-items:flex-start;
+flex-direction:column
+}
+}
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
+
 <section class="login" id="login">
+
 <div class="loginbox">
-<div class="logo">COPLAN<span>Controle de O.S. e Demandas</span></div>
-<h2>Acesso ao sistema</h2><p>Entre para acompanhar as demandas da equipe.</p>
-<form onsubmit="entrar(event)">
-<div class="field"><label>E-mail</label><input id="email" type="email" required placeholder="seu@email.com"></div>
-<div class="field"><label>Senha</label><input id="senha" type="password" required placeholder="••••••••"></div>
-<div class="error" id="loginerr">E-mail ou senha inválidos.</div>
-<button class="primary wide">Entrar</button>
-</form>
-<div class="hint">Esta versão está preparada para autenticação e banco de dados Supabase. Veja o arquivo CONFIGURACAO.md.</div>
+
+<div class="logo">
+COPLAN
+<span>Controle de O.S. e Demandas</span>
 </div>
+
+<h2>Acesso ao sistema</h2>
+
+<p>
+Entre para acompanhar as demandas da equipe.
+</p>
+
+<form onsubmit="entrar(event)">
+
+<div class="field">
+<label>E-mail</label>
+<input id="email" type="email" required placeholder="seu@email.com">
+</div>
+
+<div class="field">
+<label>Senha</label>
+<input id="senha" type="password" required placeholder="••••••••">
+</div>
+
+<div class="error" id="loginerr">
+E-mail ou senha inválidos.
+</div>
+
+<button class="primary wide">
+Entrar
+</button>
+
+</form>
+
+<div class="hint">
+Esta versão está preparada para autenticação e banco de dados Supabase.
+</div>
+
+</div>
+
 </section>
+
 
 <section class="app" id="app">
+
 <aside class="sidebar">
-<div class="side-logo">COPLAN<small>CONTROLE DE DEMANDAS</small></div>
-<div class="nav"><div class="active">▦ Dashboard</div><div>✓ Ordens de Serviço</div><div>◉ Relatórios</div></div>
-<div class="user"><strong id="useremail">Usuário</strong><br><span style="opacity:.6">Acesso ao sistema</span><button onclick="sair()">Sair</button></div>
+
+<div class="side-logo">
+COPLAN
+<small>CONTROLE DE DEMANDAS</small>
+</div>
+
+<div class="nav">
+<div class="active">▦ Dashboard</div>
+<div>✓ Ordens de Serviço</div>
+<div>◉ Relatórios</div>
+</div>
+
+<div class="user">
+
+<strong id="useremail">
+Usuário
+</strong>
+
+<br>
+
+<span style="opacity:.6">
+Acesso ao sistema
+</span>
+
+<button onclick="sair()">
+Sair
+</button>
+
+</div>
+
 </aside>
+
+
 <main class="main">
-<div class="top"><div><h1>Dashboard</h1><p>Visão geral das ordens de serviço</p></div><button class="primary" onclick="abrir()">+ Nova O.S.</button></div>
+
+<div class="top">
+
+<div>
+<h1>Dashboard</h1>
+<p>Visão geral das ordens de serviço</p>
+</div>
+
+<button class="primary" onclick="abrir()">
++ Nova O.S.
+</button>
+
+</div>
+
+
 <div class="cards">
-<div class="card green"><div class="label">TOTAL DE O.S.</div><div class="num" id="total">0</div></div>
-<div class="card red"><div class="label">PENDENTES</div><div class="num" id="pendCount">0</div></div>
-<div class="card yellow"><div class="label">EM ANDAMENTO</div><div class="num" id="and">0</div></div>
-<div class="card blue"><div class="label">AGUARDANDO CLIENTE</div><div class="num" id="cli">0</div></div>
-<div class="card red"><div class="label">EM ATRASO</div><div class="num" id="late">0</div></div>
+
+<div class="card green">
+<div class="label">TOTAL DE O.S.</div>
+<div class="num" id="total">0</div>
 </div>
+
+<div class="card red">
+<div class="label">PENDENTES</div>
+<div class="num" id="pendCount">0</div>
+</div>
+
+<div class="card yellow">
+<div class="label">EM ANDAMENTO</div>
+<div class="num" id="and">0</div>
+</div>
+
+<div class="card blue">
+<div class="label">AGUARDANDO CLIENTE</div>
+<div class="num" id="cli">0</div>
+</div>
+
+<div class="card red">
+<div class="label">EM ATRASO</div>
+<div class="num" id="late">0</div>
+</div>
+
+</div>
+
+
 <div class="panel">
-<div class="toolbar"><div class="filters"><input id="busca" placeholder="Buscar O.S. ou descrição..." oninput="render()"><select id="status" onchange="render()"><option value="">Todos os status</option><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select><select id="pendFiltro" onchange="render()"><option value="">Todas as pendências</option><option>Empresa</option><option>Cliente</option></select></div></div>
-<div style="overflow:auto"><table><thead><tr><th>Prioridade</th><th>O.S.</th><th>Prazo</th><th>Descrição</th><th>Status</th><th>Pendência</th><th>Observação</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
+
+<div class="toolbar">
+
+<div class="filters">
+
+<input
+id="busca"
+placeholder="Buscar O.S. ou descrição..."
+oninput="render()"
+>
+
+<select id="status" onchange="render()">
+
+<option value="">
+Todos os status
+</option>
+
+<option>
+Pendente
+</option>
+
+<option>
+Em andamento
+</option>
+
+<option>
+Concluído
+</option>
+
+</select>
+
+<select id="pendFiltro" onchange="render()">
+
+<option value="">
+Todas as pendências
+</option>
+
+<option>
+Empresa
+</option>
+
+<option>
+Cliente
+</option>
+
+</select>
+
 </div>
+
+</div>
+
+
+<!-- BARRA DE SELEÇÃO -->
+<div class="selection-bar">
+
+<div class="selection-left">
+
+<input
+type="checkbox"
+id="selecionarTodas"
+onchange="selecionarTodas()"
+>
+
+<label for="selecionarTodas">
+Selecionar todas
+</label>
+
+<span id="contadorSelecionadas">
+(0 selecionadas)
+</span>
+
+</div>
+
+<button
+id="btnExcluir"
+class="delete-selected"
+onclick="excluirSelecionadas()"
+>
+🗑 Excluir selecionadas
+</button>
+
+</div>
+
+
+<div style="overflow:auto">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th class="checkbox-cell">
+<input
+type="checkbox"
+id="checkCabecalho"
+onchange="selecionarTodas()"
+>
+</th>
+
+<th>Prioridade</th>
+<th>O.S.</th>
+<th>Prazo</th>
+<th>Descrição</th>
+<th>Status</th>
+<th>Pendência</th>
+<th>Observação</th>
+<th></th>
+
+</tr>
+
+</thead>
+
+<tbody id="tbody"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
 </main>
+
 </section>
 
-<div class="modal" id="modal"><div class="modalbox"><h2 id="mt">Nova O.S.</h2><form onsubmit="salvar(event)">
-<input type="hidden" id="id"><div class="grid">
-<div class="field"><label>Prioridade</label><input id="prioridade" type="number" min="1" required></div>
-<div class="field"><label>Nº da O.S.</label><input id="os" required></div>
-<div class="field"><label>Prazo</label><input id="prazo" type="date"></div>
-<div class="field"><label>Status</label><select id="st"><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select></div>
-<div class="field"><label>Pendência</label><select id="pe"><option>Empresa</option><option>Cliente</option></select></div>
-<div class="field full"><label>Descrição</label><textarea id="desc" rows="4" required></textarea></div>
-<div class="field full"><label>Observação</label><textarea id="obs" rows="3"></textarea></div>
-</div><div class="actions"><button type="button" onclick="fechar()">Cancelar</button><button class="primary">Salvar</button></div></form></div></div>
+
+<div class="modal" id="modal">
+
+<div class="modalbox">
+
+<h2 id="mt">
+Nova O.S.
+</h2>
+
+<form onsubmit="salvar(event)">
+
+<input type="hidden" id="id">
+
+<div class="grid">
+
+<div class="field">
+
+<label>Prioridade</label>
+
+<input
+id="prioridade"
+type="number"
+min="1"
+required
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Nº da O.S.</label>
+
+<input
+id="os"
+required
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Prazo</label>
+
+<input
+id="prazo"
+type="date"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Status</label>
+
+<select id="st">
+
+<option>
+Pendente
+</option>
+
+<option>
+Em andamento
+</option>
+
+<option>
+Concluído
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Pendência</label>
+
+<select id="pe">
+
+<option>
+Empresa
+</option>
+
+<option>
+Cliente
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field full">
+
+<label>Descrição</label>
+
+<textarea
+id="desc"
+rows="4"
+required
+></textarea>
+
+</div>
+
+
+<div class="field full">
+
+<label>Observação</label>
+
+<textarea
+id="obs"
+rows="3"
+></textarea>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button
+type="button"
+onclick="fechar()"
+>
+Cancelar
+</button>
+
+<button class="primary">
+Salvar
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
 
 <script>
-const SUPABASE_URL = 'https://otzhzpimeawafhguhcae.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
+
+const SUPABASE_URL =
+'https://otzhzpimeawafhguhcae.supabase.co';
+
+const SUPABASE_PUBLISHABLE_KEY =
+'sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
 
 const { createClient } = supabase;
-const db = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+const db =
+createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
 
 let dados = [];
 let carregando = false;
 
-async function iniciar() {
-const { data: { session } } = await db.auth.getSession();
-if (session) {
+
+// ==========================
+// LOGIN
+// ==========================
+
+async function iniciar(){
+
+const {
+data:{
+session
+}
+} = await db.auth.getSession();
+
+if(session){
+
 mostrarApp(session.user);
-} else {
+
+}else{
+
 mostrarLogin();
+
 }
 
-db.auth.onAuthStateChange((_event, session) => {
-if (session) mostrarApp(session.user);
-else mostrarLogin();
-});
+db.auth.onAuthStateChange(
+(_event, session)=>{
+
+if(session){
+
+mostrarApp(session.user);
+
+}else{
+
+mostrarLogin();
+
 }
 
-function mostrarLogin() {
-document.getElementById('login').style.display = 'grid';
-document.getElementById('app').style.display = 'none';
+}
+);
+
 }
 
-async function entrar(e) {
+
+function mostrarLogin(){
+
+document.getElementById('login').style.display='grid';
+
+document.getElementById('app').style.display='none';
+
+}
+
+
+async function entrar(e){
+
 e.preventDefault();
-const email = document.getElementById('email').value.trim();
-const senha = document.getElementById('senha').value;
-const erro = document.getElementById('loginerr');
-erro.style.display = 'none';
 
-const { error } = await db.auth.signInWithPassword({ email, password: senha });
+const email =
+document.getElementById('email').value.trim();
 
-if (error) {
-erro.textContent = 'E-mail ou senha inválidos.';
-erro.style.display = 'block';
+const senha =
+document.getElementById('senha').value;
+
+const erro =
+document.getElementById('loginerr');
+
+erro.style.display='none';
+
+const {error} =
+await db.auth.signInWithPassword({
+email,
+password:senha
+});
+
+if(error){
+
+erro.textContent =
+'E-mail ou senha inválidos.';
+
+erro.style.display='block';
+
 }
+
 }
 
-async function mostrarApp(user) {
-document.getElementById('login').style.display = 'none';
-document.getElementById('app').style.display = 'block';
-document.getElementById('useremail').textContent = user?.email || 'Usuário';
+
+async function mostrarApp(user){
+
+document.getElementById('login').style.display='none';
+
+document.getElementById('app').style.display='block';
+
+document.getElementById('useremail').textContent =
+user?.email || 'Usuário';
+
 await carregarDados();
+
 }
 
-async function sair() {
+
+async function sair(){
+
 await db.auth.signOut();
+
 }
 
-async function carregarDados() {
-carregando = true;
-const { data, error } = await db
+
+// ==========================
+// CARREGAR DADOS
+// ==========================
+
+async function carregarDados(){
+
+carregando=true;
+
+const {
+data,
+error
+} =
+await db
 .from('ordens_servico')
 .select('*')
-.order('prioridade', { ascending: true });
+.order('prioridade',{
+ascending:true
+});
 
-carregando = false;
+carregando=false;
 
-if (error) {
-alert('Não foi possível carregar as O.S.\\n\\n' + error.message);
+if(error){
+
+alert(
+'Não foi possível carregar as O.S.\n\n'
++
+error.message
+);
+
 return;
+
 }
 
-dados = data || [];
+dados=data || [];
+
 render();
+
 }
 
-function abrir(x = null) {
-document.getElementById('modal').classList.add('open');
-document.querySelector('#modal form').reset();
-document.getElementById('id').value = '';
-document.getElementById('mt').textContent = x ? 'Editar O.S.' : 'Nova O.S.';
 
-if (x) {
-document.getElementById('id').value = x.id || '';
-document.getElementById('prioridade').value = x.prioridade ?? '';
-document.getElementById('os').value = x.os ?? '';
-document.getElementById('prazo').value = x.prazo ?? '';
-document.getElementById('st').value = x.status ?? 'Pendente';
-document.getElementById('pe').value = x.pendencia ?? 'Empresa';
-document.getElementById('desc').value = x.descricao ?? '';
-document.getElementById('obs').value = x.observacao ?? '';
-}
+// ==========================
+// NOVA / EDITAR O.S.
+// ==========================
+
+function abrir(x=null){
+
+document
+.getElementById('modal')
+.classList.add('open');
+
+document
+.querySelector('#modal form')
+.reset();
+
+document.getElementById('id').value='';
+
+document.getElementById('mt').textContent =
+x ? 'Editar O.S.' : 'Nova O.S.';
+
+if(x){
+
+document.getElementById('id').value =
+x.id || '';
+
+document.getElementById('prioridade').value =
+x.prioridade ?? '';
+
+document.getElementById('os').value =
+x.os ?? '';
+
+document.getElementById('prazo').value =
+x.prazo ?? '';
+
+document.getElementById('st').value =
+x.status ?? 'Pendente';
+
+document.getElementById('pe').value =
+x.pendencia ?? 'Empresa';
+
+document.getElementById('desc').value =
+x.descricao ?? '';
+
+document.getElementById('obs').value =
+x.observacao ?? '';
+
 }
 
-function fechar() {
-document.getElementById('modal').classList.remove('open');
 }
 
-async function salvar(e) {
+
+function fechar(){
+
+document
+.getElementById('modal')
+.classList.remove('open');
+
+}
+
+
+// ==========================
+// SALVAR
+// ==========================
+
+async function salvar(e){
+
 e.preventDefault();
 
-const id = document.getElementById('id').value;
+const id =
+document.getElementById('id').value;
 
-const registro = {
-prioridade: Number(document.getElementById('prioridade').value),
-os: document.getElementById('os').value.trim(),
-prazo: document.getElementById('prazo').value || null,
-status: document.getElementById('st').value,
-pendencia: document.getElementById('pe').value,
-descricao: document.getElementById('desc').value.trim(),
-observacao: document.getElementById('obs').value.trim()
+const registro={
+
+prioridade:Number(
+document.getElementById('prioridade').value
+),
+
+os:
+document.getElementById('os').value.trim(),
+
+prazo:
+document.getElementById('prazo').value || null,
+
+status:
+document.getElementById('st').value,
+
+pendencia:
+document.getElementById('pe').value,
+
+descricao:
+document.getElementById('desc').value.trim(),
+
+observacao:
+document.getElementById('obs').value.trim()
+
 };
 
-if (!registro.os || !registro.descricao) {
-alert('Preencha O.S. e descrição.');
+if(!registro.os || !registro.descricao){
+
+alert(
+'Preencha O.S. e descrição.'
+);
+
 return;
+
 }
 
 let resultado;
 
-if (id) {
-resultado = await db
+if(id){
+
+resultado=
+await db
 .from('ordens_servico')
 .update(registro)
-.eq('id', id)
+.eq('id',id)
 .select()
 .single();
-} else {
-resultado = await db
+
+}else{
+
+resultado=
+await db
 .from('ordens_servico')
 .insert(registro)
 .select()
 .single();
+
 }
 
-if (resultado.error) {
-alert('Não foi possível salvar a O.S.\n\n' + resultado.error.message);
+if(resultado.error){
+
+alert(
+'Não foi possível salvar a O.S.\n\n'
++
+resultado.error.message
+);
+
 return;
+
 }
 
 fechar();
+
 await carregarDados();
+
 }
 
-function render() {
-const q = (document.getElementById('busca').value || '').toLowerCase();
-const f = document.getElementById('status').value;
-const p = document.getElementById('pendFiltro').value;
 
-const a = dados
-.filter(x =>
-(!q || (String(x.os || '') + ' ' + String(x.descricao || '')).toLowerCase().includes(q)) &&
-(!f || x.status === f) &&
-(!p || x.pendencia === p)
+// ==========================
+// SELEÇÃO
+// ==========================
+
+function obterSelecionadas(){
+
+return Array.from(
+document.querySelectorAll(
+'.check-os:checked'
 )
-.sort((x, y) => Number(x.prioridade) - Number(y.prioridade));
+).map(
+checkbox => checkbox.value
+);
 
-document.getElementById('tbody').innerHTML = a.length
-? a.map(x => {
-const d = new Date(x.prazo + 'T00:00:00');
-const h = new Date();
-h.setHours(0, 0, 0, 0);
-const atras = x.status !== 'Concluído' && x.prazo && d < h;
+}
 
-    return \`\<tr>
-      \<td>\<b>${esc(x.prioridade)}\</b>\</td>
-      \<td>\<b>${esc(x.os)}\</b>\</td>
-      \<td class="${atras ? 'late' : ''}">${br(x.prazo)}${atras ? ' • ATRASADO' : ''}\</td>
-      \<td>${esc(x.descricao)}\</td>
-      \<td>\<span class="badge ${x.status === 'Concluído' ? 'c' : x.status === 'Em andamento' ? 'a' : 'p'}">${esc(x.status)}\</span>\</td>
-      \<td>\<span class="badge ${x.pendencia === 'Cliente' ? 'pc' : 'pe'}">${esc(x.pendencia)}\</span>\</td>
-      \<td>${esc(x.observacao) || '—'}\</td>
-      \<td>\<button onclick='abrir(${JSON.stringify(x).replace(/'/g, '&#39;')})'>Editar\</button>\</td>
-    \</tr>\`;
-  }).join('')
-: \`\<tr>\<td colspan="8" style="text-align\:center;padding:40px;color:#71807b">${carregando ? 'Carregando...' : 'Nenhuma O.S. cadastrada.'}\</td>\</tr>\`;
 
-document.getElementById('total').textContent = dados.length;
-document.getElementById('pendCount').textContent = dados.filter(x => x.status === 'Pendente').length;
-document.getElementById('and').textContent = dados.filter(x => x.status === 'Em andamento').length;
-document.getElementById('cli').textContent = dados.filter(x => x.pendencia === 'Cliente' && x.status !== 'Concluído').length;
-document.getElementById('late').textContent = dados.filter(x =>
-x.status !== 'Concluído' && x.prazo &&
-new Date(x.prazo + 'T00:00:00') < new Date(new Date().setHours(0, 0, 0, 0))
+function atualizarSelecao(){
+
+const selecionadas =
+obterSelecionadas();
+
+const contador =
+document.getElementById(
+'contadorSelecionadas'
+);
+
+const botao =
+document.getElementById(
+'btnExcluir'
+);
+
+contador.textContent =
+`(${selecionadas.length} selecionadas)`;
+
+if(selecionadas.length > 0){
+
+botao.classList.add('show');
+
+}else{
+
+botao.classList.remove('show');
+
+}
+
+const todos =
+document.querySelectorAll('.check-os');
+
+const cabecalho =
+document.getElementById('checkCabecalho');
+
+const todasMarcadas =
+todos.length > 0 &&
+selecionadas.length === todos.length;
+
+cabecalho.checked =
+todasMarcadas;
+
+document.getElementById(
+'selecionarTodas'
+).checked =
+todasMarcadas;
+
+}
+
+
+function selecionarTodas(){
+
+const cabecalho =
+document.getElementById('checkCabecalho');
+
+const selecionar =
+cabecalho.checked ||
+document.getElementById('selecionarTodas').checked;
+
+document
+.querySelectorAll('.check-os')
+.forEach(check=>{
+check.checked=selecionar;
+});
+
+document.getElementById(
+'checkCabecalho'
+).checked=selecionar;
+
+document.getElementById(
+'selecionarTodas'
+).checked=selecionar;
+
+atualizarSelecao();
+
+}
+
+
+// ==========================
+// EXCLUIR O.S.
+// ==========================
+
+async function excluirSelecionadas(){
+
+const selecionadas =
+obterSelecionadas();
+
+if(!selecionadas.length){
+
+alert(
+'Selecione pelo menos uma O.S. para excluir.'
+);
+
+return;
+
+}
+
+const confirmacao =
+confirm(
+`Tem certeza que deseja excluir ${selecionadas.length} O.S.? \n\nEsta ação não poderá ser desfeita.`
+);
+
+if(!confirmacao){
+
+return;
+
+}
+
+const botao =
+document.getElementById('btnExcluir');
+
+botao.disabled=true;
+
+botao.textContent='Excluindo...';
+
+
+const {error} =
+await db
+.from('ordens_servico')
+.delete()
+.in('id',selecionadas);
+
+
+botao.disabled=false;
+
+botao.textContent='🗑 Excluir selecionadas';
+
+
+if(error){
+
+alert(
+'Não foi possível excluir as O.S.\n\n'
++
+error.message
+);
+
+return;
+
+}
+
+
+alert(
+`${selecionadas.length} O.S. excluída(s) com sucesso.`
+);
+
+
+document.getElementById(
+'checkCabecalho'
+).checked=false;
+
+document.getElementById(
+'selecionarTodas'
+).checked=false;
+
+
+await carregarDados();
+
+}
+
+
+// ==========================
+// RENDER
+// ==========================
+
+function render(){
+
+const q =
+(
+document.getElementById('busca').value || ''
+).toLowerCase();
+
+const f =
+document.getElementById('status').value;
+
+const p =
+document.getElementById('pendFiltro').value;
+
+
+const a =
+dados
+.filter(x=>
+
+(
+!q ||
+(
+String(x.os || '')
++
+' '
++
+String(x.descricao || '')
+)
+.toLowerCase()
+.includes(q)
+)
+
+&&
+
+(!f || x.status===f)
+
+&&
+
+(!p || x.pendencia===p)
+
+)
+.sort(
+(x,y)=>
+Number(x.prioridade)
+-
+Number(y.prioridade)
+);
+
+
+document.getElementById('tbody').innerHTML =
+a.length
+
+?
+
+a.map(x=>{
+
+const d =
+x.prazo
+?
+new Date(x.prazo+'T00:00:00')
+:
+null;
+
+const h =
+new Date();
+
+h.setHours(0,0,0,0);
+
+const atras =
+x.status !== 'Concluído'
+&&
+x.prazo
+&&
+d < h;
+
+
+return `
+
+<tr>
+
+<td class="checkbox-cell">
+
+<input
+type="checkbox"
+class="check-os"
+value="${esc(x.id)}"
+onchange="atualizarSelecao()"
+>
+
+</td>
+
+<td>
+<b>${esc(x.prioridade)}</b>
+</td>
+
+<td>
+<b>${esc(x.os)}</b>
+</td>
+
+<td class="${atras ? 'late' : ''}">
+${br(x.prazo)}
+${atras ? ' • ATRASADO' : ''}
+</td>
+
+<td>
+${esc(x.descricao)}
+</td>
+
+<td>
+
+<span class="badge ${
+x.status === 'Concluído'
+?
+'c'
+:
+x.status === 'Em andamento'
+?
+'a'
+:
+'p'
+}">
+
+${esc(x.status)}
+
+</span>
+
+</td>
+
+<td>
+
+<span class="badge ${
+x.pendencia === 'Cliente'
+?
+'pc'
+:
+'pe'
+}">
+
+${esc(x.pendencia)}
+
+</span>
+
+</td>
+
+<td>
+${esc(x.observacao) || '—'}
+</td>
+
+<td>
+
+<button
+onclick='abrir(${JSON.stringify(x).replace(/'/g,'&#39;')})'
+>
+Editar
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+}).join('')
+
+:
+
+`
+
+<tr>
+
+<td
+colspan="9"
+style="text-align:center;padding:40px;color:#71807b"
+>
+
+${carregando
+?
+'Carregando...'
+:
+'Nenhuma O.S. cadastrada.'
+}
+
+</td>
+
+</tr>
+
+`;
+
+
+document.getElementById('total').textContent =
+dados.length;
+
+document.getElementById('pendCount').textContent =
+dados.filter(
+x=>x.status==='Pendente'
 ).length;
+
+document.getElementById('and').textContent =
+dados.filter(
+x=>x.status==='Em andamento'
+).length;
+
+document.getElementById('cli').textContent =
+dados.filter(
+x=>
+x.pendencia==='Cliente'
+&&
+x.status!=='Concluído'
+).length;
+
+document.getElementById('late').textContent =
+dados.filter(
+x=>
+x.status!=='Concluído'
+&&
+x.prazo
+&&
+new Date(
+x.prazo+'T00:00:00'
+)
+<
+new Date(
+new Date().setHours(0,0,0,0)
+)
+).length;
+
+
+// limpa seleção após renderização
+atualizarSelecao();
+
 }
 
-function br(x) {
-if (!x) return 'Não definido';
-const [y, m, d] = x.split('-');
+
+// ==========================
+// DATA
+// ==========================
+
+function br(x){
+
+if(!x)
+return 'Não definido';
+
+const [y,m,d]=x.split('-');
+
 return `${d}/${m}/${y}`;
+
 }
 
-function esc(s) {
-return String(s ?? '').replace(/[&<>"']/g, c => ({
-'&': '&', '<': '<', '>': '>', '"': '"', "'": '''
-}[c]));
+
+// ==========================
+// ESCAPE
+// ==========================
+
+function esc(s){
+
+return String(s ?? '')
+.replace(
+/[&<>"']/g,
+c=>({
+
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#39;'
+
+}[c])
+
+);
+
 }
+
+
+// ==========================
+// INICIAR
+// ==========================
 
 iniciar();
+
 </script>
-</body></html>
+
+</body>
+</html>
