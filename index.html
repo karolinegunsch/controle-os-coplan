@@ -37,7 +37,7 @@ input,select,textarea{width:100%;padding:12px 13px;border:1px solid #d5dfdb;bord
 .user{position:absolute;bottom:20px;left:17px;right:17px;padding:12px;border-top:1px solid #ffffff22;font-size:13px}
 .user button{margin-top:10px;width:100%;background:#ffffff12;color:#fff}
 .main{margin-left:72px;padding:28px 34px;transition:margin-left .25s ease}.sidebar:hover ~ .main{margin-left:230px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:25px}.top-buttons{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}.top-buttons button{white-space:nowrap}
 .top h1{margin:0;font-size:25px}.top p{margin:5px 0;color:var(--muted)}
 .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:19px;box-shadow:0 3px 12px #12382f08}
@@ -73,7 +73,7 @@ th{font-size:11px;text-transform:uppercase;color:var(--muted);background:#fafcfb
 @media(max-width:700px){
   .sidebar{position:static;width:auto;overflow:visible}.sidebar:hover{width:auto}.main{margin-left:0;padding:20px}.user{position:static;margin-top:25px;font-size:13px}.sidebar:hover .user{font-size:13px}.sidebar .nav div,.sidebar:hover .nav div{font-size:13px}.sidebar .side-logo small,.sidebar:hover .side-logo small{opacity:.65}
   .grid{grid-template-columns:1fr}.full{grid-column:auto}.cards{grid-template-columns:1fr}
-  .top{align-items:flex-start;gap:10px;flex-direction:column}.filters{min-width:0;flex-direction:column}
+  .top{align-items:flex-start;gap:10px;flex-direction:column}.top-buttons{width:100%;justify-content:flex-start}.filters{min-width:0;flex-direction:column}
   .filters input{max-width:none}.result-grid{grid-template-columns:1fr}
 }
 </style>
@@ -84,7 +84,7 @@ th{font-size:11px;text-transform:uppercase;color:var(--muted);background:#fafcfb
 
 <section class="login" id="login">
   <div class="loginbox">
-    <div class="logo">C<span></div>
+    <div class="logo">COPLAN<span>Controle de O.S. e Demandas</span></div>
     <h2>Acesso ao sistema</h2>
     <p>Entre para acompanhar as demandas da equipe.</p>
     <form onsubmit="entrar(event)">
@@ -115,7 +115,11 @@ th{font-size:11px;text-transform:uppercase;color:var(--muted);background:#fafcfb
   <main class="main">
     <div class="top">
       <div><h1>Dashboard</h1><p>Visão geral das ordens de serviço</p></div>
-      <button class="primary" onclick="abrir()">+ Nova O.S.</button>
+      <div class="top-buttons">
+        <button class="primary" onclick="abrirImportacaoOS()">📥 Importar Excel — O.S.</button>
+        <button class="secondary" onclick="abrirImportacaoControle()">📋 Importar Excel — Controle</button>
+        <button class="primary" onclick="abrir()">+ Nova O.S.</button>
+      </div>
     </div>
 
     <div class="cards">
@@ -141,8 +145,6 @@ th{font-size:11px;text-transform:uppercase;color:var(--muted);background:#fafcfb
       </div>
 
       <div class="import-actions">
-        <button class="primary" onclick="abrirImportacaoOS()">📥 Importar Excel — O.S.</button>
-        <button class="secondary" onclick="abrirImportacaoControle()">📋 Importar Excel — Controle</button>
         <button class="danger" onclick="excluirImportadas()">Excluir O.S. importadas nesta sessão</button>
       </div>
 
