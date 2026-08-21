@@ -269,8 +269,7 @@ min-width:300px
 max-width:320px
 }
 
-/* SELEÇÃO E EXCLUSÃO */
-
+/* SELEÇÃO */
 .selection-bar{
 display:flex;
 align-items:center;
@@ -297,12 +296,12 @@ color:#fff;
 display:none
 }
 
-.delete-selected:hover{
-background:#a82f2f
-}
-
 .delete-selected.show{
 display:block
+}
+
+.delete-selected:hover{
+background:#a82f2f
 }
 
 input[type="checkbox"]{
@@ -313,7 +312,7 @@ accent-color:var(--green)
 }
 
 .checkbox-cell{
-width:45px;
+width:55px;
 text-align:center
 }
 
@@ -422,11 +421,9 @@ display:none
 }
 
 @media(max-width:1000px){
-
 .cards{
 grid-template-columns:repeat(2,1fr)
 }
-
 }
 
 @media(max-width:700px){
@@ -476,10 +473,6 @@ flex-direction:column
 </head>
 
 <body>
-
-<!-- =========================
-     LOGIN
-========================= -->
 
 <section class="login" id="login">
 
@@ -537,10 +530,6 @@ Esta versão está preparada para autenticação e banco de dados Supabase.
 </section>
 
 
-<!-- =========================
-     SISTEMA
-========================= -->
-
 <section class="app" id="app">
 
 <aside class="sidebar">
@@ -582,13 +571,8 @@ Sair
 <div class="top">
 
 <div>
-
 <h1>Dashboard</h1>
-
-<p>
-Visão geral das ordens de serviço
-</p>
-
+<p>Visão geral das ordens de serviço</p>
 </div>
 
 <button
@@ -599,10 +583,6 @@ onclick="abrir()">
 
 </div>
 
-
-<!-- =========================
-     CARDS
-========================= -->
 
 <div class="cards">
 
@@ -633,10 +613,6 @@ onclick="abrir()">
 
 </div>
 
-
-<!-- =========================
-     TABELA
-========================= -->
 
 <div class="panel">
 
@@ -694,9 +670,7 @@ Cliente
 </div>
 
 
-<!-- =========================
-     BARRA DE EXCLUSÃO
-========================= -->
+<!-- BARRA DE SELEÇÃO -->
 
 <div class="selection-bar">
 
@@ -741,36 +715,14 @@ onclick="excluirSelecionadas()">
 Selecionar
 </th>
 
-<th>
-Prioridade
-</th>
-
-<th>
-O.S.
-</th>
-
-<th>
-Prazo
-</th>
-
-<th>
-Descrição
-</th>
-
-<th>
-Status
-</th>
-
-<th>
-Pendência
-</th>
-
-<th>
-Observação
-</th>
-
-<th>
-</th>
+<th>Prioridade</th>
+<th>O.S.</th>
+<th>Prazo</th>
+<th>Descrição</th>
+<th>Status</th>
+<th>Pendência</th>
+<th>Observação</th>
+<th></th>
 
 </tr>
 
@@ -789,13 +741,7 @@ Observação
 </section>
 
 
-<!-- =========================
-     MODAL
-========================= -->
-
-<div
-class="modal"
-id="modal">
+<div class="modal" id="modal">
 
 <div class="modalbox">
 
@@ -805,17 +751,13 @@ Nova O.S.
 
 <form onsubmit="salvar(event)">
 
-<input
-type="hidden"
-id="id">
+<input type="hidden" id="id">
 
 <div class="grid">
 
 <div class="field">
 
-<label>
-Prioridade
-</label>
+<label>Prioridade</label>
 
 <input
 id="prioridade"
@@ -825,12 +767,9 @@ required>
 
 </div>
 
-
 <div class="field">
 
-<label>
-Nº da O.S.
-</label>
+<label>Nº da O.S.</label>
 
 <input
 id="os"
@@ -838,12 +777,9 @@ required>
 
 </div>
 
-
 <div class="field">
 
-<label>
-Prazo
-</label>
+<label>Prazo</label>
 
 <input
 id="prazo"
@@ -851,58 +787,36 @@ type="date">
 
 </div>
 
-
 <div class="field">
 
-<label>
-Status
-</label>
+<label>Status</label>
 
 <select id="st">
 
-<option>
-Pendente
-</option>
-
-<option>
-Em andamento
-</option>
-
-<option>
-Concluído
-</option>
+<option>Pendente</option>
+<option>Em andamento</option>
+<option>Concluído</option>
 
 </select>
 
 </div>
-
 
 <div class="field">
 
-<label>
-Pendência
-</label>
+<label>Pendência</label>
 
 <select id="pe">
 
-<option>
-Empresa
-</option>
-
-<option>
-Cliente
-</option>
+<option>Empresa</option>
+<option>Cliente</option>
 
 </select>
 
 </div>
 
-
 <div class="field full">
 
-<label>
-Descrição
-</label>
+<label>Descrição</label>
 
 <textarea
 id="desc"
@@ -911,12 +825,9 @@ required></textarea>
 
 </div>
 
-
 <div class="field full">
 
-<label>
-Observação
-</label>
+<label>Observação</label>
 
 <textarea
 id="obs"
@@ -925,7 +836,6 @@ rows="3"></textarea>
 </div>
 
 </div>
-
 
 <div class="actions">
 
@@ -952,10 +862,6 @@ Salvar
 
 <script>
 
-// ==========================
-// SUPABASE
-// ==========================
-
 const SUPABASE_URL =
 'https://otzhzpimeawafhguhcae.supabase.co';
 
@@ -964,11 +870,11 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 const { createClient } = supabase;
 
-const db = createClient(
+const db =
+createClient(
 SUPABASE_URL,
 SUPABASE_PUBLISHABLE_KEY
 );
-
 
 let dados = [];
 let carregando = false;
@@ -981,7 +887,7 @@ let carregando = false;
 async function iniciar(){
 
 const {
-data: {
+data:{
 session
 }
 } = await db.auth.getSession();
@@ -1031,29 +937,22 @@ async function entrar(e){
 e.preventDefault();
 
 const email =
-document.getElementById('email')
-.value
-.trim();
+document.getElementById('email').value.trim();
 
 const senha =
-document.getElementById('senha')
-.value;
+document.getElementById('senha').value;
 
 const erro =
 document.getElementById('loginerr');
 
-erro.style.display = 'none';
-
+erro.style.display =
+'none';
 
 const { error } =
 await db.auth.signInWithPassword({
-
-email: email,
-
-password: senha
-
+email,
+password:senha
 });
-
 
 if(error){
 
@@ -1102,7 +1001,8 @@ carregando = true;
 const {
 data,
 error
-} = await db
+} =
+await db
 .from('ordens_servico')
 .select('*')
 .order(
@@ -1113,7 +1013,6 @@ ascending:true
 );
 
 carregando = false;
-
 
 if(error){
 
@@ -1135,7 +1034,7 @@ render();
 
 
 // ==========================
-// NOVA / EDITAR O.S.
+// NOVA / EDITAR
 // ==========================
 
 function abrir(x = null){
@@ -1149,11 +1048,11 @@ document
 .querySelector('#modal form')
 .reset();
 
-document.getElementById('id').value = '';
+document.getElementById('id').value =
+'';
 
 document.getElementById('mt').textContent =
 x ? 'Editar O.S.' : 'Nova O.S.';
-
 
 if(x){
 
@@ -1207,7 +1106,6 @@ e.preventDefault();
 const id =
 document.getElementById('id').value;
 
-
 const registro = {
 
 prioridade:
@@ -1244,7 +1142,6 @@ document.getElementById('obs')
 
 };
 
-
 if(!registro.os || !registro.descricao){
 
 alert(
@@ -1255,9 +1152,7 @@ return;
 
 }
 
-
 let resultado;
-
 
 if(id){
 
@@ -1280,7 +1175,6 @@ await db
 
 }
 
-
 if(resultado.error){
 
 alert(
@@ -1292,7 +1186,6 @@ resultado.error.message
 return;
 
 }
-
 
 fechar();
 
@@ -1323,7 +1216,6 @@ function atualizarSelecao(){
 const selecionadas =
 obterSelecionadas();
 
-
 const contador =
 document.getElementById(
 'contadorSelecionadas'
@@ -1332,6 +1224,11 @@ document.getElementById(
 const botao =
 document.getElementById(
 'btnExcluir'
+);
+
+const cabecalho =
+document.getElementById(
+'checkCabecalho'
 );
 
 
@@ -1351,17 +1248,45 @@ botao.classList.remove('show');
 
 
 const todos =
-document.querySelectorAll('.check-os');
-
-const cabecalho =
-document.getElementById(
-'checkCabecalho'
+document.querySelectorAll(
+'.check-os'
 );
 
 
-cabecalho.checked =
-todos.length > 0 &&
-selecionadas.length === todos.length;
+if(todos.length === 0){
+
+cabecalho.checked = false;
+
+cabecalho.indeterminate = false;
+
+return;
+
+}
+
+
+if(
+selecionadas.length === todos.length
+){
+
+cabecalho.checked = true;
+
+cabecalho.indeterminate = false;
+
+}else if(
+selecionadas.length > 0
+){
+
+cabecalho.checked = false;
+
+cabecalho.indeterminate = true;
+
+}else{
+
+cabecalho.checked = false;
+
+cabecalho.indeterminate = false;
+
+}
 
 }
 
@@ -1373,18 +1298,22 @@ document.getElementById(
 'checkCabecalho'
 );
 
+const marcar =
+cabecalho.checked;
+
 
 document
 .querySelectorAll('.check-os')
 .forEach(
 check => {
 
-check.checked =
-cabecalho.checked;
+check.checked = marcar;
 
 }
 );
 
+
+cabecalho.indeterminate = false;
 
 atualizarSelecao();
 
@@ -1392,14 +1321,13 @@ atualizarSelecao();
 
 
 // ==========================
-// EXCLUIR SELECIONADAS
+// EXCLUIR
 // ==========================
 
 async function excluirSelecionadas(){
 
 const selecionadas =
 obterSelecionadas();
-
 
 if(!selecionadas.length){
 
@@ -1472,7 +1400,6 @@ botao.textContent =
 
 await carregarDados();
 
-
 }
 
 
@@ -1489,11 +1416,9 @@ document.getElementById('busca')
 )
 .toLowerCase();
 
-
 const f =
 document.getElementById('status')
 .value;
-
 
 const p =
 document.getElementById('pendFiltro')
@@ -1551,7 +1476,6 @@ x.prazo + 'T00:00:00'
 :
 null;
 
-
 const h =
 new Date();
 
@@ -1561,7 +1485,6 @@ h.setHours(
 0,
 0
 );
-
 
 const atras =
 x.status !== 'Concluído'
@@ -1586,38 +1509,22 @@ onchange="atualizarSelecao()"
 
 </td>
 
-
 <td>
-<b>
-${esc(x.prioridade)}
-</b>
+<b>${esc(x.prioridade)}</b>
 </td>
 
-
 <td>
-<b>
-${esc(x.os)}
-</b>
+<b>${esc(x.os)}</b>
 </td>
-
 
 <td class="${atras ? 'late' : ''}">
-
 ${br(x.prazo)}
-
-${atras
-?
-' • ATRASADO'
-:
-''}
-
+${atras ? ' • ATRASADO' : ''}
 </td>
-
 
 <td>
 ${esc(x.descricao)}
 </td>
-
 
 <td>
 
@@ -1639,7 +1546,6 @@ ${esc(x.status)}
 
 </td>
 
-
 <td>
 
 <span class="badge ${
@@ -1656,13 +1562,9 @@ ${esc(x.pendencia)}
 
 </td>
 
-
 <td>
-
 ${esc(x.observacao) || '—'}
-
 </td>
-
 
 <td>
 
@@ -1713,18 +1615,15 @@ carregando
 document.getElementById('total').textContent =
 dados.length;
 
-
 document.getElementById('pendCount').textContent =
 dados.filter(
 x => x.status === 'Pendente'
 ).length;
 
-
 document.getElementById('and').textContent =
 dados.filter(
 x => x.status === 'Em andamento'
 ).length;
-
 
 document.getElementById('cli').textContent =
 dados.filter(
@@ -1733,7 +1632,6 @@ x.pendencia === 'Cliente'
 &&
 x.status !== 'Concluído'
 ).length;
-
 
 document.getElementById('late').textContent =
 dados.filter(
@@ -1757,8 +1655,6 @@ new Date().setHours(
 ).length;
 
 
-// Atualiza apenas o contador.
-// Não recria a seleção aqui.
 atualizarSelecao();
 
 }
@@ -1775,7 +1671,6 @@ if(!x){
 return 'Não definido';
 
 }
-
 
 const [y,m,d] =
 x.split('-');
