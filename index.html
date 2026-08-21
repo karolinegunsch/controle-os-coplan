@@ -5,550 +5,259 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Coplan • Controle de O.S.</title>
 <style>
-:root{
-  --green:#006b4f;--green2:#008b68;--dark:#073e31;--bg:#f4f7f6;
-  --card:#fff;--line:#e4ebe8;--text:#1e2b27;--muted:#71807b;
-  --red:#c93d3d;--yellow:#c98612;--blue:#3c6edb
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
-button,input,select,textarea{font:inherit}
-button{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer}
-button.primary{background:var(--green);color:#fff}
-button.primary:hover{background:#00563f}
-button.secondary{background:#eef3f1;color:var(--text)}
-button.danger{background:#fee7e7;color:#9f2626}
-button:disabled{opacity:.55;cursor:not-allowed}
-input,select,textarea{width:100%;padding:12px 13px;border:1px solid #d5dfdb;border-radius:9px;background:#fff;color:var(--text)}
+:root{--green:#006b4f;--green2:#008b68;--dark:#12382f;--bg:#f4f7f6;--card:#fff;--line:#e4ebe8;--text:#1e2b27;--muted:#71807b;--red:#c93d3d;--yellow:#c98612;--blue:#3c6edb}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
 .login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#073e31,#006b4f 55%,#0d8b6a)}
-.loginbox{width:min(420px,92%);background:#fff;border-radius:20px;padding:36px;box-shadow:0 20px 60px #0004}
-.logo{font-weight:900;font-size:34px;color:var(--green);letter-spacing:-1px}
-.logo span{display:block;font-size:13px;color:var(--muted);font-weight:500;letter-spacing:0;margin-top:4px}
-.login h2{margin:30px 0 6px}.login p{color:var(--muted);margin-top:0}
-.field{margin:15px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
-.wide{width:100%;margin-top:8px}.hint{font-size:12px;color:var(--muted);margin-top:14px}
-.error{color:#b42318;font-size:13px;margin-top:8px;display:none}
-.app{display:none;min-height:100vh}
-.sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:#073e31;color:#fff;padding:25px 17px}
-.side-logo{font-size:27px;font-weight:900;padding:8px 12px 28px}
-.side-logo small{display:block;font-size:11px;font-weight:500;opacity:.65;margin-top:3px}
-.nav{padding:8px 0}.nav div{padding:12px;border-radius:9px;margin:4px 0;color:#dcebe6}
-.nav .active,.nav div:hover{background:#ffffff16;color:#fff}
-.user{position:absolute;bottom:20px;left:17px;right:17px;padding:12px;border-top:1px solid #ffffff22;font-size:13px}
-.user button{margin-top:10px;width:100%;background:#ffffff12;color:#fff}
-.main{margin-left:245px;padding:28px 34px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
-.top h1{margin:0;font-size:25px}.top p{margin:5px 0;color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:19px;box-shadow:0 3px 12px #12382f08}
-.card .label{font-size:12px;color:var(--muted);font-weight:700}.card .num{font-size:29px;font-weight:800;margin-top:9px}
-.card.green{border-top:3px solid var(--green)}.card.yellow{border-top:3px solid var(--yellow)}
-.card.red{border-top:3px solid var(--red)}.card.blue{border-top:3px solid var(--blue)}
-.panel{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px}
-.toolbar{display:flex;gap:9px;justify-content:space-between;flex-wrap:wrap}
-.filters{display:flex;gap:8px;flex:1;min-width:300px}.filters input{max-width:320px}
-.import-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
-.import-note{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.5}
-.file-input{display:none}
-table{width:100%;border-collapse:collapse;margin-top:17px}
-th,td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--line);font-size:13px}
-th{font-size:11px;text-transform:uppercase;color:var(--muted);background:#fafcfb}
-.badge{display:inline-block;padding:5px 9px;border-radius:99px;font-size:11px;font-weight:800}
-.p{background:#fee7e7;color:#9f2626}.a{background:#fff2d5;color:#94600a}.c{background:#def6e9;color:#17683f}
-.pc{background:#e4ecff;color:#365aa0}.pe{background:#def5ee;color:#17664f}
-.late{color:#bd2525;font-weight:800}
-.modal{display:none;position:fixed;inset:0;background:#0007;place-items:center;padding:20px;z-index:20}
-.modal.open{display:grid}
-.modalbox{background:#fff;width:min(760px,100%);max-height:90vh;overflow:auto;border-radius:15px;padding:25px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.full{grid-column:1/-1}
-.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
-.info{background:#f1f7f5;border:1px solid #d9e9e3;padding:13px;border-radius:10px;font-size:13px;line-height:1.5;margin:12px 0}
-.import-result{margin-top:16px;border:1px solid var(--line);border-radius:10px;padding:14px;background:#fafcfb;display:none}
-.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.result-card{background:#fff;border:1px solid var(--line);border-radius:9px;padding:13px;text-align:center}
-.result-card strong{display:block;font-size:24px;margin-top:4px}
-.result-errors{margin-top:12px;color:#b42318;font-size:12px;max-height:180px;overflow:auto}
-.loading{display:none;font-size:13px;color:var(--muted);margin-top:10px}
-@media(max-width:1100px){.cards{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){
-  .sidebar{position:static;width:auto}.main{margin-left:0;padding:20px}.user{position:static;margin-top:25px}
-  .grid{grid-template-columns:1fr}.full{grid-column:auto}.cards{grid-template-columns:1fr}
-  .top{align-items:flex-start;gap:10px;flex-direction:column}.filters{min-width:0;flex-direction:column}
-  .filters input{max-width:none}.result-grid{grid-template-columns:1fr}
-}
+.loginbox{width:min(420px,92%);background:#fff;border-radius:20px;padding:36px;box-shadow:0 20px 60px #0004}.logo{font-weight:900;font-size:34px;color:var(--green);letter-spacing:-1px}.logo span{display:block;font-size:13px;color:var(--muted);font-weight:500;letter-spacing:0;margin-top:4px}
+.login h2{margin:30px 0 6px}.login p{color:var(--muted);margin-top:0}.field{margin:15px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}input,select,textarea{width:100%;padding:12px 13px;border:1px solid #d5dfdb;border-radius:9px;font:inherit;background:#fff}button{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer}.primary{background:var(--green);color:#fff}.primary:hover{background:#00563f}.wide{width:100%;margin-top:8px}.hint{font-size:12px;color:var(--muted);margin-top:14px}.app{display:none;min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:#073e31;color:#fff;padding:25px 17px}.side-logo{font-size:27px;font-weight:900;padding:8px 12px 28px}.side-logo small{display:block;font-size:11px;font-weight:500;opacity:.65;margin-top:3px}.nav{padding:8px 0}.nav div{padding:12px;border-radius:9px;margin:4px 0;color:#dcebe6}.nav .active,.nav div:hover{background:#ffffff16;color:#fff}.user{position:absolute;bottom:20px;left:17px;right:17px;padding:12px;border-top:1px solid #ffffff22;font-size:13px}.user button{margin-top:10px;width:100%;background:#ffffff12;color:#fff}.main{margin-left:245px;padding:28px 34px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.top h1{margin:0;font-size:25px}.top p{margin:5px 0;color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:19px;box-shadow:0 3px 12px #12382f08}.card .label{font-size:12px;color:var(--muted);font-weight:700}.card .num{font-size:29px;font-weight:800;margin-top:9px}.card.green{border-top:3px solid var(--green)}.card.yellow{border-top:3px solid var(--yellow)}.card.red{border-top:3px solid var(--red)}.card.blue{border-top:3px solid var(--blue)}.panel{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px}.toolbar{display:flex;gap:9px;justify-content:space-between;flex-wrap:wrap}.filters{display:flex;gap:8px;flex:1;min-width:300px}.filters input{max-width:320px}table{width:100%;border-collapse:collapse;margin-top:17px}th,td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--line);font-size:13px}th{font-size:11px;text-transform:uppercase;color:var(--muted);background:#fafcfb}.badge{display:inline-block;padding:5px 9px;border-radius:99px;font-size:11px;font-weight:800}.p{background:#fee7e7;color:#9f2626}.a{background:#fff2d5;color:#94600a}.c{background:#def6e9;color:#17683f}.pc{background:#e4ecff;color:#365aa0}.pe{background:#def5ee;color:#17664f}.late{color:#bd2525;font-weight:800}.modal{display:none;position:fixed;inset:0;background:#0007;place-items:center;padding:20px}.modal.open{display:grid}.modalbox{background:#fff;width:min(650px,100%);max-height:90vh;overflow:auto;border-radius:15px;padding:25px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.full{grid-column:1/-1}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.error{color:#b42318;font-size:13px;margin-top:8px;display:none}
+@media(max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.sidebar{position:static;width:auto}.main{margin-left:0;padding:20px}.user{position:static;margin-top:25px}.grid{grid-template-columns:1fr}.full{grid-column:auto}.cards{grid-template-columns:1fr}.top{align-items:flex-start;gap:10px;flex-direction:column}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
-
 <section class="login" id="login">
-  <div class="loginbox">
-    <div class="logo">COPLAN<span>Controle de O.S. e Demandas</span></div>
-    <h2>Acesso ao sistema</h2>
-    <p>Entre para acompanhar as demandas da equipe.</p>
-    <form onsubmit="entrar(event)">
-      <div class="field"><label>E-mail</label><input id="email" type="email" required placeholder="seu@email.com"></div>
-      <div class="field"><label>Senha</label><input id="senha" type="password" required placeholder="••••••••"></div>
-      <div class="error" id="loginerr">E-mail ou senha inválidos.</div>
-      <button class="primary wide">Entrar</button>
-    </form>
-    <div class="hint">Sistema de controle de O.S. e demandas.</div>
-  </div>
+<div class="loginbox">
+<div class="logo">COPLAN<span>Controle de O.S. e Demandas</span></div>
+<h2>Acesso ao sistema</h2><p>Entre para acompanhar as demandas da equipe.</p>
+<form onsubmit="entrar(event)">
+<div class="field"><label>E-mail</label><input id="email" type="email" required placeholder="seu@email.com"></div>
+<div class="field"><label>Senha</label><input id="senha" type="password" required placeholder="••••••••"></div>
+<div class="error" id="loginerr">E-mail ou senha inválidos.</div>
+<button class="primary wide">Entrar</button>
+</form>
+<div class="hint">Esta versão está preparada para autenticação e banco de dados Supabase. Veja o arquivo CONFIGURACAO.md.</div>
+</div>
 </section>
 
 <section class="app" id="app">
-  <aside class="sidebar">
-    <div class="side-logo">COPLAN<small>CONTROLE DE DEMANDAS</small></div>
-    <div class="nav">
-      <div class="active">▦ Dashboard</div>
-      <div>✓ Ordens de Serviço</div>
-      <div>◉ Relatórios</div>
-    </div>
-    <div class="user">
-      <strong id="useremail">Usuário</strong><br>
-      <span style="opacity:.6">Acesso ao sistema</span>
-      <button onclick="sair()">Sair</button>
-    </div>
-  </aside>
-
-  <main class="main">
-    <div class="top">
-      <div><h1>Dashboard</h1><p>Visão geral das ordens de serviço</p></div>
-      <button class="primary" onclick="abrir()">+ Nova O.S.</button>
-    </div>
-
-    <div class="cards">
-      <div class="card green"><div class="label">TOTAL DE O.S.</div><div class="num" id="total">0</div></div>
-      <div class="card red"><div class="label">PENDENTES</div><div class="num" id="pendCount">0</div></div>
-      <div class="card yellow"><div class="label">EM ANDAMENTO</div><div class="num" id="and">0</div></div>
-      <div class="card blue"><div class="label">AGUARDANDO CLIENTE</div><div class="num" id="cli">0</div></div>
-      <div class="card red"><div class="label">EM ATRASO</div><div class="num" id="late">0</div></div>
-    </div>
-
-    <div class="panel">
-      <div class="toolbar">
-        <div class="filters">
-          <input id="busca" placeholder="Buscar O.S. ou descrição..." oninput="render()">
-          <select id="status" onchange="render()">
-            <option value="">Todos os status</option>
-            <option>Pendente</option><option>Em andamento</option><option>Concluído</option>
-          </select>
-          <select id="pendFiltro" onchange="render()">
-            <option value="">Todas as pendências</option><option>Empresa</option><option>Cliente</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="import-actions">
-        <button class="primary" onclick="abrirImportacaoOS()">📥 Importar Excel — O.S.</button>
-        <button class="secondary" onclick="abrirImportacaoControle()">📋 Importar Excel — Controle</button>
-        <button class="danger" onclick="excluirImportadas()">Excluir O.S. importadas nesta sessão</button>
-      </div>
-
-      <div class="import-note">
-        <b>Importar Excel — O.S.:</b> atualiza O.S. existentes ou cria novas. Em O.S. já existentes, Prioridade e Prazo permanecem como estão.
-        <br>
-        <b>Importar Excel — Controle:</b> grava os dados somente em <code>controle_os</code>. A coluna Ordem pode ficar vazia.
-      </div>
-
-      <div style="overflow:auto">
-        <table>
-          <thead><tr><th>Prioridade</th><th>O.S.</th><th>Prazo</th><th>Descrição</th><th>Status</th><th>Pendência</th><th>Observação</th><th></th></tr></thead>
-          <tbody id="tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </main>
+<aside class="sidebar">
+<div class="side-logo">COPLAN<small>CONTROLE DE DEMANDAS</small></div>
+<div class="nav"><div class="active">▦ Dashboard</div><div>✓ Ordens de Serviço</div><div>◉ Relatórios</div></div>
+<div class="user"><strong id="useremail">Usuário</strong><br><span style="opacity:.6">Acesso ao sistema</span><button onclick="sair()">Sair</button></div>
+</aside>
+<main class="main">
+<div class="top"><div><h1>Dashboard</h1><p>Visão geral das ordens de serviço</p></div><button class="primary" onclick="abrir()">+ Nova O.S.</button></div>
+<div class="cards">
+<div class="card green"><div class="label">TOTAL DE O.S.</div><div class="num" id="total">0</div></div>
+<div class="card red"><div class="label">PENDENTES</div><div class="num" id="pendCount">0</div></div>
+<div class="card yellow"><div class="label">EM ANDAMENTO</div><div class="num" id="and">0</div></div>
+<div class="card blue"><div class="label">AGUARDANDO CLIENTE</div><div class="num" id="cli">0</div></div>
+<div class="card red"><div class="label">EM ATRASO</div><div class="num" id="late">0</div></div>
+</div>
+<div class="panel">
+<div class="toolbar"><div class="filters"><input id="busca" placeholder="Buscar O.S. ou descrição..." oninput="render()"><select id="status" onchange="render()"><option value="">Todos os status</option><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select><select id="pendFiltro" onchange="render()"><option value="">Todas as pendências</option><option>Empresa</option><option>Cliente</option></select></div></div>
+<div style="overflow:auto"><table><thead><tr><th>Prioridade</th><th>O.S.</th><th>Prazo</th><th>Descrição</th><th>Status</th><th>Pendência</th><th>Observação</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
+</div>
+</main>
 </section>
 
-<div class="modal" id="modal">
-  <div class="modalbox">
-    <h2 id="mt">Nova O.S.</h2>
-    <form onsubmit="salvar(event)">
-      <input type="hidden" id="id">
-      <div class="grid">
-        <div class="field"><label>Prioridade</label><input id="prioridade" type="number" min="1" required></div>
-        <div class="field"><label>Nº da O.S.</label><input id="os" required></div>
-        <div class="field"><label>Prazo</label><input id="prazo" type="date"></div>
-        <div class="field"><label>Status</label><select id="st"><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select></div>
-        <div class="field"><label>Pendência</label><select id="pe"><option>Empresa</option><option>Cliente</option></select></div>
-        <div class="field full"><label>Descrição</label><textarea id="desc" rows="4" required></textarea></div>
-        <div class="field full"><label>Observação</label><textarea id="obs" rows="3"></textarea></div>
-      </div>
-      <div class="actions"><button type="button" class="secondary" onclick="fechar()">Cancelar</button><button class="primary">Salvar</button></div>
-    </form>
-  </div>
-</div>
-
-<div class="modal" id="importModal">
-  <div class="modalbox">
-    <h2 id="importTitle">Importar Excel</h2>
-    <div class="info" id="importInfo"></div>
-    <input class="file-input" type="file" id="importInput" accept=".xlsx,.xls">
-    <button class="primary" onclick="document.getElementById('importInput').click()">Escolher arquivo Excel</button>
-    <div id="selectedFile" class="import-note"></div>
-    <div class="loading" id="importLoading">Processando arquivo, aguarde...</div>
-    <div class="import-result" id="importResult">
-      <div class="result-grid">
-        <div class="result-card"><span>Novos</span><strong id="rNew">0</strong></div>
-        <div class="result-card"><span>Atualizados</span><strong id="rUpdate">0</strong></div>
-        <div class="result-card"><span>Erros</span><strong id="rError">0</strong></div>
-      </div>
-      <div class="result-errors" id="rErrors"></div>
-    </div>
-    <div class="actions">
-      <button class="secondary" onclick="fecharImportacao()">Fechar</button>
-      <button class="primary" id="btnProcessar" onclick="processarArquivo()" disabled>Importar</button>
-    </div>
-  </div>
-</div>
+<div class="modal" id="modal"><div class="modalbox"><h2 id="mt">Nova O.S.</h2><form onsubmit="salvar(event)">
+<input type="hidden" id="id"><div class="grid">
+<div class="field"><label>Prioridade</label><input id="prioridade" type="number" min="1" required></div>
+<div class="field"><label>Nº da O.S.</label><input id="os" required></div>
+<div class="field"><label>Prazo</label><input id="prazo" type="date"></div>
+<div class="field"><label>Status</label><select id="st"><option>Pendente</option><option>Em andamento</option><option>Concluído</option></select></div>
+<div class="field"><label>Pendência</label><select id="pe"><option>Empresa</option><option>Cliente</option></select></div>
+<div class="field full"><label>Descrição</label><textarea id="desc" rows="4" required></textarea></div>
+<div class="field full"><label>Observação</label><textarea id="obs" rows="3"></textarea></div>
+</div><div class="actions"><button type="button" onclick="fechar()">Cancelar</button><button class="primary">Salvar</button></div></form></div></div>
 
 <script>
 const SUPABASE_URL = 'https://otzhzpimeawafhguhcae.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_wAshDtNi1gdWaWy6XRa2qQ_BHxktO5d';
-const {createClient} = supabase;
-const db = createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 
-let dados=[];
-let carregando=false;
-let modoImportacao='';
-let arquivoSelecionado=null;
-let idsImportadosSessao=[];
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
-async function iniciar(){
-  const {data:{session}}=await db.auth.getSession();
-  if(session) mostrarApp(session.user); else mostrarLogin();
-  db.auth.onAuthStateChange((_event,session)=>{
-    if(session) mostrarApp(session.user); else mostrarLogin();
-  });
-}
-function mostrarLogin(){document.getElementById('login').style.display='grid';document.getElementById('app').style.display='none'}
-async function entrar(e){
-  e.preventDefault();
-  const email=document.getElementById('email').value.trim();
-  const senha=document.getElementById('senha').value;
-  const erro=document.getElementById('loginerr');
-  erro.style.display='none';
-  const {error}=await db.auth.signInWithPassword({email,password:senha});
-  if(error){erro.textContent='E-mail ou senha inválidos.';erro.style.display='block'}
-}
-async function mostrarApp(user){
-  document.getElementById('login').style.display='none';
-  document.getElementById('app').style.display='block';
-  document.getElementById('useremail').textContent=user?.email||'Usuário';
-  await carregarDados();
-}
-async function sair(){await db.auth.signOut()}
+let dados = [];
+let carregando = false;
 
-async function carregarDados(){
-  carregando=true; render();
-  const {data,error}=await db.from('ordens_servico').select('*').order('prioridade',{ascending:true});
-  carregando=false;
-  if(error){alert('Não foi possível carregar as O.S.\n\n'+error.message);render();return}
-  dados=data||[];render();
+async function iniciar() {
+const { data: { session } } = await db.auth.getSession();
+if (session) {
+mostrarApp(session.user);
+} else {
+mostrarLogin();
 }
 
-function abrir(x=null){
-  document.getElementById('modal').classList.add('open');
-  document.querySelector('#modal form').reset();
-  document.getElementById('id').value='';
-  document.getElementById('mt').textContent=x?'Editar O.S.':'Nova O.S.';
-  if(x){
-    document.getElementById('id').value=x.id||'';
-    document.getElementById('prioridade').value=x.prioridade??'';
-    document.getElementById('os').value=x.os??'';
-    document.getElementById('prazo').value=normalizarData(x.prazo);
-    document.getElementById('st').value=x.status??'Pendente';
-    document.getElementById('pe').value=x.pendencia??'Empresa';
-    document.getElementById('desc').value=x.descricao??'';
-    document.getElementById('obs').value=x.observacao??'';
-  }
-}
-function fechar(){document.getElementById('modal').classList.remove('open')}
-
-async function salvar(e){
-  e.preventDefault();
-  const id=document.getElementById('id').value;
-  const registro={
-    prioridade:Number(document.getElementById('prioridade').value),
-    os:document.getElementById('os').value.trim(),
-    prazo:document.getElementById('prazo').value||null,
-    status:document.getElementById('st').value,
-    pendencia:document.getElementById('pe').value,
-    descricao:document.getElementById('desc').value.trim(),
-    observacao:document.getElementById('obs').value.trim()
-  };
-  if(!registro.os||!registro.descricao||!registro.prioridade){alert('Preencha prioridade, O.S. e descrição.');return}
-  let resultado;
-  if(id){
-    resultado=await db.from('ordens_servico').update(registro).eq('id',id).select().single();
-  }else{
-    resultado=await db.from('ordens_servico').insert(registro).select().single();
-  }
-  if(resultado.error){alert('Não foi possível salvar a O.S.\n\n'+resultado.error.message);return}
-  fechar();await carregarDados();
-}
-
-function render(){
-  const q=(document.getElementById('busca')?.value||'').toLowerCase();
-  const f=document.getElementById('status')?.value||'';
-  const p=document.getElementById('pendFiltro')?.value||'';
-  const a=dados.filter(x=>
-    (!q||(String(x.os||'')+' '+String(x.descricao||'')).toLowerCase().includes(q)) &&
-    (!f||x.status===f)&&(!p||x.pendencia===p)
-  ).sort((x,y)=>Number(x.prioridade||0)-Number(y.prioridade||0));
-
-  document.getElementById('tbody').innerHTML=a.length?a.map(x=>{
-    let atras=false;
-    if(x.prazo){
-      const d=new Date(normalizarData(x.prazo)+'T00:00:00'),h=new Date();
-      h.setHours(0,0,0,0);atras=x.status!=='Concluído'&&d<h;
-    }
-    const botao=escAttr(JSON.stringify(x));
-    return `<tr>
-      <td><b>${esc(x.prioridade??'')}</b></td>
-      <td><b>${esc(x.os)}</b></td>
-      <td class="${atras?'late':''}">${br(x.prazo)}${atras?' • ATRASADO':''}</td>
-      <td>${esc(x.descricao)}</td>
-      <td><span class="badge ${x.status==='Concluído'?'c':x.status==='Em andamento'?'a':'p'}">${esc(x.status)}</span></td>
-      <td><span class="badge ${x.pendencia==='Cliente'?'pc':'pe'}">${esc(x.pendencia)}</span></td>
-      <td>${esc(x.observacao)||'—'}</td>
-      <td><button class="secondary" onclick="abrir(JSON.parse(this.dataset.x))" data-x="${botao}">Editar</button></td>
-    </tr>`;
-  }).join(''):`<tr><td colspan="8" style="text-align:center;padding:40px;color:#71807b">${carregando?'Carregando...':'Nenhuma O.S. cadastrada.'}</td></tr>`;
-
-  document.getElementById('total').textContent=dados.length;
-  document.getElementById('pendCount').textContent=dados.filter(x=>x.status==='Pendente').length;
-  document.getElementById('and').textContent=dados.filter(x=>x.status==='Em andamento').length;
-  document.getElementById('cli').textContent=dados.filter(x=>x.pendencia==='Cliente'&&x.status!=='Concluído').length;
-  document.getElementById('late').textContent=dados.filter(x=>{
-    if(x.status==='Concluído'||!x.prazo)return false;
-    const prazo=new Date(normalizarData(x.prazo)+'T00:00:00'),hoje=new Date();
-    hoje.setHours(0,0,0,0);return prazo<hoje;
-  }).length;
-}
-
-function br(x){
-  const d=normalizarData(x);
-  if(!d)return 'Não definido';
-  const [y,m,day]=d.split('-');return `${day}/${m}/${y}`;
-}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
-function escAttr(s){return esc(s).replace(/`/g,'&#096;')}
-
-function abrirImportacaoOS(){
-  modoImportacao='os';arquivoSelecionado=null;
-  document.getElementById('importTitle').textContent='Importar Excel — O.S.';
-  document.getElementById('importInfo').innerHTML=
-    '<b>Regra da importação:</b><br>• O.S. existente: será atualizada, mas <b>Prioridade e Prazo não serão alterados</b>.<br>• O.S. inexistente: será criada com os dados do Excel, incluindo <b>Prioridade e Prazo</b>.<br>• O arquivo deve ser Excel (.xlsx ou .xls).';
-  abrirImportacaoBase();
-}
-function abrirImportacaoControle(){
-  modoImportacao='controle';arquivoSelecionado=null;
-  document.getElementById('importTitle').textContent='Importar Excel — Controle';
-  document.getElementById('importInfo').innerHTML=
-    '<b>Regra da importação:</b><br>• Os dados serão gravados somente na tabela <b>controle_os</b>.<br>• A coluna <b>Ordem / Nº da O.S.</b> pode estar vazia.<br>• Não cria nem altera O.S. na tabela <b>ordens_servico</b>.<br>• Campos esperados: Ordem, Data de criação, Usuário, Prioridade, Prazo Coplan e Assunto.';
-  abrirImportacaoBase();
-}
-function abrirImportacaoBase(){
-  document.getElementById('importModal').classList.add('open');
-  document.getElementById('importInput').value='';
-  document.getElementById('selectedFile').textContent='';
-  document.getElementById('importResult').style.display='none';
-  document.getElementById('importLoading').style.display='none';
-  document.getElementById('btnProcessar').disabled=true;
-}
-function fecharImportacao(){document.getElementById('importModal').classList.remove('open')}
-document.getElementById('importInput').addEventListener('change',e=>{
-  arquivoSelecionado=e.target.files[0]||null;
-  document.getElementById('selectedFile').textContent=arquivoSelecionado?'Arquivo selecionado: '+arquivoSelecionado.name:'';
-  document.getElementById('btnProcessar').disabled=!arquivoSelecionado;
+db.auth.onAuthStateChange((_event, session) => {
+if (session) mostrarApp(session.user);
+else mostrarLogin();
 });
-
-async function processarArquivo(){
-  if(!arquivoSelecionado)return;
-  document.getElementById('importLoading').style.display='block';
-  document.getElementById('btnProcessar').disabled=true;
-  document.getElementById('importResult').style.display='none';
-  try{
-    const buffer=await arquivoSelecionado.arrayBuffer();
-    const wb=XLSX.read(buffer,{type:'array',cellDates:true,raw:false});
-    const ws=wb.Sheets[wb.SheetNames[0]];
-    const linhas=XLSX.utils.sheet_to_json(ws,{defval:'',raw:false});
-    if(!linhas.length)throw new Error('O Excel não possui registros para importar.');
-    if(modoImportacao==='os')await importarOS(linhas);
-    else await importarControle(linhas);
-  }catch(err){
-    mostrarResultado(0,0,1,['Erro geral: '+err.message]);
-  }finally{
-    document.getElementById('importLoading').style.display='none';
-    document.getElementById('btnProcessar').disabled=false;
-  }
 }
 
-async function importarOS(linhas){
-  let novos=0,atualizados=0,erros=[];
-  const {data:existentes,error:erroBusca}=await db.from('ordens_servico').select('*');
-  if(erroBusca){mostrarResultado(0,0,1,['Não foi possível consultar as O.S. existentes: '+erroBusca.message]);return}
-  const mapa=new Map((existentes||[]).map(x=>[normalizarTexto(x.os),x]));
-  const idsNovos=[];
-
-  for(let i=0;i<linhas.length;i++){
-    const linha=linhas[i];
-    const os=String(pegar(linha,['os','ordem','nº da os','n da os','numero da os','número da os','numero os','nº os'])).trim();
-    const descricao=String(pegar(linha,['descricao','descrição','assunto','demanda'])).trim();
-    const prioridade=converterPrioridade(pegar(linha,['prioridade','prioridade da o.s.','prioridade da os']));
-    const prazo=converterDataImportada(pegar(linha,['prazo','data prazo','data_prazo','prazo coplan']));
-    const status=normalizarStatus(pegar(linha,['status','situação','situacao']))||'Pendente';
-    const pendencia=normalizarPendencia(pegar(linha,['pendencia','pendência']))||'Empresa';
-    const observacao=String(pegar(linha,['observacao','observação'])).trim();
-
-    if(!os){erros.push(`Linha ${i+2}: O.S. não informada.`);continue}
-    if(!descricao){erros.push(`Linha ${i+2} — O.S. ${os}: descrição não informada.`);continue}
-    const existente=mapa.get(normalizarTexto(os));
-
-    if(existente){
-      const registroAtualizacao={os,descricao,status,pendencia,observacao};
-      const {data,error}=await db.from('ordens_servico').update(registroAtualizacao).eq('id',existente.id).select().single();
-      if(error){erros.push(`Linha ${i+2} — O.S. ${os}: ${error.message}`)}
-      else{atualizados++;mapa.set(normalizarTexto(os),data)}
-    }else{
-      if(prioridade===null){erros.push(`Linha ${i+2} — O.S. ${os}: prioridade não informada ou inválida.`);continue}
-      const registro={prioridade,os,prazo,status,pendencia,descricao,observacao};
-      const {data,error}=await db.from('ordens_servico').insert(registro).select().single();
-      if(error){erros.push(`Linha ${i+2} — O.S. ${os}: ${error.message}`)}
-      else{novos++;idsNovos.push(data.id);mapa.set(normalizarTexto(os),data)}
-    }
-  }
-  idsImportadosSessao.push(...idsNovos);
-  mostrarResultado(novos,atualizados,erros.length,erros);
-  await carregarDados();
+function mostrarLogin() {
+document.getElementById('login').style.display = 'grid';
+document.getElementById('app').style.display = 'none';
 }
 
-async function importarControle(linhas){
-  let novos=0,erros=[];
-  const registros=[];
-  for(let i=0;i<linhas.length;i++){
-    const linha=linhas[i];
-    const ordem=String(pegar(linha,['ordem','o.s.','os','nº da os','n da os','numero da os','número da os'])).trim();
-    const dataCriacao=converterDataImportada(pegar(linha,['data criacao','data criação','data de criacao','data de criação']));
-    const usuario=String(pegar(linha,['usuario','usuário','responsavel','responsável'])).trim();
-    const prioridade=converterPrioridade(pegar(linha,['prioridade']));
-    const prazoCoplan=converterDataImportada(pegar(linha,['prazo coplan','prazo_coplan','prazo','data prazo']));
-    const assunto=String(pegar(linha,['assunto','descricao','descrição','demanda'])).trim();
+async function entrar(e) {
+e.preventDefault();
+const email = document.getElementById('email').value.trim();
+const senha = document.getElementById('senha').value;
+const erro = document.getElementById('loginerr');
+erro.style.display = 'none';
 
-    if(!dataCriacao && !usuario && prioridade===null && !prazoCoplan && !assunto && !ordem){
-      erros.push(`Linha ${i+2}: linha vazia.`);continue;
-    }
-    if(!assunto){erros.push(`Linha ${i+2}: Assunto não informado.`);continue}
+const { error } = await db.auth.signInWithPassword({ email, password: senha });
 
-    registros.push({
-      ordem:ordem||null,
-      data_criacao:dataCriacao||null,
-      usuario:usuario||null,
-      prioridade:prioridade===null?null:prioridade,
-      prazo_coplan:prazoCoplan||null,
-      assunto
-    });
-  }
-
-  if(!registros.length){mostrarResultado(0,0,erros.length,erros);return}
-  const {error}=await db.from('controle_os').insert(registros);
-  if(error){mostrarResultado(0,0,erros.length+1,[...erros,'Erro ao gravar na tabela controle_os: '+error.message]);return}
-  novos=registros.length;
-  mostrarResultado(novos,0,erros.length,erros);
+if (error) {
+erro.textContent = 'E-mail ou senha inválidos.';
+erro.style.display = 'block';
+}
 }
 
-function mostrarResultado(novos,atualizados,erros,lista){
-  document.getElementById('rNew').textContent=novos;
-  document.getElementById('rUpdate').textContent=atualizados;
-  document.getElementById('rError').textContent=erros;
-  document.getElementById('rErrors').innerHTML=lista&&lista.length?'<b>Detalhes:</b><br>'+lista.map(esc).join('<br>'):'';
-  document.getElementById('importResult').style.display='block';
+async function mostrarApp(user) {
+document.getElementById('login').style.display = 'none';
+document.getElementById('app').style.display = 'block';
+document.getElementById('useremail').textContent = user?.email || 'Usuário';
+await carregarDados();
 }
 
-async function excluirImportadas(){
-  if(!idsImportadosSessao.length){alert('Não há O.S. importadas nesta sessão para excluir.');return}
-  if(!confirm(`Deseja excluir as ${idsImportadosSessao.length} O.S. novas importadas nesta sessão?\n\nO.S. que apenas foram atualizadas não serão excluídas.`))return;
-  const {error}=await db.from('ordens_servico').delete().in('id',idsImportadosSessao);
-  if(error){alert('Não foi possível excluir as O.S. importadas.\n\n'+error.message);return}
-  idsImportadosSessao=[];
-  alert('O.S. novas importadas excluídas com sucesso.');
-  await carregarDados();
+async function sair() {
+await db.auth.signOut();
 }
 
-function pegar(obj,chaves){
-  const mapa={};
-  Object.keys(obj||{}).forEach(k=>mapa[normalizarTexto(k)]=obj[k]);
-  for(const chave of chaves){
-    const v=mapa[normalizarTexto(chave)];
-    if(v!==undefined&&v!==null&&String(v).trim()!=='')return v;
-  }
-  return '';
-}
-function normalizarTexto(v){
-  return String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
-}
-function converterPrioridade(v){
-  if(v===null||v===undefined||String(v).trim()==='')return null;
-  const n=Number(String(v).replace(',','.').replace(/[^\d.-]/g,''));
-  return Number.isFinite(n)?Math.round(n):null;
-}
-function converterDataImportada(v){
-  if(v===null||v===undefined||String(v).trim()==='')return null;
-  if(v instanceof Date&&!isNaN(v.getTime()))return formatDate(v);
-  const s=String(v).trim();
+async function carregarDados() {
+carregando = true;
+const { data, error } = await db
+.from('ordens_servico')
+.select('*')
+.order('prioridade', { ascending: true });
 
-  if(/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)){
-    const [d,m,y]=s.split('/');
-    return `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
-  }
-  if(/^\d{4}-\d{1,2}-\d{1,2}$/.test(s)){
-    const [y,m,d]=s.split('-');
-    return `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
-  }
-  if(/^\d{1,2}-\d{1,2}-\d{4}$/.test(s)){
-    const [d,m,y]=s.split('-');
-    return `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
-  }
-  const numero=Number(s.replace(',','.'));
-  if(Number.isFinite(numero)&&numero>20000&&numero<80000){
-    const base=new Date(Date.UTC(1899,11,30));
-    base.setUTCDate(base.getUTCDate()+Math.floor(numero));
-    return formatDate(base);
-  }
-  const tentativa=new Date(s);
-  if(!isNaN(tentativa.getTime()))return formatDate(tentativa);
-  return null;
+carregando = false;
+
+if (error) {
+alert('Não foi possível carregar as O.S.\\n\\n' + error.message);
+return;
 }
-function formatDate(d){
-  const y=d.getUTCFullYear(),m=String(d.getUTCMonth()+1).padStart(2,'0'),day=String(d.getUTCDate()).padStart(2,'0');
-  return `${y}-${m}-${day}`;
+
+dados = data || [];
+render();
 }
-function normalizarData(v){
-  if(!v)return '';
-  const s=String(v);
-  if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.substring(0,10);
-  return converterDataImportada(s)||'';
+
+function abrir(x = null) {
+document.getElementById('modal').classList.add('open');
+document.querySelector('#modal form').reset();
+document.getElementById('id').value = '';
+document.getElementById('mt').textContent = x ? 'Editar O.S.' : 'Nova O.S.';
+
+if (x) {
+document.getElementById('id').value = x.id || '';
+document.getElementById('prioridade').value = x.prioridade ?? '';
+document.getElementById('os').value = x.os ?? '';
+document.getElementById('prazo').value = x.prazo ?? '';
+document.getElementById('st').value = x.status ?? 'Pendente';
+document.getElementById('pe').value = x.pendencia ?? 'Empresa';
+document.getElementById('desc').value = x.descricao ?? '';
+document.getElementById('obs').value = x.observacao ?? '';
 }
-function normalizarStatus(v){
-  const s=normalizarTexto(v);
-  if(!s)return '';
-  if(s.includes('concl'))return 'Concluído';
-  if(s.includes('andamento'))return 'Em andamento';
-  if(s.includes('pend'))return 'Pendente';
-  return String(v).trim();
 }
-function normalizarPendencia(v){
-  const s=normalizarTexto(v);
-  if(!s)return '';
-  if(s.includes('cliente'))return 'Cliente';
-  if(s.includes('empresa')||s.includes('coplan'))return 'Empresa';
-  return String(v).trim();
+
+function fechar() {
+document.getElementById('modal').classList.remove('open');
+}
+
+async function salvar(e) {
+e.preventDefault();
+
+const id = document.getElementById('id').value;
+
+const registro = {
+prioridade: Number(document.getElementById('prioridade').value),
+os: document.getElementById('os').value.trim(),
+prazo: document.getElementById('prazo').value || null,
+status: document.getElementById('st').value,
+pendencia: document.getElementById('pe').value,
+descricao: document.getElementById('desc').value.trim(),
+observacao: document.getElementById('obs').value.trim()
+};
+
+if (!registro.os || !registro.descricao) {
+alert('Preencha O.S. e descrição.');
+return;
+}
+
+let resultado;
+
+if (id) {
+resultado = await db
+.from('ordens_servico')
+.update(registro)
+.eq('id', id)
+.select()
+.single();
+} else {
+resultado = await db
+.from('ordens_servico')
+.insert(registro)
+.select()
+.single();
+}
+
+if (resultado.error) {
+alert('Não foi possível salvar a O.S.\n\n' + resultado.error.message);
+return;
+}
+
+fechar();
+await carregarDados();
+}
+
+function render() {
+const q = (document.getElementById('busca').value || '').toLowerCase();
+const f = document.getElementById('status').value;
+const p = document.getElementById('pendFiltro').value;
+
+const a = dados
+.filter(x =>
+(!q || (String(x.os || '') + ' ' + String(x.descricao || '')).toLowerCase().includes(q)) &&
+(!f || x.status === f) &&
+(!p || x.pendencia === p)
+)
+.sort((x, y) => Number(x.prioridade) - Number(y.prioridade));
+
+document.getElementById('tbody').innerHTML = a.length
+? a.map(x => {
+const d = new Date(x.prazo + 'T00:00:00');
+const h = new Date();
+h.setHours(0, 0, 0, 0);
+const atras = x.status !== 'Concluído' && x.prazo && d < h;
+
+    return \`\<tr>
+      \<td>\<b>${esc(x.prioridade)}\</b>\</td>
+      \<td>\<b>${esc(x.os)}\</b>\</td>
+      \<td class="${atras ? 'late' : ''}">${br(x.prazo)}${atras ? ' • ATRASADO' : ''}\</td>
+      \<td>${esc(x.descricao)}\</td>
+      \<td>\<span class="badge ${x.status === 'Concluído' ? 'c' : x.status === 'Em andamento' ? 'a' : 'p'}">${esc(x.status)}\</span>\</td>
+      \<td>\<span class="badge ${x.pendencia === 'Cliente' ? 'pc' : 'pe'}">${esc(x.pendencia)}\</span>\</td>
+      \<td>${esc(x.observacao) || '—'}\</td>
+      \<td>\<button onclick='abrir(${JSON.stringify(x).replace(/'/g, '&#39;')})'>Editar\</button>\</td>
+    \</tr>\`;
+  }).join('')
+: \`\<tr>\<td colspan="8" style="text-align\:center;padding:40px;color:#71807b">${carregando ? 'Carregando...' : 'Nenhuma O.S. cadastrada.'}\</td>\</tr>\`;
+
+document.getElementById('total').textContent = dados.length;
+document.getElementById('pendCount').textContent = dados.filter(x => x.status === 'Pendente').length;
+document.getElementById('and').textContent = dados.filter(x => x.status === 'Em andamento').length;
+document.getElementById('cli').textContent = dados.filter(x => x.pendencia === 'Cliente' && x.status !== 'Concluído').length;
+document.getElementById('late').textContent = dados.filter(x =>
+x.status !== 'Concluído' && x.prazo &&
+new Date(x.prazo + 'T00:00:00') < new Date(new Date().setHours(0, 0, 0, 0))
+).length;
+}
+
+function br(x) {
+if (!x) return 'Não definido';
+const [y, m, d] = x.split('-');
+return `${d}/${m}/${y}`;
+}
+
+function esc(s) {
+return String(s ?? '').replace(/[&<>"']/g, c => ({
+'&': '&', '<': '<', '>': '>', '"': '"', "'": '''
+}[c]));
 }
 
 iniciar();
 </script>
-</body>
-</html>
+</body></html>
