@@ -269,7 +269,8 @@ min-width:300px
 max-width:320px
 }
 
-/* ÁREA DE EXCLUSÃO */
+/* SELEÇÃO E EXCLUSÃO */
+
 .selection-bar{
 display:flex;
 align-items:center;
@@ -421,12 +422,15 @@ display:none
 }
 
 @media(max-width:1000px){
+
 .cards{
 grid-template-columns:repeat(2,1fr)
 }
+
 }
 
 @media(max-width:700px){
+
 .sidebar{
 position:static;
 width:auto
@@ -464,6 +468,7 @@ flex-direction:column
 align-items:flex-start;
 flex-direction:column
 }
+
 }
 </style>
 
@@ -471,6 +476,10 @@ flex-direction:column
 </head>
 
 <body>
+
+<!-- =========================
+     LOGIN
+========================= -->
 
 <section class="login" id="login">
 
@@ -491,19 +500,29 @@ Entre para acompanhar as demandas da equipe.
 
 <div class="field">
 <label>E-mail</label>
-<input id="email" type="email" required placeholder="seu@email.com">
+<input
+id="email"
+type="email"
+required
+placeholder="seu@email.com">
 </div>
 
 <div class="field">
 <label>Senha</label>
-<input id="senha" type="password" required placeholder="••••••••">
+<input
+id="senha"
+type="password"
+required
+placeholder="••••••••">
 </div>
 
 <div class="error" id="loginerr">
 E-mail ou senha inválidos.
 </div>
 
-<button class="primary wide">
+<button
+type="submit"
+class="primary wide">
 Entrar
 </button>
 
@@ -517,6 +536,10 @@ Esta versão está preparada para autenticação e banco de dados Supabase.
 
 </section>
 
+
+<!-- =========================
+     SISTEMA
+========================= -->
 
 <section class="app" id="app">
 
@@ -559,16 +582,27 @@ Sair
 <div class="top">
 
 <div>
+
 <h1>Dashboard</h1>
-<p>Visão geral das ordens de serviço</p>
+
+<p>
+Visão geral das ordens de serviço
+</p>
+
 </div>
 
-<button class="primary" onclick="abrir()">
+<button
+class="primary"
+onclick="abrir()">
 + Nova O.S.
 </button>
 
 </div>
 
+
+<!-- =========================
+     CARDS
+========================= -->
 
 <div class="cards">
 
@@ -600,6 +634,10 @@ Sair
 </div>
 
 
+<!-- =========================
+     TABELA
+========================= -->
+
 <div class="panel">
 
 <div class="toolbar">
@@ -609,10 +647,11 @@ Sair
 <input
 id="busca"
 placeholder="Buscar O.S. ou descrição..."
-oninput="render()"
->
+oninput="render()">
 
-<select id="status" onchange="render()">
+<select
+id="status"
+onchange="render()">
 
 <option value="">
 Todos os status
@@ -632,7 +671,9 @@ Concluído
 
 </select>
 
-<select id="pendFiltro" onchange="render()">
+<select
+id="pendFiltro"
+onchange="render()">
 
 <option value="">
 Todas as pendências
@@ -653,23 +694,25 @@ Cliente
 </div>
 
 
-<!-- BARRA DE SELEÇÃO -->
+<!-- =========================
+     BARRA DE EXCLUSÃO
+========================= -->
+
 <div class="selection-bar">
 
 <div class="selection-left">
 
 <input
 type="checkbox"
-id="selecionarTodas"
-onchange="selecionarTodas()"
->
+id="checkCabecalho"
+onchange="selecionarTodas()">
 
-<label for="selecionarTodas">
+<label for="checkCabecalho">
 Selecionar todas
 </label>
 
 <span id="contadorSelecionadas">
-(0 selecionadas)
+0 O.S. selecionada(s)
 </span>
 
 </div>
@@ -677,9 +720,10 @@ Selecionar todas
 <button
 id="btnExcluir"
 class="delete-selected"
-onclick="excluirSelecionadas()"
->
+onclick="excluirSelecionadas()">
+
 🗑 Excluir selecionadas
+
 </button>
 
 </div>
@@ -694,21 +738,39 @@ onclick="excluirSelecionadas()"
 <tr>
 
 <th class="checkbox-cell">
-<input
-type="checkbox"
-id="checkCabecalho"
-onchange="selecionarTodas()"
->
+Selecionar
 </th>
 
-<th>Prioridade</th>
-<th>O.S.</th>
-<th>Prazo</th>
-<th>Descrição</th>
-<th>Status</th>
-<th>Pendência</th>
-<th>Observação</th>
-<th></th>
+<th>
+Prioridade
+</th>
+
+<th>
+O.S.
+</th>
+
+<th>
+Prazo
+</th>
+
+<th>
+Descrição
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Pendência
+</th>
+
+<th>
+Observação
+</th>
+
+<th>
+</th>
 
 </tr>
 
@@ -727,7 +789,13 @@ onchange="selecionarTodas()"
 </section>
 
 
-<div class="modal" id="modal">
+<!-- =========================
+     MODAL
+========================= -->
+
+<div
+class="modal"
+id="modal">
 
 <div class="modalbox">
 
@@ -737,51 +805,58 @@ Nova O.S.
 
 <form onsubmit="salvar(event)">
 
-<input type="hidden" id="id">
+<input
+type="hidden"
+id="id">
 
 <div class="grid">
 
 <div class="field">
 
-<label>Prioridade</label>
+<label>
+Prioridade
+</label>
 
 <input
 id="prioridade"
 type="number"
 min="1"
-required
->
+required>
 
 </div>
 
 
 <div class="field">
 
-<label>Nº da O.S.</label>
+<label>
+Nº da O.S.
+</label>
 
 <input
 id="os"
-required
->
+required>
 
 </div>
 
 
 <div class="field">
 
-<label>Prazo</label>
+<label>
+Prazo
+</label>
 
 <input
 id="prazo"
-type="date"
->
+type="date">
 
 </div>
 
 
 <div class="field">
 
-<label>Status</label>
+<label>
+Status
+</label>
 
 <select id="st">
 
@@ -804,7 +879,9 @@ Concluído
 
 <div class="field">
 
-<label>Pendência</label>
+<label>
+Pendência
+</label>
 
 <select id="pe">
 
@@ -823,25 +900,27 @@ Cliente
 
 <div class="field full">
 
-<label>Descrição</label>
+<label>
+Descrição
+</label>
 
 <textarea
 id="desc"
 rows="4"
-required
-></textarea>
+required></textarea>
 
 </div>
 
 
 <div class="field full">
 
-<label>Observação</label>
+<label>
+Observação
+</label>
 
 <textarea
 id="obs"
-rows="3"
-></textarea>
+rows="3"></textarea>
 
 </div>
 
@@ -852,12 +931,13 @@ rows="3"
 
 <button
 type="button"
-onclick="fechar()"
->
+onclick="fechar()">
 Cancelar
 </button>
 
-<button class="primary">
+<button
+type="submit"
+class="primary">
 Salvar
 </button>
 
@@ -872,6 +952,10 @@ Salvar
 
 <script>
 
+// ==========================
+// SUPABASE
+// ==========================
+
 const SUPABASE_URL =
 'https://otzhzpimeawafhguhcae.supabase.co';
 
@@ -880,11 +964,11 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 const { createClient } = supabase;
 
-const db =
-createClient(
+const db = createClient(
 SUPABASE_URL,
 SUPABASE_PUBLISHABLE_KEY
 );
+
 
 let dados = [];
 let carregando = false;
@@ -897,7 +981,7 @@ let carregando = false;
 async function iniciar(){
 
 const {
-data:{
+data: {
 session
 }
 } = await db.auth.getSession();
@@ -933,9 +1017,11 @@ mostrarLogin();
 
 function mostrarLogin(){
 
-document.getElementById('login').style.display='grid';
+document.getElementById('login').style.display =
+'grid';
 
-document.getElementById('app').style.display='none';
+document.getElementById('app').style.display =
+'none';
 
 }
 
@@ -945,28 +1031,37 @@ async function entrar(e){
 e.preventDefault();
 
 const email =
-document.getElementById('email').value.trim();
+document.getElementById('email')
+.value
+.trim();
 
 const senha =
-document.getElementById('senha').value;
+document.getElementById('senha')
+.value;
 
 const erro =
 document.getElementById('loginerr');
 
-erro.style.display='none';
+erro.style.display = 'none';
 
-const {error} =
+
+const { error } =
 await db.auth.signInWithPassword({
-email,
-password:senha
+
+email: email,
+
+password: senha
+
 });
+
 
 if(error){
 
 erro.textContent =
 'E-mail ou senha inválidos.';
 
-erro.style.display='block';
+erro.style.display =
+'block';
 
 }
 
@@ -975,9 +1070,11 @@ erro.style.display='block';
 
 async function mostrarApp(user){
 
-document.getElementById('login').style.display='none';
+document.getElementById('login').style.display =
+'none';
 
-document.getElementById('app').style.display='block';
+document.getElementById('app').style.display =
+'block';
 
 document.getElementById('useremail').textContent =
 user?.email || 'Usuário';
@@ -1000,20 +1097,23 @@ await db.auth.signOut();
 
 async function carregarDados(){
 
-carregando=true;
+carregando = true;
 
 const {
 data,
 error
-} =
-await db
+} = await db
 .from('ordens_servico')
 .select('*')
-.order('prioridade',{
+.order(
+'prioridade',
+{
 ascending:true
-});
+}
+);
 
-carregando=false;
+carregando = false;
+
 
 if(error){
 
@@ -1027,7 +1127,7 @@ return;
 
 }
 
-dados=data || [];
+dados = data || [];
 
 render();
 
@@ -1038,20 +1138,22 @@ render();
 // NOVA / EDITAR O.S.
 // ==========================
 
-function abrir(x=null){
+function abrir(x = null){
 
 document
 .getElementById('modal')
-.classList.add('open');
+.classList
+.add('open');
 
 document
 .querySelector('#modal form')
 .reset();
 
-document.getElementById('id').value='';
+document.getElementById('id').value = '';
 
 document.getElementById('mt').textContent =
 x ? 'Editar O.S.' : 'Nova O.S.';
+
 
 if(x){
 
@@ -1088,7 +1190,8 @@ function fechar(){
 
 document
 .getElementById('modal')
-.classList.remove('open');
+.classList
+.remove('open');
 
 }
 
@@ -1104,31 +1207,43 @@ e.preventDefault();
 const id =
 document.getElementById('id').value;
 
-const registro={
 
-prioridade:Number(
+const registro = {
+
+prioridade:
+Number(
 document.getElementById('prioridade').value
 ),
 
 os:
-document.getElementById('os').value.trim(),
+document.getElementById('os')
+.value
+.trim(),
 
 prazo:
-document.getElementById('prazo').value || null,
+document.getElementById('prazo')
+.value || null,
 
 status:
-document.getElementById('st').value,
+document.getElementById('st')
+.value,
 
 pendencia:
-document.getElementById('pe').value,
+document.getElementById('pe')
+.value,
 
 descricao:
-document.getElementById('desc').value.trim(),
+document.getElementById('desc')
+.value
+.trim(),
 
 observacao:
-document.getElementById('obs').value.trim()
+document.getElementById('obs')
+.value
+.trim()
 
 };
+
 
 if(!registro.os || !registro.descricao){
 
@@ -1140,11 +1255,13 @@ return;
 
 }
 
+
 let resultado;
+
 
 if(id){
 
-resultado=
+resultado =
 await db
 .from('ordens_servico')
 .update(registro)
@@ -1154,7 +1271,7 @@ await db
 
 }else{
 
-resultado=
+resultado =
 await db
 .from('ordens_servico')
 .insert(registro)
@@ -1162,6 +1279,7 @@ await db
 .single();
 
 }
+
 
 if(resultado.error){
 
@@ -1174,6 +1292,7 @@ resultado.error.message
 return;
 
 }
+
 
 fechar();
 
@@ -1204,6 +1323,7 @@ function atualizarSelecao(){
 const selecionadas =
 obterSelecionadas();
 
+
 const contador =
 document.getElementById(
 'contadorSelecionadas'
@@ -1214,8 +1334,10 @@ document.getElementById(
 'btnExcluir'
 );
 
+
 contador.textContent =
-`(${selecionadas.length} selecionadas)`;
+`${selecionadas.length} O.S. selecionada(s)`;
+
 
 if(selecionadas.length > 0){
 
@@ -1227,23 +1349,19 @@ botao.classList.remove('show');
 
 }
 
+
 const todos =
 document.querySelectorAll('.check-os');
 
 const cabecalho =
-document.getElementById('checkCabecalho');
+document.getElementById(
+'checkCabecalho'
+);
 
-const todasMarcadas =
-todos.length > 0 &&
-selecionadas.length === todos.length;
 
 cabecalho.checked =
-todasMarcadas;
-
-document.getElementById(
-'selecionarTodas'
-).checked =
-todasMarcadas;
+todos.length > 0 &&
+selecionadas.length === todos.length;
 
 }
 
@@ -1251,25 +1369,22 @@ todasMarcadas;
 function selecionarTodas(){
 
 const cabecalho =
-document.getElementById('checkCabecalho');
+document.getElementById(
+'checkCabecalho'
+);
 
-const selecionar =
-cabecalho.checked ||
-document.getElementById('selecionarTodas').checked;
 
 document
 .querySelectorAll('.check-os')
-.forEach(check=>{
-check.checked=selecionar;
-});
+.forEach(
+check => {
 
-document.getElementById(
-'checkCabecalho'
-).checked=selecionar;
+check.checked =
+cabecalho.checked;
 
-document.getElementById(
-'selecionarTodas'
-).checked=selecionar;
+}
+);
+
 
 atualizarSelecao();
 
@@ -1277,13 +1392,14 @@ atualizarSelecao();
 
 
 // ==========================
-// EXCLUIR O.S.
+// EXCLUIR SELECIONADAS
 // ==========================
 
 async function excluirSelecionadas(){
 
 const selecionadas =
 obterSelecionadas();
+
 
 if(!selecionadas.length){
 
@@ -1295,10 +1411,12 @@ return;
 
 }
 
+
 const confirmacao =
 confirm(
-`Tem certeza que deseja excluir ${selecionadas.length} O.S.? \n\nEsta ação não poderá ser desfeita.`
+`Tem certeza que deseja excluir ${selecionadas.length} O.S.?\n\nEsta ação não poderá ser desfeita.`
 );
+
 
 if(!confirmacao){
 
@@ -1306,27 +1424,34 @@ return;
 
 }
 
+
 const botao =
-document.getElementById('btnExcluir');
+document.getElementById(
+'btnExcluir'
+);
 
-botao.disabled=true;
+botao.disabled = true;
 
-botao.textContent='Excluindo...';
+botao.textContent =
+'Excluindo...';
 
 
-const {error} =
+const { error } =
 await db
 .from('ordens_servico')
 .delete()
-.in('id',selecionadas);
-
-
-botao.disabled=false;
-
-botao.textContent='🗑 Excluir selecionadas';
+.in(
+'id',
+selecionadas
+);
 
 
 if(error){
+
+botao.disabled = false;
+
+botao.textContent =
+'🗑 Excluir selecionadas';
 
 alert(
 'Não foi possível excluir as O.S.\n\n'
@@ -1339,21 +1464,14 @@ return;
 }
 
 
-alert(
-`${selecionadas.length} O.S. excluída(s) com sucesso.`
-);
+botao.disabled = false;
 
-
-document.getElementById(
-'checkCabecalho'
-).checked=false;
-
-document.getElementById(
-'selecionarTodas'
-).checked=false;
+botao.textContent =
+'🗑 Excluir selecionadas';
 
 
 await carregarDados();
+
 
 }
 
@@ -1366,19 +1484,25 @@ function render(){
 
 const q =
 (
-document.getElementById('busca').value || ''
-).toLowerCase();
+document.getElementById('busca')
+.value || ''
+)
+.toLowerCase();
+
 
 const f =
-document.getElementById('status').value;
+document.getElementById('status')
+.value;
+
 
 const p =
-document.getElementById('pendFiltro').value;
+document.getElementById('pendFiltro')
+.value;
 
 
 const a =
 dados
-.filter(x=>
+.filter(x =>
 
 (
 !q ||
@@ -1395,15 +1519,15 @@ String(x.descricao || '')
 
 &&
 
-(!f || x.status===f)
+(!f || x.status === f)
 
 &&
 
-(!p || x.pendencia===p)
+(!p || x.pendencia === p)
 
 )
 .sort(
-(x,y)=>
+(x,y) =>
 Number(x.prioridade)
 -
 Number(y.prioridade)
@@ -1411,23 +1535,33 @@ Number(y.prioridade)
 
 
 document.getElementById('tbody').innerHTML =
+
 a.length
 
 ?
 
-a.map(x=>{
+a.map(x => {
 
 const d =
 x.prazo
 ?
-new Date(x.prazo+'T00:00:00')
+new Date(
+x.prazo + 'T00:00:00'
+)
 :
 null;
+
 
 const h =
 new Date();
 
-h.setHours(0,0,0,0);
+h.setHours(
+0,
+0,
+0,
+0
+);
+
 
 const atras =
 x.status !== 'Concluído'
@@ -1452,22 +1586,38 @@ onchange="atualizarSelecao()"
 
 </td>
 
-<td>
-<b>${esc(x.prioridade)}</b>
-</td>
 
 <td>
-<b>${esc(x.os)}</b>
+<b>
+${esc(x.prioridade)}
+</b>
 </td>
+
+
+<td>
+<b>
+${esc(x.os)}
+</b>
+</td>
+
 
 <td class="${atras ? 'late' : ''}">
+
 ${br(x.prazo)}
-${atras ? ' • ATRASADO' : ''}
+
+${atras
+?
+' • ATRASADO'
+:
+''}
+
 </td>
+
 
 <td>
 ${esc(x.descricao)}
 </td>
+
 
 <td>
 
@@ -1489,6 +1639,7 @@ ${esc(x.status)}
 
 </td>
 
+
 <td>
 
 <span class="badge ${
@@ -1505,13 +1656,18 @@ ${esc(x.pendencia)}
 
 </td>
 
+
 <td>
+
 ${esc(x.observacao) || '—'}
+
 </td>
+
 
 <td>
 
 <button
+type="button"
 onclick='abrir(${JSON.stringify(x).replace(/'/g,'&#39;')})'
 >
 Editar
@@ -1533,10 +1689,14 @@ Editar
 
 <td
 colspan="9"
-style="text-align:center;padding:40px;color:#71807b"
->
+style="
+text-align:center;
+padding:40px;
+color:#71807b
+">
 
-${carregando
+${
+carregando
 ?
 'Carregando...'
 :
@@ -1553,42 +1713,52 @@ ${carregando
 document.getElementById('total').textContent =
 dados.length;
 
+
 document.getElementById('pendCount').textContent =
 dados.filter(
-x=>x.status==='Pendente'
+x => x.status === 'Pendente'
 ).length;
+
 
 document.getElementById('and').textContent =
 dados.filter(
-x=>x.status==='Em andamento'
+x => x.status === 'Em andamento'
 ).length;
+
 
 document.getElementById('cli').textContent =
 dados.filter(
-x=>
-x.pendencia==='Cliente'
+x =>
+x.pendencia === 'Cliente'
 &&
-x.status!=='Concluído'
+x.status !== 'Concluído'
 ).length;
+
 
 document.getElementById('late').textContent =
 dados.filter(
-x=>
-x.status!=='Concluído'
+x =>
+x.status !== 'Concluído'
 &&
 x.prazo
 &&
 new Date(
-x.prazo+'T00:00:00'
+x.prazo + 'T00:00:00'
 )
 <
 new Date(
-new Date().setHours(0,0,0,0)
+new Date().setHours(
+0,
+0,
+0,
+0
+)
 )
 ).length;
 
 
-// limpa seleção após renderização
+// Atualiza apenas o contador.
+// Não recria a seleção aqui.
 atualizarSelecao();
 
 }
@@ -1600,10 +1770,15 @@ atualizarSelecao();
 
 function br(x){
 
-if(!x)
+if(!x){
+
 return 'Não definido';
 
-const [y,m,d]=x.split('-');
+}
+
+
+const [y,m,d] =
+x.split('-');
 
 return `${d}/${m}/${y}`;
 
@@ -1619,7 +1794,7 @@ function esc(s){
 return String(s ?? '')
 .replace(
 /[&<>"']/g,
-c=>({
+c => ({
 
 '&':'&amp;',
 '<':'&lt;',
@@ -1628,7 +1803,6 @@ c=>({
 "'":'&#39;'
 
 }[c])
-
 );
 
 }
